@@ -2,6 +2,9 @@
 
 import subprocess, sys, os
 
+if len(sys.argv) < 2: #Stops program if no arguments are given
+    sys.exit()
+
 acc_nr = sys.argv[1]
 
 parent_directory = acc_nr + "_pipeline_results/"
@@ -59,10 +62,19 @@ subprocess.run(["conda", "run", "-n", "qc","fastqc","-o", "fastqc", acc_nr_2_tri
 print("Fastqc finished.")
 
 
+#Running assembly using spades.py
+
 assemblyfolder = "assembly_" + acc_nr
 
 print("Running spades.py")
 
-subprocess.run(["rm","-rf",assemblyfolder], cwd = parent_directory)
+if os.path.exists(parent_directory + assemblyfolder):
+    subprocess.run(["rm","-rf",assemblyfolder], cwd = parent_directory) 
 
 subprocess.run(["conda", "run", "-n", "assembly3", "spades.py", "-o", assemblyfolder, "-1", acc_nr_1_trimmed, "-2", acc_nr_2_trimmed, "--metaviral"], cwd = parent_directory)
+
+
+#Pharokka.py
+subprocess.run(["mkdir","pharokka"],cwd = parent_directory)
+
+subprocess.run(["conda", "run", "-n", "pharokka_env", "pharokka.py","-i", assemblyfolder + "/contigs.fasta", "-o", "pharokka"],cwd = parent_directory)
