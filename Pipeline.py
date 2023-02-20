@@ -1,8 +1,12 @@
 #!/usr/bin/python3
 
-import subprocess, sys, os
+import subprocess, sys, os, multiprocessing
+
+if "-h" in sys.argv or "--help" in sys.argv:
+    print("input: ./pipeline.py [SRA accession nr.] <-h or --help> <-ss for 0.1 subsampling> <-f to skip assembly>")
 
 if len(sys.argv) < 2: #Stops program if no arguments are given
+    print("ERROR: No arguments were given")
     sys.exit()
 
 acc_nr = sys.argv[1]
@@ -10,8 +14,9 @@ acc_nr = sys.argv[1]
 parent_directory = acc_nr + "_pipeline_results/"
 
 
-if not os.path.exists(parent_directory):
+if not os.path.exists(parent_directory): 
     subprocess.run(["mkdir",parent_directory])
+
 
 acc_nr_1 = acc_nr + "_1.fastq"
 
@@ -23,10 +28,10 @@ if not os.path.isfile(parent_directory + acc_nr_1) and not os.path.isfile(parent
     #Downloads reads from SRA - fasterq-dump
     print("Downloading from SRA using fasterq-dump")
     subprocess.run(["fasterq-dump", acc_nr, "--progress"], cwd = parent_directory)
+else:
+    print("Reads already present!")
 
-
-
-if "--ss" in sys.argv: #Subsampling data
+if "-ss" in sys.argv: #Subsampling data
     
     acc_nr_1_trimmed_subs = acc_nr + "_1_subs.fastq"
     acc_nr_2_trimmed_subs = acc_nr + "_2_subs.fastq"
@@ -47,8 +52,9 @@ if not os.path.exists(parent_directory + "/trimmed"):
     subprocess.run(["mkdir","trimmed"], cwd = parent_directory)
 
 subprocess.run(["conda", "run", "-n", "qc","fastp","-i", acc_nr_1, "-I", acc_nr_2, "-o", acc_nr_1_trimmed, "-O", acc_nr_2_trimmed, "-f", "15", "-F", "15"], cwd = parent_directory)
-
 print("Fastp finished.")
+
+
 #Fastqc 
 print("Running fastqc")
 
@@ -66,15 +72,29 @@ print("Fastqc finished.")
 
 assemblyfolder = "assembly_" + acc_nr
 
-print("Running spades.py")
 
-if os.path.exists(parent_directory + assemblyfolder):
-    subprocess.run(["rm","-rf",assemblyfolder], cwd = parent_directory) 
+if "-f" not in sys.argv:
+    if os.path.exists(parent_directory + assemblyfolder):
+        subprocess.run(["rm","-rf",assemblyfolder], cwd = parent_directory) 
 
-subprocess.run(["conda", "run", "-n", "assembly3", "spades.py", "-o", assemblyfolder, "-1", acc_nr_1_trimmed, "-2", acc_nr_2_trimmed, "--metaviral"], cwd = parent_directory)
+    print("Running spades.py")
+    subprocess.run(["conda", "run", "-n", "assembly3", "spades.py", "-o", assemblyfolder, "-1", acc_nr_1_trimmed, "-2", acc_nr_2_trimmed, "--metaviral"], cwd = parent_directory)
 
+    print("Spades.py finished.")
+else: 
+    print("-f argument specified, Spades.py was skipped.")
+
+subprocess.run(["rm",acc_nr_1_trimmed],cwd = parent_directory)
+
+print("Running pharokka.py")
 
 #Pharokka.py
-subprocess.run(["mkdir","pharokka"],cwd = parent_directory)
 
-subprocess.run(["conda", "run", "-n", "pharokka_env", "pharokka.py","-i", assemblyfolder + "/contigs.fasta", "-o", "pharokka"],cwd = parent_directory)
+threads = multiprocessing.cpu_count()
+print("Using:", threads, "threads.")
+
+subprocess.run(["conda", "run", "-n", "pharokka_env", "pharokka.py","-i", assemblyfolder + "/contigs.fasta", "-o", "pharokka", "-f","-t",str(threads)],cwd = parent_directory)
+
+print("Pharokka.py finished running.")
+
+print("Thanks for using the PhAnTomic's pipeline :-P")
