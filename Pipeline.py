@@ -14,7 +14,7 @@ acc_nr_1 = acc_nr + "_1.fastq"
 
 acc_nr_2 = acc_nr + "_2.fastq"
 
-print("Running PhAnTomic pipeline!\n2023")
+print("Running PhAnTomic pipeline!\n2023 v.0.1")
 
 if not os.path.isfile(parent_directory + acc_nr_1) and not os.path.isfile(parent_directory + acc_nr_2): #Checks if the two files exist in folder
     #Downloads reads from SRA - fasterq-dump
@@ -59,7 +59,6 @@ subprocess.run(["conda", "run", "-n", "qc","fastqc","-o", "fastqc", acc_nr_2_tri
 print("Fastqc finished.")
 
 
-
 assemblyfolder = "assembly_" + acc_nr
 
 print("Running spades.py")
@@ -67,4 +66,3 @@ print("Running spades.py")
 subprocess.run(["rm","-rf",assemblyfolder], cwd = parent_directory)
 
 subprocess.run(["conda", "run", "-n", "assembly3", "spades.py", "-o", assemblyfolder, "-1", acc_nr_1_trimmed, "-2", acc_nr_2_trimmed, "--metaviral"], cwd = parent_directory)
-
