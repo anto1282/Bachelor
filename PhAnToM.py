@@ -3,7 +3,3 @@
 import subprocess, argparse
 
 
-
-Hejse
-
-Hejse 2
