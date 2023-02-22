@@ -2,8 +2,6 @@
 
 import subprocess, sys, os, multiprocessing
 
-if "-h" in sys.argv or "--help" in sys.argv:
-    print("input: ./pipeline.py [SRA accession nr.] <-h or --help> <-ss for 0.1 subsampling> <-f to skip assembly>")
 
 if len(sys.argv) < 2: #Stops program if no arguments are given
     print("ERROR: No arguments were given")
@@ -82,9 +80,13 @@ if "-f" not in sys.argv:
 
     print("Spades.py finished.")
 else: 
-    print("-f argument specified, Spades.py was skipped.")
+    print("INFO: '-f' argument specified, Spades.py was skipped.")
 
 subprocess.run(["rm",acc_nr_1_trimmed],cwd = parent_directory)
+subprocess.run(["rm",acc_nr_2_trimmed],cwd = parent_directory)
+
+subprocess.run(["conda", "run","-n", "assembly", "quast", "-o","quast",assemblyfolder + "/scaffolds.fasta"],cwd = parent_directory)
+
 
 print("Running pharokka.py")
 
@@ -97,4 +99,4 @@ subprocess.run(["conda", "run", "-n", "pharokka_env", "pharokka.py","-i", assemb
 
 print("Pharokka.py finished running.")
 
-print("Thanks for using the PhAnTomic's pipeline :-P")
+print("\nThanks for using the PhAnTomic's pipeline :-P")
