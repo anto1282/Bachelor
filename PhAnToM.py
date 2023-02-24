@@ -12,13 +12,14 @@ parser = ArgumentParser(prog = 'PhAnTom.py',description="Help me!")
 parser.add_argument("-i","--input", action="store", dest = "sraAccNr", help ="Input valid accesion number from Sequence Read Archive.")
 parser.add_argument("--flag", action = "store", dest = "whatSPADES", default = "--meta", help = "Runs spades with the specified flag.")
 parser.add_argument("--threads","-t",action = "store", dest = "threads", type = int, default = multiprocessing.cpu_count(),help = "Specifies the total number of threads used in various of the programs in the pipeline.")
+parser.add_argument("-r","--ref", action="store", dest="refFile", help ="Input fasta file for filtering out", default=False)
 
 args = parser.parse_args()
 
 
 #Creates results directory for the pipeline results
 def directory_maker(sraAccNr):
-    parent_directory = "Results" + sraAccNr
+    parent_directory =  "../Results" + sraAccNr
     if not os.path.exists(parent_directory): 
         subprocess.run(["mkdir",parent_directory])
     return parent_directory
@@ -31,6 +32,28 @@ def sra_get(sraAccNr,directory):
     else:
         print("Reads already present in directory! Continuing...")
     return sraAccNr + "_1.fastq", sraAccNr + "_2.fastq"
+
+
+
+def trimming(read1, read2, directory, refFile):
+    
+    
+    read1_trimmed = "trimmed/" + read1
+    read2_trimmed = "trimmed/" + read2
+
+    if not os.path.exists(directory + "/trimmed"):
+        subprocess.run(["mkdir","trimmed"], cwd = directory) 
+    if args.refFile:
+        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=" + read2,  "-in2=" + read2, "-out=" + read1_trimmed, "-out2=" + read2_trimmed, "ref=" + refFile , "forcetrimleft=15" , "minbasequality=30"], cwd =directory)
+        print("Trim finished.")
+    else:
+        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=%s" % read1,  "-in2=%s" % read2, "-out=%s" % read1_trimmed, "-out2=%s" % read2_trimmed,"forcetrimleft=15" , "minbasequality=30"], cwd =directory)
+        print("Trim finished.")
+    return read1_trimmed, read2_trimmed
+
+
+
+
 
 def main():
     #Initialization
@@ -46,9 +69,11 @@ def main():
     sraAccNr = args.sraAccNr 
     parent_directory = directory_maker(sraAccNr)
     read1, read2 = sra_get(sraAccNr,parent_directory)
+    refFile = args.refFile
 
-    read1Trimmed, read2Trimmed = Assembly.SubSampling(read1,read2,parent_directory,0.1,100)
-    assemblydirectory = Assembly.SPADES(read1Trimmed,read2Trimmed,parent_directory,args.whatSPADES)
+    read1Trimmed, read2Trimmed = trimming(read1, read2, parent_directory, refFile)
+    read1TrimmedSub, read2TrimmedSub = Assembly.SubSampling(read1Trimmed,read2Trimmed,parent_directory,0.1,100)
+    assemblydirectory = Assembly.SPADES(read1TrimmedSub,read2TrimmedSub,parent_directory,args.whatSPADES)
     
     Assembly.N50(parent_directory,assemblydirectory)
     Assembly.PHAROKKA(parent_directory, assemblydirectory, threads)
