@@ -86,14 +86,18 @@ def main():
     assemblydirectory = Assembly.SPADES(read1TrimmedSub,read2TrimmedSub,parent_directory,args.whatSPADES,phredOffset)
     Assembly.N50(parent_directory,assemblydirectory)
 
+    #Implement filtering of contigs that are too short
     
 
-    predfile = Assembly.DeepVirFinder(pathtoDeepVirFinder, assemblydirectory)
+    pathToDeepVirFinder = "../../DeepVirFinder"
+
+    predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads)
     
-    outputfile = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.05)
+    viralcontigs = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.05)
 
 
-    Assembly.PHAROKKA(parent_directory, assemblydirectory, threads)
+
+    Assembly.PHAROKKA(parent_directory, viralcontigs, threads)
 
 main()
 
