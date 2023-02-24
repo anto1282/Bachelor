@@ -38,7 +38,7 @@ def SPADES(read1,read2,directory,spades_tag,phred_offset):
     if spades_tag != "skip":
         print("Running spades.py")
         SPADES = subprocess.run(["conda", "run", "-n", "ASSEMBLY", "spades.py", "-o", output_dir, "-1", read1, "-2", read2, spades_tag,"--phred-offset",phred_offset], cwd = directory)
-        print("Spades.py finished.")
+        print("Spades.py finished. \n")
     
     return output_dir
 
@@ -64,12 +64,12 @@ def DeepVirFinder(pathtoDeepVirFinder,assemblydirectory):
     subprocess.run(["conda","run","-n","VIRFINDER","python" + pathtoDeepVirFinder + "/dvf.py", "-i", assemblydirectory + "/contigs.fasta","-o",DVPDir],cwd = assemblydirectory)
 
 
-def PHAROKKA(directory, assemblydirectory,threads):
+def PHAROKKA(directory, assemblydirectory,threads): ##TODO remove phanotate, use prodigal instead
 
     print("Running pharokka.py")
-    
+    print(directory + "/" +assemblydirectory)
     print("Using:", threads, "threads.")
-
-    subprocess.run(["conda", "run", "-n", "PHAROKKA", "pharokka.py","-i", assemblydirectory + "/contigs.fasta", "-o", "pharokka", "-f","-t",str(threads)],cwd = directory)
+    pathToDB = "../PHAROKKADB"
+    subprocess.run(["conda", "run", "-n", "PHAROKKA", "pharokka.py","-i", assemblydirectory + "/contigs.fasta", "-o", "pharokka","-f","-t",str(threads),"-d",pathToDB],cwd = directory)
 
     print("Pharokka.py finished running.")
