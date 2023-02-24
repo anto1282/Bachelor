@@ -1,6 +1,8 @@
 #!/usr/bin/python3
+import os
 
-def EuRemover(read1TrimmedSub, read2TrimmedSub):
+def EuRemover(directory,read1TrimmedSub, read2TrimmedSub):
+    os.chdir(directory)
     infile = open("Report.kraken.txt", "r")
     Flag = False
     TaxIDSet = set()
@@ -29,8 +31,8 @@ def EuRemover(read1TrimmedSub, read2TrimmedSub):
 
     infile1 = open(read1TrimmedSub)
     infile2 = open(read2TrimmedSub)
-    OutName1 = "read_1_TrimmedSubNoEu.txt"
-    OutName2 = "read_2_TrimmedSubNoEu.txt"
+    OutName1 = "read_1_TrimmedSubNoEu.fq"
+    OutName2 = "read_2_TrimmedSubNoEu.fq"
     outfile1 = open(OutName1,"w")
     outfile2 = open(OutName2, "w")
 
@@ -43,8 +45,8 @@ def EuRemover(read1TrimmedSub, read2TrimmedSub):
                 Flag = False
         if Flag == False:
             print(line.strip(), file = outfile1)
-        if Flag == True:
-            print(line.strip())
+        #if Flag == True:
+         #   print(line.strip())
     infile1.close()
     outfile1.close()
 
@@ -56,8 +58,8 @@ def EuRemover(read1TrimmedSub, read2TrimmedSub):
                 Flag = False
         if Flag == False:
             print(line.strip(), file = outfile2)
-        if Flag == True:
-            print(line.strip())
+        #if Flag == True:
+         #   print(line.strip())
     
     ReadNumSet.clear()
     infile2.close()

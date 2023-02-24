@@ -3,7 +3,8 @@
 import subprocess, sys, os, multiprocessing
 from argparse import ArgumentParser
 import Assembly
-
+import TaxRemover
+import Kraken2
 
 
 #Command line arguments
@@ -13,6 +14,7 @@ parser.add_argument("-i","--input", action="store", dest = "sraAccNr", help ="In
 parser.add_argument("--flag", action = "store", dest = "whatSPADES", default = "--meta", help = "Runs spades with the specified flag.")
 parser.add_argument("--threads","-t",action = "store", dest = "threads", type = int, default = multiprocessing.cpu_count(),help = "Specifies the total number of threads used in various of the programs in the pipeline.")
 parser.add_argument("-r","--ref", action="store", dest="refFile", help ="Input fasta file for filtering out", default=False)
+
 
 args = parser.parse_args()
 
@@ -35,7 +37,7 @@ def sra_get(sraAccNr,directory):
 
 
 
-def trimming(read1, read2, directory, refFile):
+def trimming(read1, read2, directory, refFile,offset):
     
     
     read1_trimmed = "trimmed/" + read1
@@ -44,14 +46,12 @@ def trimming(read1, read2, directory, refFile):
     if not os.path.exists(directory + "/trimmed"):
         subprocess.run(["mkdir","trimmed"], cwd = directory) 
     if args.refFile:
-        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=" + read2,  "-in2=" + read2, "-out=" + read1_trimmed, "-out2=" + read2_trimmed, "ref=" + refFile , "forcetrimleft=15" , "minbasequality=30","overwrite=true"], cwd =directory)
+        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=" + read2,  "-in2=" + read2, "-out=" + read1_trimmed, "-out2=" + read2_trimmed, "ref=" + refFile , "trimq=30", "qtrim=rl","forcetrimleft=15" ,"overwrite=true"], cwd =directory)
         print("Trim finished.")
     else:
-        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=%s" % read1,  "-in2=%s" % read2, "-out=%s" % read1_trimmed, "-out2=%s" % read2_trimmed,"forcetrimleft=15" , "minbasequality=30","overwrite=true"], cwd =directory)
+        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=%s" % read1,  "-in2=%s" % read2, "-out=%s" % read1_trimmed, "-out2=%s" % read2_trimmed, "trimq=30", "qtrim=rl","forcetrimleft=15" ,"overwrite=true"], cwd =directory)
         print("Trim finished.")
     return read1_trimmed, read2_trimmed
-
-
 
 
 
@@ -76,10 +76,13 @@ def main():
 
     refFile = args.refFile
 
-    read1Trimmed, read2Trimmed = trimming(read1, read2, parent_directory, refFile)
+    read1Trimmed, read2Trimmed = trimming(read1, read2, parent_directory, refFile, phredOffset)
     read1TrimmedSub, read2TrimmedSub = Assembly.SubSampling(read1Trimmed,read2Trimmed,parent_directory,0.1,100)
+
+    Kraken2.Kraken(parent_directory,read1TrimmedSub,read2TrimmedSub, "../KrakenDB")
+    read1TrimmedSub, read2TrimmedSub = TaxRemover.EuRemover(parent_directory,read1TrimmedSub, read2TrimmedSub)
+
     assemblydirectory = Assembly.SPADES(read1TrimmedSub,read2TrimmedSub,parent_directory,args.whatSPADES,phredOffset)
-    
     Assembly.N50(parent_directory,assemblydirectory)
     Assembly.PHAROKKA(parent_directory, assemblydirectory, threads)
 
