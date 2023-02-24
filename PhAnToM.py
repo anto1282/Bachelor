@@ -3,7 +3,7 @@
 import subprocess, sys, os, multiprocessing
 from argparse import ArgumentParser
 import Assembly
-import Trimton
+
 
 
 #Command line arguments
@@ -44,10 +44,10 @@ def trimming(read1, read2, directory, refFile):
     if not os.path.exists(directory + "/trimmed"):
         subprocess.run(["mkdir","trimmed"], cwd = directory) 
     if args.refFile:
-        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=" + read2,  "-in2=" + read2, "-out=" + read1_trimmed, "-out2=" + read2_trimmed, "ref=" + refFile , "forcetrimleft=15" , "minbasequality=30"], cwd =directory)
+        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=" + read2,  "-in2=" + read2, "-out=" + read1_trimmed, "-out2=" + read2_trimmed, "ref=" + refFile , "forcetrimleft=15" , "minbasequality=30","overwrite=true"], cwd =directory)
         print("Trim finished.")
     else:
-        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=%s" % read1,  "-in2=%s" % read2, "-out=%s" % read1_trimmed, "-out2=%s" % read2_trimmed,"forcetrimleft=15" , "minbasequality=30"], cwd =directory)
+        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=%s" % read1,  "-in2=%s" % read2, "-out=%s" % read1_trimmed, "-out2=%s" % read2_trimmed,"forcetrimleft=15" , "minbasequality=30","overwrite=true"], cwd =directory)
         print("Trim finished.")
     return read1_trimmed, read2_trimmed
 
@@ -67,13 +67,18 @@ def main():
     #Implement steps to stop pipeline if arguments are missing
 
     sraAccNr = args.sraAccNr 
+    
     parent_directory = directory_maker(sraAccNr)
+
     read1, read2 = sra_get(sraAccNr,parent_directory)
+
+    phredOffset = Assembly.offsetDetector(read1,read2,parent_directory)
+
     refFile = args.refFile
 
     read1Trimmed, read2Trimmed = trimming(read1, read2, parent_directory, refFile)
     read1TrimmedSub, read2TrimmedSub = Assembly.SubSampling(read1Trimmed,read2Trimmed,parent_directory,0.1,100)
-    assemblydirectory = Assembly.SPADES(read1TrimmedSub,read2TrimmedSub,parent_directory,args.whatSPADES)
+    assemblydirectory = Assembly.SPADES(read1TrimmedSub,read2TrimmedSub,parent_directory,args.whatSPADES,phredOffset)
     
     Assembly.N50(parent_directory,assemblydirectory)
     Assembly.PHAROKKA(parent_directory, assemblydirectory, threads)

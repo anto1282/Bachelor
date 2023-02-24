@@ -1,12 +1,45 @@
 #!/usr/bin/python3
 import subprocess, re
 
-def SPADES(read1,read2,directory,spades_tag):
+def offsetDetector(read1,read2,directory):
+    maxASCII = None
+    minASCII = None
+    print("Finding phred-offset")
+    reads = [read1,read2]
+    for read in reads:
+        with open(directory + "/" + read) as file:
+            phredflag = False
+            for line in file:
+                if line.startswith("+"):
+                    phredflag = True
+                elif line.startswith("@"):
+                    phredflag = False
+                elif phredflag == True:
+                    #print(line)
+                    for char in line.strip():
+                        if maxASCII is None or ord(char) > maxASCII:
+                            maxASCII = ord(char)
+                        if minASCII is None or ord(char) < minASCII:
+                            minASCII = ord(char)
+    print("Min ASCII found:",minASCII,"\nMax ASCII found:",maxASCII)
+
+    if minASCII >= 33 and maxASCII <= 75:
+        phredoffset = "33"
+        print("Phred-Offset:", phredoffset)
+        return phredoffset
+    elif minASCII >= 64 and maxASCII <= 106:
+        phredoffset = "64"
+        print(phredoffset)
+        return phredoffset
+
+
+
+def SPADES(read1,read2,directory,spades_tag,phred_offset):
     output_dir = "assembly" 
     
     if spades_tag != "skip":
         print("Running spades.py")
-        SPADES = subprocess.run(["conda", "run", "-n", "ASSEMBLY", "spades.py", "-o", output_dir, "-1", read1, "-2", read2, spades_tag], cwd = directory)
+        SPADES = subprocess.run(["conda", "run", "-n", "ASSEMBLY", "spades.py", "-o", output_dir, "-1", read1, "-2", read2, spades_tag,"--phred-offset",phred_offset], cwd = directory)
         print("Spades.py finished.")
     
     return output_dir
