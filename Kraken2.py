@@ -1,8 +1,10 @@
 import subprocess, os
 
 
+
 def Kraken(sraACCnr, directory, read1,read2, refFile, acc_1,acc_2,DBPath):
 
+    
     if not os.path.exists(directory + "/krakenResult"):
         subprocess.run(["mkdir","krakenResult"], cwd = directory) 
     

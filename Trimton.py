@@ -10,21 +10,19 @@ args = parser.parse_args()
 
 def trimming(read1, read2, directory, refFile):
     
-
-    acc_nr_1 = sraACCnr + "_1.fastq"
-    acc_nr_2 = sraACCnr + "_2.fastq"
     
-    acc_nr_1_trimmed = "trimmed/" + acc_nr_1
-    acc_nr_2_trimmed = "trimmed/" + acc_nr_2
+    read1_trimmed = "trimmed/" + read1
+    read2_trimmed = "trimmed/" + read2
 
     if not os.path.exists(directory + "/trimmed"):
         subprocess.run(["mkdir","trimmed"], cwd = directory) 
     if args.refFile:
-        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=" + acc_nr_1,  "-in2=" + acc_nr_2, "-out=" + acc_nr_1_trimmed, "-out2=" + acc_nr_2_trimmed, "ref=" + refFile , "forcetrimleft=15" , "minbasequality=30"], cwd =directory)
+        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=" + read2,  "-in2=" + read2, "-out=" + read1_trimmed, "-out2=" + read2_trimmed, "ref=" + refFile , "forcetrimleft=15" , "minbasequality=30"], cwd =directory)
         print("Trim finished.")
     else:
-        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=%s" % acc_nr_1,  "-in2=%s" % acc_nr_2, "-out=%s" % acc_nr_1_trimmed, "-out2=%s" % acc_nr_2_trimmed,"forcetrimleft=15" , "minbasequality=30"], cwd =directory)
+        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=%s" % read1,  "-in2=%s" % read2, "-out=%s" % read1_trimmed, "-out2=%s" % read2_trimmed,"forcetrimleft=15" , "minbasequality=30"], cwd =directory)
         print("Trim finished.")
-    return acc_nr_1_trimmed, acc_nr_2_trimmed
+    return read1_trimmed, read2_trimmed
+
 
 
