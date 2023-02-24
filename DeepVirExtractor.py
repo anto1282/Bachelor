@@ -3,14 +3,16 @@
 import sys
 
 
-def DeepVirExtractor(predfile,contigfile,outputfile,cutoff):
+def DeepVirExtractor(predfile,assemblyDirectory,directory,cutoff):
     try: 
         
         if cutoff > 1 or cutoff < 0:
             raise ValueError
 
         fastanames = set()
-
+        
+        contigfile = directory + "/" + assemblyDirectory + "/contigs.fasta"
+        outputfile = directory + "/predicted_viruses.fastq"
         
         linecount = 0
         print("\nCreating set...")
@@ -46,7 +48,7 @@ def DeepVirExtractor(predfile,contigfile,outputfile,cutoff):
             
             
         outfile.close()
-                    
+        return outputfile
     
         
     except IndexError as error:

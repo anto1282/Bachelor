@@ -5,7 +5,7 @@ from argparse import ArgumentParser
 import Assembly
 import TaxRemover
 import Kraken2
-
+from DeepVirExtractor import DeepVirExtractor
 
 #Command line arguments
 
@@ -82,12 +82,15 @@ def main():
     Kraken2.Kraken(parent_directory,read1TrimmedSub,read2TrimmedSub, "../KrakenDB")
     read1TrimmedSub, read2TrimmedSub = TaxRemover.EuRemover(parent_directory,read1TrimmedSub, read2TrimmedSub)
 
+    
     assemblydirectory = Assembly.SPADES(read1TrimmedSub,read2TrimmedSub,parent_directory,args.whatSPADES,phredOffset)
     Assembly.N50(parent_directory,assemblydirectory)
 
-
-    #Assembly.DeepVirFinder(pathtoDeepVirFinder, assemblydirectory)
     
+
+    predfile = Assembly.DeepVirFinder(pathtoDeepVirFinder, assemblydirectory)
+    
+    outputfile = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.05)
 
 
     Assembly.PHAROKKA(parent_directory, assemblydirectory, threads)
