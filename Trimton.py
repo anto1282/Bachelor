@@ -8,8 +8,8 @@ args = parser.parse_args()
 
 
 
-def trimming(sraACCnr, directory, read1,read2, refFile):
-
+def trimming(read1, read2, directory, refFile):
+    
 
     acc_nr_1 = sraACCnr + "_1.fastq"
     acc_nr_2 = sraACCnr + "_2.fastq"
@@ -25,6 +25,7 @@ def trimming(sraACCnr, directory, read1,read2, refFile):
     else:
         subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=%s" % acc_nr_1,  "-in2=%s" % acc_nr_2, "-out=%s" % acc_nr_1_trimmed, "-out2=%s" % acc_nr_2_trimmed,"forcetrimleft=15" , "minbasequality=30"], cwd =directory)
         print("Trim finished.")
+    return acc_nr_1_trimmed, acc_nr_2_trimmed
 
 
 
