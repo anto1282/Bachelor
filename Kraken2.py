@@ -1,13 +1,12 @@
+#!/usr/bin/python3
 import subprocess, os
 
-
-
-def Kraken(sraACCnr, directory, read1,read2, refFile, acc_1,acc_2,DBPath):
+def Kraken(directory,read1,read2,DBPath):
 
     
     if not os.path.exists(directory + "/krakenResult"):
         subprocess.run(["mkdir","krakenResult"], cwd = directory) 
     
-    subprocess.run(["mamba", "run", "-n", "KRAKEN","kraken2", "--use-names", "--threads", 4, "--db", DBPath, "--fastq-input", "--report evol1", "--gzip-compressed", "--paired", read1, read2,  "--output", sraACCnr + ".kraken"], cwd =directory)
+    subprocess.run(["mamba", "run", "-n", "KRAKEN","kraken2", "--threads", 4, "--d", DBPath, "--memory-mapping", "--report","Report.kraken.txt", "--paired", read1, read2,  "--output", "Read.kraken"], cwd =directory)
     print("Kraken finished.")
-
+    return
