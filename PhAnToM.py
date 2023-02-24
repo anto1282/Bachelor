@@ -86,5 +86,4 @@ def main():
 main()
 
 ### The end ###
-print("Pharokka.py finished running.")
 print("\nThanks for using the PhAnTomic's pipeline :-P")
