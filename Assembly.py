@@ -12,7 +12,7 @@ def SPADES(read1,read2,directory,spades_tag):
     return output_dir
 
 
-def SubSampling(read1,read2,directory,sampleRate,sampleSeed):
+def SubSampling(read1,read2,directory,sampleRate,sampleSeed): #Subsampling using Reformat.sh 
     
     read1WithNoFileFormat = re.search(r'(\w+)\.fastq',read1).groups()[0]
     read2WithNoFileFormat = re.search(r'(\w+)\.fastq',read2).groups()[0]
