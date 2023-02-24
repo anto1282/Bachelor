@@ -27,3 +27,4 @@ def trimming(sraACCnr, directory, read1,read2, refFile):
         print("Trim finished.")
 
 
+
