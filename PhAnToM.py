@@ -84,6 +84,12 @@ def main():
 
     assemblydirectory = Assembly.SPADES(read1TrimmedSub,read2TrimmedSub,parent_directory,args.whatSPADES,phredOffset)
     Assembly.N50(parent_directory,assemblydirectory)
+
+
+    #Assembly.DeepVirFinder(pathtoDeepVirFinder, assemblydirectory)
+    
+
+
     Assembly.PHAROKKA(parent_directory, assemblydirectory, threads)
 
 main()
