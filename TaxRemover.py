@@ -49,7 +49,7 @@ def EuRemover(directory,read1TrimmedSub, read2TrimmedSub):
          #   print(line.strip())
     infile1.close()
     outfile1.close()
-
+    Counter = 0
     for line in infile2:
         if line[0] == "@":
             if line.split()[0][1:] in ReadNumSet:
@@ -58,12 +58,12 @@ def EuRemover(directory,read1TrimmedSub, read2TrimmedSub):
                 Flag = False
         if Flag == False:
             print(line.strip(), file = outfile2)
-        #if Flag == True:
-         #   print(line.strip())
+        if Flag == True:
+            Counter =+ 1
     
     ReadNumSet.clear()
     infile2.close()
     outfile2.close()
-
+    print("TaxRemover has removed ", Counter/4, " reads from the fastq files")
     return OutName1, OutName2
 
