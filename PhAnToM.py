@@ -87,15 +87,15 @@ def main():
     Assembly.N50(parent_directory,assemblydirectory)
 
     #Implement filtering of contigs that are too short
-    
+    Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=200)
 
     pathToDeepVirFinder = "../../DeepVirFinder"
 
-    predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads)
+    predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads, Contigs_Trimmed)
     
     viralcontigs = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.05)
 
-
+    
     Assembly.PHAROKKA(parent_directory, viralcontigs, threads)
 
 main()
