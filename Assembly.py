@@ -70,10 +70,11 @@ def MultiAssembly(read1, read2, directory, spades_tag, phred_offset, sampleRate,
             maxN50 = N50(directory,assemblydirectory)
         print("\nMax N50:", maxN50)
         print("Best seed:", maxseed, "\n")
-    print("Running assembly for the best subsampling seed...")
+        subprocess.run(["rm","-rf",assemblydirectory],cwd = directory)
+    print("Running assembly for the best subsampling seed...\n")
     read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate, maxseed)
     assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
-    print("Finished assembly for the best subsampling seed:", maxseed)
+    print("Finished assembly for the best subsampling seed:", maxseed,"\n")
     return assemblydirectory #, read1Trimmed, read2Trimmed
 
 

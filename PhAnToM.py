@@ -85,11 +85,11 @@ def main():
 
     assemblydirectory = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,args.whatSPADES,phredOffset,1,args.nrofassemblies)
     #Implement filtering of contigs that are too short
-    Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=200)
+    Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=500)
 
     pathToDeepVirFinder = "../../DeepVirFinder"
 
-    predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads, Contigs_Trimmed,args.virpredflag)
+    predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads, Contigs_Trimmed, args.virpredflag)
     
     viralcontigs = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.95)
 
