@@ -31,8 +31,8 @@ def EuRemover(directory,read1TrimmedSub, read2TrimmedSub):
 
     infile1 = open(read1TrimmedSub)
     infile2 = open(read2TrimmedSub)
-    OutName1 = "read_1_TrimmedSubNoEu.fq"
-    OutName2 = "read_2_TrimmedSubNoEu.fq"
+    OutName1 = "read_1_TrimmedSubNoEu.fastq"
+    OutName2 = "read_2_TrimmedSubNoEu.fastq"
     outfile1 = open(OutName1,"w")
     outfile2 = open(OutName2, "w")
 

@@ -30,7 +30,7 @@ def directory_maker(sraAccNr):
 def sra_get(sraAccNr,directory):
     if not os.path.exists(directory + "/" +sraAccNr + "_1.fastq") and not os.path.exists(directory + "/" + sraAccNr + "_2.fastq"):
         print("Downloading", sraAccNr, "from SRA using fasterq-dump")
-        subprocess.run(["fasterq-dump", sraAccNr, "--progress"], cwd = directory)
+        subprocess.run(["fasterq-dump", sraAccNr, "--progress", "--split-files"], cwd = directory)
     else:
         print("Reads already present in directory! Continuing...")
     return sraAccNr + "_1.fastq", sraAccNr + "_2.fastq"
