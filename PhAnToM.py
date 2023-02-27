@@ -93,7 +93,7 @@ def main():
 
     predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads)
     
-    viralcontigs = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.05)
+    viralcontigs = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.95)
 
 
     Assembly.PHAROKKA(parent_directory, viralcontigs, threads)
