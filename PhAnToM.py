@@ -84,11 +84,6 @@ def main():
     read1Trimmed, read2Trimmed = TaxRemover.EuRemover(parent_directory,read1Trimmed, read2Trimmed)
 
     assemblydirectory = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,args.whatSPADES,phredOffset,0.1,args.nrofassemblies)
-
-    '''
-    read1TrimmedSub, read2TrimmedSub = Assembly.SubSampling(read1Trimmed,read2Trimmed,parent_directory,0.1,100)
-    assemblydirectory = Assembly.SPADES(read1TrimmedSub,read2TrimmedSub,parent_directory,args.whatSPADES,phredOffset)
-    Assembly.N50(parent_directory,assemblydirectory)'''
     
     #Implement filtering of contigs that are too short
     Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=200)

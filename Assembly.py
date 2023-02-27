@@ -68,23 +68,15 @@ def MultiAssembly(read1, read2, directory, spades_tag, phred_offset, sampleRate,
         if maxN50 is None or N50(directory,assemblydirectory) > maxN50:
             maxseed = sampleSeed
             maxN50 = N50(directory,assemblydirectory)
-        print("Max N50:", maxN50)
-        print("Best seed:", maxseed)
+        print("\nMax N50:", maxN50)
+        print("Best seed:", maxseed, "\n")
+    print("Running assembly for the best subsampling seed...")
     read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate, maxseed)
     assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
-
-    return assemblydirectory
-
-
-
-#Subsample 1000 times
-'''def N50(directory,assemblydirectory): #Calculating N50 using stats.sh from BBtools
-    filename = "N50assemblystats.txt"
-    subprocess.run(["conda","run","-n","QC","stats.sh","in=" + assemblydirectory + "/contigs.fasta",">",filename],cwd = directory)
-'''
+    print("Finished assembly for the best subsampling seed:", maxseed)
+    return assemblydirectory #, read1Trimmed, read2Trimmed
 
 
-#Not implemented yet
 def N50(directory,assemblydirectory): #Calculating N50 using stats.sh from BBtools
     filename = "N50assemblystats.txt"
     subprocess.run(["conda","run","-n","QC","stats.sh","in=" + assemblydirectory + "/contigs.fasta",">",filename],cwd = directory)
