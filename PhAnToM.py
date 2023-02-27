@@ -96,7 +96,6 @@ def main():
     viralcontigs = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.05)
 
 
-
     Assembly.PHAROKKA(parent_directory, viralcontigs, threads)
 
 main()
