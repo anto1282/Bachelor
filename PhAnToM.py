@@ -97,7 +97,7 @@ def main():
     Assembly.PHAROKKA(parent_directory, viralcontigs, threads)
 
     Kraken2.KrakenContig(parent_directory,nonviralcontigs, "../KrakenDB")
-    
+
 
 
 main()
