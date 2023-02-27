@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import subprocess, re
+import subprocess, re, os, glob
 
 def offsetDetector(read1,read2,directory):
     maxASCII = None
@@ -15,7 +15,7 @@ def offsetDetector(read1,read2,directory):
                 elif line.startswith("@"):
                     phredflag = False
                 elif phredflag == True:
-                    #print(line)
+                    
                     for char in line.strip():
                         if maxASCII is None or char > maxASCII:
                             maxASCII = char
@@ -58,18 +58,30 @@ def SubSampling(read1,read2,directory,sampleRate,sampleSeed): #Subsampling using
 def N50(directory,assemblydirectory): #Calculating N50 using stats.sh from BBtools
     subprocess.run(["conda","run","-n","QC","stats.sh","in=" + assemblydirectory + "/contigs.fasta",">",assemblydirectory + "/N50assemblystats"],cwd = directory)
 
-def DeepVirFinder(pathtoDeepVirFinder,assemblydirectory):
-    DVPDir = "../DeepVirPredictions"
-    subprocess.run(["mkdir",DVPDir],cwd = assemblydirectory)
-    subprocess.run(["conda","run","-n","VIRFINDER","python" + pathtoDeepVirFinder + "/dvf.py", "-i", assemblydirectory + "/contigs.fasta","-o",DVPDir],cwd = assemblydirectory)
+
+#def contigTrimming()
 
 
-def PHAROKKA(directory, assemblydirectory,threads): ##TODO remove phanotate, use prodigal instead
+def DeepVirFinder(pathtoDeepVirFinder,assemblydirectory,threads):
+    print("Running DeepVirFinder")
+    DVPDir = "DeepVirPredictions"
+    if not os.path.exists(DVPDir): 
+        subprocess.run(["mkdir","../" + DVPDir],cwd = assemblydirectory)
+    
+    subprocess.run(["conda","run","-n","VIRFINDER","python", pathtoDeepVirFinder + "/dvf.py", "-i", "contigs.fasta","-o","../" + DVPDir,"-c", str(threads)],cwd = assemblydirectory)
+    filename = glob.glob(DVPDir + "/contigs.fasta*")
+    #print(filename)
+    resultpath = filename[0]
+    return resultpath
+
+
+
+
+def PHAROKKA(directory, viralcontigs,threads): ##TODO remove phanotate, use prodigal instead
 
     print("Running pharokka.py")
-    print(directory + "/" +assemblydirectory)
     print("Using:", threads, "threads.")
     pathToDB = "../PHAROKKADB"
-    subprocess.run(["conda", "run", "-n", "PHAROKKA", "pharokka.py","-i", assemblydirectory + "/contigs.fasta", "-o", "pharokka","-f","-t",str(threads),"-d",pathToDB],cwd = directory)
+    subprocess.run(["conda", "run", "-n", "PHAROKKA", "pharokka.py","-i", viralcontigs, "-o", "pharokka","-f","-t",str(threads),"-d",pathToDB],cwd = directory)
 
     print("Pharokka.py finished running.")

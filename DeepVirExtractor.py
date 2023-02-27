@@ -5,7 +5,7 @@ import sys
 
 def DeepVirExtractor(predfile,assemblyDirectory,directory,cutoff):
     try: 
-        
+        print("Running DeepVirExtractor") 
         if cutoff > 1 or cutoff < 0:
             raise ValueError
 
