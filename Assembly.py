@@ -70,6 +70,6 @@ def PHAROKKA(directory, assemblydirectory,threads): ##TODO remove phanotate, use
     print(directory + "/" +assemblydirectory)
     print("Using:", threads, "threads.")
     pathToDB = "../PHAROKKADB"
-    subprocess.run(["conda", "run", "-n", "PHAROKKA", "pharokka.py","-i", assemblydirectory + "/contigs.fasta", "-o", "pharokka","-f","-t",str(threads),"-d",pathToDB],cwd = directory)
+    subprocess.run(["conda", "run", "-n", "PHAROKKA", "pharokka.py","-i", assemblydirectory + "/contigs.fasta", "-o", "pharokka","-f","-t",str(threads),"-d",pathToDB, "-g prodigal", "--meta" ],cwd = directory)
 
     print("Pharokka.py finished running.")

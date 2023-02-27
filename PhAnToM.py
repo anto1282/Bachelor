@@ -87,7 +87,7 @@ def main():
     Assembly.N50(parent_directory,assemblydirectory)
 
     
-
+    
     predfile = Assembly.DeepVirFinder(pathtoDeepVirFinder, assemblydirectory)
     
     outputfile = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.05)
