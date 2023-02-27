@@ -1,7 +1,7 @@
 #!/usr/bin/python3
 import os
 
-def EuRemover(directory,read1TrimmedSub, read2TrimmedSub):
+def EuRemover(directory,read1TrimmedSub, read2TrimmedSub, sraNR):
     os.chdir(directory)
     infile = open("Report.kraken.txt", "r")
     Flag = False
@@ -38,7 +38,7 @@ def EuRemover(directory,read1TrimmedSub, read2TrimmedSub):
 
 
     for line in infile1:
-        if line[0] == "@":
+        if line.startswith("@"+sraNR):
             if line.split()[0][1:] in ReadNumSet:
                 Flag = True
             else:
@@ -51,7 +51,7 @@ def EuRemover(directory,read1TrimmedSub, read2TrimmedSub):
     outfile1.close()
     Counter = 0
     for line in infile2:
-        if line[0] == "@":
+        if line.startswith("@"+sraNR):
             if line.split()[0][1:] in ReadNumSet:
                 Flag = True
             else:
@@ -59,7 +59,8 @@ def EuRemover(directory,read1TrimmedSub, read2TrimmedSub):
         if Flag == False:
             print(line.strip(), file = outfile2)
         if Flag == True:
-            Counter =+ 1
+            print(line.strip())
+            Counter += 1
     
     ReadNumSet.clear()
     infile2.close()
