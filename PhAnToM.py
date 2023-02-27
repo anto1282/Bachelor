@@ -38,6 +38,7 @@ def sra_get(sraAccNr,directory):
 
 
 
+#TODO Spørg Bent/Thomas/Ole om programmet skal kunne ændre i hvor meget den trimmer af (Kvalitet)
 def trimming(read1, read2, directory, refFile,offset):
     
     
@@ -47,10 +48,10 @@ def trimming(read1, read2, directory, refFile,offset):
     if not os.path.exists(directory + "/trimmed"):
         subprocess.run(["mkdir","trimmed"], cwd = directory) 
     if args.refFile:
-        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=" + read2,  "-in2=" + read2, "-out=" + read1_trimmed, "-out2=" + read2_trimmed, "ref=" + refFile , "trimq=30", "qtrim=rl","forcetrimleft=15" ,"overwrite=true"], cwd =directory)
+        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=" + read2,  "-in2=" + read2, "-out=" + read1_trimmed, "-out2=" + read2_trimmed, "ref=" + refFile , "trimq=25", "qtrim=w","forcetrimleft=15" ,"overwrite=true"], cwd =directory)
         print("Trim finished.")
     else:
-        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=%s" % read1,  "-in2=%s" % read2, "-out=%s" % read1_trimmed, "-out2=%s" % read2_trimmed, "trimq=30", "qtrim=rl","forcetrimleft=15" ,"overwrite=true"], cwd =directory)
+        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=%s" % read1,  "-in2=%s" % read2, "-out=%s" % read1_trimmed, "-out2=%s" % read2_trimmed, "trimq=25", "qtrim=w","forcetrimleft=15" ,"overwrite=true"], cwd =directory)
         print("Trim finished.")
     return read1_trimmed, read2_trimmed
 
@@ -85,16 +86,19 @@ def main():
 
     assemblydirectory = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,args.whatSPADES,phredOffset,1,args.nrofassemblies)
     #Implement filtering of contigs that are too short
-    Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=500)
+    Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=200)
 
     pathToDeepVirFinder = "../../DeepVirFinder"
 
     predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads, Contigs_Trimmed, args.virpredflag)
     
-    viralcontigs = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.95)
+    viralcontigs,nonviralcontigs = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.95)
 
-    
     Assembly.PHAROKKA(parent_directory, viralcontigs, threads)
+
+    Kraken2.KrakenContig(parent_directory,nonviralcontigs, "../KrakenDB")
+    
+
 
 main()
 
