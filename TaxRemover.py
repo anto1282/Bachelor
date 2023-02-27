@@ -59,7 +59,6 @@ def EuRemover(directory,read1TrimmedSub, read2TrimmedSub, sraNR):
         if Flag == False:
             print(line.strip(), file = outfile2)
         if Flag == True:
-            print(line.strip())
             Counter += 1
     
     ReadNumSet.clear()
