@@ -82,6 +82,6 @@ def PHAROKKA(directory, viralcontigs,threads): ##TODO remove phanotate, use prod
     print("Running pharokka.py")
     print("Using:", threads, "threads.")
     pathToDB = "../PHAROKKADB"
-    subprocess.run(["conda", "run", "-n", "PHAROKKA", "pharokka.py","-i", viralcontigs, "-o", "pharokka","-f","-t",str(threads),"-d",pathToDB],cwd = directory)
+    subprocess.run(["conda", "run", "-n", "PHAROKKA", "pharokka.py","-i", viralcontigs, "-o", "pharokka","-f","-t",str(threads),"-d",pathToDB, "-g prodigal","--meta"],cwd = directory)
 
     print("Pharokka.py finished running.")
