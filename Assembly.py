@@ -62,19 +62,22 @@ def N50(directory,assemblydirectory): #Calculating N50 using stats.sh from BBtoo
 def contigTrimming(directory,Contigs_fasta, minLength=200):
     Contigs_trimmed = "contigs_trimmed.fasta"
 
-    subprocess.run(["conda", "run", "-n","QC","reformat.sh","in="+Contigs_fasta, "out=" + Contigs_trimmed, "minlength="+str(minLength)], cwd = directory)
+    subprocess.run(["conda", "run", "-n","QC","reformat.sh","in="+Contigs_fasta, "out=" + Contigs_trimmed, "minlength="+str(minLength),"overwrite=True"], cwd = directory)
     return Contigs_trimmed
 
 
-def DeepVirFinder(pathtoDeepVirFinder,assemblydirectory,threads, inFile):
-    print("Running DeepVirFinder")
+def DeepVirFinder(pathtoDeepVirFinder,assemblydirectory,threads,inFile,PredTag):
     DVPDir = "DeepVirPredictions"
-    if not os.path.exists(DVPDir): 
-        subprocess.run(["mkdir","../" + DVPDir],cwd = assemblydirectory)
-    
-    subprocess.run(["conda","run","-n","VIRFINDER","python", pathtoDeepVirFinder + "/dvf.py", "-i", inFile,"-o","../" + DVPDir,"-c", str(threads)],cwd = assemblydirectory)
     filename = glob.glob(DVPDir + "/contigs.fasta*")
-    #print(filename)
+    if PredTag != "skip":
+        print("Running DeepVirFinder")
+        
+        if not os.path.exists(DVPDir): 
+            subprocess.run(["mkdir","../" + DVPDir],cwd = assemblydirectory)
+        
+        subprocess.run(["conda","run","-n","VIRFINDER","python", pathtoDeepVirFinder + "/dvf.py", "-i", inFile,"-o","../" + DVPDir,"-c", str(threads)],cwd = assemblydirectory)
+    else:
+        print("DeepVirFinder was skipped")
     resultpath = filename[0]
     return resultpath
 

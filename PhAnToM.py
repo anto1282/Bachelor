@@ -11,9 +11,10 @@ from DeepVirExtractor import DeepVirExtractor
 
 parser = ArgumentParser(prog = 'PhAnTom.py',description="Help me!")
 parser.add_argument("-i","--input", action="store", dest = "sraAccNr", help ="Input valid accesion number from Sequence Read Archive.")
-parser.add_argument("--flag", action = "store", dest = "whatSPADES", default = "--meta", help = "Runs spades with the specified flag.")
+parser.add_argument("--flag",'-f', action = "store", dest = "whatSPADES", default = "--meta", help = "Runs spades with the specified flag. (skip skips spades)")
 parser.add_argument("--threads","-t",action = "store", dest = "threads", type = int, default = multiprocessing.cpu_count(),help = "Specifies the total number of threads used in various of the programs in the pipeline.")
 parser.add_argument("-r","--ref", action="store", dest="refFile", help ="Input fasta file for filtering out", default=False)
+parser.add_argument("-p","-pred",action="store",dest = "virpredflag", default = "dontskip", help = "Write skip to skip deepvirfinder.")
 
 
 args = parser.parse_args()
@@ -91,7 +92,7 @@ def main():
 
     pathToDeepVirFinder = "../../DeepVirFinder"
 
-    predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads, Contigs_Trimmed)
+    predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads, Contigs_Trimmed,args.virpredflag)
     
     viralcontigs = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.95)
 
