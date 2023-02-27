@@ -68,7 +68,7 @@ def contigTrimming(directory,Contigs_fasta, minLength=200):
 
 def DeepVirFinder(pathtoDeepVirFinder,assemblydirectory,threads,inFile,PredTag):
     DVPDir = "DeepVirPredictions"
-    filename = glob.glob(DVPDir + "/contigs.fasta*")
+    filename = glob.glob(DVPDir + "/contigs*")
     if PredTag != "skip":
         print("Running DeepVirFinder")
         
