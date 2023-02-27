@@ -59,16 +59,19 @@ def N50(directory,assemblydirectory): #Calculating N50 using stats.sh from BBtoo
     subprocess.run(["conda","run","-n","QC","stats.sh","in=" + assemblydirectory + "/contigs.fasta",">",assemblydirectory + "/N50assemblystats"],cwd = directory)
 
 
-#def contigTrimming()
+def contigTrimming(directory,Contigs_fastq, minLength=200):
+    Contigs_trimmed = Contigs_fastq + ".trimmed"
+    subprocess.run(["conda", "run", "-n","QC","reformat.sh","in="+Contigs_fastq, "out=" + Contigs_trimmed, "minlength="+minLength], cwd = directory)
+    return Contigs_trimmed
 
 
-def DeepVirFinder(pathtoDeepVirFinder,assemblydirectory,threads):
+def DeepVirFinder(pathtoDeepVirFinder,assemblydirectory,threads, inFile):
     print("Running DeepVirFinder")
     DVPDir = "DeepVirPredictions"
     if not os.path.exists(DVPDir): 
         subprocess.run(["mkdir","../" + DVPDir],cwd = assemblydirectory)
     
-    subprocess.run(["conda","run","-n","VIRFINDER","python", pathtoDeepVirFinder + "/dvf.py", "-i", "contigs.fasta","-o","../" + DVPDir,"-c", str(threads)],cwd = assemblydirectory)
+    subprocess.run(["conda","run","-n","VIRFINDER","python", pathtoDeepVirFinder + "/dvf.py", "-i", inFile,"-o","../" + DVPDir,"-c", str(threads)],cwd = assemblydirectory)
     filename = glob.glob(DVPDir + "/contigs.fasta*")
     #print(filename)
     resultpath = filename[0]
@@ -76,12 +79,13 @@ def DeepVirFinder(pathtoDeepVirFinder,assemblydirectory,threads):
 
 
 
+# TODO Map reads to contigs to reveal coverage of potential phages
 
 def PHAROKKA(directory, viralcontigs,threads): ##TODO remove phanotate, use prodigal instead
 
     print("Running pharokka.py")
     print("Using:", threads, "threads.")
     pathToDB = "../PHAROKKADB"
-    subprocess.run(["conda", "run", "-n", "PHAROKKA", "pharokka.py","-i", viralcontigs, "-o", "pharokka","-f","-t",str(threads),"-d",pathToDB, "-g prodigal","--meta"],cwd = directory)
+    subprocess.run(["conda", "run", "-n", "PHAROKKA", "pharokka.py","-i", viralcontigs, "-o", "pharokka","-f","-t",str(threads),"-d",pathToDB, "-g ","prodigal","--meta"],cwd = directory)
 
     print("Pharokka.py finished running.")
