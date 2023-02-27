@@ -75,7 +75,7 @@ def MultiAssembly(read1, read2, directory, spades_tag, phred_offset, sampleRate,
     read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate, maxseed)
     assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
     print("Finished assembly for the best subsampling seed:", maxseed,"\n")
-    return assemblydirectory #, read1Trimmed, read2Trimmed
+    return assemblydirectory, read1Trimmed, read2Trimmed
 
 
 def N50(directory,assemblydirectory): #Calculating N50 using stats.sh from BBtools
@@ -117,10 +117,22 @@ def DeepVirFinder(pathtoDeepVirFinder,assemblydirectory,threads,inFile,PredTag):
     return resultpath
 
 
-
 # TODO Map reads to contigs to reveal coverage of potential phages
 
-def PHAROKKA(directory, viralcontigs,threads): ##TODO remove phanotate, use prodigal instead
+def coverageFinder(read1,read2,directory,assemblydirectory):
+    print("Finding coverage of assemblies")
+    contigs = assemblydirectory + "/contigs.fasta"
+    coveragestats = "coveragestats.txt"
+    subprocess.run(["conda","run","-n","QC","bbmap.sh","ref=" + contigs,"in=" + read1,"in2=" + read2,"out=coverage_mapping.sam","nodisk=t","fast=t","covstats="+coveragestats],cwd = directory)
+   
+
+   #Check average coverage, adjust samplerate to improve coverage
+   #Check coverage before multi assembly and after
+
+
+
+
+def PHAROKKA(directory, viralcontigs,threads):
 
     print("Running pharokka.py")
     print("Using:", threads, "threads.")
