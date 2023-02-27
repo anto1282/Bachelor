@@ -3,6 +3,8 @@
 import sys
 
 
+#Script that saves predicted viral contigs in one file and the predicted non-viral contigs 
+
 def DeepVirExtractor(predfile,assemblyDirectory,directory,cutoff):
     try: 
         print("Running DeepVirExtractor") 
