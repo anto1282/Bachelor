@@ -78,7 +78,7 @@ def main():
     refFile = args.refFile
 
     read1Trimmed, read2Trimmed = trimming(read1, read2, parent_directory, refFile, phredOffset)
-    read1TrimmedSub, read2TrimmedSub = Assembly.SubSampling(read1Trimmed,read2Trimmed,parent_directory,0.1,100)
+    read1TrimmedSub, read2TrimmedSub = Assembly.SubSampling(read1Trimmed,read2Trimmed,parent_directory,1,100)
 
     Kraken2.Kraken(parent_directory,read1TrimmedSub,read2TrimmedSub, "../KrakenDB")
     read1TrimmedSub, read2TrimmedSub = TaxRemover.EuRemover(parent_directory,read1TrimmedSub, read2TrimmedSub)
