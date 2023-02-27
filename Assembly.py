@@ -44,7 +44,7 @@ def SPADES(read1,read2,directory,spades_tag,phred_offset):
 
 
 def SubSampling(read1,read2,directory,sampleRate,sampleSeed): #Subsampling using Reformat.sh 
-    
+    print(read1)
     read1WithNoFileFormat = re.search(r'(\w+)\.fastq',read1).groups()[0]
     read2WithNoFileFormat = re.search(r'(\w+)\.fastq',read2).groups()[0]
     read1Trimmed = read1WithNoFileFormat + "_trimmed.fastq"
@@ -55,8 +55,50 @@ def SubSampling(read1,read2,directory,sampleRate,sampleSeed): #Subsampling using
     
     return read1Trimmed, read2Trimmed
 
+
+def MultiAssembly(read1, read2, directory, spades_tag, phred_offset, sampleRate, nrofassemblies):
+    #Assembles the 
+    
+    maxN50 = None
+    maxseed = None
+    for sampleSeed in range(1,int(nrofassemblies)+1):
+        print("Assembling using SPADES.py", sampleSeed ,"out of", nrofassemblies, "...")
+        read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed)
+        assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
+        if maxN50 is None or N50(directory,assemblydirectory) > maxN50:
+            maxseed = sampleSeed
+            maxN50 = N50(directory,assemblydirectory)
+        print("Max N50:", maxN50)
+        print("Best seed:", maxseed)
+    read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate, maxseed)
+    assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
+
+    return assemblydirectory
+
+
+
+#Subsample 1000 times
+'''def N50(directory,assemblydirectory): #Calculating N50 using stats.sh from BBtools
+    filename = "N50assemblystats.txt"
+    subprocess.run(["conda","run","-n","QC","stats.sh","in=" + assemblydirectory + "/contigs.fasta",">",filename],cwd = directory)
+'''
+
+
+#Not implemented yet
 def N50(directory,assemblydirectory): #Calculating N50 using stats.sh from BBtools
-    subprocess.run(["conda","run","-n","QC","stats.sh","in=" + assemblydirectory + "/contigs.fasta",">",assemblydirectory + "/N50assemblystats"],cwd = directory)
+    filename = "N50assemblystats.txt"
+    subprocess.run(["conda","run","-n","QC","stats.sh","in=" + assemblydirectory + "/contigs.fasta",">",filename],cwd = directory)
+    
+    with open(filename,'r') as file:
+        for line in file:
+            if line.startswith("Main genome contig N/L50:"):
+                nl50 = line.split()[4]
+                reg_obj = re.search(r'(\w+)\/',nl50)
+                N50 = reg_obj.groups()[0]
+                print(N50)
+    subprocess.run(["rm",filename],cwd = directory)
+    print("N50 =", N50)
+    return N50
 
 
 def contigTrimming(directory,Contigs_fasta, minLength=200):

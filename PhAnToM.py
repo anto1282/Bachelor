@@ -15,7 +15,7 @@ parser.add_argument("--flag",'-f', action = "store", dest = "whatSPADES", defaul
 parser.add_argument("--threads","-t",action = "store", dest = "threads", type = int, default = multiprocessing.cpu_count(),help = "Specifies the total number of threads used in various of the programs in the pipeline.")
 parser.add_argument("-r","--ref", action="store", dest="refFile", help ="Input fasta file for filtering out", default=False)
 parser.add_argument("-p","-pred",action="store",dest = "virpredflag", default = "dontskip", help = "Write skip to skip deepvirfinder.")
-
+parser.add_argument("-a","--assemblies",action="store",dest = "nrofassemblies",default = "1", help ="Determines the number of assemblies and subsamplings to be performed (Default is 1)")
 
 args = parser.parse_args()
 
@@ -78,15 +78,18 @@ def main():
     refFile = args.refFile
 
     read1Trimmed, read2Trimmed = trimming(read1, read2, parent_directory, refFile, phredOffset)
-    read1TrimmedSub, read2TrimmedSub = Assembly.SubSampling(read1Trimmed,read2Trimmed,parent_directory,0.1,100)
-
-    Kraken2.Kraken(parent_directory,read1TrimmedSub,read2TrimmedSub, "../KrakenDB")
-    read1TrimmedSub, read2TrimmedSub = TaxRemover.EuRemover(parent_directory,read1TrimmedSub, read2TrimmedSub)
-
     
-    assemblydirectory = Assembly.SPADES(read1TrimmedSub,read2TrimmedSub,parent_directory,args.whatSPADES,phredOffset)
-    Assembly.N50(parent_directory,assemblydirectory)
+    Kraken2.Kraken(parent_directory,read1Trimmed,read2Trimmed, "../KrakenDB")
+    
+    read1Trimmed, read2Trimmed = TaxRemover.EuRemover(parent_directory,read1Trimmed, read2Trimmed)
 
+    assemblydirectory = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,args.whatSPADES,phredOffset,0.1,args.nrofassemblies)
+
+    '''
+    read1TrimmedSub, read2TrimmedSub = Assembly.SubSampling(read1Trimmed,read2Trimmed,parent_directory,0.1,100)
+    assemblydirectory = Assembly.SPADES(read1TrimmedSub,read2TrimmedSub,parent_directory,args.whatSPADES,phredOffset)
+    Assembly.N50(parent_directory,assemblydirectory)'''
+    
     #Implement filtering of contigs that are too short
     Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=200)
 
