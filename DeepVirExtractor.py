@@ -63,7 +63,7 @@ def DeepVirExtractor(predfile,assemblyDirectory,directory,cutoff):
             
         virusoutfile.close()
         nonvirusoutfile.close()
-        return virusfile
+        return virusfile, nonvirusfile
     
         
     except IndexError as error:
