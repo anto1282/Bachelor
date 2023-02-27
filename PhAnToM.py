@@ -81,10 +81,9 @@ def main():
     
     Kraken2.Kraken(parent_directory,read1Trimmed,read2Trimmed, "../KrakenDB")
     
-    read1Trimmed, read2Trimmed = TaxRemover.EuRemover(parent_directory,read1Trimmed, read2Trimmed)
+    read1Trimmed, read2Trimmed = TaxRemover.EuRemover(parent_directory,read1Trimmed, read2Trimmed, sraAccNr)
 
     assemblydirectory = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,args.whatSPADES,phredOffset,0.1,args.nrofassemblies)
-    
     #Implement filtering of contigs that are too short
     Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=500)
 
