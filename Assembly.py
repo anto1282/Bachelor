@@ -59,9 +59,10 @@ def N50(directory,assemblydirectory): #Calculating N50 using stats.sh from BBtoo
     subprocess.run(["conda","run","-n","QC","stats.sh","in=" + assemblydirectory + "/contigs.fasta",">",assemblydirectory + "/N50assemblystats"],cwd = directory)
 
 
-def contigTrimming(directory,Contigs_fastq, minLength=200):
-    Contigs_trimmed = Contigs_fastq + ".trimmed"
-    subprocess.run(["conda", "run", "-n","QC","reformat.sh","in="+Contigs_fastq, "out=" + Contigs_trimmed, "minlength="+minLength], cwd = directory)
+def contigTrimming(directory,Contigs_fasta, minLength=200):
+    Contigs_trimmed = "contigs_trimmed.fasta"
+
+    subprocess.run(["conda", "run", "-n","QC","reformat.sh","in="+Contigs_fasta, "out=" + Contigs_trimmed, "minlength="+str(minLength)], cwd = directory)
     return Contigs_trimmed
 
 
@@ -86,6 +87,6 @@ def PHAROKKA(directory, viralcontigs,threads): ##TODO remove phanotate, use prod
     print("Running pharokka.py")
     print("Using:", threads, "threads.")
     pathToDB = "../PHAROKKADB"
-    subprocess.run(["conda", "run", "-n", "PHAROKKA", "pharokka.py","-i", viralcontigs, "-o", "pharokka","-f","-t",str(threads),"-d",pathToDB, "-g ","prodigal","--meta"],cwd = directory)
+    subprocess.run(["conda", "run", "-n", "PHAROKKA", "pharokka.py","-i", viralcontigs, "-o", "pharokka","-f","-t",str(threads),"-d",pathToDB, "-g","prodigal","--meta"],cwd = directory)
 
     print("Pharokka.py finished running.")
