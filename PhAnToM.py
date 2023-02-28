@@ -55,6 +55,13 @@ def trimming(read1, read2, directory, refFile,offset):
         print("Trim finished.")
     return read1_trimmed, read2_trimmed
 
+def AdapRemov(read1, read2, directory):
+    
+    if args.refFile:
+        subprocess.run(["mamba", "run", "-n", "QC","AdaptorRemoval","--file1", read2,  "--file2", read2, "--output1", read1, "--output2", read2], cwd =directory)
+        print("AdaptorRemoval finished.")
+    return read1, read2
+
 
 
 def main():
@@ -77,6 +84,8 @@ def main():
     phredOffset = Assembly.offsetDetector(read1,read2,parent_directory)
 
     refFile = args.refFile
+
+    read1, read2 = AdapRemov(read1, read2, parent_directory)
 
     read1Trimmed, read2Trimmed = trimming(read1, read2, parent_directory, refFile, phredOffset)
     
