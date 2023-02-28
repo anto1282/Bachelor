@@ -16,9 +16,11 @@ parser.add_argument("--threads","-t",action = "store", dest = "threads", type = 
 parser.add_argument("-r","--ref", action="store", dest="refFile", help ="Input fasta file for filtering out", default=False)
 parser.add_argument("-p","-pred",action="store",dest = "virpredflag", default = "dontskip", help = "Write skip to skip deepvirfinder.")
 parser.add_argument("-a","--assemblies",action="store",dest = "nrofassemblies",default = "1", help ="Determines the number of assemblies and subsamplings to be performed (Default is 1)")
+parser.add_argument("-s", "--skip", action="store", dest = "skip",nargs="+", help="Please input the steps you want to skip: \n Wget \n Trimming \n Assembly \n DeepVirFinder \n Pharokka") 
+
 
 args = parser.parse_args()
-
+print("Hello", args.skip)
 
 #Creates results directory for the pipeline results
 def directory_maker(sraAccNr):
@@ -41,7 +43,7 @@ def sra_get(sraAccNr,directory):
 #TODO Spørg Bent/Thomas/Ole om programmet skal kunne ændre i hvor meget den trimmer af (Kvalitet)
 def trimming(read1, read2, directory, refFile,offset):
     
-    
+
     read1_trimmed = "trimmed/" + read1
     read2_trimmed = "trimmed/" + read2
 
@@ -79,27 +81,38 @@ def main():
     phredOffset = Assembly.offsetDetector(read1,read2,parent_directory)
 
     refFile = args.refFile
+    if "Trimming" not in args.skip:
+        read1Trimmed, read2Trimmed = trimming(read1, read2, parent_directory, refFile, phredOffset)
+    else:
+        read1Trimmed, read2Trimmed = "trimmed/" + read1, "trimmed/" + read2
+        print("Trimming was skipped")
 
-    read1Trimmed, read2Trimmed = trimming(read1, read2, parent_directory, refFile, phredOffset)
+    
     
     Kraken2.Kraken(parent_directory,read1Trimmed,read2Trimmed, "../KrakenDB")
     
     read1Trimmed, read2Trimmed = TaxRemover.EuRemover(parent_directory,read1Trimmed, read2Trimmed, sraAccNr)
 
-    assemblydirectory, read1Trimmed, read2Trimmed = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,args.whatSPADES,phredOffset,0.1,args.nrofassemblies)
+    if "Assembly" not in args.skip:
+        assemblydirectory, read1Trimmed, read2Trimmed = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,args.whatSPADES,phredOffset,0.1,args.nrofassemblies)
+    else:
+        print("Assembly was skipped")
     
     Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=500) #Filters off too short contigs
-
     Assembly.coverageFinder(read1Trimmed,read2Trimmed,parent_directory,assemblydirectory)
 
-    pathToDeepVirFinder = "../../DeepVirFinder"
-
-    predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads, Contigs_Trimmed, args.virpredflag)
     
+    pathToDeepVirFinder = "../../DeepVirFinder"
+    if "DeepVirFinder" not in args.skip:
+        predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads, Contigs_Trimmed, args.virpredflag)
+    else:
+        print("DeepVirFinder was skipped")
+
     viralcontigs,nonviralcontigs = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.95)
-
-    Assembly.PHAROKKA(parent_directory, viralcontigs, threads)
-
+    if "Pharokka" not in args.skip:
+        Assembly.PHAROKKA(parent_directory, viralcontigs, threads)
+    else:
+        print("Pharokka was skipped")
     Kraken2.KrakenContig(parent_directory,nonviralcontigs, "../KrakenDB")
 
 
