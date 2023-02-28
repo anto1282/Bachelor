@@ -59,15 +59,30 @@ def SubSampling(read1,read2,directory,sampleRate,sampleSeed): #Subsampling using
 def MultiAssembly(read1, read2, directory, spades_tag, phred_offset, sampleRate, nrofassemblies):
     #Assembles the 
     
+    averageCoverage = None
+
+    print("Finding the optimal subsampling rate")
+    print("Starting with samplingrate:",sampleRate)
+    while averageCoverage == None or averageCoverage < 20 or averageCoverage > 100:
+        sampleSeed = nrofassemblies
+        read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed)
+        assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
+        trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",500)
+        averageCoverage = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
+        subprocess.run(["rm","-rf",assemblydirectory],cwd = directory)
+        
+        print(averageCoverage)
     maxN50 = None
     maxseed = None
+    
     for sampleSeed in range(1,int(nrofassemblies)+1):
         print("Assembling using SPADES.py", sampleSeed ,"out of", nrofassemblies, "...")
         read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed)
         assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
-        if maxN50 is None or N50(directory,assemblydirectory) > maxN50:
+        N50 = N50(directory,assemblydirectory)
+        if maxN50 is None or N50 > maxN50:
             maxseed = sampleSeed
-            maxN50 = N50(directory,assemblydirectory)
+            maxN50 = N50
         print("\nMax N50:", maxN50)
         print("Best seed:", maxseed, "\n")
         subprocess.run(["rm","-rf",assemblydirectory],cwd = directory)
@@ -119,12 +134,25 @@ def DeepVirFinder(pathtoDeepVirFinder,assemblydirectory,threads,inFile,PredTag):
 
 # TODO Map reads to contigs to reveal coverage of potential phages
 
-def coverageFinder(read1,read2,directory,assemblydirectory):
+def coverageFinder(read1,read2,directory,filepath):
     print("Finding coverage of assemblies")
-    contigs = assemblydirectory + "/contigs.fasta"
+    contigs = filepath
     coveragestats = "coveragestats.txt"
     subprocess.run(["conda","run","-n","QC","bbmap.sh","ref=" + contigs,"in=" + read1,"in2=" + read2,"out=coverage_mapping.sam","nodisk=t","fast=t","covstats="+coveragestats],cwd = directory)
-   
+    
+    linecount = 0
+    coverageSum = 0
+    with open(coveragestats,'r') as covfile:
+        for line in covfile:
+            if linecount != 0:
+                
+                coverageSum += float(line.split()[1])
+            linecount += 1
+    contigcount = linecount - 1
+    covAverage = coverageSum / contigcount
+    return covAverage
+
+
 
    #Check average coverage, adjust samplerate to improve coverage
    #Check coverage before multi assembly and after
