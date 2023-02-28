@@ -47,22 +47,17 @@ def trimming(read1, read2, directory, refFile,offset):
 
     if not os.path.exists(directory + "/trimmed"):
         subprocess.run(["mkdir","trimmed"], cwd = directory) 
+
+    subprocess.run(["mamba", "run", "-n", "QC","AdapterRemoval","--file1", read2,  "--file2", read2, "--output1", read1 + ".noadap", "--output2", read2+ ".noadap"], cwd =directory)
+    print("AdapterRemoval finished.")
+
     if args.refFile:
-        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=" + read2,  "-in2=" + read2, "-out=" + read1_trimmed, "-out2=" + read2_trimmed, "ref=" + refFile , "trimq=25", "qtrim=w","forcetrimleft=15" ,"overwrite=true"], cwd =directory)
+        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=" + read2 + ".noadap",  "-in2=" + read2 + ".noadap", "-out=" + read1_trimmed, "-out2=" + read2_trimmed, "ref=" + refFile , "trimq=25", "qtrim=w","forcetrimleft=15" ,"overwrite=true"], cwd =directory)
         print("Trim finished.")
     else:
         subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=%s" % read1,  "-in2=%s" % read2, "-out=%s" % read1_trimmed, "-out2=%s" % read2_trimmed, "trimq=25", "qtrim=w","forcetrimleft=15" ,"overwrite=true"], cwd =directory)
         print("Trim finished.")
     return read1_trimmed, read2_trimmed
-
-def AdapRemov(read1, read2, directory):
-    
-    if args.refFile:
-        subprocess.run(["mamba", "run", "-n", "QC","AdaptorRemoval","--file1", read2,  "--file2", read2, "--output1", read1, "--output2", read2], cwd =directory)
-        print("AdaptorRemoval finished.")
-    return read1, read2
-
-
 
 def main():
     #Initialization
