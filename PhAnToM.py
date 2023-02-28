@@ -80,8 +80,6 @@ def main():
 
     refFile = args.refFile
 
-    read1, read2 = AdapRemov(read1, read2, parent_directory)
-
     read1Trimmed, read2Trimmed = trimming(read1, read2, parent_directory, refFile, phredOffset)
     
     Kraken2.Kraken(parent_directory,read1Trimmed,read2Trimmed, "../KrakenDB")
