@@ -89,8 +89,6 @@ def main():
     
     Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=500) #Filters off too short contigs
 
-    Assembly.coverageFinder(read1Trimmed,read2Trimmed,parent_directory,assemblydirectory)
-
     pathToDeepVirFinder = "../../DeepVirFinder"
 
     predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads, Contigs_Trimmed, args.virpredflag)
