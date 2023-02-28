@@ -86,8 +86,8 @@ def main():
 
     assemblydirectory, read1Trimmed, read2Trimmed = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,args.whatSPADES,phredOffset,0.1,args.nrofassemblies)
     
-    #Implement filtering of contigs that are too short
-    Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=500)
+    
+    Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=500) #Filters off too short contigs
 
     Assembly.coverageFinder(read1Trimmed,read2Trimmed,parent_directory,assemblydirectory)
 
