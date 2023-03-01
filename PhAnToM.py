@@ -117,7 +117,8 @@ def main():
     else:
         print("Assembly was skipped")
     
-    #Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=200) #Filters off too short contigs
+    #Maybe this is not necessary?
+    Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=200) #Filters off too short contigs
 
     pathToDeepVirFinder = "../../DeepVirFinder"
     if "DeepVirFinder" not in args.skip:
