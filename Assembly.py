@@ -153,13 +153,12 @@ def coverageFinder(read1,read2,directory,filepath):
     coverageSum = 0
     with open(coveragestats,'r') as covfile:
         for line in covfile:
-            if linecount != 0:
+            if linecount == 1:
                 
-                coverageSum += float(line.split()[1])
+                coverage = float(line.split()[1])
             linecount += 1
-    contigcount = linecount - 1
-    covAverage = coverageSum / contigcount
-    return covAverage
+    
+    return coverage
 
 
 

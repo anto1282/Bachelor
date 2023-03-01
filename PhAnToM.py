@@ -43,7 +43,7 @@ def wget_wget(sraAccNr,directory): #Replacement for fasterq-dump
     if not os.path.exists(directory + "/" +sraAccNr + "_1.fastq") and not os.path.exists(directory + "/" + sraAccNr + "_2.fastq"):
         print("Downloading", sraAccNr, "from SRA using wget")
         link = "https://trace.ncbi.nlm.nih.gov/Traces/sra-reads-be/fasta?acc=" + sraAccNr
-        subprocess.run(["wget", link,sraAccNr], cwd = directory)
+        subprocess.run(["wget", link,"-o",sraAccNr], cwd = directory)
         subprocess.run(["gzip","-d",sraAccNr],cwd = directory)
     else:
         print("Reads already present in directory! Continuing...")
@@ -86,8 +86,8 @@ def main():
     
     parent_directory = directory_maker(sraAccNr)
 
-    read1, read2 = sra_get(sraAccNr,parent_directory)
-    #read1, read2 = wget_wget(sraAccNr,parent_directory) #Testing wget instead of fasterq
+    #read1, read2 = sra_get(sraAccNr,parent_directory)
+    read1, read2 = wget_wget(sraAccNr,parent_directory) #Testing wget instead of fasterq
    
    
     phredOffset = Assembly.offsetDetector(read1,read2,parent_directory)
@@ -99,8 +99,6 @@ def main():
         read1Trimmed, read2Trimmed = "trimmed/" + read1, "trimmed/" + read2
         print("Trimming was skipped")
 
-    
-    
     Kraken2.Kraken(parent_directory,read1Trimmed,read2Trimmed, "../KrakenDB")
     
     read1Trimmed, read2Trimmed = TaxRemover.EuRemover(parent_directory,read1Trimmed, read2Trimmed, sraAccNr)
