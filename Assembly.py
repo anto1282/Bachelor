@@ -58,6 +58,9 @@ def SubSampling(read1,read2,directory,sampleRate,sampleSeed, SkipTag): #Subsampl
 
 def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassemblies, SkipTag):
     
+    #Initialisation
+    contiglengthcutoff = 200
+
     if "Assembly" not in SkipTag:
         coverage = None
 
@@ -69,7 +72,7 @@ def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassembl
 
             read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed, None)
             assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, SkipTag, phred_offset)
-            trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",500)
+            trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",contiglengthcutoff)
             coverage, coveragestatsfile = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
             subprocess.run(["rm","-rf",assemblydirectory], cwd = directory)
             subprocess.run(["rm",trimmedContigs], cwd = directory)
@@ -112,7 +115,7 @@ def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassembl
     print("Running assembly for the best subsampling seed...\n")
     read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate, maxseed, SkipTag)
     assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, SkipTag, phred_offset)
-    trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",500)
+    trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",contiglengthcutoff)
     coverage = coverageFinderMax(read1Trimmed,read2Trimmed,directory,trimmedContigs)
     
     print("Finished assembly for the best subsampling seed:", maxseed,"\n")
