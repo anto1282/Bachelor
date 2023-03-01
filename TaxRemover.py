@@ -10,7 +10,7 @@ def EuRemover(directory,read1TrimmedSub, read2TrimmedSub, sraNR):
     for line in infile:
         if line.split()[-1] == "Eukaryota":
             Flag = True
-        if line.split()[-1] == "Archaea":
+        if line.split()[-1] in ["Archaea","Bacteria"]:
             Flag = False
             break
         if Flag == True:
