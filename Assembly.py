@@ -67,36 +67,36 @@ def MultiAssembly(read1, read2, directory, spades_tag, phred_offset, sampleRate,
             sampleSeed = nrofassemblies
 
         
-        read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed)
-        assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
-        trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",500)
-        averageCoverage, coverageStatFile = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
-        subprocess.run(["rm","-rf",assemblydirectory],cwd = directory)
-        subprocess.run(["rm",trimmedContigs],cwd = directory)
-        subprocess.run(["rm",read1Trimmed],cwd = directory)
-        subprocess.run(["rm",read2Trimmed],cwd = directory)
-        
+            read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed, None)
+            assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
+            trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",500)
+            averageCoverage, coverageStatFile = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
+            subprocess.run(["rm","-rf",assemblydirectory],cwd = directory)
+            subprocess.run(["rm",trimmedContigs],cwd = directory)
+            subprocess.run(["rm",read1Trimmed],cwd = directory)
+            subprocess.run(["rm",read2Trimmed],cwd = directory)
+            
 
-        if sampleRate < 20:
-            sampleRate = sampleRate * (25 / averageCoverage) #Aiming for x25 coverage
-        elif sampleRate > 100:
-            sampleRate = sampleRate * (80 / averageCoverage) #Aiming for x80 coverage
-        sampleRate = sampleRate * (60 / averageCoverage)
+            if sampleRate < 20:
+                sampleRate = sampleRate * (25 / averageCoverage) #Aiming for x25 coverage
+            elif sampleRate > 100:
+                sampleRate = sampleRate * (80 / averageCoverage) #Aiming for x80 coverage
+            sampleRate = sampleRate * (60 / averageCoverage)
 
-        if sampleRate > 1:
-            sampleRate = 1
+            if sampleRate > 1:
+                sampleRate = 1
+                print(averageCoverage)
+                print(sampleRate)
+                break
             print(averageCoverage)
             print(sampleRate)
-            break
-        print(averageCoverage)
-        print(sampleRate)
     
     maxN50 = None
     maxseed = None
     print("Found best sampleRate:", sampleRate)
     for sampleSeed in range(1,int(nrofassemblies)+1):
         print("Assembling using SPADES.py", sampleSeed ,"out of", nrofassemblies, "...")
-        read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed)
+        read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed, None)
         assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
         N50val = N50(directory,assemblydirectory)
         if maxN50 is None or N50val > maxN50:
@@ -109,7 +109,7 @@ def MultiAssembly(read1, read2, directory, spades_tag, phred_offset, sampleRate,
         subprocess.run(["rm",read2Trimmed],cwd = directory)
 
     print("Running assembly for the best subsampling seed...\n")
-    read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate, maxseed)
+    read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate, maxseed, SkipTag)
     assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
     print("Finished assembly for the best subsampling seed:", maxseed,"\n")
     return assemblydirectory, read1Trimmed, read2Trimmed
