@@ -118,7 +118,7 @@ def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassembl
     read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate, maxseed, Skip)
     assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, SkipTag, phred_offset)
     trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",contiglengthcutoff)
-    coverage = coverageFinderMax(read1Trimmed,read2Trimmed,directory,trimmedContigs)
+    coverage = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
     
     print("Finished assembly for the best subsampling seed:", maxseed,"\n")
     
@@ -134,7 +134,7 @@ def N50(directory,assemblydirectory): #Calculating N50 using stats.sh from BBtoo
             if line.startswith("Main genome contig N/L50:"):
                 nl50 = line.split()[4]
                 reg_obj = re.search(r'(\w+)\/',nl50)
-                N50 = reg_obj.groups()[0]
+                N50 = float(reg_obj.groups()[0])
                 print(N50)
     subprocess.run(["rm",filename],cwd = directory)
     print("N50 =", N50)
@@ -226,7 +226,7 @@ def coverageFinderMax(read1,read2,directory,contigfilepath):
         for line in covfile:
             linesplit = line.split()
             if linecount == 1:
-                longestcontiglength = linesplit[2]
+                longestcontiglength = float(linesplit[2])
                 maxcoverage = float(linesplit[1])
             elif linecount > 1:
                 if float(linesplit[2]) > longestcontiglength / 2 and float(linesplit[1]) > maxcoverage:
