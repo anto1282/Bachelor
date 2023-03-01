@@ -44,15 +44,15 @@ def SPADES(read1,read2,directory,spades_tag,phred_offset):
 
 
 def SubSampling(read1,read2,directory,sampleRate,sampleSeed, SkipTag): #Subsampling using Reformat.sh 
-    print(read1)
+    
     read1WithNoFileFormat = re.search(r'(\w+)\.fastq',read1).groups()[0]
     read2WithNoFileFormat = re.search(r'(\w+)\.fastq',read2).groups()[0]
     read1Trimmed = read1WithNoFileFormat + "_trimmed.fastq"
     read2Trimmed = read2WithNoFileFormat + "_trimmed.fastq"
-    if SkipTag != None:
+    if SkipTag == None:
         print("Subsampling reads using reformat.sh with samplerate =", sampleRate, "and sampleseed =", sampleSeed, "\n")
         subprocess.run(["conda","run","-n", "QC","reformat.sh","in=" + read1, "in2=" + read2, "out=" + read1Trimmed, "out2=" + read2Trimmed,"samplerate=" + str(sampleRate),"sampleseed=" + str(sampleSeed),"overwrite=true"], cwd = directory)
-    
+    print("Finished subsampling")
     return read1Trimmed, read2Trimmed
 
 
