@@ -75,12 +75,12 @@ def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassembl
             read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed, Skip)
             assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, SkipTag, phred_offset)
             trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",contiglengthcutoff)
-            coverage, coveragestatsfile = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
+            coverage, coveragestatsfile = coverageFinderMax(read1Trimmed,read2Trimmed,directory,trimmedContigs)
             subprocess.run(["rm","-rf",assemblydirectory], cwd = directory)
             subprocess.run(["rm",trimmedContigs], cwd = directory)
             subprocess.run(["rm",read1Trimmed], cwd = directory)
             subprocess.run(["rm",read2Trimmed], cwd = directory)
-            subprocess.run(["rm",coveragestatsfile], cwd = directory)
+            #subprocess.run(["rm",coveragestatsfile], cwd = directory)
                 
 
             if sampleRate < 20:
@@ -118,7 +118,7 @@ def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassembl
     read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate, maxseed, Skip)
     assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, SkipTag, phred_offset)
     trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",contiglengthcutoff)
-    coverage = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
+    coverage = coverageFinderMax(read1Trimmed,read2Trimmed,directory,trimmedContigs)
     
     print("Finished assembly for the best subsampling seed:", maxseed,"\n")
     
@@ -234,7 +234,7 @@ def coverageFinderMax(read1,read2,directory,contigfilepath):
                 
             linecount += 1      
         
-    return maxcoverage
+    return maxcoverage, coveragestats
 
 
 def PHAROKKA(directory, viralcontigs,threads):
