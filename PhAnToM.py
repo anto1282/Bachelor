@@ -112,12 +112,10 @@ def main():
         print("Trimming was skipped")
 
     print(read1Trimmed,read2Trimmed)
-    if "Assembly" not in args.skip:
-        assemblydirectory, read1Trimmed, read2Trimmed = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,phredOffset,0.1,args.nrofassemblies, args.skip)
-    else:
-        print("Assembly was skipped")
+    assemblydirectory, read1Trimmed, read2Trimmed = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,phredOffset,0.1,args.nrofassemblies, args.skip)
+
     
-    #Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=200) #Filters off too short contigs
+    Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=200) #Filters off too short contigs
 
     pathToDeepVirFinder = "../../DeepVirFinder"
     if "DeepVirFinder" not in args.skip:
