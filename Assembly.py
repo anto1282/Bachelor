@@ -67,14 +67,14 @@ def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassembl
         sampleSeed = nrofassemblies
 
         
-            read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed, None)
-            assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, SkipTag, phred_offset)
-            trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",500)
-            coverage = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
-            subprocess.run(["rm","-rf",assemblydirectory],cwd = directory)
-            subprocess.run(["rm",trimmedContigs],cwd = directory)
-            subprocess.run(["rm",read1Trimmed],cwd = directory)
-            subprocess.run(["rm",read2Trimmed],cwd = directory)
+        read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed, None)
+        assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, SkipTag, phred_offset)
+        trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",500)
+        coverage = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
+        subprocess.run(["rm","-rf",assemblydirectory],cwd = directory)
+        subprocess.run(["rm",trimmedContigs],cwd = directory)
+        subprocess.run(["rm",read1Trimmed],cwd = directory)
+        subprocess.run(["rm",read2Trimmed],cwd = directory)
             
 
         if sampleRate < 20:
