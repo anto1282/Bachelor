@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 
-import subprocess, sys, os, multiprocessing
+import subprocess, sys, os, multiprocessing, glob
 from argparse import ArgumentParser
 import Assembly
 import TaxRemover
@@ -51,7 +51,7 @@ def wget_wget(sraAccNr,directory): #Replacement for fasterq-dump
 
 
 #TODO Spørg Bent/Thomas/Ole om programmet skal kunne ændre i hvor meget den trimmer af (Kvalitet)
-def trimming(read1, read2, directory, refFile,offset):
+def trimming(read1, read2, directory, refFile):
     
 
     read1_trimmed = "trimmed/" + read1
@@ -95,10 +95,14 @@ def main():
     refFile = args.refFile
     if "Trimming" not in args.skip:
         read1Trimmed, read2Trimmed = trimming(read1, read2, parent_directory, refFile, phredOffset)
+        Kraken2.Kraken(parent_directory,read1Trimmed,read2Trimmed, "../KrakenDB")
+    
+        read1Trimmed, read2Trimmed = TaxRemover.EuRemover(parent_directory,read1Trimmed, read2Trimmed, sraAccNr)
     else:
         read1Trimmed, read2Trimmed = "trimmed/" + read1, "trimmed/" + read2
         print("Trimming was skipped")
 
+    
     Kraken2.Kraken(parent_directory,read1Trimmed,read2Trimmed, "../KrakenDB")
     
     read1Trimmed, read2Trimmed = TaxRemover.EuRemover(parent_directory,read1Trimmed, read2Trimmed, sraAccNr)
@@ -114,6 +118,7 @@ def main():
     if "DeepVirFinder" not in args.skip:
         predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads, Contigs_Trimmed, args.virpredflag)
     else:
+        predfile = glob.glob("DeepVirPredictions" + "/contigs*")[0]
         print("DeepVirFinder was skipped")
 
     viralcontigs,nonviralcontigs = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.95)
@@ -121,6 +126,7 @@ def main():
         Assembly.PHAROKKA(parent_directory, viralcontigs, threads)
     else:
         print("Pharokka was skipped")
+    
     Kraken2.KrakenContig(parent_directory,nonviralcontigs, "../KrakenDB")
 
 
