@@ -61,28 +61,37 @@ def MultiAssembly(read1, read2, directory, spades_tag, phred_offset, sampleRate,
     
     averageCoverage = None
 
-    print("Finding the optimal subsampling rate")
-    print("Starting with samplingrate:",sampleRate)
+    print("\nFinding the optimal subsampling rate")
+    print("Starting with samplingrate:",sampleRate,"\n")
     while averageCoverage == None or averageCoverage < 20 or averageCoverage > 100:
         sampleSeed = nrofassemblies
+
+        
         read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed)
         assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
         trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",500)
         averageCoverage = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
         subprocess.run(["rm","-rf",assemblydirectory],cwd = directory)
-        
+        subprocess.run(["rm",trimmedContigs])
+        sampleRate = sampleRate * (60 / averageCoverage)
+        if sampleRate > 1:
+            sampleRate = 1
+            print(averageCoverage)
+            print(sampleRate)
+            break
         print(averageCoverage)
+        print(sampleRate)
     maxN50 = None
     maxseed = None
-    
+    print("Found best sampleRate:", sampleRate)
     for sampleSeed in range(1,int(nrofassemblies)+1):
         print("Assembling using SPADES.py", sampleSeed ,"out of", nrofassemblies, "...")
         read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed)
         assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
-        N50 = N50(directory,assemblydirectory)
-        if maxN50 is None or N50 > maxN50:
+        N50val = N50(directory,assemblydirectory)
+        if maxN50 is None or N50val > maxN50:
             maxseed = sampleSeed
-            maxN50 = N50
+            maxN50 = N50val
         print("\nMax N50:", maxN50)
         print("Best seed:", maxseed, "\n")
         subprocess.run(["rm","-rf",assemblydirectory],cwd = directory)
