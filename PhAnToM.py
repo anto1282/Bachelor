@@ -16,11 +16,11 @@ parser.add_argument("--threads","-t",action = "store", dest = "threads", type = 
 parser.add_argument("-r","--ref", action="store", dest="refFile", help ="Input fasta file for filtering out", default=False)
 parser.add_argument("-p","-pred",action="store",dest = "virpredflag", default = "dontskip", help = "Write skip to skip deepvirfinder.")
 parser.add_argument("-a","--assemblies",action="store",dest = "nrofassemblies",default = "1", help ="Determines the number of assemblies and subsamplings to be performed (Default is 1)")
-parser.add_argument("-s", "--skip", action="store", dest = "skip",nargs="+", help="Please input the steps you want to skip: \n Wget \n Trimming \n Assembly \n DeepVirFinder \n Pharokka") 
+parser.add_argument("-s", "--skip", action="store", dest = "skip",nargs="+",default= "1", help="Please input the steps you want to skip: \n Wget \n Trimming \n Assembly \n DeepVirFinder \n Pharokka") 
 
 
 args = parser.parse_args()
-print("Hello", args.skip)
+#print("Hello", args.skip)
 
 #Creates results directory for the pipeline results
 def directory_maker(sraAccNr):
@@ -39,6 +39,16 @@ def sra_get(sraAccNr,directory):
     return sraAccNr + "_1.fastq", sraAccNr + "_2.fastq"
 
 
+def wget_wget(sraAccNr,directory): #Replacement for fasterq-dump
+    if not os.path.exists(directory + "/" +sraAccNr + "_1.fastq") and not os.path.exists(directory + "/" + sraAccNr + "_2.fastq"):
+        print("Downloading", sraAccNr, "from SRA using wget")
+        link = "https://trace.ncbi.nlm.nih.gov/Traces/sra-reads-be/fasta?acc=" + sraAccNr
+        subprocess.run(["wget", link,sraAccNr], cwd = directory)
+        subprocess.run(["gzip","-d",sraAccNr],cwd = directory)
+    else:
+        print("Reads already present in directory! Continuing...")
+    return sraAccNr + "_1.fastq", sraAccNr + "_2.fastq"
+
 
 #TODO Spørg Bent/Thomas/Ole om programmet skal kunne ændre i hvor meget den trimmer af (Kvalitet)
 def trimming(read1, read2, directory, refFile,offset):
@@ -50,11 +60,11 @@ def trimming(read1, read2, directory, refFile,offset):
     if not os.path.exists(directory + "/trimmed"):
         subprocess.run(["mkdir","trimmed"], cwd = directory) 
 
-    subprocess.run(["mamba", "run", "-n", "QC","AdapterRemoval","--file1", read2,  "--file2", read2, "--output1", read1 + ".noadap", "--output2", read2+ ".noadap"], cwd =directory)
+    subprocess.run(["mamba", "run", "-n", "QC","AdapterRemoval","--file1", read1,  "--file2", read2, "--output1", read1 + ".noadap", "--output2", read2+ ".noadap"], cwd =directory)
     print("AdapterRemoval finished.")
 
     if args.refFile:
-        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=" + read2 + ".noadap",  "-in2=" + read2 + ".noadap", "-out=" + read1_trimmed, "-out2=" + read2_trimmed, "ref=" + refFile , "trimq=25", "qtrim=w","forcetrimleft=15" ,"overwrite=true"], cwd =directory)
+        subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=" + read1 + ".noadap",  "-in2=" + read2 + ".noadap", "-out=" + read1_trimmed, "-out2=" + read2_trimmed, "ref=" + refFile , "trimq=25", "qtrim=w","forcetrimleft=15" ,"overwrite=true"], cwd =directory)
         print("Trim finished.")
     else:
         subprocess.run(["mamba", "run", "-n", "QC","bbduk.sh","-in=%s" % read1,  "-in2=%s" % read2, "-out=%s" % read1_trimmed, "-out2=%s" % read2_trimmed, "trimq=25", "qtrim=w","forcetrimleft=15" ,"overwrite=true"], cwd =directory)
@@ -77,7 +87,9 @@ def main():
     parent_directory = directory_maker(sraAccNr)
 
     read1, read2 = sra_get(sraAccNr,parent_directory)
-
+    #read1, read2 = wget_wget(sraAccNr,parent_directory) #Testing wget instead of fasterq
+   
+   
     phredOffset = Assembly.offsetDetector(read1,read2,parent_directory)
 
     refFile = args.refFile
@@ -99,9 +111,7 @@ def main():
         print("Assembly was skipped")
     
     Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=500) #Filters off too short contigs
-    Assembly.coverageFinder(read1Trimmed,read2Trimmed,parent_directory,assemblydirectory)
 
-    
     pathToDeepVirFinder = "../../DeepVirFinder"
     if "DeepVirFinder" not in args.skip:
         predfile = Assembly.DeepVirFinder(pathToDeepVirFinder, assemblydirectory,threads, Contigs_Trimmed, args.virpredflag)
