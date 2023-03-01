@@ -49,14 +49,14 @@ def SubSampling(read1,read2,directory,sampleRate,sampleSeed, SkipTag): #Subsampl
     read2WithNoFileFormat = re.search(r'(\w+)\.fastq',read2).groups()[0]
     read1Trimmed = read1WithNoFileFormat + "_trimmed.fastq"
     read2Trimmed = read2WithNoFileFormat + "_trimmed.fastq"
-    
-    print("Subsampling reads using reformat.sh with samplerate =", sampleRate, "and sampleseed =", sampleSeed, "\n")
-    subprocess.run(["conda","run","-n", "QC","reformat.sh","in=" + read1, "in2=" + read2, "out=" + read1Trimmed, "out2=" + read2Trimmed,"samplerate=" + str(sampleRate),"sampleseed=" + str(sampleSeed),"overwrite=true"], cwd = directory)
+    if SkipTag != None:
+        print("Subsampling reads using reformat.sh with samplerate =", sampleRate, "and sampleseed =", sampleSeed, "\n")
+        subprocess.run(["conda","run","-n", "QC","reformat.sh","in=" + read1, "in2=" + read2, "out=" + read1Trimmed, "out2=" + read2Trimmed,"samplerate=" + str(sampleRate),"sampleseed=" + str(sampleSeed),"overwrite=true"], cwd = directory)
     
     return read1Trimmed, read2Trimmed
 
 
-def MultiAssembly(read1, read2, directory, spades_tag, phred_offset, sampleRate, nrofassemblies, SkipTag):
+def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassemblies, SkipTag):
     #Assembles the 
     if "Assembly" not in SkipTag:
         coverage = None
@@ -67,14 +67,14 @@ def MultiAssembly(read1, read2, directory, spades_tag, phred_offset, sampleRate,
             sampleSeed = nrofassemblies
 
 
-            read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed, None)
-            assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
-            trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",500)
-            coverage, coveragestatsfile = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
-            subprocess.run(["rm","-rf",assemblydirectory], cwd = directory)
-            subprocess.run(["rm",trimmedContigs], cwd = directory)
-            subprocess.run(["rm",read1Trimmed], cwd = directory)
-            subprocess.run(["rm",read2Trimmed], cwd = directory)
+        read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed, None)
+        assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, SkipTag, phred_offset)
+        trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",500)
+        coverage, coveragestatsfile = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
+        subprocess.run(["rm","-rf",assemblydirectory], cwd = directory)
+        subprocess.run(["rm",trimmedContigs], cwd = directory)
+        subprocess.run(["rm",read1Trimmed], cwd = directory)
+        subprocess.run(["rm",read2Trimmed], cwd = directory)
             
                 
 
@@ -98,7 +98,7 @@ def MultiAssembly(read1, read2, directory, spades_tag, phred_offset, sampleRate,
         for sampleSeed in range(1,int(nrofassemblies)+1):
             print("Assembling using SPADES.py", sampleSeed ,"out of", nrofassemblies, "...")
             read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed, None)
-            assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
+            assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, SkipTag, phred_offset)
             N50val = N50(directory,assemblydirectory)
             if maxN50 is None or N50val > maxN50:
                 maxseed = sampleSeed
@@ -111,7 +111,7 @@ def MultiAssembly(read1, read2, directory, spades_tag, phred_offset, sampleRate,
 
     print("Running assembly for the best subsampling seed...\n")
     read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate, maxseed, SkipTag)
-    assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
+    assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, SkipTag, phred_offset)
     trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",500)
     coverage = coverageFinderMax(read1Trimmed,read2Trimmed,directory,trimmedContigs)
     print("Finished assembly for the best subsampling seed:", maxseed,"\n")
