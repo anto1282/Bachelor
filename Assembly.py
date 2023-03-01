@@ -37,7 +37,7 @@ def SPADES(read1,read2,directory,spades_tag,phred_offset):
     
     if "Assembly" not in spades_tag:
         print("Running spades.py")
-        subprocess.run(["conda", "run", "-n", "ASSEMBLY", "spades.py", "-o", output_dir, "-1", read1, "-2", read2, spades_tag,"--phred-offset",phred_offset], cwd = directory)
+        subprocess.run(["conda", "run", "-n", "ASSEMBLY", "spades.py", "-o", output_dir, "-1", read1, "-2", read2, "--meta","--phred-offset",phred_offset], cwd = directory)
         print("Spades.py finished. \n")
     
     return output_dir
