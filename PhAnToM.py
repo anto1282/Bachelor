@@ -94,7 +94,7 @@ def main():
 
     refFile = args.refFile
     if "Trimming" not in args.skip:
-        read1Trimmed, read2Trimmed = trimming(read1, read2, parent_directory, refFile, phredOffset)
+        read1Trimmed, read2Trimmed = trimming(read1, read2, parent_directory, refFile)
         Kraken2.Kraken(parent_directory,read1Trimmed,read2Trimmed, "../KrakenDB")
     
         read1Trimmed, read2Trimmed = TaxRemover.EuRemover(parent_directory,read1Trimmed, read2Trimmed, sraAccNr)
@@ -108,7 +108,7 @@ def main():
     read1Trimmed, read2Trimmed = TaxRemover.EuRemover(parent_directory,read1Trimmed, read2Trimmed, sraAccNr)
 
     if "Assembly" not in args.skip:
-        assemblydirectory, read1Trimmed, read2Trimmed = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,args.whatSPADES,phredOffset,0.1,args.nrofassemblies)
+        assemblydirectory, read1Trimmed, read2Trimmed = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,args.whatSPADES,phredOffset,0.1,args.nrofassemblies, args.skip)
     else:
         print("Assembly was skipped")
     
