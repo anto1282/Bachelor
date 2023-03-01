@@ -37,7 +37,7 @@ def SPADES(read1,read2,directory,spades_tag,phred_offset):
     
     if "Assembly" not in spades_tag:
         print("Running spades.py")
-        SPADES = subprocess.run(["conda", "run", "-n", "ASSEMBLY", "spades.py", "-o", output_dir, "-1", read1, "-2", read2, spades_tag,"--phred-offset",phred_offset], cwd = directory)
+        subprocess.run(["conda", "run", "-n", "ASSEMBLY", "spades.py", "-o", output_dir, "-1", read1, "-2", read2, spades_tag,"--phred-offset",phred_offset], cwd = directory)
         print("Spades.py finished. \n")
     
     return output_dir
@@ -61,52 +61,53 @@ def MultiAssembly(read1, read2, directory, spades_tag, phred_offset, sampleRate,
     if "Assembly" not in SkipTag:
         coverage = None
 
-    print("\nFinding the optimal subsampling rate")
-    print("Starting with samplingrate:",sampleRate,"\n")
-    while coverage == None or coverage < 20 or coverage > 100:
-        sampleSeed = nrofassemblies
+        print("\nFinding the optimal subsampling rate")
+        print("Starting with samplingrate:",sampleRate,"\n")
+        while coverage == None or coverage < 20 or coverage > 100:
+            sampleSeed = nrofassemblies
 
-        
+
             read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed, None)
             assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
             trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",500)
-            coverage = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
-            subprocess.run(["rm","-rf",assemblydirectory],cwd = directory)
-            subprocess.run(["rm",trimmedContigs],cwd = directory)
-            subprocess.run(["rm",read1Trimmed],cwd = directory)
-            subprocess.run(["rm",read2Trimmed],cwd = directory)
+            coverage, coveragestatsfile = coverageFinder(read1Trimmed,read2Trimmed,directory,trimmedContigs)
+            subprocess.run(["rm","-rf",assemblydirectory], cwd = directory)
+            subprocess.run(["rm",trimmedContigs], cwd = directory)
+            subprocess.run(["rm",read1Trimmed], cwd = directory)
+            subprocess.run(["rm",read2Trimmed], cwd = directory)
             
+                
 
-        if sampleRate < 20:
-            sampleRate = sampleRate * (25 / coverage) #Aiming for x25 coverage
-        elif sampleRate > 100:
-            sampleRate = sampleRate * (80 / coverage) #Aiming for x80 coverage
-        sampleRate = sampleRate * (60 / coverage)
+            if sampleRate < 20:
+                sampleRate = sampleRate * (25 / coverage) #Aiming for x25 coverage
+            elif sampleRate > 100:
+                sampleRate = sampleRate * (80 / coverage) #Aiming for x80 coverage
+            sampleRate = sampleRate * (60 / coverage)
 
-        if sampleRate > 1:
-            sampleRate = 1
+            if sampleRate > 1:
+                sampleRate = 1
+                print(coverage)
+                print(sampleRate)
+                break
             print(coverage)
             print(sampleRate)
-            break
-        print(coverage)
-        print(sampleRate)
     
-    maxN50 = None
-    maxseed = None
-    print("Found best sampleRate:", sampleRate)
-    for sampleSeed in range(1,int(nrofassemblies)+1):
-        print("Assembling using SPADES.py", sampleSeed ,"out of", nrofassemblies, "...")
-        read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed, None)
-        assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
-        N50val = N50(directory,assemblydirectory)
-        if maxN50 is None or N50val > maxN50:
-            maxseed = sampleSeed
-            maxN50 = N50val
-        print("\nMax N50:", maxN50)
-        print("Best seed:", maxseed, "\n")
-        subprocess.run(["rm","-rf",assemblydirectory],cwd = directory)
-        subprocess.run(["rm",read1Trimmed],cwd = directory)
-        subprocess.run(["rm",read2Trimmed],cwd = directory)
+        maxN50 = None
+        maxseed = None
+        print("Found best sampleRate:", sampleRate)
+        for sampleSeed in range(1,int(nrofassemblies)+1):
+            print("Assembling using SPADES.py", sampleSeed ,"out of", nrofassemblies, "...")
+            read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed, None)
+            assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, spades_tag, phred_offset)
+            N50val = N50(directory,assemblydirectory)
+            if maxN50 is None or N50val > maxN50:
+                maxseed = sampleSeed
+                maxN50 = N50val
+            print("\nMax N50:", maxN50)
+            print("Best seed:", maxseed, "\n")
+            subprocess.run(["rm","-rf",assemblydirectory],cwd = directory)
+            subprocess.run(["rm",read1Trimmed],cwd = directory)
+            subprocess.run(["rm",read2Trimmed],cwd = directory)
 
     print("Running assembly for the best subsampling seed...\n")
     read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate, maxseed, SkipTag)
@@ -203,7 +204,7 @@ def coverageFinder(read1,read2,directory,contigfilepath): #Finds coverage of the
                 coverage = float(line.split()[1])
                 break
             linecount += 1
-    return coverage
+    return coverage, coveragestats
 
 def coverageFinderMax(read1,read2,directory,contigfilepath):
     print("Finding maximum coverage among assemblies which are larger than half of the size of the largest contig.")
