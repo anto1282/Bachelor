@@ -83,11 +83,11 @@ def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassembl
             #subprocess.run(["rm",coveragestatsfile], cwd = directory)
                 
 
-            if sampleRate < 20:
+            if coverage < 20:
                 sampleRate = sampleRate * (25 / coverage) #Aiming for x25 coverage
-            elif sampleRate > 100:
+            elif coverage > 100:
                 sampleRate = sampleRate * (80 / coverage) #Aiming for x80 coverage
-            #sampleRate = sampleRate * (60 / coverage)
+            
 
             if sampleRate > 1:
                 sampleRate = 1
@@ -246,7 +246,7 @@ def coverageFinderAverage(read1,read2,directory,contigfilepath):
     contigs = contigfilepath
     coveragestats = "coveragestats.txt"
     subprocess.run(["conda","run","-n","QC","bbmap.sh","ref=" + contigs,"in=" + read1,"in2=" + read2,"out=coverage_mapping.sam","nodisk=t","fast=t","covstats="+coveragestats],cwd = directory)
-    
+    print("Finished")
     linecount = 0
     sumcoverage = 0
     longestcontiglength = None
