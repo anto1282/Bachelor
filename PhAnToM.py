@@ -112,7 +112,7 @@ def main():
         print("Trimming was skipped")
 
     print(read1Trimmed,read2Trimmed)
-    assemblydirectory, read1Trimmed, read2Trimmed = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,phredOffset,0.1,args.nrofassemblies, args.skip)
+    assemblydirectory, read1Trimmed, read2Trimmed = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,phredOffset,0.3,args.nrofassemblies, args.skip)
 
     
     #Maybe this is not necessary?
