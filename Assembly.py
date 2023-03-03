@@ -58,6 +58,8 @@ def SubSampling(read1,read2,directory,sampleRate,sampleSeed, SkipTag): #Subsampl
 
 def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassemblies, SkipTag):
     
+    maxN50 = None
+    maxseed = None
     #Initialisation
     contiglengthcutoff = 500
     if "Assembly" not in SkipTag:
@@ -97,8 +99,6 @@ def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassembl
             print(coverage)
             print(sampleRate)
     
-        maxN50 = None
-        maxseed = None
         print("Found best sampleRate:", sampleRate)
         for sampleSeed in range(1,int(nrofassemblies)+1):
             print("Assembling using SPADES.py", sampleSeed ,"out of", nrofassemblies, "...")
