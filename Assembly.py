@@ -61,7 +61,7 @@ def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassembl
     maxN50 = None
     maxseed = None
     #Initialisation
-    contiglengthcutoff = 200
+    contiglengthcutoff = 500
     if "Assembly" not in SkipTag:
         Skip = None
     

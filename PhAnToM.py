@@ -112,11 +112,11 @@ def main():
         print("Trimming was skipped")
 
     print(read1Trimmed,read2Trimmed)
-    assemblydirectory, read1Trimmed, read2Trimmed = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,phredOffset,0.1,args.nrofassemblies, args.skip)
+    assemblydirectory, read1Trimmed, read2Trimmed = Assembly.MultiAssembly(read1Trimmed,read2Trimmed,parent_directory,phredOffset,0.3,args.nrofassemblies, args.skip)
 
     
     #Maybe this is not necessary?
-    Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=200) #Filters off too short contigs
+    Contigs_Trimmed = Assembly.contigTrimming(assemblydirectory, "contigs.fasta", minLength=500) #Filters off too short contigs
 
     pathToDeepVirFinder = "../../DeepVirFinder"
     if "DeepVirFinder" not in args.skip:
@@ -126,6 +126,7 @@ def main():
         print("DeepVirFinder was skipped")
 
     viralcontigs,nonviralcontigs = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.95)
+    
     if "Pharokka" not in args.skip:
         Assembly.PHAROKKA(parent_directory, viralcontigs, threads)
     else:
