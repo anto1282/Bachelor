@@ -126,6 +126,7 @@ def main():
         print("DeepVirFinder was skipped")
 
     viralcontigs,nonviralcontigs = DeepVirExtractor(predfile,assemblydirectory,parent_directory,0.95)
+    
     if "Pharokka" not in args.skip:
         Assembly.PHAROKKA(parent_directory, viralcontigs, threads)
     else:
