@@ -59,7 +59,7 @@ def SubSampling(read1,read2,directory,sampleRate,sampleSeed, SkipTag): #Subsampl
 def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassemblies, SkipTag):
     
     #Initialisation
-    contiglengthcutoff = 200
+    contiglengthcutoff = 500
     if "Assembly" not in SkipTag:
         Skip = None
     
