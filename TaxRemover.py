@@ -14,14 +14,14 @@ def EuRemover(directory,read1TrimmedSub, read2TrimmedSub, sraNR):
             Flag = False
             break
         if Flag == True:
-            TaxIDSet.add(line.split()[-2])
+            TaxIDSet.add(line.split()[4])
     infile.close()
 
     Flag = False
 
     ReadNumSet = set()
     infile = open("Read.kraken")
-
+    print(TaxIDSet)
     for line in infile:
         if line.split()[2] in TaxIDSet:
             ReadNumSet.add(line.split()[1])
@@ -36,7 +36,7 @@ def EuRemover(directory,read1TrimmedSub, read2TrimmedSub, sraNR):
     outfile1 = open(OutName1,"w")
     outfile2 = open(OutName2, "w")
 
-
+    #print(ReadNumSet)
     for line in infile1:
         if line.startswith("@"+sraNR):
             if line.split()[0][1:] in ReadNumSet:
