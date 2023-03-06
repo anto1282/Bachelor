@@ -9,6 +9,7 @@ params.krakDB = "../KrakenDB"
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
 include {SPADES} from "./Assembly.nf"
+include {DVF} from "./DVF.nf"
 
 workflow{
     
@@ -29,6 +30,6 @@ workflow{
     NoEUReads_ch = TAXREMOVE(TrimmedFiles_ch, Krak_ch)
 
     ASSEMBLY_ch = SPADES(NoEUReads_ch)  
-
+    VIRPREDFILE_ch = DVF(ASSEMBLY_ch)
 
 }
