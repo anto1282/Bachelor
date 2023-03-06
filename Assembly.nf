@@ -44,13 +44,12 @@ process OFFSETDETECTOR {
 process SUBSAMPLING {
     conda 'agbiome::bbtools'
     input:
-    val(pair_id)
-    path(reads)
+    tuple val(pair_id), path(reads)
     val samplerate
     val sampleseed
 
     output:
-    path(subsampled_reads)
+    tuple val(pair_id), path(subsampled_reads)
 
     script:
     def (r1,r2) = reads
