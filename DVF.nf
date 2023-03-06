@@ -1,6 +1,6 @@
 process DVF {
     conda 'python=3.6 numpy theano=1.0.3 keras=2.2.4 scikit-learn Biopython h5py'
-    publishDir "${params.outdir}/${pair_id}/DVFResults", mode: 'copy'
+    publishDir "${params.outdir}/DVFResults", mode: 'copy'
 
     cpus 6
 
@@ -14,8 +14,8 @@ process DVF {
     
     script:
     """
-    gunzip ${contigs} > contigs.tmp
-    python ${params.DVF}/dvf.py -i contigs.tmp -l 500
+    gzip --decompress --force ${contigs}
+    python ${projectDir}/../DeepVirFinder/dvf.py -i contigs.fasta -l 500
     """
 }
 
