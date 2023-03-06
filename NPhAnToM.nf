@@ -8,6 +8,8 @@ params.outdir = "./Results"
 params.krakDB = "../KrakenDB"
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
+include * from "./Assembly.nf"
+
 workflow{
     Channel
         .fromSRA(params.IDS)
@@ -19,5 +21,8 @@ workflow{
     TrimmedFiles_ch = TRIM(read_pairs_ch)
     Krak_ch = KRAKEN(TrimmedFiles_ch, KrakenDB_ch)
     NoEUReads_ch = TAXREMOVE(TrimmedFiles_ch, Krak_ch)
+
+    ASSEMBLY_ch = SPADES(NoEUReads_ch)  
+    
 
 }

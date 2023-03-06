@@ -64,3 +64,25 @@ process SubSampling {
 
 }
 
+process N50 {
+    conda 'agbiome::bbtools'
+    input:
+    path(contigs)
+
+    output:
+    val n50
+
+    script:
+    """"
+    stats.sh in=${contigs} > n50results
+
+    #!/usr/bin/python3
+    with open(n50results,'r') as file:
+        for line in file:
+            if line.startswith("Main genome contig N/L50:"):
+                nl50 = line.split()[4]
+                reg_obj = re.search(r'(\w+)\/',nl50)
+                N50 = float(reg_obj.groups()[0])
+                print(N50)
+    """
+}
