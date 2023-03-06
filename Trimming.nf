@@ -1,19 +1,22 @@
 #!/usr/bin/env nextflow
-nextflow.enable.dsl=2
-params.reads = "*_{1,2}.fastq"
-params.outdir = "./Results"
-params.krakDB = "../KrakenDB"
+
+
 
 process FASTERQDUMP {
     conda 'sra-tools'
-    publishDir "${params.outdir}"
+    publishDir "${params.outdir}/${sra_nr}"
 
-    input sra_nr
+    input: 
+    tuple val(sra_nr), path(web)
     
+    output:
+    path "${sra_nr}_{1,2}.fastq"
 
+    script:
+    """
+    fasterq-dump ${sra_nr} --split-files
+    """
 }
-
-
 
 process TRIM {
     conda 'AdapterRemoval agbiome::bbtools'
@@ -85,17 +88,3 @@ process TAXREMOVE{
     """
 
 }
-
-
-'''workflow{
-    Channel
-        .fromFilePairs(params.reads, checkIfExists: true)
-        .set { read_pairs_ch }
-
-    KrakenDB_ch = Channel.fromPath("../KrakenDB")
-
-    TrimmedFiles_ch = TRIM(read_pairs_ch)
-    Krak_ch = KRAKEN(TrimmedFiles_ch, KrakenDB_ch)
-    NoEUReads_ch = TAXREMOVE(TrimmedFiles_ch, Krak_ch)
-
-}'''
