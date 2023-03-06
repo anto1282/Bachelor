@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl=2
 params.reads = "*_{1,2}.fastq"
-params.outdir = "./Results"
+params.outdir = "../Results"
 params.krakDB = "../KrakenDB"
 
 
