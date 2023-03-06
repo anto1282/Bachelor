@@ -7,6 +7,8 @@ params.IDS = "SRP043510"
 params.outdir = "./Results"
 params.krakDB = "../KrakenDB"
 params.DVF = "../DeepVirFinder"
+params.samplerate = 0.1
+params.sampleseed = 100
 
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
@@ -30,11 +32,10 @@ workflow{
     NoEUReads_ch = TAXREMOVE(TrimmedFiles_ch, Krak_ch)
 
 
-    READS_SUB = SUBSAMPLING()
-    ASSEMBLY_ch = SPADES(NoEUReads_ch,OFFSET)  
+    READS_SUB_ch = SUBSAMPLING(NoEUReads_ch,params.samplerate,params.sampleseed)
+    ASSEMBLY_ch = SPADES(READS_SUB_ch,OFFSET)  
     N50STATS = N50(ASSEMBLY_ch)
     
-    ASSEMBLY_ch = SPADES(NoEUReads_ch)  
     VIRPREDFILE_ch = DVF(ASSEMBLY_ch)
 
 }
