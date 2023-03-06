@@ -72,3 +72,4 @@ def DeepVirExtractor(predfile,assemblyDirectory,directory,cutoff):
     except ValueError as error:
         print("Command argument missing:", error)
         sys.exit()
+
