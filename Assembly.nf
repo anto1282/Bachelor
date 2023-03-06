@@ -18,9 +18,7 @@ process SPADES {
     
     """
     spades.py -o assembly -1 ${r1} -2 ${r2} --meta --phred-offset 33
-    if [ -f contigs.fasta ]; then
-        gzip -n assembly/contigs.fasta
-    fi
+    gzip -n assembly/contigs.fasta
     """
 }
 
