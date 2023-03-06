@@ -77,7 +77,7 @@ process TAXREMOVE{
 }
 
 
-workflow{
+'''workflow{
     Channel
         .fromFilePairs(params.reads, checkIfExists: true)
         .set { read_pairs_ch }
@@ -88,4 +88,4 @@ workflow{
     Krak_ch = KRAKEN(TrimmedFiles_ch, KrakenDB_ch)
     NoEUReads_ch = TAXREMOVE(TrimmedFiles_ch, Krak_ch)
 
-}
+}'''
