@@ -1,13 +1,23 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl=2
 params.reads = "*_{1,2}.fastq"
-params.outdir = "../Results"
+params.outdir = "./Results"
 params.krakDB = "../KrakenDB"
+
+process FASTERQDUMP {
+    conda 'sra-tools'
+    publishDir "${params.outdir}"
+
+    input sra_nr
+    
+
+}
+
 
 
 process TRIM {
-  conda 'AdapterRemoval agbiome::bbtools'
-    publishDir "${params.outdir}${pair_id}/TrimmedFiles", mode: 'copy'
+    conda 'AdapterRemoval agbiome::bbtools'
+    publishDir "${params.outdir}/${pair_id}/TrimmedFiles", mode: 'copy'
 
     cpus 4
 
