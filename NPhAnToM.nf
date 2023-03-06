@@ -6,14 +6,11 @@ nextflow.enable.dsl=2
 params.IDS = "SRP043510"
 params.outdir = "./Results"
 params.krakDB = "../KrakenDB"
+params.DVF = "../DeepVirFinder"
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
-<<<<<<< HEAD
-include {SPADES} from "./Assembly.nf"
 include {DVF} from "./DVF.nf"
-=======
 include {SPADES; offsetdetector} from "./Assembly.nf"
->>>>>>> a1f24213efb376c263a280e8584fae01bd662eae
 
 workflow{
     
