@@ -8,7 +8,7 @@ params.outdir = "./Results"
 params.krakDB = "../KrakenDB"
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
-include * from "./Assembly.nf"
+include {SPADES} from "./Assembly.nf"
 
 workflow{
     
@@ -29,6 +29,6 @@ workflow{
     NoEUReads_ch = TAXREMOVE(TrimmedFiles_ch, Krak_ch)
 
     ASSEMBLY_ch = SPADES(NoEUReads_ch)  
-    
+
 
 }

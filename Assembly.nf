@@ -1,42 +1,42 @@
 #!/usr/bin/env nextflow
 
-params.cpu = 1
-
+'''params.cpu = 1
+'''
 process SPADES {
-    conda "bioconda::spades=3.15.5"
+    conda "spades=3.15.4 conda-forge::openmp"
     publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
 
-    cpus = cpu
+    cpus = 4
     input: 
     tuple val(pair_id), path(reads)
 
     output:
-    path('contigs.fasta.gz')
+    path('assembly/contigs.fasta.gz')
 
     script:
     def (r1, r2) = reads
     
     """
-    spades.py -1 ${r1} -2 ${r2} --meta --phred-offset 33
+    spades.py -o assembly -1 ${r1} -2 ${r2} --meta --phred-offset 33
     if [ -f contigs.fasta ]; then
-        gzip -n contigs.fasta
+        gzip -n assembly/contigs.fasta
     fi
     """
 }
 
-//insert offsetdetector
+
 
 process offsetdetector {
     input:
     path(reads)
 
     output:
-    val phredscore
+    val (phredscore)
     script:
     
     def (r1, r2) = reads
     """
-    #!/usr/bin/python3
+    #!/usr/bin/env python
     import Assembly
 
     print(offsetdetector.offsetDetector(${r1},${r2}))
@@ -46,7 +46,10 @@ process offsetdetector {
 process SubSampling {
     conda 'agbiome::bbtools'
     input:
-    tuple val(pair_id), path(reads), val samplerate, val sampleseed
+    val(pair_id)
+    path(reads)
+    val samplerate
+    val sampleseed
 
     output:
     path(subsampled_reads)
@@ -64,25 +67,3 @@ process SubSampling {
 
 }
 
-process N50 {
-    conda 'agbiome::bbtools'
-    input:
-    path(contigs)
-
-    output:
-    val n50
-
-    script:
-    """"
-    stats.sh in=${contigs} > n50results
-
-    #!/usr/bin/python3
-    with open(n50results,'r') as file:
-        for line in file:
-            if line.startswith("Main genome contig N/L50:"):
-                nl50 = line.split()[4]
-                reg_obj = re.search(r'(\w+)\/',nl50)
-                N50 = float(reg_obj.groups()[0])
-                print(N50)
-    """
-}
