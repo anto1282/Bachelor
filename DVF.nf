@@ -5,7 +5,7 @@ process DVF {
     cpus 4
 
     input: 
-    path(contigs.gz) 
+    path(contigs) 
 
 
     output:
@@ -13,7 +13,7 @@ process DVF {
     
     script:
     """
-    gunzip ${contigs.gz} > contigs.tmp
+    gunzip ${contigs} > contigs.tmp
     python ${params.DVF} -i contigs.tmp -l 500
     """
 }

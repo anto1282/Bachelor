@@ -6,10 +6,12 @@ nextflow.enable.dsl=2
 params.IDS = "SRP043510"
 params.outdir = "./Results"
 params.krakDB = "../KrakenDB"
+params.DVF = "../DeepVirFinder"
 
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
 include {SPADES; OFFSETDETECTOR; N50;SUBSAMPLING} from "./Assembly.nf"
+include {DVF} from "./DVF.nf"
 
 workflow{
     
@@ -32,5 +34,7 @@ workflow{
     ASSEMBLY_ch = SPADES(NoEUReads_ch,OFFSET)  
     N50STATS = N50(ASSEMBLY_ch)
     
+    ASSEMBLY_ch = SPADES(NoEUReads_ch)  
+    VIRPREDFILE_ch = DVF(ASSEMBLY_ch)
 
 }
