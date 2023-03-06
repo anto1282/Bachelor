@@ -17,6 +17,7 @@ process TRIM {
 
     output:
     tuple val(pair_id), path(trimmed_reads)
+    
     script:
     def (r1, r2) = reads
 
