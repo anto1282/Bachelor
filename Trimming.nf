@@ -7,10 +7,11 @@ process FASTERQDUMP {
     publishDir "${params.outdir}/${sra_nr}"
 
     input: 
-    tuple val(sra_nr), path(web)
+    val sra_nr
     
     output:
-    path "${sra_nr}_{1,2}.fastq"
+    tuple val (sra_nr), path ("${sra_nr}_*.fastq")
+    
 
     script:
     """
