@@ -1,7 +1,6 @@
 #!/usr/bin/env nextflow
 
-'''params.cpu = 1
-'''
+
 process SPADES {
     conda "spades=3.15.4 conda-forge::openmp"
     publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
@@ -26,18 +25,17 @@ process SPADES {
 
 process offsetdetector {
     input:
-    path(reads)
+    tuple val(pair_id), path(reads)
 
     output:
     val (phredscore)
     script:
     
     def (r1, r2) = reads
-    """
-    #!/usr/bin/env python
-    import Assembly
-
-    print(offsetdetector.offsetDetector(${r1},${r2}))
+    
+    phredscore = """
+    python3 ${projectDir}/offsetdetector.py ${r1} ${r2}
+    
     """
 }
 

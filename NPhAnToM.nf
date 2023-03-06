@@ -8,7 +8,7 @@ params.outdir = "./Results"
 params.krakDB = "../KrakenDB"
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
-include {SPADES} from "./Assembly.nf"
+include {SPADES; offsetdetector} from "./Assembly.nf"
 
 workflow{
     
@@ -22,7 +22,8 @@ workflow{
 
     read_pairs_ch = FASTERQDUMP(read_IDS_ch)
 
-    
+    OFFSET = offsetdetector(read_pairs_ch)
+    OFFSET.view()
 
     TrimmedFiles_ch = TRIM(read_pairs_ch)
     Krak_ch = KRAKEN(TrimmedFiles_ch, KrakenDB_ch)
@@ -30,5 +31,6 @@ workflow{
 
     ASSEMBLY_ch = SPADES(NoEUReads_ch)  
 
+    
 
 }
