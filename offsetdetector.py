@@ -1,5 +1,8 @@
 #!/usr/bin/python3
 
+import sys
+
+
 def offsetDetector(read1,read2):
     maxASCII = None
     minASCII = None
@@ -30,3 +33,5 @@ def offsetDetector(read1,read2):
                         phredoffset = "64"
                         #print(phredoffset)
                         return phredoffset
+                    
+print(offsetDetector(sys.argv[1],sys.argv[2]))

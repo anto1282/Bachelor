@@ -47,7 +47,7 @@ process TRIM {
 
 process KRAKEN{
     conda "kraken2"
-    publishDir "${params.outdir}${pair_id}", mode: "copy"
+    publishDir "${params.outdir}/${pair_id}", mode: "copy"
     cpus 4
 
     input:
@@ -69,7 +69,7 @@ process KRAKEN{
 }
 
 process TAXREMOVE{
-    publishDir "${params.outdir}${pair_id}", mode: "copy"
+    publishDir "${params.outdir}/${pair_id}", mode: "copy"
     cpus 4
 
     input:
@@ -78,15 +78,21 @@ process TAXREMOVE{
     path reportkraken
 
     output:
-    path "read_1_TrimmedSubNoEu.fastq"
-    path "read_2_TrimmedSubNoEu.fastq"
-
+    
+    tuple val(pair_id), path(trimmed_reads)
 
     script:
+
     def (r1, r2) = reads
 
+    trimmed_reads = reads.collect{
+      "${it.baseName}SubNoEu.fastq"
+    }
+    
+    
+
     """ 
-    python3 ${projectDir}/TaxRemover.py ${r1} ${r2} ${pair_id} ${reportkraken} ${readkraken} ${projectDir}
+    python3 ${projectDir}/TaxRemover.py ${r1} ${r2} ${pair_id} ${reportkraken} ${readkraken} ${projectDir}/Results
     """
 
 }
