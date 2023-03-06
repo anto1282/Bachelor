@@ -79,3 +79,8 @@ process N50 {
     """
 
 }
+
+
+process MULTIASSEMBLY {
+    <
+}
