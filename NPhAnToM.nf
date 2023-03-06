@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 
-//nextflow.preview.recursion=true
+nextflow.preview.recursion=true
 nextflow.enable.dsl=2
 params.IDS = "SRP043510"
 params.outdir = "./Results"
@@ -14,6 +14,8 @@ params.sampleseed = 100
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
 include {SPADES; OFFSETDETECTOR; N50;SUBSAMPLING} from "./Assembly.nf"
 include {DVF} from "./DVF.nf"
+
+
 
 workflow{
     
@@ -36,6 +38,10 @@ workflow{
     ASSEMBLY_ch = SPADES(READS_SUB_ch,OFFSET)  
     N50STATS = N50(ASSEMBLY_ch)
     
+    MULTIASSEMBLY
+        .recurse(NoEUReads_ch)
+        .times(3)
+
     VIRPREDFILE_ch = DVF(ASSEMBLY_ch)
 
 }
