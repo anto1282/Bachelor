@@ -8,6 +8,7 @@ process SPADES {
     cpus = 4
     input: 
     tuple val(pair_id), path(reads)
+    val phred
 
     output:
     path('assembly/contigs.fasta.gz')
@@ -16,30 +17,31 @@ process SPADES {
     def (r1, r2) = reads
     
     """
-    spades.py -o assembly -1 ${r1} -2 ${r2} --meta --phred-offset 33
+    spades.py -o assembly -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
     gzip -n assembly/contigs.fasta
     """
 }
 
 
 
-process offsetdetector {
+process OFFSETDETECTOR {
     input:
     tuple val(pair_id), path(reads)
 
     output:
-    val (phredscore)
+    stdout
+
     script:
     
     def (r1, r2) = reads
     
-    phredscore = """
+    """
     python3 ${projectDir}/offsetdetector.py ${r1} ${r2}
     
     """
 }
 
-process SubSampling {
+process SUBSAMPLING {
     conda 'agbiome::bbtools'
     input:
     val(pair_id)
@@ -63,3 +65,18 @@ process SubSampling {
 
 }
 
+process N50 {
+    conda 'agbiome::bbtools'
+
+    input: 
+    path(contigs_fasta)
+
+    output:
+    stdout
+
+    script:
+    """
+    stats.sh in=${contigs_fasta} | grep 'Main genome scaffold N/L50:' | cut -d: -f2 | cut -d/ -f1 | xargs
+    """
+
+}
