@@ -82,5 +82,13 @@ process N50 {
 
 
 process MULTIASSEMBLY {
-    <
+    
+    
+    
+    script:
+    """
+    python3 ${projectDir}/MultiAssembly.py
+
+
+    """
 }
