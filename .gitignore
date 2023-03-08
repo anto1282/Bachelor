@@ -6,5 +6,5 @@ work
 Results*
 .nextflow.log*
 copy.nf
-
-NPhAnToM copy.nf
+AntonsNphantom.nf
+AntonsDVF.nf

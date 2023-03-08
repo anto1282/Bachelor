@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 
-
+// TODO TJEK OM FIL ER TILSTEDE FØR VI LAVER FASTERQDUMP
 process FASTERQDUMP {
     conda 'sra-tools'
     publishDir "${params.outdir}/${sra_nr}"
