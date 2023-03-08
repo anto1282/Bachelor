@@ -9,38 +9,7 @@ directory = sys.argv[6]
 
 
 #!/usr/bin/python3
-import subprocess, re, os, glob
-
-def offsetDetector(read1,read2,directory):
-    maxASCII = None
-    minASCII = None
-    print("Finding phred-offset")
-    reads = [read1,read2]
-    for read in reads:
-        with open(directory + "/" + read) as file:
-            phredflag = False
-            for line in file:
-                if line.startswith("+"):
-                    phredflag = True
-                elif line.startswith("@"):
-                    phredflag = False
-                elif phredflag == True:
-                    
-                    for char in line.strip():
-                        if maxASCII is None or char > maxASCII:
-                            maxASCII = char
-                        if minASCII is None or char < minASCII:
-                            minASCII = char
-                    
-                    if minASCII < "@":
-                        phredoffset = "33"
-                        print("Phred-Offset:", phredoffset)
-                        return phredoffset
-                    
-                    if maxASCII > "K":
-                        phredoffset = "64"
-                        print(phredoffset)
-                        return phredoffset
+import subprocess, re
 
 def SPADES(read1,read2,directory,spades_tag,phred_offset):
     output_dir = "assembly" 
@@ -86,7 +55,7 @@ def MultiAssembly(read1, read2, directory, phred_offset, sampleRate, nrofassembl
 
             read1Trimmed, read2Trimmed = SubSampling(read1,read2,directory,sampleRate,sampleSeed, Skip)
             assemblydirectory = SPADES(read1Trimmed,read2Trimmed,directory, SkipTag, phred_offset)
-            trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",contiglengthcutoff)
+            #trimmedContigs = contigTrimming(directory, assemblydirectory + "/contigs.fasta",contiglengthcutoff)
             coverage, coveragestatsfile = coverageFinderAverage(read1Trimmed,read2Trimmed,directory,trimmedContigs)
             subprocess.run(["rm","-rf",assemblydirectory], cwd = directory)
             subprocess.run(["rm",trimmedContigs], cwd = directory)
