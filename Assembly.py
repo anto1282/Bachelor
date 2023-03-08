@@ -42,7 +42,8 @@ def SPADES(read1,read2,directory,spades_tag,phred_offset):
     
     return output_dir
 
-
+ subprocess.run(reformat.sh in=${r1} in2=${r2} out=${subsampled_reads[0]}_#5_subsampled.fastq out2=${subsampled_reads[1]}_#5_subsampled.fastq samplerate=${samplerate} sampleseed=5)
+   
 def SubSampling(read1,read2,directory,sampleRate,sampleSeed, SkipTag): #Subsampling using Reformat.sh 
     
     read1WithNoFileFormat = re.search(r'(\w+)\.fastq',read1).groups()[0]

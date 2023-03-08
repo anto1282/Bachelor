@@ -1,18 +1,19 @@
 #!/usr/bin/env nextflow
 
 
-nextflow.preview.recursion=true
+//nextflow.preview.recursion=true
 nextflow.enable.dsl=2
-params.IDS = "SRP043510"
+params.IDS = "SRR23446271"
 params.outdir = "./Results"
 params.krakDB = "../KrakenDB"
 params.DVF = "../DeepVirFinder"
 params.samplerate = 0.1
-params.sampleseed = 100
+params.sampleseed = 5
+
 
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
-include {SPADES; OFFSETDETECTOR; N50;SUBSAMPLING} from "./Assembly.nf"
+include {SPADES; OFFSETDETECTOR; N50;SUBSAMPLING;MULTIASSEMBLY} from "./Assembly.nf"
 include {DVF} from "./DVF.nf"
 
 
@@ -34,13 +35,18 @@ workflow{
     NoEUReads_ch = TAXREMOVE(TrimmedFiles_ch, Krak_ch)
 
 
-    READS_SUB_ch = SUBSAMPLING(NoEUReads_ch,params.samplerate,params.sampleseed)
-    ASSEMBLY_ch = SPADES(READS_SUB_ch,OFFSET)  
+
+
+    READS_SUBS_ch = MULTIASSEMBLY(NoEUReads_ch,params.samplerate,params.sampleseed)
+    
+    READS_ch = Channel.fromFilePairs("/${projectDir}/Results/${params.IDS}/Subsamples/*_read{1,2}*")
+
+    ASSEMBLY_ch = (SPADES(READS_ch,OFFSET))
+
+    COVERAGE_ch = 
+
     N50STATS = N50(ASSEMBLY_ch)
     
-    MULTIASSEMBLY
-        .recurse(NoEUReads_ch)
-        .times(3)
 
     VIRPREDFILE_ch = DVF(ASSEMBLY_ch)
 
