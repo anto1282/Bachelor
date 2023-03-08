@@ -7,7 +7,8 @@ process SPADES {
 
     cpus = 4
     input: 
-    tuple val(pair_id), path(reads)
+    tuple val(pair_id), path (reads)
+    
     val phred
 
     output:
@@ -43,6 +44,7 @@ process OFFSETDETECTOR {
 
 process SUBSAMPLING {
     conda 'agbiome::bbtools'
+
     input:
     tuple val(pair_id), path(reads)
     val samplerate
@@ -55,14 +57,17 @@ process SUBSAMPLING {
     def (r1,r2) = reads
 
     subsampled_reads = reads.collect{
-        "${it.baseName}_subsampled.fastq"
+        "${it.baseName}_#*_subsampled.fastq"
     }
+"""
+reformat.sh in=${r1} in2=${r2} out=${subsampled_reads[0]} out2=${subsampled_reads[1]} samplerate=${samplerate} sampleseed=${sampleseed}
 
-    """
-    reformat.sh in=${r1} in2=${r2} out=${subsampled_reads[0]} out2=${subsampled_reads[1]} samplerate=${samplerate} sampleseed=${sampleseed}
-    """
+"""
 
 }
+
+
+
 
 process N50 {
     conda 'agbiome::bbtools'
@@ -82,13 +87,26 @@ process N50 {
 
 
 process MULTIASSEMBLY {
+    conda 'agbiome::bbtools'
+    publishDir "${params.outdir}/${pair_id}/Subsamples", mode: 'copy'
+    input:
+    tuple val(pair_id), path(reads)
+    val samplerate
+    val sampleseed
+
+    output:
+    tuple val(pair_id), path (subsampled_reads)
     
+    script:
+    def (r1,r2) = reads
+
+    subsampled_reads = reads.collect{
+        "subs#*_read{1,2}.fastq"
+    } 
     
     
     script:
     """
-    python3 ${projectDir}/MultiAssembly.py
-
-
+    python3 ${projectDir}/SubSampling.py ${r1} ${r2} ${samplerate} ${sampleseed} ${reads.baseName}
     """
 }
