@@ -2,7 +2,7 @@
 
 
 process SPADES {
-    conda "spades=3.15.4 conda-forge::openmp"
+    conda "spades=3.15.4 conda-forge::openmp seqkit"
     publishDir "${params.outdir}/${params.IDS}/Assembly", mode: 'copy'
 
     cpus 4
@@ -24,8 +24,8 @@ process SPADES {
 
     """
     spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
+    seqkit sort assembly${r1.baseName}/contigs.fasta > contigs.fasta
     gzip -n assembly${r1.baseName}/contigs.fasta
-    
     mv assembly${r1.baseName}/contigs.fasta.gz assembly${r1.baseName}/${r1}_contigs.fasta.gz
 
     """

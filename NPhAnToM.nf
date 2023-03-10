@@ -39,7 +39,6 @@ workflow{
     .flatten()
     .unique()
     .buffer( size: 2 )
-    
     .set { READS_SUBS_ch }
 
     READS_SUBS_ch.view()
@@ -63,6 +62,6 @@ workflow{
 
     N50STATS = N50(ASSEMBLY_ch_N50)
 
-    VIRPREDFILE_ch = DVF(ASSEMBLY_ch_N50)
+    //VIRPREDFILE_ch = DVF(ASSEMBLY_ch_N50)
 
 }
