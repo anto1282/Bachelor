@@ -39,10 +39,9 @@ workflow{
     SAMPLERATES_ch = Channel.fromList([0.05,0.1,0.15,0.2,0.25])
 
     SUBSAMPLEFORCOVERAGE(NoEUReads_ch,SAMPLERATES_ch,params.sampleseed)
-    // .flatten()
-    // .unique()
-    // .buffer( size: 2 )
-    
+    .flatten()
+    .unique()
+    .buffer( size: 2 )
     .set { READS_SUBS_ch }
 
     READS_SUBS_ch[0].view()
@@ -67,6 +66,6 @@ workflow{
 
     // N50STATS = N50(ASSEMBLY_ch_N50)
 
-    // VIRPREDFILE_ch = DVF(ASSEMBLY_ch_N50)
+    //VIRPREDFILE_ch = DVF(ASSEMBLY_ch_N50)
 
 }

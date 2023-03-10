@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-import subprocess, sys,re
+import subprocess, sys, re
 
 read1 = sys.argv[1]
 read2 = sys.argv[2]
