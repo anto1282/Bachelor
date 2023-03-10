@@ -50,15 +50,15 @@ workflow{
 
     results1.READ1_ch.view()
     
-    results1.READ1_ch.merge(results1.READ2_ch).view()
+    READS_SUBS_ch = results1.READ1_ch.merge(results1.READ2_ch).view()
 
     READS_SUBS_ch.view()
     
 
 
 
-    READS_ch.view()
-    ASSEMBLY_ch_COVERAGE = SPADES(READS_ch,OFFSET)
+    //READS_ch.view()
+    //ASSEMBLY_ch_COVERAGE = SPADES(READS_ch,OFFSET)
 
     //READS_ch.view()
     ASSEMBLY_ch_COVERAGE = SPADES(READS_SUBS_ch,OFFSET)
