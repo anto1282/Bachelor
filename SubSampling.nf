@@ -1,7 +1,9 @@
 #!/usr/bin/env nextflow
 
+
+
 process SUBSAMPLEFORCOVERAGE {
-    if params.server:
+    //if params.server:
     conda 'agbiome::bbtools'
     publishDir "${params.outdir}/${pair_id}/Subsamplescov", mode: 'copy'
     input:
@@ -16,7 +18,6 @@ process SUBSAMPLEFORCOVERAGE {
     def (r1,r2) = reads
 
     subsampled_reads = reads.collect{
-        
         "subs#cov*_read{1,2}.fastq"
     } 
         
