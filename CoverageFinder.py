@@ -1,8 +1,16 @@
-def coverageFinderAverage(read1,read2,directory,contigfilepath):
+#!/usr/bin/python3
+import subprocess, sys,re
+
+read1 = sys.argv[1]
+read2 = sys.argv[2]
+contig = sys.argv[3]
+
+
+def coverageFinderAverage(read1,read2,contigfilepath):
     print("Finding maximum coverage among assemblies which are larger than half of the size of the largest contig.")
     contigs = contigfilepath
     coveragestats = "coveragestats.txt"
-    subprocess.run(["conda","run","-n","QC","bbmap.sh","ref=" + contigs,"in=" + read1,"in2=" + read2,"out=coverage_mapping.sam","nodisk=t","fast=t","covstats="+coveragestats],cwd = directory)
+    subprocess.run(["bbmap.sh","ref=" + contigs,"in=" + read1,"in2=" + read2,"out=coverage_mapping.sam","nodisk=t","fast=t","covstats="+coveragestats])
     print("Finished")
     linecount = 0
     sumcoverage = 0
@@ -23,5 +31,11 @@ def coverageFinderAverage(read1,read2,directory,contigfilepath):
                 
             linecount += 1      
     averagecoverage = sumcoverage / linecount - 1
-    return averagecoverage, coveragestats
+    
 
+    if averagecoverage > 20 and 100 > averagecoverage:
+        reg_obj = re.search(r'subs#cov(\d\.\d+)_read1\.fastq',read1)
+        
+        return reg_obj.groups(0)
+
+print(coverageFinderAverage(read1,read2,contig))
