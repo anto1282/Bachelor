@@ -7,12 +7,12 @@ process SPADES {
 
     cpus 4
     input: 
-    path(reads)
+    tuple val(sampr), path(reads)
     
     val phred
 
     output:
-    path(assemblies)
+    tuple val(r1.baseName), path(assemblies)
 
     script:
     def (r1, r2) = reads
@@ -98,64 +98,12 @@ process N50 {
 }
 
 
-process SUBSAMPLEFORCOVERAGE {
-    conda 'agbiome::bbtools'
-    publishDir "${params.outdir}/${pair_id}/Subsamplescov", mode: 'copy'
-    input:
-    tuple val(pair_id), path(reads)
-    val samplerate
-    val sampleseed
-
-    output:
-    path (subsampled_reads)
-    
-    script:
-    def (r1,r2) = reads
-
-    subsampled_reads = reads.collect{
-        
-        "subs#cov*_read{1,2}.fastq"
-    } 
-        
-    script:
-    """
-    python3 ${projectDir}/SubSampling.py ${r1} ${r2} ${samplerate} ${sampleseed} coverage
-    """
-}
-
-
-process SUBSAMPLEFORN50 {
-    conda 'agbiome::bbtools'
-    publishDir "${params.outdir}/${pair_id}/Subsamplesn50", mode: 'copy'
-    input:
-    tuple val(pair_id), path(reads)
-    val samplerate
-    val sampleseed
-
-    output:
-    path (subsampled_reads)
-    
-    script:
-    def (r1,r2) = reads
-
-    subsampled_reads = reads.collect{
-        "subs#n50*_read{1,2}.fastq"
-    } 
-    
-    
-    script:
-    """
-    python3 ${projectDir}/SubSampling.py ${r1} ${r2} ${samplerate} ${sampleseed} n50
-    """
-}
-
-
 process COVERAGE {
     conda 'agbiome::bbtools'
     
     input:
-    path(reads)
-    path(contigs_fasta)
+    tuple path(contigs_fasta), path(reads)
+    
 
     output:
     stdout

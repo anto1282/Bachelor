@@ -15,6 +15,7 @@ def SubSampling(read1,read2,sampleRate,sampleSeed,covorn50): #Subsampling using 
             out1 = "subs#cov"+ str(i) + "_read1.fastq"
             out2 = "subs#cov"+ str(i) + "_read2.fastq"
             subprocess.run(["reformat.sh","in=" + read1, "in2=" + read2, "out=" + out1, "out2=" + out2,"samplerate=" + str(i),"sampleseed=" + str(sampleSeed),"overwrite=true"])
+            print((int(i * 100)),end=" ")
     elif covorn50 == "n50":
         sampleRate = int(sampleRate) / 100
         for i in range(int(sampleSeed)):
