@@ -5,7 +5,7 @@ process SPADES {
     conda "spades=3.15.4 conda-forge::openmp"
     publishDir "${params.outdir}/${params.IDS}/Assembly", mode: 'copy'
 
-    cpus 4
+    cpus 8
     input: 
     path(reads)
     
@@ -23,7 +23,7 @@ process SPADES {
     } 
 
     """
-    spades.py -o assembly -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
+    spades.py -o assembly -1 ${r1} -2 ${r2} --meta --phred-offset ${phred} --threads ${task.cpus}
     gzip -n assembly/contigs.fasta
     
     mv assembly/contigs.fasta.gz assembly/${r1}_contigs.fasta.gz

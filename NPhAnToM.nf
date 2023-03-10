@@ -35,41 +35,19 @@ workflow{
     NoEUReads_ch = TAXREMOVE(TrimmedFiles_ch, Krak_ch)
 
 
-   // READ1_ch = Channel.create()
-    //READ2_ch = Channel.create()
-
     SUBSAMPLEFORCOVERAGE(NoEUReads_ch,params.samplerate,params.sampleseed)
-    // .toSortedList( {a, b -> a[0] <=> b[0]})
     .flatten()
     .unique()
-
-    // .multiMap{
-    //     it -> 
-    //     READ1_ch: it
-    //     READ2_ch: it
-    // }
     .buffer( size: 2 )
     
-    .set { results1 }
+    .set { READS_SUBS_ch }
 
-    results1.view()
-    
+    READS_SUBS_ch.view()
 
-    
-    // READS_SUBS_ch = results1.READ1_ch.merge(results1.READ2_ch).view()
-
-    // READS_SUBS_ch.view()
-    
+    ASSEMBLY_ch_COVERAGE = SPADES(READS_SUBS_ch,OFFSET)
 
 
-
-    //READS_ch.view()
-    ASSEMBLY_ch_COVERAGE = SPADES(results1,OFFSET)
-
-    //READS_ch.view()
-    //ASSEMBLY_ch_COVERAGE = SPADES(READS_SUBS_ch,OFFSET)
-
-    //SAMPLERATE_LIST = COVERAGE(READS_SUBS_ch,ASSEMBLY_ch_COVERAGE).collect().max()
+    SAMPLERATE_LIST = COVERAGE(READS_SUBS_ch,ASSEMBLY_ch_COVERAGE).collect().max()
 
     
 
