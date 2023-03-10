@@ -9,11 +9,12 @@ params.krakDB = "../KrakenDB"
 params.DVF = "../DeepVirFinder"
 params.samplerate = 0.3
 params.sampleseed = 5
-
+params.server = false
 
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
-include {SPADES; SPADES1; OFFSETDETECTOR; N50;SUBSAMPLEFORCOVERAGE;SUBSAMPLEFORN50;COVERAGE} from "./Assembly.nf"
+include {SPADES; SPADES1; OFFSETDETECTOR; N50;COVERAGE} from "./Assembly.nf"
+include {SUBSAMPLEFORCOVERAGE; SUBSAMPLEFORN50} from "./SubSampling.nf"
 include {DVF} from "./DVF.nf"
 
 
