@@ -19,14 +19,14 @@ process SPADES {
     
 
     assemblies = reads.collect{
-        "assembly/${r1}_contigs.fasta.gz"
+        "assembly${r1.baseName}/${r1}_contigs.fasta.gz"
     } 
 
     """
     spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
-    gzip -n assembly/contigs.fasta
+    gzip -n assembly${r1.baseName}/contigs.fasta
     
-    mv assembly/contigs.fasta.gz assembly/${r1}_contigs.fasta.gz
+    mv assembly${r1.baseName}/contigs.fasta.gz assembly${r1.baseName}/${r1}_contigs.fasta.gz
 
     """
 }
@@ -42,14 +42,14 @@ process SPADES1 {
     val phred
 
     output:
-    path('assembly/contigs.fasta.gz')
+    path('assembly${r1.baseName}/contigs.fasta.gz')
 
     script:
     def (r1, r2) = reads
     
     """
     spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
-    gzip -n assembly/contigs.fasta
+    gzip -n assembly${r1.baseName}/contigs.fasta
     """
 }
 
