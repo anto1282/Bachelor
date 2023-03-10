@@ -33,23 +33,31 @@ process SPADES {
 
 process SPADES1 {
     conda "spades=3.15.4 conda-forge::openmp"
-    publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
+    publishDir "${params.outdir}/${params.IDS}/Assembly", mode: 'copy'
 
-    cpus = 4
+    cpus 4
     input: 
-    tuple val(pair_id), path (reads)
+    path(reads)
     
     val phred
 
     output:
-    path('assembly${r1.baseName}/contigs.fasta.gz')
+    path(assemblies)
 
     script:
     def (r1, r2) = reads
     
+
+    assemblies = reads.collect{
+        "assembly${r1.baseName}/${r1}_contigs.fasta.gz"
+    } 
+
     """
     spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
     gzip -n assembly${r1.baseName}/contigs.fasta
+    
+    mv assembly${r1.baseName}/contigs.fasta.gz assembly${r1.baseName}/${r1}_contigs.fasta.gz
+
     """
 }
 

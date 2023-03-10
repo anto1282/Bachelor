@@ -47,7 +47,7 @@ workflow{
     ASSEMBLY_ch_COVERAGE = SPADES(READS_SUBS_ch,OFFSET).flatten().unique()
 
 
-    SAMPLERATE_LIST = COVERAGE(READS_SUBS_ch,ASSEMBLY_ch_COVERAGE).collect().max()
+    SAMPLERATE_BEST = COVERAGE(READS_SUBS_ch,ASSEMBLY_ch_COVERAGE).collect().max()
 
     
 
