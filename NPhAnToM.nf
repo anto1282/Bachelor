@@ -44,10 +44,10 @@ workflow{
 
     READS_SUBS_ch.view()
 
-    ASSEMBLY_ch_COVERAGE = SPADES(READS_SUBS_ch,OFFSET)
+    ASSEMBLY_ch_COVERAGE = SPADES(READS_SUBS_ch,OFFSET).flatten().unique()
 
 
-    SAMPLERATE_LIST = COVERAGE(READS_SUBS_ch,ASSEMBLY_ch_COVERAGE.unique()).collect().max()
+    SAMPLERATE_LIST = COVERAGE(READS_SUBS_ch,ASSEMBLY_ch_COVERAGE).collect().max()
 
     
 
