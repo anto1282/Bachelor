@@ -3,29 +3,31 @@
 
 process SPADES {
     conda "spades=3.15.4 conda-forge::openmp"
-    publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
+    publishDir "${params.outdir}/${params.IDS}/Assembly", mode: 'copy'
 
-    cpus = 4
+    cpus 4
     input: 
-    tuple val(pair_id), val(reads)
+    path(reads)
     
     val phred
 
     output:
-    path('assembly/contigs.fasta.gz')
+    path(assemblies)
 
     script:
     def (r1, r2) = reads
     
 
     assemblies = reads.collect{
-        "assembly/${it.baseName}_contigs.fasta.gz"
+        "assembly/${r1}_contigs.fasta.gz"
     } 
 
     """
     spades.py -o assembly -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
     gzip -n assembly/contigs.fasta
-    mv assembly/contigs.fasta.gz assembly/${reads.baseName}_contigs.fasta.gz
+    
+    mv assembly/contigs.fasta.gz assembly/${r1}_contigs.fasta.gz
+
     """
 }
 
@@ -70,32 +72,6 @@ process OFFSETDETECTOR {
     """
 }
 
-process SUBSAMPLING {
-    conda 'agbiome::bbtools'
-
-    input:
-    tuple val(pair_id), path(reads)
-    val samplerate
-    val sampleseed
-
-    output:
-    tuple val(pair_id), path(subsampled_reads)
-
-    script:
-    def (r1,r2) = reads
-
-    subsampled_reads = reads.collect{
-        "${it.baseName}_#*_subsampled.fastq"
-    }
-"""
-reformat.sh in=${r1} in2=${r2} out=${subsampled_reads[0]} out2=${subsampled_reads[1]} samplerate=${samplerate} sampleseed=${sampleseed}
-
-"""
-
-}
-
-
-
 
 process N50 {
     conda 'agbiome::bbtools'
@@ -123,7 +99,7 @@ process SUBSAMPLEFORCOVERAGE {
     val sampleseed
 
     output:
-    tuple val(pair_id), path (subsampled_reads)
+    path (subsampled_reads)
     
     script:
     def (r1,r2) = reads
