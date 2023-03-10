@@ -47,15 +47,14 @@ workflow{
     ASSEMBLY_ch_COVERAGE = SPADES(READS_SUBS_ch,OFFSET).flatten().unique()
 
 
-    SAMPLERATE_LIST = COVERAGE(READS_SUBS_ch,ASSEMBLY_ch_COVERAGE)
+    SAMPLERATE_BEST = COVERAGE(READS_SUBS_ch,ASSEMBLY_ch_COVERAGE).toInteger().collect()
 
-    SAMPLERATE_LIST.view()
-    SAMPLERATE_BEST = SAMPLERATE_LIST.max()
-    
+
 
     SAMPLERATE_BEST.view()
+    SAMPLERATE_BEST.flatten().max().view()
 
-    READS_ch_N50= SUBSAMPLEFORN50(NoEUReads_ch, SAMPLERATE_BEST, params.sampleseed)
+    READS_ch_N50= SUBSAMPLEFORN50(NoEUReads_ch, SAMPLERATE_BEST.flatten().max(), params.sampleseed)
     .flatten()
     .unique()
     .buffer( size: 2 )

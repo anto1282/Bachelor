@@ -3,7 +3,7 @@ import subprocess, sys
 
 read1 = sys.argv[1]
 read2 = sys.argv[2]
-samplerate = sys.argv[3]
+samplerate = int(sys.argv[3]) / 100
 sampleseed = sys.argv[4]
 covorn50 = sys.argv[5]
 

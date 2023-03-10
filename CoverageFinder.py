@@ -33,8 +33,9 @@ def coverageFinderAverage(read1,read2,contigfilepath):
     
 
     if averagecoverage > 20 and 100 > averagecoverage:
-        reg_obj = re.search(r'subs#cov(\d\.\d+)_read1\.fastq',read1)
+        reg_obj = re.search(r'subs#cov([0-1]\.[0-9]+)_read1\.fastq',read1)
         
-        return reg_obj.groups(0)
+        return int(float(reg_obj.group(1))*100)
+    else: return 0
 
-print(coverageFinderAverage(read1,read2,contig))
+print(coverageFinderAverage(read1,read2,contig),end = "")
