@@ -52,7 +52,7 @@ workflow{
 
     
 
-    READS_SUBS_ch = SUBSAMPLEFORN50(NoEUReads_ch, SAMPLERATE_BEST, params.sampleseed)
+    READS_ch_N50= SUBSAMPLEFORN50(NoEUReads_ch, SAMPLERATE_BEST, params.sampleseed)
     
     //READS_ch_N50 = Channel.fromFilePairs("/${projectDir}/Results/${params.IDS}/Subsamplesn50/*_read{1,2}*")
     
