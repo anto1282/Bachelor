@@ -5,7 +5,7 @@ process SPADES {
     conda "spades=3.15.4 conda-forge::openmp"
     publishDir "${params.outdir}/${params.IDS}/Assembly", mode: 'copy'
 
-    cpus 8
+    cpus 4
     input: 
     path(reads)
     
@@ -23,7 +23,7 @@ process SPADES {
     } 
 
     """
-    spades.py -o assembly -1 ${r1} -2 ${r2} --meta --phred-offset ${phred} --threads ${task.cpus}
+    spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
     gzip -n assembly/contigs.fasta
     
     mv assembly/contigs.fasta.gz assembly/${r1}_contigs.fasta.gz
@@ -35,7 +35,7 @@ process SPADES1 {
     conda "spades=3.15.4 conda-forge::openmp"
     publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
 
-    cpus = 8
+    cpus = 4
     input: 
     tuple val(pair_id), path (reads)
     
@@ -48,7 +48,7 @@ process SPADES1 {
     def (r1, r2) = reads
     
     """
-    spades.py -o assembly -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
+    spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
     gzip -n assembly/contigs.fasta
     """
 }
