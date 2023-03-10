@@ -47,18 +47,19 @@ workflow{
     ASSEMBLY_ch_COVERAGE = SPADES(READS_SUBS_ch,OFFSET)
 
 
-    SAMPLERATE_LIST = COVERAGE(READS_SUBS_ch,ASSEMBLY_ch_COVERAGE).collect().max()
+    SAMPLERATE_BEST = COVERAGE(READS_SUBS_ch,ASSEMBLY_ch_COVERAGE).collect().max()
+    SAMPLERATE_BEST.view()
 
     
 
-    //READS_SUBS_ch = SUBSAMPLEFORN50(NoEUReads_ch, SAMPLERATE_LIST.max(), params.sampleseed)
+    READS_SUBS_ch = SUBSAMPLEFORN50(NoEUReads_ch, SAMPLERATE_BEST, params.sampleseed)
     
     //READS_ch_N50 = Channel.fromFilePairs("/${projectDir}/Results/${params.IDS}/Subsamplesn50/*_read{1,2}*")
     
-   // ASSEMBLY_ch_N50 = (SPADES1(READS_ch_N50,OFFSET))
+    ASSEMBLY_ch_N50 = SPADES1(READS_ch_N50,OFFSET)
 
-    //N50STATS = N50(ASSEMBLY_ch_N50)
+    N50STATS = N50(ASSEMBLY_ch_N50)
 
-    // VIRPREDFILE_ch = DVF(ASSEMBLY_ch_N50)
+    VIRPREDFILE_ch = DVF(ASSEMBLY_ch_N50)
 
 }
