@@ -14,8 +14,8 @@ process DVF {
     
     script:
     """
-    gzip --decompress --force ${contigs}
-    python ${projectDir}/../DeepVirFinder/dvf.py -i contigs.fasta -l 500 -t ${task.cpus}
+    gzip --decompress --force ${contigs} 
+    python ${projectDir}/../DeepVirFinder/dvf.py -i ${contigs.baseName} -l 500 -c ${task.cpus}
     """
 }
 

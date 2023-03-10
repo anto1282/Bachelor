@@ -59,7 +59,7 @@ workflow{
     .unique()
     .buffer( size: 2 )
     
-    ASSEMBLY_ch_N50 = SPADES1(READS_ch_N50,OFFSET)
+    ASSEMBLY_ch_N50 = SPADES1(READS_ch_N50,OFFSET).flatten().unique()
 
     N50STATS = N50(ASSEMBLY_ch_N50)
 

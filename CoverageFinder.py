@@ -8,7 +8,7 @@ contig = sys.argv[3]
 
 def coverageFinderAverage(read1,read2,contigfilepath):
     contigs = contigfilepath
-    coveragestats = "coveragestats.txt"
+    coveragestats = contigfilepath + "coveragestats.txt"
     subprocess.run(["bbmap.sh","ref=" + contigs,"in=" + read1,"in2=" + read2,"out=coverage_mapping.sam","nodisk=t","fast=t","covstats="+coveragestats])
     
     linecount = 0
@@ -29,8 +29,8 @@ def coverageFinderAverage(read1,read2,contigfilepath):
                     break
                 
             linecount += 1      
-    averagecoverage = sumcoverage / linecount - 1
-    
+    averagecoverage = sumcoverage / (linecount - 1)
+    subprocess.run(["rm",coveragestats])
 
     if averagecoverage > 20 and 100 > averagecoverage:
         reg_obj = re.search(r'subs#cov([0-1]\.[0-9]+)_read1\.fastq',read1)
