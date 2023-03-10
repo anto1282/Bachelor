@@ -7,6 +7,34 @@ process SPADES {
 
     cpus = 4
     input: 
+    tuple val(pair_id), val(reads)
+    
+    val phred
+
+    output:
+    path('assembly/contigs.fasta.gz')
+
+    script:
+    def (r1, r2) = reads
+    
+
+    assemblies = reads.collect{
+        "assembly/${it.baseName}_contigs.fasta.gz"
+    } 
+
+    """
+    spades.py -o assembly -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
+    gzip -n assembly/contigs.fasta
+    mv assembly/contigs.fasta.gz assembly/${reads.baseName}_contigs.fasta.gz
+    """
+}
+
+process SPADES1 {
+    conda "spades=3.15.4 conda-forge::openmp"
+    publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
+
+    cpus = 8
+    input: 
     tuple val(pair_id), path (reads)
     
     val phred
@@ -86,9 +114,9 @@ process N50 {
 }
 
 
-process MULTIASSEMBLY {
+process SUBSAMPLEFORCOVERAGE {
     conda 'agbiome::bbtools'
-    publishDir "${params.outdir}/${pair_id}/Subsamples", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/Subsamplescov", mode: 'copy'
     input:
     tuple val(pair_id), path(reads)
     val samplerate
@@ -101,12 +129,62 @@ process MULTIASSEMBLY {
     def (r1,r2) = reads
 
     subsampled_reads = reads.collect{
-        "subs#*_read{1,2}.fastq"
+        
+        "subs#cov*_read{1,2}.fastq"
+    } 
+    
+   // simplename_reads = subsampled_reads.collect{
+    //    "${it.baseName}"
+    //} 
+    
+    script:
+    """
+    python3 ${projectDir}/SubSampling.py ${r1} ${r2} ${samplerate} ${sampleseed} coverage
+    """
+}
+
+
+process SUBSAMPLEFORN50 {
+    conda 'agbiome::bbtools'
+    publishDir "${params.outdir}/${pair_id}/Subsamplesn50", mode: 'copy'
+    input:
+    tuple val(pair_id), path(reads)
+    val samplerate
+    val sampleseed
+
+    output:
+    path (subsampled_reads)
+    
+    script:
+    def (r1,r2) = reads
+
+    subsampled_reads = reads.collect{
+        "subs#n50*_read{1,2}.fastq"
     } 
     
     
     script:
     """
-    python3 ${projectDir}/SubSampling.py ${r1} ${r2} ${samplerate} ${sampleseed} ${reads.baseName}
+    python3 ${projectDir}/SubSampling.py ${r1} ${r2} ${samplerate} ${sampleseed} n50
+    """
+}
+
+
+process COVERAGE {
+    conda 'agbiome::bbtools'
+    
+    input:
+    tuple val(pair_id), path(reads)
+    path(contigs_fasta)
+
+    output:
+    stdout
+    
+    script:
+    def (r1,r2) = reads
+    
+    script:
+    """
+    python3 ${projectDir}/CoverageFinder.py ${r1} ${r2} ${contigs_fasta}
     """
 }
