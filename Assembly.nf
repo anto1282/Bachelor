@@ -150,7 +150,7 @@ process COVERAGE {
     conda 'agbiome::bbtools'
     
     input:
-    tuple val(pair_id), path(reads)
+    path(reads)
     path(contigs_fasta)
 
     output:
