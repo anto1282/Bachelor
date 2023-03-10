@@ -108,11 +108,7 @@ process SUBSAMPLEFORCOVERAGE {
         
         "subs#cov*_read{1,2}.fastq"
     } 
-    
-   // simplename_reads = subsampled_reads.collect{
-    //    "${it.baseName}"
-    //} 
-    
+        
     script:
     """
     python3 ${projectDir}/SubSampling.py ${r1} ${r2} ${samplerate} ${sampleseed} coverage
