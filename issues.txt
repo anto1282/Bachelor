@@ -1,0 +1,2 @@
+coverage function doesn't take the reads corresponding to the correct contigs:
+Create channel with list of samplerates to feed to subsampling
