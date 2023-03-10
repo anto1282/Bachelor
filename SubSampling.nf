@@ -3,16 +3,20 @@
 
 
 process SUBSAMPLEFORCOVERAGE {
-    //if params.server:
-    conda 'agbiome::bbtools'
+    if (params.server) {
+        module load bbtools
+    }
+    else {
+        conda 'agbiome::bbtools'
+    }
+    
     publishDir "${params.outdir}/${pair_id}/Subsamplescov", mode: 'copy'
     input:
-    tuple val(pair_id), path(reads)
-    val samplerate
+    tuple val(samplerate), path(reads)
     val sampleseed
 
     output:
-    path (subsampled_reads)
+    tuple , path(subsampled_reads)
     
     script:
     def (r1,r2) = reads
@@ -20,7 +24,7 @@ process SUBSAMPLEFORCOVERAGE {
     subsampled_reads = reads.collect{
         "subs#cov*_read{1,2}.fastq"
     } 
-        
+    
     script:
     """
     python3 ${projectDir}/SubSampling.py ${r1} ${r2} ${samplerate} ${sampleseed} coverage

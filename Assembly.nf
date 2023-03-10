@@ -7,12 +7,12 @@ process SPADES {
 
     cpus 4
     input: 
-    path(reads)
+    tuple val(sampr), path(reads)
     
     val phred
 
     output:
-    path(assemblies)
+    tuple val(r1.baseName), path(assemblies)
 
     script:
     def (r1, r2) = reads
@@ -98,14 +98,12 @@ process N50 {
 }
 
 
-
-
 process COVERAGE {
     conda 'agbiome::bbtools'
     
     input:
-    path(reads)
-    path(contigs_fasta)
+    tuple path(contigs_fasta), path(reads)
+    
 
     output:
     stdout
