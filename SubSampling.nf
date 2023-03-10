@@ -12,11 +12,12 @@ process SUBSAMPLEFORCOVERAGE {
     
     publishDir "${params.outdir}/${pair_id}/Subsamplescov", mode: 'copy'
     input:
-    tuple val(samplerate), path(reads)
+    tuple val(pair_id), path(reads)
+    val samplerate
     val sampleseed
 
     output:
-    tuple , path(subsampled_reads)
+    tuple samplerate, path(subsampled_reads)
     
     script:
     def (r1,r2) = reads
