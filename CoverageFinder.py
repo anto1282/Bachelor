@@ -8,7 +8,8 @@ contig = sys.argv[3]
 
 def coverageFinderAverage(read1,read2,contigfilepath):
     contigs = contigfilepath
-    coveragestats = contigfilepath + "coveragestats.txt"
+    coveragestats = contigfilepath + "_coveragestats.txt"
+    
     subprocess.run(["bbmap.sh","ref=" + contigs,"in=" + read1,"in2=" + read2,"out=coverage_mapping.sam","nodisk=t","fast=t","covstats="+coveragestats])
     
     linecount = 0
