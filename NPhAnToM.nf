@@ -59,9 +59,6 @@ workflow{
     SAMPLESEEDS_ch = Channel.fromList([1,2,3,4,5]).flatten() // MAKE python script to create list
 
     SUBSAMPLEFORN50(NoEUReads_ch, SAMPLERATE_BEST.flatten().max(), SAMPLESEEDS_ch)
-    // .flatten()
-    // .unique()
-    // .buffer( size: 2 )re
     .set { READS_ch_N50 }
     
     ASSEMBLY_ch_N50 = SPADES1(READS_ch_N50,OFFSET)
