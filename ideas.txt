@@ -20,3 +20,5 @@ Get a big dataset from Thomas when the time is right
 
 
 Make one folder with all the databases?
+
+Create a channel for all the SRA's to be run in the pipeline

@@ -13,6 +13,7 @@ params.server = false
 params.cutoff = 0.7
 params.phaDB = "../PHAROKKADB"
 params.iphopDB = "..input/something"
+params.DATABASEDIR = "../../projects/mjolnir1/data/databases"
 
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"

@@ -3,14 +3,13 @@
 
 process SPADES {
     if (params.server) {
-        """
-        module load bbtools
-        """
+        beforeScript 'module load spades'
     }
     else {
-        conda 'agbiome::bbtools'
+        conda "spades=3.15.4 conda-forge::openmp seqkit"
     }
-    conda "spades=3.15.4 conda-forge::openmp seqkit"
+
+    
     publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
 
     cpus 4
@@ -30,8 +29,31 @@ process SPADES {
     mv Assembly${pair_id}/contigs.fasta.gz contigs.fasta.gz
 
     """
+    if (params.server) {
+        afterScript 'module unload spades'
+    }
 }
 
+
+
+process OFFSETDETECTOR {
+    input:
+    tuple val(pair_id), path(reads)
+
+    output:
+    stdout
+
+    script:
+    
+    def (r1, r2) = reads
+    """
+    python3 ${projectDir}/offsetdetector.py ${r1} ${r2}
+    
+    """
+}
+
+
+//DEPRECATED FUNCTIONS
 process SPADES1 {
     conda "spades=3.15.4 conda-forge::openmp seqkit"
     publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
@@ -56,24 +78,6 @@ process SPADES1 {
     gzip -n assembly${r1.baseName}/contigs.fasta
     mv assembly${r1.baseName}/contigs.fasta.gz n50_${sampleseed}_contigs.fasta.gz
 
-    """
-}
-
-
-
-process OFFSETDETECTOR {
-    input:
-    tuple val(pair_id), path(reads)
-
-    output:
-    stdout
-
-    script:
-    
-    def (r1, r2) = reads
-    """
-    python3 ${projectDir}/offsetdetector.py ${r1} ${r2}
-    
     """
 }
 

@@ -3,7 +3,13 @@
 
 // TODO TJEK OM FIL ER TILSTEDE FØR VI LAVER FASTERQDUMP
 process FASTERQDUMP {
-    conda 'sra-tools'
+    if (params.server) {
+        beforeScript 'module load sra-tools'
+    }
+    else {
+        conda 'sra-tools'
+    }
+    
     publishDir "${params.outdir}/${sra_nr}/reads"
 
     input: 
@@ -17,11 +23,24 @@ process FASTERQDUMP {
     """
     fasterq-dump ${sra_nr} --split-files
     """
+    if (params.server) {
+        afterScript 'module unload sra-tools'
+    }
 }
 
 process TRIM {
-    conda 'AdapterRemoval agbiome::bbtools'
-    //publishDir "${params.outdir}/${pair_id}/TrimmedFiles", mode: 'copy'
+    
+    if (params.server) {
+        beforeScript 
+        '
+        module load adapterremoval
+        module load bbmap
+        '
+    }
+    else {
+        conda 'AdapterRemoval agbiome::bbtools'
+    }
+     
 
     cpus 4
 
@@ -43,11 +62,26 @@ process TRIM {
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp --seed ${params.sampleseed}
     bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${trimmed_reads[0]} -out2=${trimmed_reads[1]} trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t sampleseed=${params.sampleseed}
     """
+    if (params.server) {
+        afterScript 
+        '
+        module unload adapterremoval
+        module unload bbmap
+        '
+    }
 }
 
 process KRAKEN{
-    conda "kraken2"
-    //publishDir "${params.outdir}/${pair_id}", mode: "copy"
+
+    if (params.server) {
+        beforeScript 'module load kraken2'
+        DB = "${params.DATABASEDIR}/kraken2"
+    }
+    else {
+        conda "kraken2"
+        DB = params.krakDB
+    }
+    
     cpus 4
 
     input:
@@ -65,12 +99,14 @@ process KRAKEN{
     """
     kraken2 -d ${DB} --memory-mapping --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken
     """
-
+    if (params.server) {
+        afterScript 'module unload kraken2'
+    }
 }
 
 process TAXREMOVE{
-    //publishDir "${params.outdir}/${pair_id}", mode: "copy"
-    cpus 4
+
+    cpus 1
 
     input:
     tuple val(pair_id), path(reads)
