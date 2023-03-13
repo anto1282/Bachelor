@@ -14,11 +14,13 @@ params.cutoff = 0.7
 params.phaDB = "../PHAROKKADB"
 
 
+
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
 include {SPADES; SPADES1; OFFSETDETECTOR; N50;COVERAGE} from "./Assembly.nf"
 include {SUBSAMPLEFORCOVERAGE; SUBSAMPLEFORN50} from "./SubSampling.nf"
 include {DVF; DVEXTRACT} from "./DVF.nf"
 include {PHAROKKA} from "./Pharokka.nf"
+include {DEEPHOST} from "./HostPredictor.nf"
 
 
 
@@ -71,7 +73,10 @@ workflow{
 
     VIREXTRACTED_ch = DVEXTRACT(VIRPREDFILE_ch)
 
+    HOSTPREDICTION = DEEPHOST(VIREXTRACTED_ch,)
+
     PHADB_ch = Channel.fromPath(params.phaDB)
 
     PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch,PHADB_ch)
+
 }
