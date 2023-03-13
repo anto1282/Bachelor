@@ -5,7 +5,7 @@ process DEEPHOST {
     //conda "spades=3.15.4 conda-forge::openmp seqkit"
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
-    cpus 8
+    //cpus 8
     input: 
     val (pair_id)
     path (viral_contigs_fasta)

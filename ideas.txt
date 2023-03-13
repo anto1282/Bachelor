@@ -1,6 +1,17 @@
 Genome completeness: Use checkV or similar to investigate contig genome completeness
 
-Host predictions: Use deephost or similar to investigate hosts of our phages
+Host predictions: Use deephost or similar to investigate hosts of our phages: IHOP
 
 Phage phylogeny: Classiphages 2.0
+
+Deepvirfinder, find multiple run in parallel, phageR, genomad
+
+
+Write down how people should download our pipeline
+
+Testing/benchmarking: Running on a known dataset
+
+Talk with Guillermo
+
+Get a big dataset from Thomas
 
