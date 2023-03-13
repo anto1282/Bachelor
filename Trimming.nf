@@ -4,7 +4,7 @@
 // TODO TJEK OM FIL ER TILSTEDE FØR VI LAVER FASTERQDUMP
 process FASTERQDUMP {
     conda 'sra-tools'
-    publishDir "${params.outdir}/${sra_nr}"
+    publishDir "${params.outdir}/${sra_nr}/reads"
 
     input: 
     val sra_nr
@@ -21,7 +21,7 @@ process FASTERQDUMP {
 
 process TRIM {
     conda 'AdapterRemoval agbiome::bbtools'
-    publishDir "${params.outdir}/${pair_id}/TrimmedFiles", mode: 'copy'
+    //publishDir "${params.outdir}/${pair_id}/TrimmedFiles", mode: 'copy'
 
     cpus 4
 
@@ -47,7 +47,7 @@ process TRIM {
 
 process KRAKEN{
     conda "kraken2"
-    publishDir "${params.outdir}/${pair_id}", mode: "copy"
+    //publishDir "${params.outdir}/${pair_id}", mode: "copy"
     cpus 4
 
     input:
@@ -69,7 +69,7 @@ process KRAKEN{
 }
 
 process TAXREMOVE{
-    publishDir "${params.outdir}/${pair_id}", mode: "copy"
+    //publishDir "${params.outdir}/${pair_id}", mode: "copy"
     cpus 4
 
     input:

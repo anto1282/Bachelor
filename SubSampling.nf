@@ -33,7 +33,7 @@ process SUBSAMPLEFORCOVERAGE {
 
 process SUBSAMPLEFORN50 {
     conda 'agbiome::bbtools'
-    publishDir "${params.outdir}/${pair_id}/Subsamplesn50", mode: 'copy'
+
     input:
     tuple val(pair_id), path(reads)
     val samplerate
