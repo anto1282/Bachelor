@@ -2,6 +2,14 @@
 
 
 process SPADES {
+    if (params.server) {
+        """
+        module load bbtools
+        """
+    }
+    else {
+        conda 'agbiome::bbtools'
+    }
     conda "spades=3.15.4 conda-forge::openmp seqkit"
     publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
 

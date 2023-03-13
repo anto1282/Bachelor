@@ -12,7 +12,7 @@ params.sampleseed = 5
 params.server = false
 params.cutoff = 0.7
 params.phaDB = "../PHAROKKADB"
-
+params.iphopDB = "..input/something"
 
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
@@ -61,10 +61,12 @@ workflow{
 
     VIREXTRACTED_ch = DVEXTRACT(VIRPREDFILE_ch)
 
-    HOSTPREDICTION = DEEPHOST(VIREXTRACTED_ch,)
+    //HOSTPREDICTION = DEEPHOST(VIREXTRACTED_ch)
 
-    PHADB_ch = Channel.fromPath(params.phaDB)
+    //HOSTPREDICTION = IPHOP(VIREXTRACTED_ch)
 
-    PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch,PHADB_ch)
+    //PHADB_ch = Channel.fromPath(params.phaDB)
+
+    //PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch,PHADB_ch)
 
 }

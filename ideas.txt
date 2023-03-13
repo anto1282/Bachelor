@@ -4,8 +4,9 @@ Host predictions: Use deephost or similar to investigate hosts of our phages: IH
 
 Phage phylogeny: Classiphages 2.0
 
-Deepvirfinder, find multiple run in parallel, phageR, genomad
 
+
+Deepvirfinder, find multiple run in parallel, phageR, genomad
 
 Write down how people should download our pipeline
 
@@ -13,5 +14,9 @@ Testing/benchmarking: Running on a known dataset
 
 Talk with Guillermo
 
-Get a big dataset from Thomas
 
+
+Get a big dataset from Thomas when the time is right
+
+
+Make one folder with all the databases?

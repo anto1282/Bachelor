@@ -4,7 +4,9 @@
 
 process SUBSAMPLEFORCOVERAGE {
     if (params.server) {
+        """
         module load bbtools
+        """
     }
     else {
         conda 'agbiome::bbtools'
