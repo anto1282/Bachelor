@@ -14,7 +14,7 @@ Testing/benchmarking: Running on a known dataset
 
 Talk with Guillermo
 
-
+Skal vi bruge "Seeker" (Lidt besværlig at installere, men det er jo Bents problem)
 
 Get a big dataset from Thomas when the time is right
 
