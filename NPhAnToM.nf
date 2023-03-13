@@ -43,14 +43,7 @@ workflow{
 
 
     SUBSAMPLEFORCOVERAGE(NoEUReads_ch,SAMPLERATES_ch,params.sampleseed)
-    //.flatten()
-    //.unique()
-    //.buffer( size: 2 )
     .set { READS_SUBS_ch }
-
-    //READS_SUBS_ch.view()
-
-    
 
     ASSEMBLY_ch_COVERAGE = SPADES(READS_SUBS_ch,OFFSET)
 
