@@ -7,25 +7,19 @@ process SPADES {
 
     cpus 4
     input: 
-    val (pair_id)
-    val samplerate
-    path(r1)
-    path(r2)
-    
+    tuple val(pair_id), path(reads)
     val phred
 
     output:
-    //path(assemblies)
-    val (pair_id)
-    path ("cov_${samplerate}_contigs.fasta.gz")
-    path (r1)
-    path (r2)
+    tuple val(pair_id), path ("contigs.fasta.gz")
 
+    
     script:
+    def(r1,r2) = reads
     """
-    spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
-    gzip -n assembly${r1.baseName}/contigs.fasta
-    mv assembly${r1.baseName}/contigs.fasta.gz cov_${samplerate}_contigs.fasta.gz
+    spades.py -o Assembly${pair_id} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
+    gzip -n Assembly${pair_id}/contigs.fasta
+    mv Assembly${pair_id}/contigs.fasta.gz contigs.fasta.gz
 
     """
 }

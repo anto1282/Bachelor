@@ -5,12 +5,11 @@ process DVF {
     cpus 8
 
     input: 
-    
-    tuple val(N50score), path(contigs), val (pair_id)
+    tuple val(pair_id), path(contigs)
 
 
     output:
-    val (pair_id)
+    val(pair_id)
     tuple path("*dvfpred.txt"), path(contigs)
     
     script:
