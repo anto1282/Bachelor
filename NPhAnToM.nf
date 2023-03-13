@@ -11,7 +11,7 @@ params.samplerate = 0.3
 params.sampleseed = 5
 params.server = false
 params.cutoff = 0.7
-
+params.phaDB = "../PHAROKKADB"
 
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
@@ -63,7 +63,7 @@ workflow{
     SAMPLERATE_BEST.view()
     SAMPLERATE_BEST.flatten().max().view()
 
-    SAMPLESEEDS_ch = Channel.fromList([1,2,3,4,5]).flatten()
+    SAMPLESEEDS_ch = Channel.fromList([1,2,3,4,5]).flatten() // MAKE python script to create list
 
     SUBSAMPLEFORN50(NoEUReads_ch, SAMPLERATE_BEST.flatten().max(), SAMPLESEEDS_ch)
     // .flatten()
@@ -81,5 +81,7 @@ workflow{
 
     VIREXTRACTED_ch = DVEXTRACT(VIRPREDFILE_ch)
 
-    PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch)
+    PHADB_ch = Channel.fromPath(params.phaDB)
+
+    PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch,PHADB_ch)
 }

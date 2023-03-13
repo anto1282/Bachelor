@@ -7,8 +7,10 @@ process PHAROKKA {
 
     cpus 8
     input: 
+    val (pair_id)
     path(viralcontigs) 
     path(nonviralcontigs)
+    path phaDB
 
     output:
     path "*"
@@ -17,6 +19,7 @@ process PHAROKKA {
     script:
 
     """
-    pharokka.py -i ${viralcontigs} -o pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
+    pharokka.py -i ${viralcontigs} -o pharokka -f -t ${task.cpus} -d ${phaDB} -g prodigal -m
     """
 }
+params.phaDB = "../PHAROKKADB"

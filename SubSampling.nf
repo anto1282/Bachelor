@@ -10,24 +10,19 @@ process SUBSAMPLEFORCOVERAGE {
         conda 'agbiome::bbtools'
     }
     
-    //publishDir "${params.outdir}/${pair_id}/Subsamplescov", mode: 'copy'
     input:
     tuple val(pair_id), path(reads)
     val samplerate
     val sampleseed
 
     output:
-    //tuple val (samplerate), path(subsampled_reads)
+    val (pair_id)
     val samplerate
     path("subs#cov${samplerate}_read1.fastq")
     path("subs#cov${samplerate}_read2.fastq")
     
     script:
     def (r1,r2) = reads
-
-    //subsampled_reads = samplerate.collect{
-    //   "subs#cov${it}_read{1,2}.fastq"
-    //}
     
     script:
     """
@@ -45,18 +40,14 @@ process SUBSAMPLEFORN50 {
     val sampleseed
 
     output:
+    val (pair_id)
     val sampleseed
     path("subs#n50_${sampleseed}_read1.fastq")
     path("subs#n50_${sampleseed}_read2.fastq")
     
     script:
     def (r1,r2) = reads
-
-    //subsampled_reads = reads.collect{
-    //    "subs#n50*_read{1,2}.fastq"
-    //} 
-    
-    
+  
     script:
     """
     python3 ${projectDir}/SubSampling.py ${r1} ${r2} ${samplerate} ${sampleseed} n50

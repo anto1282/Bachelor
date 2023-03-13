@@ -1,14 +1,16 @@
 process DVF {
     conda 'python=3.6 numpy theano=1.0.3 keras=2.2.4 scikit-learn Biopython h5py'
-    publishDir "${params.outdir}/DVFResults", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/DVFResults", mode: 'copy'
 
     cpus 8
 
     input: 
-    tuple val(N50score), path(contigs) 
+    
+    tuple val(N50score), path(contigs), val (pair_id)
 
 
     output:
+    val (pair_id)
     tuple path("*dvfpred.txt"), path(contigs)
     
     script:
@@ -20,12 +22,14 @@ process DVF {
 }
 
 process DVEXTRACT{
-    //publishDir "${params.outdir}/${pair_id}", mode: "copy"
+    publishDir "${params.outdir}/${pair_id}/DVFResults", mode: "copy"
 
     input:
+    val (pair_id)
     tuple path (predfile), path (contigs)
     
     output:
+    val (pair_id)
     path "predicted_viruses.fasta"
     path "non_viral_assemblies.fasta"
 
