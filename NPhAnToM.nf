@@ -19,7 +19,7 @@ params.DATABASEDIR = "../../projects/mjolnir1/data/databases"
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
 include {SPADES; SPADES1; OFFSETDETECTOR; N50;COVERAGE} from "./Assembly.nf"
 include {SUBSAMPLEFORCOVERAGE; SUBSAMPLEFORN50} from "./SubSampling.nf"
-include {DVF; DVEXTRACT} from "./DVF.nf"
+include {DVF; DVEXTRACT} from "./VirPredictions.nf"
 include {PHAROKKA} from "./Pharokka.nf"
 include {DEEPHOST} from "./HostPredictor.nf"
 
