@@ -3,7 +3,7 @@
 
 process PHAROKKA {
     conda 'pharokka'
-    publishDir "${params.outdir}/${params.IDS}/Pharokka", mode: 'copy'
+    publishDir "${params.outdir}/${params.IDS}", mode: 'copy'
 
     cpus 8
     input: 

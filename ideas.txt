@@ -1,0 +1,6 @@
+Genome completeness: Use checkV or similar to investigate contig genome completeness
+
+Host predictions: Use deephost or similar to investigate hosts of our phages
+
+Phage phylogeny: Classiphages 2.0
+

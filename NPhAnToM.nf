@@ -14,11 +14,13 @@ params.cutoff = 0.7
 params.phaDB = "../PHAROKKADB"
 
 
+
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
 include {SPADES; SPADES1; OFFSETDETECTOR; N50;COVERAGE} from "./Assembly.nf"
 include {SUBSAMPLEFORCOVERAGE; SUBSAMPLEFORN50} from "./SubSampling.nf"
 include {DVF; DVEXTRACT} from "./DVF.nf"
 include {PHAROKKA} from "./Pharokka.nf"
+include {DEEPHOST} from "./HostPredictor.nf"
 
 
 
@@ -59,9 +61,6 @@ workflow{
     SAMPLESEEDS_ch = Channel.fromList([1,2,3,4,5]).flatten() // MAKE python script to create list
 
     SUBSAMPLEFORN50(NoEUReads_ch, SAMPLERATE_BEST.flatten().max(), SAMPLESEEDS_ch)
-    // .flatten()
-    // .unique()
-    // .buffer( size: 2 )re
     .set { READS_ch_N50 }
     
     ASSEMBLY_ch_N50 = SPADES1(READS_ch_N50,OFFSET)
@@ -74,7 +73,10 @@ workflow{
 
     VIREXTRACTED_ch = DVEXTRACT(VIRPREDFILE_ch)
 
+    HOSTPREDICTION = DEEPHOST(VIREXTRACTED_ch,)
+
     PHADB_ch = Channel.fromPath(params.phaDB)
 
     PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch,PHADB_ch)
+
 }
