@@ -3,10 +3,11 @@
 
 process SPADES {
     conda "spades=3.15.4 conda-forge::openmp seqkit"
-    publishDir "${params.outdir}/${params.IDS}/Assembly", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
 
     cpus 4
     input: 
+    val (pair_id)
     val samplerate
     path(r1)
     path(r2)
@@ -15,18 +16,12 @@ process SPADES {
 
     output:
     //path(assemblies)
+    val (pair_id)
     path ("assembly${r1.baseName}/${r1}_contigs.fasta.gz")
     path (r1)
     path (r2)
 
     script:
-    ///def (r1, r2) = reads
-    
-
-    //assemblies = reads.collect{
-    //    "assembly${r1.baseName}/${r1}_contigs.fasta.gz"
-    //} 
-
     """
     spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
     seqkit sort assembly${r1.baseName}/contigs.fasta > contigs.fasta
@@ -37,11 +32,12 @@ process SPADES {
 }
 
 process SPADES1 {
-    conda "spades=3.15.4 conda-forge::openmp"
-    publishDir "${params.outdir}/${params.IDS}/Assembly", mode: 'copy'
+    conda "spades=3.15.4 conda-forge::openmp seqkit"
+    publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
 
     cpus 4
     input: 
+    val (pair_id)
     val sampleseed
     path(r1)
     path(r2)
@@ -49,21 +45,15 @@ process SPADES1 {
     val phred
 
     output:
+    val (pair_id)
     path ("assembly${r1.baseName}/${r1}_contigs.fasta.gz")
 
 
     script:
-    // def (r1, r2) = reads
-    
-
-    // assemblies = reads.collect{
-    //     "assembly${r1.baseName}/${r1}_contigs.fasta.gz"
-    // } 
-
     """
     spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
+    seqkit sort assembly${r1.baseName}/contigs.fasta > contigs.fasta
     gzip -n assembly${r1.baseName}/contigs.fasta
-    
     mv assembly${r1.baseName}/contigs.fasta.gz assembly${r1.baseName}/${r1}_contigs.fasta.gz
 
     """
@@ -91,6 +81,7 @@ process COVERAGE {
     conda 'agbiome::bbtools'
     
     input:
+    val pair_id
     path(contigs_fasta)
     path(r1)
     path(r2)
@@ -110,11 +101,12 @@ process N50 {
     conda 'agbiome::bbtools'
 
     input: 
+    val (pair_id)
     path(contigs_fasta)
 
 
     output:
-    tuple stdout, path (contigs_fasta)
+    tuple stdout, path (contigs_fasta), val (pair_id)
     
 
     script:
