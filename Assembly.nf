@@ -17,16 +17,15 @@ process SPADES {
     output:
     //path(assemblies)
     val (pair_id)
-    path ("assembly${r1.baseName}/${r1}_contigs.fasta.gz")
+    path ("cov_${samplerate}_contigs.fasta.gz")
     path (r1)
     path (r2)
 
     script:
     """
     spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
-    seqkit sort assembly${r1.baseName}/contigs.fasta > contigs.fasta
     gzip -n assembly${r1.baseName}/contigs.fasta
-    mv assembly${r1.baseName}/contigs.fasta.gz assembly${r1.baseName}/${r1}_contigs.fasta.gz
+    mv assembly${r1.baseName}/contigs.fasta.gz cov_${samplerate}_contigs.fasta.gz
 
     """
 }
@@ -46,15 +45,14 @@ process SPADES1 {
 
     output:
     val (pair_id)
-    path ("assembly${r1.baseName}/${r1}_contigs.fasta.gz")
+    path ("n50_${sampleseed}_contigs.fasta.gz")
 
 
     script:
     """
     spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
-    seqkit sort assembly${r1.baseName}/contigs.fasta > contigs.fasta
     gzip -n assembly${r1.baseName}/contigs.fasta
-    mv assembly${r1.baseName}/contigs.fasta.gz assembly${r1.baseName}/${r1}_contigs.fasta.gz
+    mv assembly${r1.baseName}/contigs.fasta.gz n50_${sampleseed}_contigs.fasta.gz
 
     """
 }
