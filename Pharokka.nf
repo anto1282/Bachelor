@@ -8,7 +8,7 @@ process PHAROKKA {
     cpus 8
     input: 
     path(viralcontigs) 
-
+    path(nonviralcontigs)
 
     output:
     path "*"

@@ -1,2 +1,11 @@
 coverage function doesn't take the reads corresponding to the correct contigs:
 Create channel with list of samplerates to feed to subsampling
+
+Increase memory if process cannot run - solution: clear cache
+
+Fix publish dir names, think about if SRA number should follow through all the processes
+to make sure we always know what SRA is related to what reads (relevant if we run many different SRA's at once, which we will do)
+(Simplify names)
+
+params.phaDB should have a default value
+

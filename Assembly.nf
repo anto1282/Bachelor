@@ -7,20 +7,25 @@ process SPADES {
 
     cpus 4
     input: 
-    tuple val(sampr), path(reads)
+    val samplerate
+    path(r1)
+    path(r2)
     
     val phred
 
     output:
-    tuple val(r1.baseName), path(assemblies)
+    //path(assemblies)
+    path ("assembly${r1.baseName}/${r1}_contigs.fasta.gz")
+    path (r1)
+    path (r2)
 
     script:
-    def (r1, r2) = reads
+    ///def (r1, r2) = reads
     
 
-    assemblies = reads.collect{
-        "assembly${r1.baseName}/${r1}_contigs.fasta.gz"
-    } 
+    //assemblies = reads.collect{
+    //    "assembly${r1.baseName}/${r1}_contigs.fasta.gz"
+    //} 
 
     """
     spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
@@ -37,20 +42,23 @@ process SPADES1 {
 
     cpus 4
     input: 
-    path(reads)
+    val sampleseed
+    path(r1)
+    path(r2)
     
     val phred
 
     output:
-    path(assemblies)
+    path ("assembly${r1.baseName}/${r1}_contigs.fasta.gz")
+
 
     script:
-    def (r1, r2) = reads
+    // def (r1, r2) = reads
     
 
-    assemblies = reads.collect{
-        "assembly${r1.baseName}/${r1}_contigs.fasta.gz"
-    } 
+    // assemblies = reads.collect{
+    //     "assembly${r1.baseName}/${r1}_contigs.fasta.gz"
+    // } 
 
     """
     spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
@@ -73,13 +81,30 @@ process OFFSETDETECTOR {
     script:
     
     def (r1, r2) = reads
-    
     """
     python3 ${projectDir}/offsetdetector.py ${r1} ${r2}
     
     """
 }
 
+process COVERAGE {
+    conda 'agbiome::bbtools'
+    
+    input:
+    path(contigs_fasta)
+    path(r1)
+    path(r2)
+    
+
+    output:
+    stdout
+    
+
+    script:
+    """
+    python3 ${projectDir}/CoverageFinder.py ${r1} ${r2} ${contigs_fasta}
+    """
+}
 
 process N50 {
     conda 'agbiome::bbtools'
@@ -87,8 +112,10 @@ process N50 {
     input: 
     path(contigs_fasta)
 
+
     output:
-    stdout
+    tuple stdout, path (contigs_fasta)
+    
 
     script:
     """
@@ -98,21 +125,3 @@ process N50 {
 }
 
 
-process COVERAGE {
-    conda 'agbiome::bbtools'
-    
-    input:
-    tuple path(contigs_fasta), path(reads)
-    
-
-    output:
-    stdout
-    
-    script:
-    def (r1,r2) = reads
-    
-    script:
-    """
-    python3 ${projectDir}/CoverageFinder.py ${r1} ${r2} ${contigs_fasta}
-    """
-}
