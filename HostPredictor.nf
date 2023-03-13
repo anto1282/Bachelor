@@ -9,8 +9,6 @@ process IPHOP {
         
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
     
-
-
     cpus 8
 
     input: 
