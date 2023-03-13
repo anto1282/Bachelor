@@ -7,8 +7,8 @@ process SAMPLELISTMAKER{
     val byVal
 
     output:
-    val sampleRate
-    
+    stdout
+
     script:
     """
     python3 SampleList.py ${fromVal} ${toVal} ${byVal}
