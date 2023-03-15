@@ -2,15 +2,16 @@
     if (params.server) {
         beforeScript 'module load deepvirfinder/2020.11.21'
         afterScript 'module unload deepvirfinder/2020.11.21'
+        cpus 16
             }
     else {
         conda 'python=3.6 numpy theano=1.0.3 keras=2.2.4 scikit-learn Biopython h5py'
-    
+        cpus 8
     }
     
     publishDir "${params.outdir}/${pair_id}/DVFResults", mode: 'copy'
 
-    cpus 10
+    
 
     input: 
     tuple val(pair_id), path(contigs)
