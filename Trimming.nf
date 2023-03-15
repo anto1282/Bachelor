@@ -4,8 +4,8 @@
 // TODO TJEK OM FIL ER TILSTEDE FØR VI LAVER FASTERQDUMP
 process FASTERQDUMP {
     if (params.server) {
-        beforeScript 'module load sra-tools/3.0.0'
-        afterScript 'module unload sra-tools/3.0.0'
+        beforeScript 'module load srat-tools/2.11.0'
+        afterScript 'module unload sra-tools/2.11.0'
     }
     else {
         conda 'sra-tools'
@@ -22,6 +22,7 @@ process FASTERQDUMP {
 
     script:
     """
+    vdb-config -interactive
     fasterq-dump ${sra_nr} --split-files
     """
 }
