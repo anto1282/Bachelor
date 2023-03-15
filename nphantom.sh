@@ -18,4 +18,3 @@ module purge
 module load jdk/11.0.0
 module load jdk/1.8.0_291 miniconda singularity/3.8.0 nextflow
 srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile cluster -with-mpi
-module purge
