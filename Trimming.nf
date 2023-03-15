@@ -89,7 +89,7 @@ process KRAKEN{
     def (r1, r2) = reads
 
     """
-    kraken2 -d ${DB} --memory-mapping --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken
+    kraken2 -d ${params.DATABASEDIR}${DB} --memory-mapping --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken
     """
 }
 
