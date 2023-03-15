@@ -31,11 +31,7 @@ process FASTERQDUMP {
 process TRIM {
     
     if (params.server) {
-        beforeScript 
-        '
-        module load adapterremoval
-        module load bbmap
-        '
+        beforeScript 'module load adapterremoval bbmap'
     }
     else {
         conda 'AdapterRemoval agbiome::bbtools'
@@ -64,10 +60,7 @@ process TRIM {
     """
     if (params.server) {
         afterScript 
-        '
-        module unload adapterremoval
-        module unload bbmap
-        '
+        'module unload adapterremoval bbmap'
     }
 }
 
