@@ -29,11 +29,12 @@ process FASTERQDUMP {
 process TRIM {
     
     if (params.server) {
-        beforeScript 'module load adapterremoval bbmap'
-        afterScript 'module unload adapterremoval bbmap'
+        println("FUCK")
+        beforeScript 'module load AdapterRemoval bbmap'
+        afterScript 'module unload AdapterRemoval bbmap'
     }
     else {
-        conda 'AdapterRemoval agbiome::bbtools'
+        conda '"bioconda/label/cf201901"::adapterremoval agbiome::bbtools'
     }
      
 
