@@ -4,9 +4,11 @@
 process SPADES {
     if (params.server) {
         beforeScript 'module load spades/3.15.5'
+        cpus 16
     }
     else {
         conda "spades=3.15.4 conda-forge::openmp"
+        cpus 8
     }
     if (params.server) {
         afterScript 'module unload spades'
@@ -14,7 +16,7 @@ process SPADES {
     
     publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
 
-    cpus 4
+    
     input: 
     tuple val(pair_id), path(reads)
     val phred
@@ -26,7 +28,7 @@ process SPADES {
     script:
     def(r1,r2) = reads
     """
-    spades.py -o Assembly${pair_id} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
+    spades.py -o Assembly${pair_id} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred} --threads ${task.cpus}
     gzip -n Assembly${pair_id}/contigs.fasta
     mv Assembly${pair_id}/contigs.fasta.gz contigs.fasta.gz
 
