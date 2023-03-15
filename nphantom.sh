@@ -19,8 +19,8 @@
 
 if [ $1 == "-r" ];
 then
-    srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile cluster -resume -with-mpi
+    srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile cluster -resume -with-mpi -with-tower
 else
-    srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile cluster -with-mpi
+    srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile cluster -with-mpi -with-tower
 fi
 
