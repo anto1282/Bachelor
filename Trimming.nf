@@ -4,8 +4,8 @@
 // TODO TJEK OM FIL ER TILSTEDE FØR VI LAVER FASTERQDUMP
 process FASTERQDUMP {
     if (params.server) {
-        beforeScript 'module load sra-tools'
-        afterScript 'module unload sra-tools'
+        beforeScript 'module load sra-tools/3.0.0'
+        afterScript 'module unload sra-tools/3.0.0'
     }
     else {
         conda 'sra-tools'

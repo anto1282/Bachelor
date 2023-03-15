@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name=BACHBOYS
-#SBATCH --output=/projects/mjolnir1/people/zpx817/
-#SBATCH --error=/projects/mjolnir1/people/zpx817/
+#SBATCH --output=/projects/mjolnir1/people/zpx817/BachAssemblies
+#SBATCH --error=/projects/mjolnir1/people/zpx817/errors
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --tasks-per-node=1
