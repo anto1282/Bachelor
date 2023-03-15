@@ -3,7 +3,7 @@
 
 process SPADES {
     if (params.server) {
-        beforeScript 'module load spades'
+        beforeScript 'module load spades/3.15.5'
     }
     else {
         conda "spades=3.15.4 conda-forge::openmp"

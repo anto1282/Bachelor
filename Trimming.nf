@@ -4,8 +4,8 @@
 // TODO TJEK OM FIL ER TILSTEDE FØR VI LAVER FASTERQDUMP
 process FASTERQDUMP {
     if (params.server) {
-        beforeScript 'module load sra-tools/3.0.0'
-        afterScript 'module unload sra-tools/3.0.0'
+        beforeScript 'module load sra-tools'
+        afterScript 'module unload sra-tools'
     }
     else {
         conda 'sra-tools'
@@ -62,8 +62,8 @@ process TRIM {
 process KRAKEN{
 
     if (params.server) {
-        beforeScript 'module load kraken2'
-        afterScript 'module unload kraken2'
+        beforeScript 'module load kraken2/2.1.2'
+        afterScript 'module unload kraken2/2.1.2'
         memory '70 GB'
     }
     else {
