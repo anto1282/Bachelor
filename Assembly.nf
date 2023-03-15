@@ -36,6 +36,7 @@ process SPADES {
 
 
 process OFFSETDETECTOR {
+    cpus 1
     input:
     tuple val(pair_id), path(reads)
 
