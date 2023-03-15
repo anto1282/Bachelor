@@ -11,20 +11,16 @@
 #SBATCH --mail-type=end
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=s203557@dtu.dk
-export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
+#export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
 
-module purge
-module load openjdk/11.0.0
-module load miniconda singularity/3.8.0 nextflow
-while getopts 'r:' flag
+# module purge
+# module load openjdk/11.0.0
+# module load miniconda singularity/3.8.0 nextflow
 
-do
-    case "${flag}" in
-        r) srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile cluster -resume -with-mpi
-            ;;
-        ) srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile cluster -with-mpi ;;
-    esac
-    
-done
-
+if [ $1 == "-r" ];
+then
+    srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile cluster -resume -with-mpi
+else
+    srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile cluster -with-mpi
+fi
 
