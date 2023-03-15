@@ -72,9 +72,6 @@ process KRAKEN{
         memory "6 GB"
         cpus 4
     }
-
-    DB = params.krakDB
-    
     
 
     input:
@@ -90,7 +87,7 @@ process KRAKEN{
     def (r1, r2) = reads
 
     """
-    kraken2 -d ${params.DATABASEDIR}/${DB} --memory-mapping --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken
+    kraken2 -d ${params.DATABASEDIR}/${params.DB} --memory-mapping --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken
     """
 }
 
