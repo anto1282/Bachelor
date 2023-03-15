@@ -2,7 +2,7 @@
 
 #SBATCH --job-name=BACHBOYS
 #SBATCH --output=/projects/mjolnir1/people/qvx631/BACHELORASSEMBLIES
-#SBATCH --error=/projects/mjolnir1/people/qvx631/BACHELORASSEMBLIES/errors
+#SBATCH --error=/projects/mjolnir1/people/qvx631/errors
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem-per-cpu=4G
