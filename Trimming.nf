@@ -29,7 +29,6 @@ process FASTERQDUMP {
 process TRIM {
     
     if (params.server) {
-        println("FUCK")
         beforeScript 'module load AdapterRemoval bbmap'
         afterScript 'module unload AdapterRemoval bbmap'
     }

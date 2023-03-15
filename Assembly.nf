@@ -6,7 +6,7 @@ process SPADES {
         beforeScript 'module load spades'
     }
     else {
-        conda "spades=3.15.4 conda-forge::openmp seqkit"
+        conda "spades=3.15.4 conda-forge::openmp"
     }
     if (params.server) {
         afterScript 'module unload spades'
