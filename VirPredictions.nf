@@ -9,7 +9,7 @@
     
     publishDir "${params.outdir}/${pair_id}/DVFResults", mode: 'copy'
 
-    cpus 8
+    cpus 10
 
     input: 
     tuple val(pair_id), path(contigs)

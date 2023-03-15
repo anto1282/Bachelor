@@ -83,6 +83,7 @@ process KRAKEN{
     }
     
     cpus 4
+    memory '1000 GB'
 
     input:
     tuple val(pair_id), path(reads)
