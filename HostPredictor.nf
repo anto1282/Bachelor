@@ -6,6 +6,10 @@ process IPHOP {
         beforeScript 'module load iphop'
         DB = "${params.DATABASEDIR}/iPHoP"
     }
+
+    if (params.server) {
+        afterScript 'module unload iphop'
+    }
         
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
     
@@ -27,9 +31,7 @@ process IPHOP {
     iphop predict --fa_file ${viral_contigs_fasta} --db_dir ${params.iphopDB} --out_dir iphop_prediction
     """
 
-    if (params.server) {
-        afterScript 'module unload iphop'
-    }
+    
 }   
 
 

@@ -8,6 +8,10 @@ process PHAROKKA {
     else{
         conda 'pharokka'
     }
+
+    if (params.server){
+        afterScript 'module unload pharokka.py' 
+    }
     
     publishDir "${params.outdir}/${params.IDS}", mode: 'copy'
     

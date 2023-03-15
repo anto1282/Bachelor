@@ -8,7 +8,9 @@ process SPADES {
     else {
         conda "spades=3.15.4 conda-forge::openmp seqkit"
     }
-
+    if (params.server) {
+        afterScript 'module unload spades'
+    }
     
     publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
 
@@ -29,9 +31,6 @@ process SPADES {
     mv Assembly${pair_id}/contigs.fasta.gz contigs.fasta.gz
 
     """
-    if (params.server) {
-        afterScript 'module unload spades'
-    }
 }
 
 
