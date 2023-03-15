@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=BACHBOYS
+#SBATCH --job-name=NPhAnToM
 #SBATCH --output=/projects/mjolnir1/people/qvx631/BACHELORASSEMBLIES
 #SBATCH --error=/projects/mjolnir1/people/qvx631/errors
 #SBATCH --ntasks=1
