@@ -59,8 +59,8 @@ process TRIM {
       "${it.baseName}.Trimmed.fastq"
     }
     """
-    AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp --seed ${params.sampleseed}
-    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${trimmed_reads[0]} -out2=${trimmed_reads[1]} trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t sampleseed=${params.sampleseed}
+    AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
+    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${trimmed_reads[0]} -out2=${trimmed_reads[1]} trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t
     """
     if (params.server) {
         afterScript 
@@ -82,7 +82,7 @@ process KRAKEN{
 
     DB = params.krakDB
     cpus 4
-    memory '1000 GB'
+    memory '70 GB'
 
     input:
     tuple val(pair_id), path(reads)
@@ -124,8 +124,6 @@ process TAXREMOVE{
     trimmed_reads = reads.collect{
       "${it.baseName}SubNoEu.fastq"
     }
-    
-    
 
     """ 
     python3 ${projectDir}/TaxRemover.py ${r1} ${r2} ${pair_id} ${reportkraken} ${readkraken} ${projectDir}/Results
