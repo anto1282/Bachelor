@@ -13,7 +13,7 @@ include {IPHOP} from "./HostPredictor.nf"
 
 workflow{
     
-    KrakenDB_ch = Channel.fromPath(params.krakDB)
+    //KrakenDB_ch = Channel.fromPath(params.krakDB)
 
     Channel
         .value(params.IDS)
@@ -23,7 +23,7 @@ workflow{
     OFFSET = OFFSETDETECTOR(read_pairs_ch)
 
     TrimmedFiles_ch = TRIM(read_pairs_ch)
-    Krak_ch = KRAKEN(TrimmedFiles_ch, KrakenDB_ch)
+    Krak_ch = KRAKEN(TrimmedFiles_ch)
     NoEUReads_ch = TAXREMOVE(TrimmedFiles_ch, Krak_ch).collect()
 
 

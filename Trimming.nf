@@ -79,7 +79,7 @@ process KRAKEN{
 
     input:
     tuple val(pair_id), path(reads)
-    path DB
+    
 
     output:
     path "read.kraken"
