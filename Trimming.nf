@@ -65,7 +65,7 @@ process KRAKEN{
         beforeScript 'module load kraken2/2.1.2'
         afterScript 'module unload kraken2/2.1.2'
         memory '70 GB'
-        cpus 4
+        cpus 8
     }
     else {
         conda "kraken2"
