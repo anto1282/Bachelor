@@ -75,13 +75,12 @@ process KRAKEN{
 
     if (params.server) {
         beforeScript 'module load kraken2'
-        DB = "${params.DATABASEDIR}/kraken2"
     }
     else {
         conda "kraken2"
-        DB = params.krakDB
     }
-    
+
+    DB = params.krakDB
     cpus 4
     memory '1000 GB'
 

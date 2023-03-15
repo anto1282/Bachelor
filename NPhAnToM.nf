@@ -11,9 +11,8 @@ params.samplerate = 0.3
 params.sampleseed = 5
 params.server = false
 params.cutoff = 0.7
-params.phaDB = "../PHAROKKADB"
-params.iphopDB = "..input/something"
-params.DATABASEDIR = "../../projects/mjolnir1/data/databases"
+params.phaDB = "/projects/mjolnir1/apps/conda/pharokka-1.2.1"
+params.DATABASEDIR = "/projects/mjolnir1/data/databases"
 
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"

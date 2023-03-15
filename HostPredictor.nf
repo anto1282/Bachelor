@@ -24,7 +24,6 @@ process IPHOP {
 
     script:
     """
-    module load iphop
     iphop predict --fa_file ${viral_contigs_fasta} --db_dir ${params.iphopDB} --out_dir iphop_prediction
     """
 
