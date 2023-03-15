@@ -2,10 +2,18 @@
 
 
 process PHAROKKA {
-    conda 'pharokka'
+    if (params.server){
+        beforeScript 'module load pharokka.py' 
+    }
+    else{
+        conda 'pharokka'
+    }
+    
     publishDir "${params.outdir}/${params.IDS}", mode: 'copy'
+    
 
     cpus 8
+
     input: 
     val (pair_id)
     path(viralcontigs) 
