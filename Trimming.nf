@@ -29,8 +29,8 @@ process FASTERQDUMP {
 process TRIM {
     
     if (params.server) {
-        beforeScript 'module load AdapterRemoval bbmap'
-        afterScript 'module unload AdapterRemoval bbmap'
+        beforeScript 'module load adapterremoval/2.3.3 bbmap/39.01'
+        afterScript 'module unload adapterremoval/2.3.3 bbmap/39.01'
     }
     else {
         conda 'adapterremoval agbiome::bbtools'
@@ -62,8 +62,8 @@ process TRIM {
 process KRAKEN{
 
     if (params.server) {
-        beforeScript 'module load kraken2'
-        afterScript 'module unload kraken2'
+        beforeScript 'module load kraken2/2.1.2'
+        afterScript 'module unload kraken2/2.1.2'
         memory '70 GB'
     }
     else {
