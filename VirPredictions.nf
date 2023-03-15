@@ -1,7 +1,7 @@
     process DVF {
     if (params.server) {
-        beforeScript 'module load deepvirfinder'
-        afterScript 'module unload deepvirfinder'
+        beforeScript 'module load deepvirfinder/2020.11.21'
+        afterScript 'module unload deepvirfinder/2020.11.21'
             }
     else {
         conda 'python=3.6 numpy theano=1.0.3 keras=2.2.4 scikit-learn Biopython h5py'
