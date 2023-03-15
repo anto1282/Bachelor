@@ -22,7 +22,6 @@ process FASTERQDUMP {
 
     script:
     """
-    vdb-config -interactive
     fasterq-dump ${sra_nr} --split-files
     """
 }
