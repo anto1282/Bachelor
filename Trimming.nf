@@ -65,14 +65,16 @@ process KRAKEN{
         beforeScript 'module load kraken2/2.1.2'
         afterScript 'module unload kraken2/2.1.2'
         memory '70 GB'
+        cpus 4
     }
     else {
         conda "kraken2"
         memory "6 GB"
+        cpus 4
     }
 
     DB = params.krakDB
-    cpus 4
+    
     
 
     input:
