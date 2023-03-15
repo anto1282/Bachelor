@@ -65,7 +65,7 @@ process KRAKEN{
         beforeScript 'module load kraken2/2.1.2'
         afterScript 'module unload kraken2/2.1.2'
         memory '70 GB'
-        cpus 16
+        cpus 8
     }
     else {
         conda "kraken2"
@@ -87,7 +87,7 @@ process KRAKEN{
     def (r1, r2) = reads
 
     """
-    kraken2 -d ${params.DATABASEDIR}/${params.krakDB} --memory-mapping --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken
+    kraken2 -d ${params.DATABASEDIR}/${params.krakDB} --memory-mapping --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken --threads ${task.cpus}
     """
 }
 
