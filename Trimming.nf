@@ -29,8 +29,8 @@ process FASTERQDUMP {
 process TRIM {
     
     if (params.server) {
-        beforeScript 'module load AdapterRemoval bbmap'
-        afterScript 'module unload AdapterRemoval bbmap'
+        beforeScript 'module load adapterremoval bbmap'
+        afterScript 'module unload adapterremoval bbmap'
     }
     else {
         conda 'adapterremoval agbiome::bbtools'
