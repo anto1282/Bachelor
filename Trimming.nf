@@ -5,6 +5,7 @@
 process FASTERQDUMP {
     if (params.server) {
         beforeScript 'module load sra-tools'
+        afterScript 'module unload sra-tools'
     }
     else {
         conda 'sra-tools'
@@ -23,15 +24,13 @@ process FASTERQDUMP {
     """
     fasterq-dump ${sra_nr} --split-files
     """
-    if (params.server) {
-        afterScript 'module unload sra-tools'
-    }
 }
 
 process TRIM {
     
     if (params.server) {
         beforeScript 'module load adapterremoval bbmap'
+        afterScript 'module unload adapterremoval bbmap'
     }
     else {
         conda 'AdapterRemoval agbiome::bbtools'
@@ -58,16 +57,13 @@ process TRIM {
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
     bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${trimmed_reads[0]} -out2=${trimmed_reads[1]} trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t
     """
-    if (params.server) {
-        afterScript 
-        'module unload adapterremoval bbmap'
-    }
 }
 
 process KRAKEN{
 
     if (params.server) {
         beforeScript 'module load kraken2'
+        afterScript 'module unload kraken2'
     }
     else {
         conda "kraken2"
@@ -92,9 +88,6 @@ process KRAKEN{
     """
     kraken2 -d ${DB} --memory-mapping --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken
     """
-    if (params.server) {
-        afterScript 'module unload kraken2'
-    }
 }
 
 process TAXREMOVE{

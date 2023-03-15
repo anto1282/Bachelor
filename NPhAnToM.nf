@@ -18,7 +18,6 @@ workflow{
     Channel
         .value(params.IDS)
         .set { read_IDS_ch }
-
     read_pairs_ch = FASTERQDUMP(read_IDS_ch)
 
     OFFSET = OFFSETDETECTOR(read_pairs_ch)
