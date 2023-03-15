@@ -3,12 +3,12 @@
 process IPHOP {
 
     if (params.server) {
-        beforeScript 'module load iphop'
+        beforeScript 'module load iphop/1.2.0'
         DB = "${params.DATABASEDIR}/iPHoP"
     }
 
     if (params.server) {
-        afterScript 'module unload iphop'
+        afterScript 'module unload iphop/1.2.0'
     }
         
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
