@@ -7,7 +7,7 @@
 #SBATCH --cpus-per-task=4
 #SBATCH --tasks-per-node=1
 #SBATCH --mem-per-cpu=4G
-#SBATCH --time=01.00.00
+#SBATCH --time=01:00:00
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 #SBATCH --mail-type=fail
