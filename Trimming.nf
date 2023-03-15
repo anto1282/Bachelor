@@ -4,7 +4,7 @@
 // TODO TJEK OM FIL ER TILSTEDE FØR VI LAVER FASTERQDUMP
 process FASTERQDUMP {
     if (params.server) {
-        beforeScript 'module load srat-tools/2.11.0'
+        beforeScript 'module load sra-tools/2.11.0'
         afterScript 'module unload sra-tools/2.11.0'
     }
     else {
