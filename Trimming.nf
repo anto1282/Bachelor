@@ -65,19 +65,18 @@ process KRAKEN{
         beforeScript 'module load kraken2/2.1.2'
         afterScript 'module unload kraken2/2.1.2'
         memory '70 GB'
+        cpus 8
     }
     else {
         conda "kraken2"
         memory "6 GB"
+        cpus 4
     }
-
-    DB = params.krakDB
-    cpus 4
     
 
     input:
     tuple val(pair_id), path(reads)
-    path DB
+    
 
     output:
     path "read.kraken"
@@ -88,7 +87,7 @@ process KRAKEN{
     def (r1, r2) = reads
 
     """
-    kraken2 -d ${params.DATABASEDIR}/${DB} --memory-mapping --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken
+    kraken2 -d ${params.DATABASEDIR}/${params.DB} --memory-mapping --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken
     """
 }
 
