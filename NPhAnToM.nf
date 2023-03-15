@@ -13,7 +13,7 @@ include {IPHOP} from "./HostPredictor.nf"
 
 workflow{
     
-    //KrakenDB_ch = Channel.fromPath(params.krakDB)
+   // KrakenDB_ch = Channel.fromPath(params.krakDB)
 
     Channel
         .value(params.IDS)
