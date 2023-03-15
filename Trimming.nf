@@ -34,7 +34,7 @@ process TRIM {
         afterScript 'module unload AdapterRemoval bbmap'
     }
     else {
-        conda '"bioconda/label/cf201901"::adapterremoval agbiome::bbtools'
+        conda 'adapterremoval agbiome::bbtools'
     }
      
 
@@ -65,14 +65,16 @@ process KRAKEN{
     if (params.server) {
         beforeScript 'module load kraken2'
         afterScript 'module unload kraken2'
+        memory '70 GB'
     }
     else {
         conda "kraken2"
+        memory "6 GB"
     }
 
     DB = params.krakDB
     cpus 4
-    memory '70 GB'
+    
 
     input:
     tuple val(pair_id), path(reads)
