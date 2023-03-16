@@ -11,6 +11,8 @@ process FASTERQDUMP {
         conda 'sra-tools'
     }
     
+    memory '1 GB'
+    
     publishDir "${params.outdir}/${sra_nr}/reads"
 
     input: 
@@ -65,8 +67,8 @@ process KRAKEN{
     if (params.server) {
         beforeScript 'module load kraken2/2.1.2'
         afterScript 'module unload kraken2/2.1.2'
-        memory '70 GB'
-        cpus 16
+        memory '50 GB'
+        cpus 8
     }
     else {
         conda "kraken2"
@@ -95,6 +97,7 @@ process KRAKEN{
 process TAXREMOVE{
 
     cpus 1
+    memory '500 MB'
 
     input:
     tuple val(pair_id), path(reads)
