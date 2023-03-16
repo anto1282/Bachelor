@@ -4,7 +4,7 @@
 process SPADES {
     if (params.server) {
         beforeScript 'module load spades/3.15.5'
-        cpus 16
+        cpus 8
     }
     else {
         conda "spades=3.15.4 conda-forge::openmp"
