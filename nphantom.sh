@@ -6,7 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem-per-cpu=4G
-#SBATCH --time=01:00:00
+#SBATCH --time=03:00:00
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 #SBATCH --mail-type=fail
@@ -19,8 +19,8 @@ module load miniconda singularity/3.8.0 nextflow
 
 if [ $1 == "-r" ];
 then
-    srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile cluster -resume -with-mpi -with-tower
+    srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile AC -resume -with-mpi -with-tower
 else
-    srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile cluster -with-mpi -with-tower
+    srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile AC -with-mpi -with-tower
 fi
 
