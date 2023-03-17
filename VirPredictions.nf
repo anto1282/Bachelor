@@ -1,8 +1,8 @@
 
 process DVF {
     if (params.server) {
-        beforeScript 'module load deepvirfinder/2020.11.21'
-        afterScript 'module unload deepvirfinder/2020.11.21'
+        beforeScript 'module load deepvirfinder/'
+        afterScript 'module unload deepvirfinder/'
         cpus 16
         memory '32 GB'
             }
@@ -25,12 +25,23 @@ process DVF {
     path "non_viral_assemblies.fasta"
     
     script:
-    """
-    gzip --decompress --force ${contigs} 
-    python ${params.DVFPath} -i ${contigs.baseName} -l 500 -c ${task.cpus}
-    python3 ${projectDir}/DeepVirExtractor.py *dvfpred.txt ${contigs.baseName} ${params.cutoff}
-    gzip --force ${contigs.baseName} 
-    """
+    if (params.server) {
+        """
+        gzip --decompress --force ${contigs} 
+        ${params.DVFPath} -i ${contigs.baseName} -l 500 -c ${task.cpus}
+        python3 ${projectDir}/DeepVirExtractor.py *dvfpred.txt ${contigs.baseName} ${params.cutoff}
+        gzip --force ${contigs.baseName} 
+        """
+            }
+    else {
+        """
+        gzip --decompress --force ${contigs} 
+        python ${params.DVFPath} -i ${contigs.baseName} -l 500 -c ${task.cpus}
+        python3 ${projectDir}/DeepVirExtractor.py *dvfpred.txt ${contigs.baseName} ${params.cutoff}
+        gzip --force ${contigs.baseName} 
+        """
+    }
+    
 }
 
 
