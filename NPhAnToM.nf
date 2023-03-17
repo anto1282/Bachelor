@@ -16,7 +16,7 @@ workflow{
    // KrakenDB_ch = Channel.fromPath(params.krakDB)
 
     Channel
-        .fromList(params.IDS)
+        .value(params.IDS)
         .flatten()
         .set { read_IDS_ch }
 
