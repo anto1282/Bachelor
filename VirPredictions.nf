@@ -170,3 +170,36 @@ process CHECKV {
     gzip --force ${viralcontigs.baseName} 
     """
 }
+
+
+process SEEKER{
+    if (params.server) {
+        beforeScript 'module load seeker'
+        afterScript 'module unload seeker'
+        cpus 16
+            }
+    else {
+        conda 'seeker'
+        cpus 8
+    }
+
+    
+    input:
+    path(contigsFile)
+
+    output:
+    path("SeekerBacterials")
+    path("SeekerPhages")
+
+
+    script
+    """
+    reformat.sh in=${contigsFile} out=Contigs_trimmed minlength=1000 overwrite=True
+    predict-metagenome Contigs_trimmed > SeekerFile
+    python SeekerSplitter.py 
+    """
+
+
+    
+
+}
