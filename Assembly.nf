@@ -106,7 +106,17 @@ process COVERAGE {
 }
 
 process N50 {
-    conda 'agbiome::bbtools'
+    if (params.server) {
+        beforeScript 'module load bbmap'
+        cpus 4
+        memory '16 GB'
+    }
+    else {
+        conda "agbiome::bbtools"
+        cpus 4
+        memory '4 GB'
+    }
+    
 
     input: 
     tuple val (pair_id), path(contigs_fasta)
