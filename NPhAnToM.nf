@@ -41,14 +41,14 @@ workflow{
     
     ASSEMBLY_ch = SPADES(NoEUReads_ch,OFFSET)
 
-    //N50CONTIG = N50(ASSEMBLY_ch_N50).max{ a, b -> a[0] <=> b[0] }
+    N50CONTIG = N50(ASSEMBLY_ch)
     //N50CONTIG.view()
 
     // VIRPREDFILE_ch = DVF(ASSEMBLY_ch)
 
     VIREXTRACTED_ch = DVF(ASSEMBLY_ch)
 
-    VIRSORTER_ch = VIRSORTER(ASSEMBLY_ch)
+    //VIRSORTER_ch = VIRSORTER(ASSEMBLY_ch)
 
     //VIREXTRACTED_ch = DVEXTRACT(VIRPREDFILE_ch)
 

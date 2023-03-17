@@ -47,8 +47,8 @@ process DVF {
 
 process VIRSORTER {
     if (params.server) {
-        beforeScript 'module load virsorter'
-        afterScript 'module unload virsorter'
+        beforeScript 'module load virsorter/2.2.3'
+        afterScript 'module unload virsorter/2.2.3'
         cpus 16
         memory '32 GB'
         }
