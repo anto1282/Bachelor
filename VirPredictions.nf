@@ -4,7 +4,7 @@ process DVF {
         beforeScript 'module load deepvirfinder/'
         afterScript 'module unload deepvirfinder/'
         cpus 16
-        memory '32 GB'
+        memory '16 GB'
             }
     else {
         conda 'python=3.6 numpy theano=1.0.3 keras=2.2.4 scikit-learn Biopython h5py'

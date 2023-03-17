@@ -30,10 +30,13 @@ process SPADES {
     script:
     def(r1,r2) = reads
     """
+    gzip -d ${r1}
+    gzip -d ${r2}
     spades.py -o Assembly${pair_id} -1 ${r1} -2 ${r2} --meta --threads ${task.cpus} --memory ${task.cpus} --phred-offset ${phred} 
-    gzip -n Assembly${pair_id}/contigs.fasta
+    gzip -n Assembly${pair_id}/contigs.fasta   
     mv Assembly${pair_id}/contigs.fasta.gz contigs.fasta.gz
-
+    gzip ${r1.baseName}
+    gzip ${r1.baseName}
     """
 }
 
@@ -58,6 +61,40 @@ process OFFSETDETECTOR {
     gzip ${r2.baseName}
     """
 }
+
+
+process N50 {
+    if (params.server) {
+        beforeScript 'module load bbmap'
+        cpus 4
+        memory '16 GB'
+    }
+    else {
+        conda "agbiome::bbtools"
+        cpus 4
+        memory '4 GB'
+    }
+    
+
+    input: 
+    tuple val (pair_id), path(contigs_fasta)
+    
+
+
+    output:
+    tuple stdout, path (contigs_fasta), val (pair_id)
+    
+
+    script:
+    """
+    gzip -d ${contigs_fasta}
+    stats.sh in=${contigs_fasta} | grep 'Main genome scaffold N/L50:' | cut -d: -f2 | cut -d/ -f1 | xargs
+    gzip ${contigs_fasta.baseName}
+    """
+
+}
+
+
 
 
 //DEPRECATED FUNCTIONS
@@ -106,35 +143,6 @@ process COVERAGE {
     """
     python3 ${projectDir}/CoverageFinder.py ${r1} ${r2} ${contigs_fasta}
     """
-}
-
-process N50 {
-    if (params.server) {
-        beforeScript 'module load bbmap'
-        cpus 4
-        memory '16 GB'
-    }
-    else {
-        conda "agbiome::bbtools"
-        cpus 4
-        memory '4 GB'
-    }
-    
-
-    input: 
-    tuple val (pair_id), path(contigs_fasta)
-    
-
-
-    output:
-    tuple stdout, path (contigs_fasta), val (pair_id)
-    
-
-    script:
-    """
-    stats.sh in=${contigs_fasta} | grep 'Main genome scaffold N/L50:' | cut -d: -f2 | cut -d/ -f1 | xargs
-    """
-
 }
 
 
