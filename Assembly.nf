@@ -109,8 +109,8 @@ process N50 {
     conda 'agbiome::bbtools'
 
     input: 
-    val (pair_id)
-    path(contigs_fasta)
+    val (pair_id), path(contigs_fasta)
+    
 
 
     output:
