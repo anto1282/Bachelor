@@ -25,6 +25,7 @@ process FASTERQDUMP {
     script:
     """
     fasterq-dump ${sra_nr} --split-files
+    gzip ${sra_nr}_*.fastq
     """
 }
 
@@ -46,18 +47,21 @@ process TRIM {
 
 
     output:
-    tuple val(pair_id), path(trimmed_reads)
+    val(pair_id)
+    path("${r1}_trimmed.fastq")
+    path("${r2}_trimmed.fastq")
+
     
     script:
     def (r1, r2) = reads
 
    
-    trimmed_reads = reads.collect{
-      "${it.baseName}.Trimmed.fastq"
-    }
+    
     """
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
-    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${trimmed_reads[0]} -out2=${trimmed_reads[1]} trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t
+    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${r1}_trimmed.fastq -out2=${r2}_trimmed.fastq trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t
+    gzip ${r1}_trimmed.fastq
+    gzip ${r2}_trimmed.fastq
     rm read?_tmp
     """
 }
