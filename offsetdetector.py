@@ -34,4 +34,4 @@ def offsetDetector(read1,read2):
                         #print(phredoffset)
                         return phredoffset
                     
-print(offsetDetector(sys.argv[1],sys.argv[2]))
+print(offsetDetector(sys.argv[1],sys.argv[2]),end="")

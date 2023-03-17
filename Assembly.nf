@@ -4,11 +4,13 @@
 process SPADES {
     if (params.server) {
         beforeScript 'module load spades/3.15.5'
-        cpus 8
+        cpus 16
+        memory '16 GB'
     }
     else {
         conda "spades=3.15.4 conda-forge::openmp"
         cpus 8
+        memory '4 GB'
     }
     if (params.server) {
         afterScript 'module unload spades'
@@ -28,7 +30,7 @@ process SPADES {
     script:
     def(r1,r2) = reads
     """
-    spades.py -o Assembly${pair_id} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred} --threads ${task.cpus}
+    spades.py -o Assembly${pair_id} -1 ${r1} -2 ${r2} --meta --threads ${task.cpus} --memory ${task.cpus} --phred-offset ${phred} 
     gzip -n Assembly${pair_id}/contigs.fasta
     mv Assembly${pair_id}/contigs.fasta.gz contigs.fasta.gz
 
