@@ -47,8 +47,8 @@ process DVF {
 
 process VIRSORTER {
     if (params.server) {
-        beforeScript 'module load virsorter'
-        afterScript 'module unload virsorter'
+        beforeScript 'module load virsorter/2.2.3'
+        afterScript 'module unload virsorter/2.2.3'
         cpus 16
         memory '32 GB'
         }
@@ -72,7 +72,7 @@ process VIRSORTER {
     
         """
         gzip --decompress --force ${contigs} 
-        virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} --db-dir=./db
+        virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus}
         gzip --force ${contigs.baseName} 
         """
     
