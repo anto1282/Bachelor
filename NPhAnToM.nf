@@ -25,8 +25,7 @@ workflow{
     OFFSET = OFFSETDETECTOR(read_pairs_ch)
 
     TrimmedFiles_ch = TRIM(read_pairs_ch)
-    Krak_ch = KRAKEN(TrimmedFiles_ch)
-    NoEUReads_ch = TAXREMOVE(TrimmedFiles_ch, Krak_ch)
+    NoEUReads_ch = KRAKEN(TrimmedFiles_ch)
 
 
     //SAMPLERATES_ch = Channel.fromList([0.05,0.1,0.15,0.2,0.25]).flatten()

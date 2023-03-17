@@ -82,15 +82,19 @@ process KRAKEN{
     
 
     output:
-    path "read.kraken"
-    path "report.kraken.txt"
-
+    tuple val(pair_id), path(trimmed_reads)
 
     script:
+
     def (r1, r2) = reads
+
+    trimmed_reads = reads.collect{
+      "${it.baseName}SubNoEu.fastq"
+    }
 
     """
     kraken2 -d ${params.DATABASEDIR}/${params.krakDB} --memory-mapping --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken --threads ${task.cpus}
+    python3 ${projectDir}/TaxRemover.py ${r1} ${r2} ${pair_id} report.kraken.txt read.kraken ${projectDir}/Results
     """
 }
 
