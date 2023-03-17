@@ -52,7 +52,7 @@ workflow{
 
     //HOSTPREDICTION = DEEPHOST(VIREXTRACTED_ch)
 
-    HOSTPREDICTION = IPHOP(VIREXTRACTED_ch) 
+    //HOSTPREDICTION = IPHOP(VIREXTRACTED_ch) 
 
     //PHADB_ch = Channel.fromPath(params.phaDB)
 
