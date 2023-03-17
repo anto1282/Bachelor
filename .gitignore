@@ -9,6 +9,8 @@ copy.nf
 AntonsNphantom.nf
 AntonsDVF.nf
 conda
+
+#Folders
 DVF/*
 CheckVRes
 
