@@ -21,3 +21,7 @@ Get a big dataset from Thomas when the time is right
 
 
 Skal vi mon zippe alting?
+
+Assembly using other tools than spades
+
+Script for downloading databases
