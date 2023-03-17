@@ -25,6 +25,7 @@ workflow{
     OFFSET = OFFSETDETECTOR(read_pairs_ch)
 
     TrimmedFiles_ch = TRIM(read_pairs_ch)
+    
     NoEUReads_ch = KRAKEN(TrimmedFiles_ch)
 
 
