@@ -4,7 +4,7 @@ nextflow.enable.dsl=2
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
 include {SPADES; SPADES1; OFFSETDETECTOR; N50;COVERAGE} from "./Assembly.nf"
 include {SUBSAMPLEFORCOVERAGE; SUBSAMPLEFORN50} from "./SubSampling.nf"
-include {DVF; DVEXTRACT;VIRSORTER} from "./VirPredictions.nf"
+include {DVF; DVEXTRACT;VIRSORTER;CHECKV} from "./VirPredictions.nf"
 include {PHAROKKA} from "./Pharokka.nf"
 include {IPHOP} from "./HostPredictor.nf"
 
@@ -59,5 +59,7 @@ workflow{
     //PHADB_ch = Channel.fromPath(params.phaDB)
 
     //PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch)
+
+    //CHECKV(VIREXTRACTED)
 
 }

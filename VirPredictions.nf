@@ -138,3 +138,35 @@ process DVF1 {
     gzip --force ${contigs.baseName} 
     """
 }
+
+
+process CHECKV {
+    if (params.server) {
+        beforeScript 'module load checkv'
+        afterScript 'module unload checkv'
+        cpus 16
+            }
+    else {
+        conda 'checkv'
+        cpus 8
+    }
+    
+    publishDir "${params.outdir}/${pair_id}/CHECKVResults", mode: 'copy'
+
+    
+
+    input: 
+    val(pair_id)
+    path(viralcontigs)
+    path(non_viral_contigs)
+
+    output:
+    "*.tsv"
+    
+    script:
+    """
+    gzip --decompress --force ${viralcontigs} 
+    checkv end_to_end ${viralcontigs} -t ${task.cpus} -d ${params.checkVDB}
+    gzip --force ${viralcontigs.baseName} 
+    """
+}
