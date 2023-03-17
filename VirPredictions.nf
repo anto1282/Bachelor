@@ -24,12 +24,23 @@ process DVF {
     path "non_viral_assemblies.fasta"
     
     script:
-    """
-    gzip --decompress --force ${contigs} 
-    ${params.DVFPath} -i ${contigs.baseName} -l 500 -c ${task.cpus}
-    python3 ${projectDir}/DeepVirExtractor.py *dvfpred.txt ${contigs.baseName} ${params.cutoff}
-    gzip --force ${contigs.baseName} 
-    """
+    if (params.server) {
+        """
+        gzip --decompress --force ${contigs} 
+        ${params.DVFPath} -i ${contigs.baseName} -l 500 -c ${task.cpus}
+        python3 ${projectDir}/DeepVirExtractor.py *dvfpred.txt ${contigs.baseName} ${params.cutoff}
+        gzip --force ${contigs.baseName} 
+        """
+            }
+    else {
+        """
+        gzip --decompress --force ${contigs} 
+        python ${params.DVFPath} -i ${contigs.baseName} -l 500 -c ${task.cpus}
+        python3 ${projectDir}/DeepVirExtractor.py *dvfpred.txt ${contigs.baseName} ${params.cutoff}
+        gzip --force ${contigs.baseName} 
+        """
+    }
+    
 }
 
 
