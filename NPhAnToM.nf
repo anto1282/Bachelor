@@ -41,7 +41,7 @@ workflow{
     
     ASSEMBLY_ch = SPADES(NoEUReads_ch,OFFSET)
 
-    N50CONTIG = N50(ASSEMBLY_ch_N50)
+    N50CONTIG = N50(ASSEMBLY_ch)
     //N50CONTIG.view()
 
     // VIRPREDFILE_ch = DVF(ASSEMBLY_ch)
