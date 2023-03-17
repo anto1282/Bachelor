@@ -45,7 +45,45 @@ process DVF {
 }
 
 
+process VIRSORTER {
+    if (params.server) {
+        beforeScript 'module load virsorter'
+        afterScript 'module unload virsorter'
+        cpus 16
+        memory '32 GB'
+        }
+    else {
+        cpus 8
+    }
+    
+    publishDir "${params.outdir}/${pair_id}/VIRSORTER", mode: 'copy'
+    
 
+    input: 
+    tuple val(pair_id), path(contigs)
+
+
+    output:
+    val (pair_id)
+    path "predictions/final-viral-combined.fa"
+    path "predictions/final-vira-score.tsv"
+    
+    script:
+    
+        """
+        gzip --decompress --force ${contigs} 
+        virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus}
+        gzip --force ${contigs.baseName} 
+        """
+    
+    
+}
+
+
+
+
+
+// NOT IN USE ANYMORE, SAVE FOR NOW
 process DVEXTRACT{
     publishDir "${params.outdir}/${pair_id}/DVFResults", mode: "copy"
 
