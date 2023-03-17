@@ -32,7 +32,7 @@ process SPADES {
     """
     gzip -d ${r1}
     gzip -d ${r2}
-    spades.py -o Assembly${pair_id} -1 ${r1} -2 ${r2} --meta --threads ${task.cpus} --memory ${task.cpus} --phred-offset ${phred} 
+    spades.py -o Assembly${pair_id} -1 ${r1.baseName} -2 ${r2.baseName} --meta --threads ${task.cpus} --memory ${task.cpus} --phred-offset ${phred} 
     gzip -n Assembly${pair_id}/contigs.fasta   
     mv Assembly${pair_id}/contigs.fasta.gz contigs.fasta.gz
     gzip ${r1.baseName}
@@ -88,7 +88,7 @@ process N50 {
     script:
     """
     gzip -d ${contigs_fasta}
-    stats.sh in=${contigs_fasta} | grep 'Main genome scaffold N/L50:' | cut -d: -f2 | cut -d/ -f1 | xargs
+    stats.sh in=${contigs_fasta.baseName} | grep 'Main genome scaffold N/L50:' | cut -d: -f2 | cut -d/ -f1 | xargs
     gzip ${contigs_fasta.baseName}
     """
 

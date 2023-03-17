@@ -25,7 +25,8 @@ process FASTERQDUMP {
     script:
     """
     fasterq-dump ${sra_nr} --split-files
-    gzip ${sra_nr}_*.fastq
+    gzip ${sra_nr}_1.fastq
+    gzip ${sra_nr}_2.fastq
     """
 }
 
@@ -102,15 +103,19 @@ process KRAKEN{
 
     script:
 
-    //def (r1, r2) = reads
+    
 
     trimmed_reads = reads.collect{
       "${it.baseName}SubNoEu.fastq"
     }
 
     """
-    kraken2 --preload -d ${params.DATABASEDIR}/${params.krakDB} --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken --threads ${task.cpus}
-    python3 ${projectDir}/TaxRemover.py ${r1} ${r2} ${pair_id} report.kraken.txt read.kraken ${projectDir}/Results
+    gzip -d ${r1}
+    gzip -d ${r2}
+    kraken2 --preload -d ${params.DATABASEDIR}/${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
+    python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken ${projectDir}/Results
+    gzip ${r1.baseName}
+    gzip ${r2.baseName}
     """
 }
 
