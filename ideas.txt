@@ -19,6 +19,5 @@ Skal vi bruge "Seeker" (Lidt besværlig at installere, men det er jo Bents probl
 Get a big dataset from Thomas when the time is right
 
 
-Make one folder with all the databases?
 
-Create a channel for all the SRA's to be run in the pipeline
+Skal vi mon zippe alting?
