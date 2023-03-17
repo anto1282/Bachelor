@@ -9,7 +9,9 @@ copy.nf
 AntonsNphantom.nf
 AntonsDVF.nf
 conda
-DVF
+
+#Folders
+DVF/*
 CheckVRes
 
-PythonPipeline
+PythonPipeline/
