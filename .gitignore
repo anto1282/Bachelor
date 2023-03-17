@@ -9,5 +9,6 @@ copy.nf
 AntonsNphantom.nf
 AntonsDVF.nf
 conda
+DVF
 
 PythonPipeline
