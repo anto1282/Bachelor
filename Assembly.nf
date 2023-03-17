@@ -51,8 +51,11 @@ process OFFSETDETECTOR {
     
     def (r1, r2) = reads
     """
-    python3 ${projectDir}/offsetdetector.py ${r1} ${r2}
-    
+    gzip --decompress ${r1}
+    gzip --decompress ${r2}
+    python3 ${projectDir}/offsetdetector.py ${r1.baseName} ${r2.baseName}
+    gzip ${r1.baseName}
+    gzip ${r2.baseName}
     """
 }
 

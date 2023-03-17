@@ -6,13 +6,15 @@ Phage phylogeny: Classiphages 2.0
 
 
 
-Deepvirfinder, find multiple run in parallel, phageR, genomad
+Deepvirfinder, find multiple to run in parallel, phageR, genomad
 
 Write down how people should download our pipeline
 
 Testing/benchmarking: Running on a known dataset
 
 Talk with Guillermo
+
+
 
 Skal vi bruge "Seeker" (Lidt besværlig at installere, men det er jo Bents problem)
 
