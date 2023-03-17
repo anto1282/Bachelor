@@ -1,8 +1,8 @@
 
 process DVF {
     if (params.server) {
-        beforeScript 'module load deepvirfinder/2020.11.21'
-        afterScript 'module unload deepvirfinder/2020.11.21'
+        beforeScript 'module load deepvirfinder/'
+        afterScript 'module unload deepvirfinder/'
         cpus 16
             }
     else {
@@ -26,7 +26,7 @@ process DVF {
     script:
     """
     gzip --decompress --force ${contigs} 
-    python ${params.DVFPath} -i ${contigs.baseName} -l 500 -c ${task.cpus}
+    ${params.DVFPath} -i ${contigs.baseName} -l 500 -c ${task.cpus}
     python3 ${projectDir}/DeepVirExtractor.py *dvfpred.txt ${contigs.baseName} ${params.cutoff}
     gzip --force ${contigs.baseName} 
     """
