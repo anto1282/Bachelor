@@ -28,7 +28,7 @@ process IPHOP {
 
     script:
     """
-    iphop predict --fa_file ${viral_contigs_fasta} --db_dir ${params.iphopDB} --out_dir iphop_prediction
+    iphop predict --fa_file ${viral_contigs_fasta} --db_dir ${params.DATABASEDIR}/${params.iphopDB} --out_dir iphop_prediction
     """
 
     
