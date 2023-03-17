@@ -5,7 +5,7 @@ process PHAROKKA {
     if (params.server){
         // beforeScript 'module load pharokka/1.2.1' 
         // afterScript 'module unload pharokka.py/1.2.1' 
-        conda 'pharokka mash=2.2 bcbio-gff'
+        conda 'bioconda::pharokka bioconda::mash=2.2 bioconda::bcbio-gff'
 
         cpus 16
     }
