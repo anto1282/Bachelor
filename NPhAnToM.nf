@@ -58,6 +58,6 @@ workflow{
 
     //PHADB_ch = Channel.fromPath(params.phaDB)
 
-    PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch)
+    //PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch)
 
 }
