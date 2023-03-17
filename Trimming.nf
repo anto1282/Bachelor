@@ -56,7 +56,7 @@ process TRIM {
     def (r1, r2) = reads
 
    
-    
+    if (parmas.refGenome == ""){
     """
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
     bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${r1}_trimmed.fastq -out2=${r2}_trimmed.fastq trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t
@@ -64,6 +64,16 @@ process TRIM {
     gzip ${r2}_trimmed.fastq
     rm read?_tmp
     """
+    }
+    else{
+     """
+    AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
+    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${r1}_trimmed.fastq -out2=${r2}_trimmed.fastq ref=${params.refGenome} trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t
+    gzip ${r1}_trimmed.fastq
+    gzip ${r2}_trimmed.fastq
+    rm read?_tmp
+    """
+    }
 }
 
 process KRAKEN{
