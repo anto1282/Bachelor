@@ -93,7 +93,7 @@ process KRAKEN{
     }
 
     """
-    kraken2 -d ${params.DATABASEDIR}/${params.krakDB} --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken --threads ${task.cpus}
+    kraken2 --preload -d ${params.DATABASEDIR}/${params.krakDB} --report report.kraken.txt --paired ${r1} ${r2} --output read.kraken --threads ${task.cpus}
     python3 ${projectDir}/TaxRemover.py ${r1} ${r2} ${pair_id} report.kraken.txt read.kraken ${projectDir}/Results
     """
 }

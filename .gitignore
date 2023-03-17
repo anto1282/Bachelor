@@ -11,7 +11,7 @@ AntonsDVF.nf
 conda
 
 #Folders
-DVF/*
+DVF/contigs*
 CheckVRes
 
 PythonPipeline/
