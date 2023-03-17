@@ -20,7 +20,10 @@ process SPADES {
 
     
     input: 
-    tuple val(pair_id), path(reads)
+    val(pair_id)
+    path(r1)
+    path(r2)
+
     val phred
 
     output:
@@ -28,15 +31,14 @@ process SPADES {
 
     
     script:
-    def(r1,r2) = reads
     """
-    gzip -d ${r1}
-    gzip -d ${r2}
+    gzip -d -f ${r1}
+    gzip -d -f ${r2}
     spades.py -o Assembly${pair_id} -1 ${r1.baseName} -2 ${r2.baseName} --meta --threads ${task.cpus} --memory ${task.cpus} --phred-offset ${phred} 
     gzip -n Assembly${pair_id}/contigs.fasta   
     mv Assembly${pair_id}/contigs.fasta.gz contigs.fasta.gz
     gzip ${r1.baseName}
-    gzip ${r1.baseName}
+    gzip ${r2.baseName}
     """
 }
 
@@ -45,17 +47,18 @@ process SPADES {
 process OFFSETDETECTOR {
     cpus 1
     input:
-    tuple val(pair_id), path(reads)
+    val(pair_id)
+    path(r1)
+    path(r2)
 
     output:
     stdout
 
     script:
     
-    def (r1, r2) = reads
     """
-    gzip --decompress ${r1}
-    gzip --decompress ${r2}
+    gzip -d ${r1} -f
+    gzip -d ${r2} -f
     python3 ${projectDir}/offsetdetector.py ${r1.baseName} ${r2.baseName}
     gzip ${r1.baseName}
     gzip ${r2.baseName}

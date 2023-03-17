@@ -19,7 +19,9 @@ process FASTERQDUMP {
     val sra_nr
     
     output:
-    tuple val (sra_nr), path ("${sra_nr}_*.fastq")
+    val (sra_nr)
+    path("${sra_nr}_1.fastq.gz")
+    path("${sra_nr}_2.fastq.gz")
     
 
     script:
@@ -44,34 +46,34 @@ process TRIM {
     cpus 4
 
     input: 
-    tuple val(pair_id), path(reads) 
+    val(pair_id)
+    path(r1) 
+    path(r2)
 
 
     output:
     val(pair_id)
-    path("${r1}_trimmed.fastq")
-    path("${r2}_trimmed.fastq")
+    path("${r1.simpleName}_trimmed.fastq.gz")
+    path("${r2.simpleName}_trimmed.fastq.gz")
 
     
     script:
-    def (r1, r2) = reads
-
    
     if (params.refGenome == ""){
     """
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
-    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${r1}_trimmed.fastq -out2=${r2}_trimmed.fastq trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t
-    gzip ${r1}_trimmed.fastq
-    gzip ${r2}_trimmed.fastq
+    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${r1.simpleName}_trimmed.fastq -out2=${r2.simpleName}_trimmed.fastq trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t
+    gzip ${r1.simpleName}_trimmed.fastq
+    gzip ${r2.simpleName}_trimmed.fastq
     rm read?_tmp
     """
     }
     else{
      """
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
-    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${r1}_trimmed.fastq -out2=${r2}_trimmed.fastq ref=${params.refGenome} trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t
-    gzip ${r1}_trimmed.fastq
-    gzip ${r2}_trimmed.fastq
+    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${r1.simpleName}_trimmed.fastq -out2=${r2.simpleName}_trimmed.fastq ref=${params.refGenome} trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t
+    gzip ${r1.simpleName}_trimmed.fastq
+    gzip ${r2.simpleName}_trimmed.fastq
     rm read?_tmp
     """
     }
@@ -93,30 +95,43 @@ process KRAKEN{
     
 
     input:
-    tuple val(pair_id)
+    val(pair_id)
     path (r1)
     path (r2)
     
 
     output:
-    tuple val(pair_id), path(trimmed_reads)
+    val(pair_id)
+    path("${pair_id}_1.TrimmedSubNoEu.fastq.gz")
+    path("${pair_id}_2.TrimmedSubNoEu.fastq.gz")
 
     script:
-
-    
-
-    trimmed_reads = reads.collect{
-      "${it.baseName}SubNoEu.fastq"
+    if (params.server) {
+        """
+        gzip -d -f ${r1}
+        gzip -d -f ${r2}
+        kraken2 --preload -d ${params.DATABASEDIR}/${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
+        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken ${projectDir}/Results
+        
+        rm ${r1.baseName}
+        rm ${r2.baseName} 
+        gzip ${pair_id}_1.TrimmedSubNoEu.fastq
+        gzip ${pair_id}_2.TrimmedSubNoEu.fastq
+        """
     }
-
-    """
-    gzip -d ${r1}
-    gzip -d ${r2}
-    kraken2 --preload -d ${params.DATABASEDIR}/${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
-    python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken ${projectDir}/Results
-    gzip ${r1.baseName}
-    gzip ${r2.baseName}
-    """
+    else {
+        """
+        gzip -d -f ${r1}
+        gzip -d -f ${r2}
+        kraken2 -d ${params.DATABASEDIR}/${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
+        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken ${projectDir}/Results
+        
+        rm ${r1.baseName}
+        rm ${r2.baseName} 
+        gzip ${pair_id}_1.TrimmedSubNoEu.fastq
+        gzip ${pair_id}_2.TrimmedSubNoEu.fastq
+        """
+    }
 }
 
 process TAXREMOVE{
