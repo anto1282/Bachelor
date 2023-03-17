@@ -54,8 +54,8 @@ workflow{
 
     HOSTPREDICTION = IPHOP(VIREXTRACTED_ch) 
 
-    PHADB_ch = Channel.fromPath(params.phaDB)
+    //PHADB_ch = Channel.fromPath(params.phaDB)
 
-    PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch,PHADB_ch)
+    PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch)
 
 }
