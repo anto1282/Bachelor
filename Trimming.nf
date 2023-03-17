@@ -82,7 +82,9 @@ process KRAKEN{
     
 
     input:
-    tuple val(pair_id), path(reads)
+    tuple val(pair_id)
+    path (r1)
+    path (r2)
     
 
     output:
@@ -90,7 +92,7 @@ process KRAKEN{
 
     script:
 
-    def (r1, r2) = reads
+    //def (r1, r2) = reads
 
     trimmed_reads = reads.collect{
       "${it.baseName}SubNoEu.fastq"
