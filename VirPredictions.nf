@@ -199,7 +199,4 @@ process SEEKER{
     python SeekerSplitter.py 
     """
 
-
-    
-
 }
