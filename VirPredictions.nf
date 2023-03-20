@@ -178,7 +178,7 @@ process SEEKER{
         cpus 16
             }
     else {
-        conda 'seeker'
+        beforeScript 'conda create -n seeker '
         cpus 8
     }
 
@@ -199,7 +199,6 @@ process SEEKER{
     python SeekerSplitter.py 
     rm SeekerFile
     rm Contigs_trimmed
-    gzip ${contigsFile}
     """
 
 }
