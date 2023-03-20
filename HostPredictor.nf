@@ -50,8 +50,8 @@ process PHIST {
     
     input: 
     val (pair_id)
-    path (viral_contigs_fasta)
-    path (non_viral_fasta)
+    val (viral_contigs_fasta)
+    val (non_viral_fasta)
 
 
     output:
