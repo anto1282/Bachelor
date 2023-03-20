@@ -1,7 +1,7 @@
 
 process DVF {
     if (params.server) {
-        beforeScript 'module load deepvirfinder/'
+        beforeScript 'module load gcc theano deepvirfinder'
         afterScript 'module unload deepvirfinder/'
         cpus 16
         memory '16 GB'
