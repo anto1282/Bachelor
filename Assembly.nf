@@ -3,8 +3,8 @@
 
 process SPADES {
     if (params.server) {
-        beforeScript 'module load spades/3.15.5'
-        cpus 16
+        beforeScript 'module load spades'
+        cpus 8
         memory '16 GB'
     }
     else {
@@ -45,7 +45,7 @@ process SPADES {
 
 
 process OFFSETDETECTOR {
-    cpus 1
+    cpus 2
     input:
     val(pair_id)
     path(r1)
