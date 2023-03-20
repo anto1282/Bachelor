@@ -36,7 +36,7 @@ for line in ScaffoldInfile:
     if line[1:-1] in BacterialSet:
         BacFlag = True
     if BacFlag == True:
-        print(line, file = BacteriaOutfile)
+        print(line, file = BacteriaOutfile, end = "")
 
 
     if line.startswith(">"):
@@ -44,7 +44,7 @@ for line in ScaffoldInfile:
     if line[1:-1] in PhageSet:
         PhageFlag = True
     if PhageFlag == True:
-        print(line, file = PhageOutfile)
+        print(line, file = PhageOutfile, end = "")
 PhageOutfile.close()
 BacteriaOutfile.close()
 ScaffoldInfile.close()
