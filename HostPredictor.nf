@@ -23,16 +23,49 @@ process IPHOP {
 
     output:
     val (pair_id)
-    path (predictions)
+    //path (predictions)
     
 
     script:
     """
-    iphop predict --fa_file ${viral_contigs_fasta} --db_dir ${params.iphopDB} --out_dir iphop_prediction
+    iphop predict --fa_file ${viral_contigs_fasta} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id}
     """
 
     
 }   
+
+
+process PHIST {
+
+    errorStrategy = 'ignore'
+    if (params.server) {
+        cpus 8
+    }
+    else {
+        cpus 4
+    }
+
+    publishDir "${params.outdir}/${pair_id}", mode: 'copy'
+
+    
+    input: 
+    val (pair_id)
+    val (viral_contigs_fasta)
+    path (non_viral_fasta)
+
+
+    output:
+    val (pair_id)
+    path ("phist_results")
+
+
+    script:
+    """
+    ./phist.py -t ${task.cpus} ${viral_contigs_fasta} ${non_viral_fasta} phist_results_${pair_id}
+    """
+}  
+
+
 
 
 //Deprecated module:
