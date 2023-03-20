@@ -39,6 +39,7 @@ process IPHOP {
 
 process DEEPHOST {
     
+    
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
     //cpus 8
