@@ -192,7 +192,7 @@ process SEEKER{
     path("SeekerPhages")
 
 
-    script
+    script:
     """
     reformat.sh in=${contigsFile} out=Contigs_trimmed minlength=1000 overwrite=True
     predict-metagenome Contigs_trimmed > SeekerFile
