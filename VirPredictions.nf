@@ -1,8 +1,8 @@
 
 process DVF {
     if (params.server) {
-        beforeScript 'module load deepvirfinder theano'
-        afterScript 'module unload deepvirfinder theano'
+        beforeScript 'module load gcc theano deepvirfinder'
+        afterScript 'module unload gcc theano deepvirfinder/'
         cpus 16
         memory '16 GB'
             }
@@ -184,15 +184,15 @@ process SEEKER{
 
     
     input:
-    val(pair_id)
-    path(contigsFile)
+    tuple val(pair_id), path(contigsFile)
+    
 
     output:
     path("SeekerBacterials")
     path("SeekerPhages")
 
 
-    script
+    script:
     """
     reformat.sh in=${contigsFile} out=Contigs_trimmed minlength=1000 overwrite=True
     predict-metagenome Contigs_trimmed > SeekerFile
