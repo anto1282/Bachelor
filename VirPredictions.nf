@@ -166,7 +166,7 @@ process CHECKV {
     script:
     """
     
-    checkv end_to_end ${viralcontigs} -t ${task.cpus} -d ${params.checkVDB}
+    checkv end_to_end ${viralcontigs} -t ${task.cpus} -d ${DATABASEDIR}/${params.checkVDB}
     
     """
 }
