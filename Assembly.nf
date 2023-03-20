@@ -7,6 +7,7 @@ process SPADES {
         cpus 8
         memory { 16.GB + (16.GB * 1/2*task.attempt) }
         errorStrategy 'retry'
+        maxRetries  = 3
     }
     else {
         conda "spades=3.15.4 conda-forge::openmp"
