@@ -178,7 +178,7 @@ process SEEKER{
         cpus 16
             }
     else {
-        beforeScript 'conda create -n seeker '
+        beforeScript 'conda activate seeker'
         cpus 8
     }
 
