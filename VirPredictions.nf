@@ -3,7 +3,7 @@ process DVF {
     if (params.server) {
         beforeScript 'module load gcc theano deepvirfinder'
         afterScript 'module unload gcc theano deepvirfinder/'
-        cpus 16
+        cpus 8
         memory '16 GB'
             }
     else {
@@ -48,7 +48,7 @@ process VIRSORTER {
     if (params.server) {
         beforeScript 'module load virsorter/2.2.3'
         afterScript 'module unload virsorter/2.2.3'
-        cpus 16
+        cpus 8
         memory '32 GB'
         }
     else {
@@ -111,7 +111,7 @@ process DVF1 {
     if (params.server) {
         beforeScript 'module load deepvirfinder/2020.11.21'
         afterScript 'module unload deepvirfinder/2020.11.21'
-        cpus 16
+        cpus 
             }
     else {
         conda 'python=3.6 numpy theano=1.0.3 keras=2.2.4 scikit-learn Biopython h5py'
@@ -143,7 +143,7 @@ process CHECKV {
     if (params.server) {
         beforeScript 'module load checkv'
         afterScript 'module unload checkv'
-        cpus 16
+        cpus 8
             }
     else {
         conda 'checkv'
@@ -175,7 +175,7 @@ process SEEKER{
     if (params.server) {
         beforeScript 'module load seeker'
         afterScript 'module unload seeker'
-        cpus 16
+        cpus 8
             }
     else {
         beforeScript 'conda activate seeker'
