@@ -6,7 +6,7 @@ include {SPADES; SPADES1; OFFSETDETECTOR; N50;COVERAGE} from "./Assembly.nf"
 include {SUBSAMPLEFORCOVERAGE; SUBSAMPLEFORN50} from "./SubSampling.nf"
 include {DVF; DVEXTRACT;VIRSORTER;CHECKV; SEEKER} from "./VirPredictions.nf"
 include {PHAROKKA} from "./Pharokka.nf"
-include {IPHOP;DEEPHOST} from "./HostPredictor.nf"
+include {IPHOP;DEEPHOST;PHIST} from "./HostPredictor.nf"
 
 
 
@@ -39,6 +39,8 @@ workflow{
 
     //HOSTPREDICTION1_ch = DEEPHOST(VIREXTRACTED_ch)
     HOSTPREDICTION2_ch = IPHOP(VIREXTRACTED_ch) 
+
+    HOSTPREDICTION2_ch = PHIST(VIREXTRACTED_ch) 
 
 
     //PHADB_ch = Channel.fromPath(params.phaDB)

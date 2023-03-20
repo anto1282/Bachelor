@@ -56,12 +56,12 @@ process PHIST {
 
     output:
     val (pair_id)
-    path ("phist_results")
+    path ("phist_results_${pair_id}")
 
 
     script:
     """
-    ./phist.py -t ${task.cpus} ${viral_contigs_fasta} ${non_viral_fasta} phist_results_${pair_id}
+    python3 ${projectDir}/PHIST/phist.py -t ${task.cpus} ${viral_contigs_fasta} ${non_viral_fasta} phist_results_${pair_id}
     """
 }  
 
