@@ -184,6 +184,8 @@ process SEEKER{
     publishDir "${params.outdir}/${pair_id}/", mode: 'copy'
 
 
+    publishDir "${params.outdir}/${pair_id}/SEEKER", mode: 'copy'
+
     
     input:
     tuple val(pair_id), path(contigsFile)
