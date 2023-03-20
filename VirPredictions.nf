@@ -194,11 +194,11 @@ process SEEKER{
 
     script:
     """
-    reformat.sh in=${contigsFile} out=Contigs_trimmed minlength=1000 overwrite=True
-    predict-metagenome Contigs_trimmed > SeekerFile
+    reformat.sh in=${contigsFile} out=Contigs_trimmed.fasta minlength=1000 overwrite=True
+    predict-metagenome Contigs_trimmed.fasta > SeekerFile
     python SeekerSplitter.py 
     rm SeekerFile
-    rm Contigs_trimmed
+    rm Contigs_trimmed.fasta
     """
 
 }
