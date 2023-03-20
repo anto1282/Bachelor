@@ -2,7 +2,7 @@
 process DVF {
     if (params.server) {
         beforeScript 'module load gcc theano deepvirfinder'
-        afterScript 'module unload deepvirfinder/'
+        afterScript 'module unload gcc theano deepvirfinder/'
         cpus 16
         memory '16 GB'
             }
@@ -13,7 +13,6 @@ process DVF {
     
     publishDir "${params.outdir}/${pair_id}/DVFResults", mode: 'copy'
 
-    
 
     input: 
     tuple val(pair_id), path(contigs)
@@ -70,11 +69,11 @@ process VIRSORTER {
     
     script:
     
-        """
-        gzip --decompress --force ${contigs} 
-        virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus}
-        gzip --force ${contigs.baseName} 
-        """
+    """
+    gzip --decompress --force ${contigs} 
+    virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus}
+    gzip --force ${contigs.baseName} 
+    """
     
     
 }
@@ -166,7 +165,7 @@ process CHECKV {
     script:
     """
     gzip --decompress --force ${viralcontigs} 
-    checkv end_to_end ${viralcontigs} -t ${task.cpus} -d ${params.checkVDB}
+    checkv end_to_end ${viralcontigs.baseName} -t ${task.cpus} -d ${params.checkVDB}
     gzip --force ${viralcontigs.baseName} 
     """
 }
@@ -185,6 +184,7 @@ process SEEKER{
 
     
     input:
+    val(pair_id)
     path(contigsFile)
 
     output:
@@ -197,6 +197,9 @@ process SEEKER{
     reformat.sh in=${contigsFile} out=Contigs_trimmed minlength=1000 overwrite=True
     predict-metagenome Contigs_trimmed > SeekerFile
     python SeekerSplitter.py 
+    rm SeekerFile
+    rm Contigs_trimmed
+    gzip ${contigsFile}
     """
 
 }

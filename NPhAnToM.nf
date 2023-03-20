@@ -4,7 +4,7 @@ nextflow.enable.dsl=2
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
 include {SPADES; SPADES1; OFFSETDETECTOR; N50;COVERAGE} from "./Assembly.nf"
 include {SUBSAMPLEFORCOVERAGE; SUBSAMPLEFORN50} from "./SubSampling.nf"
-include {DVF; DVEXTRACT;VIRSORTER;CHECKV} from "./VirPredictions.nf"
+include {DVF; DVEXTRACT;VIRSORTER;CHECKV; SEEKER} from "./VirPredictions.nf"
 include {PHAROKKA} from "./Pharokka.nf"
 include {IPHOP} from "./HostPredictor.nf"
 
@@ -45,22 +45,21 @@ workflow{
     N50CONTIG = N50(ASSEMBLY_ch)
     //N50CONTIG.view()
 
-    // VIRPREDFILE_ch = DVF(ASSEMBLY_ch)
 
     VIREXTRACTED_ch = DVF(ASSEMBLY_ch)
+    VIRSORTER_ch = VIRSORTER(ASSEMBLY_ch)
+    SEEKER_ch = SEEKER(ASSEMBLY_ch)
 
-    //VIRSORTER_ch = VIRSORTER(ASSEMBLY_ch)
 
-    //VIREXTRACTED_ch = DVEXTRACT(VIRPREDFILE_ch)
+    HOSTPREDICTION1_ch = DEEPHOST(VIREXTRACTED_ch)
+    HOSTPREDICTION2_ch = IPHOP(VIREXTRACTED_ch) 
 
-    //HOSTPREDICTION = DEEPHOST(VIREXTRACTED_ch)
-
-    //HOSTPREDICTION = IPHOP(VIREXTRACTED_ch) 
 
     //PHADB_ch = Channel.fromPath(params.phaDB)
+    PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch)
 
-    //PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch)
+    CHECKV(VIREXTRACTED_ch)
 
-    //CHECKV(VIREXTRACTED)
+
 
 }

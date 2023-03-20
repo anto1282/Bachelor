@@ -3,8 +3,8 @@
 
 process PHAROKKA {
     if (params.server){
-        beforeScript 'module load pharokka/1.2.1' 
-        afterScript 'module unload pharokka.py/1.2.1' 
+        beforeScript 'module load mash/2.2 bcbio-gff/0.7.0 pharokka/' 
+        afterScript 'module unload mash/2.2 bcbio-gff/0.7.0 pharokka/' 
         
 
         cpus 16
