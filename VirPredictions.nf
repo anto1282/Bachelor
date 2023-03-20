@@ -71,7 +71,7 @@ process VIRSORTER {
     
     """
     gzip --decompress --force ${contigs} 
-    virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -db-dir ${params.virsorterDB} --min-score 0.8 all 
+    virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} --db-dir ${params.virsorterDB} --min-score 0.8 all 
     gzip --force ${contigs.baseName} 
     """
     
