@@ -161,12 +161,12 @@ process CHECKV {
     path(non_viral_contigs)
 
     output:
-    "output_directory/*.tsv"
+    "checkv_${pair_id}/*.tsv"
     
     script:
     """
     
-    checkv end_to_end ${viralcontigs} output_directory -t ${task.cpus} -d ${params.checkVDB}
+    checkv end_to_end ${viralcontigs} checkv_${pair_id} -t ${task.cpus} -d ${params.checkVDB}
     
     """
 }
