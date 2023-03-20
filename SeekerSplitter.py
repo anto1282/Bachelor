@@ -11,7 +11,7 @@ BacteriaOutfile = open("SeekerBacterials", "w")
 PhageOutfile = open("SeekerPhages", "w")
 PhageSet = set()
 BacterialSet = set()
-CutOff = 0.8
+CutOff = 0.7
 
 
 for line in SeekerInfile:
