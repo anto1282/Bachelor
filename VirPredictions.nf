@@ -65,7 +65,7 @@ process VIRSORTER {
     output:
     val (pair_id)
     path "predictions/final-viral-combined.fa"
-    path "predictions/final-vira-score.tsv"
+    path "predictions/final-viral-score.tsv"
     
     script:
     
