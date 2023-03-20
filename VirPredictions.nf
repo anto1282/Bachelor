@@ -166,7 +166,7 @@ process CHECKV {
     script:
     """
     gzip --decompress --force ${viralcontigs} 
-    checkv end_to_end ${viralcontigs} -t ${task.cpus} -d ${params.checkVDB}
+    checkv end_to_end ${viralcontigs.baseName} -t ${task.cpus} -d ${params.checkVDB}
     gzip --force ${viralcontigs.baseName} 
     """
 }
@@ -197,6 +197,9 @@ process SEEKER{
     reformat.sh in=${contigsFile} out=Contigs_trimmed minlength=1000 overwrite=True
     predict-metagenome Contigs_trimmed > SeekerFile
     python SeekerSplitter.py 
+    rm SeekerFile
+    rm Contigs_trimmed
+    gzip ${contigsFile}
     """
 
 }
