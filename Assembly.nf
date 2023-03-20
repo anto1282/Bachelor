@@ -5,7 +5,8 @@ process SPADES {
     if (params.server) {
         beforeScript 'module load spades'
         cpus 8
-        memory '16 GB'
+        memory { 16.GB + (16.GB * 1/2*task.attempt) }
+        errorStrategy 'retry'
     }
     else {
         conda "spades=3.15.4 conda-forge::openmp"
