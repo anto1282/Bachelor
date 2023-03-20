@@ -46,7 +46,7 @@ workflow{
     //N50CONTIG.view()
 
 
-    //VIREXTRACTED_ch = DVF(ASSEMBLY_ch)
+    VIREXTRACTED_ch = DVF(ASSEMBLY_ch)
     VIRSORTER_ch = VIRSORTER(ASSEMBLY_ch)
     SEEKER_ch = SEEKER(ASSEMBLY_ch)
 
