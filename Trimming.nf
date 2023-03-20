@@ -1,7 +1,6 @@
 #!/usr/bin/env nextflow
 
 
-// TODO TJEK OM FIL ER TILSTEDE FØR VI LAVER FASTERQDUMP
 process FASTERQDUMP {
     if (params.server) {
         beforeScript 'module load sra-tools'
