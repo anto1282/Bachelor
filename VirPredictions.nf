@@ -13,7 +13,6 @@ process DVF {
     
     publishDir "${params.outdir}/${pair_id}/DVFResults", mode: 'copy'
 
-    
 
     input: 
     tuple val(pair_id), path(contigs)
@@ -70,11 +69,11 @@ process VIRSORTER {
     
     script:
     
-        """
-        gzip --decompress --force ${contigs} 
-        virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus}
-        gzip --force ${contigs.baseName} 
-        """
+    """
+    gzip --decompress --force ${contigs} 
+    virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus}
+    gzip --force ${contigs.baseName} 
+    """
     
     
 }
@@ -185,6 +184,7 @@ process SEEKER{
 
     
     input:
+    val(pair_id)
     path(contigsFile)
 
     output:
