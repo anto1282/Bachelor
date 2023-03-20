@@ -19,8 +19,8 @@ module load miniconda singularity/3.8.0 nextflow
 
 if [ $1 == "-r" ];
 then
-    srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile AC -resume -with-mpi -with-tower
+    srun nextflow run NPhAnToM.nf --IDS SRR23446273	 -profile AC -resume -with-mpi -with-tower
 else
-    srun nextflow run NPhAnToM.nf --IDS SRR13557385 -profile AC -with-mpi -with-tower
+    srun nextflow run NPhAnToM.nf --IDS SRR23446273	 -profile AC -with-mpi -with-tower
 fi
 
