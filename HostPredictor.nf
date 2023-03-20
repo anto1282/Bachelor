@@ -50,7 +50,7 @@ process PHIST {
     
     input: 
     val (pair_id)
-    val (viral_contigs_fasta)
+    path (viral_contigs_fasta)
     path (non_viral_fasta)
 
 
@@ -78,7 +78,7 @@ process DEEPHOST {
     //cpus 8
     input: 
     val (pair_id)
-    val (viral_contigs_fasta)
+    path (viral_contigs_fasta)
     path (non_viral_fasta)
 
 
