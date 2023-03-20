@@ -90,7 +90,7 @@ process N50 {
 
     script:
     """
-    gzip -d ${contigs_fasta}
+    gzip -f -d ${contigs_fasta}
     stats.sh in=${contigs_fasta.baseName} | grep 'Main genome scaffold N/L50:' | cut -d: -f2 | cut -d/ -f1 | xargs
     gzip ${contigs_fasta.baseName}
     """
