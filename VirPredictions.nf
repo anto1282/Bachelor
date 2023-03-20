@@ -181,6 +181,8 @@ process SEEKER{
         beforeScript 'conda activate seeker'
         cpus 8
     }
+    publishDir "${params.outdir}/${pair_id}/", mode: 'copy'
+
 
     
     input:
