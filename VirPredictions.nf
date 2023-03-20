@@ -173,8 +173,8 @@ process CHECKV {
 
 process SEEKER{
     if (params.server) {
-        beforeScript 'module load seeker'
-        afterScript 'module unload seeker'
+        beforeScript 'module load seeker bbmap'
+        afterScript 'module unload seeker bbmap'
         cpus 8
             }
     else {
