@@ -101,6 +101,7 @@ process DVEXTRACT{
     gzip --decompress --force ${contigs} 
     python3 ${projectDir}/DeepVirExtractor.py ${predfile} ${contigs.baseName} ${params.cutoff}
     gzip --force ${contigs.baseName} 
+    gzip 
     """
 
 }
@@ -164,9 +165,9 @@ process CHECKV {
     
     script:
     """
-    gzip --decompress --force ${viralcontigs} 
-    checkv end_to_end ${viralcontigs.baseName} -t ${task.cpus} -d ${params.checkVDB}
-    gzip --force ${viralcontigs.baseName} 
+    
+    checkv end_to_end ${viralcontigs} -t ${task.cpus} -d ${params.checkVDB}
+    
     """
 }
 
