@@ -79,7 +79,9 @@ process N50 {
         cpus 4
         memory '4 GB'
     }
-    
+    publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
+
+
 
     input: 
     tuple val (pair_id), path(contigs_fasta)
@@ -87,13 +89,13 @@ process N50 {
 
 
     output:
-    tuple stdout, path (contigs_fasta), val (pair_id)
+    path("assemblyStats_${pair_id}")
     
 
     script:
     """
     gzip -f -d ${contigs_fasta}
-    stats.sh in=${contigs_fasta.baseName} | grep 'Main genome scaffold N/L50:' | cut -d: -f2 | cut -d/ -f1 | xargs
+    stats.sh in=${contigs_fasta.baseName} > assemblyStats_${pair_id}
     gzip ${contigs_fasta.baseName}
     """
 

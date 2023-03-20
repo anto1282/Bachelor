@@ -19,9 +19,9 @@ for line in SeekerInfile:
         continue
     if SeekerFlag == True:
         if line.split()[1]== "Phage" and float(line.split()[-1]) > CutOff:
-            PhageSet.add(line.split[0])
+            PhageSet.add(line.split()[0])
         if line.split()[1]== "Bacteria":
-            BacterialSet.add(line.split[0])
+            BacterialSet.add(line.split()[0])
     if line.split()[0] =="name":
         SeekerFlag = True
 
