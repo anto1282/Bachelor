@@ -61,7 +61,7 @@ process PHIST {
 
     script:
     """
-    python3 ${projectDir}/../PHIST/phist.py -t ${task.cpus} ${viral_contigs_fasta} ${non_viral_fasta} phist_results_${pair_id}
+    python3 ${projectDir}/PHIST/phist.py -t ${task.cpus} ${viral_contigs_fasta} ${non_viral_fasta} phist_results_${pair_id}
     """
 }  
 
