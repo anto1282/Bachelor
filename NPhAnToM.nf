@@ -6,7 +6,7 @@ include {SPADES; SPADES1; OFFSETDETECTOR; N50;COVERAGE} from "./Assembly.nf"
 include {SUBSAMPLEFORCOVERAGE; SUBSAMPLEFORN50} from "./SubSampling.nf"
 include {DVF; DVEXTRACT;VIRSORTER;CHECKV; SEEKER} from "./VirPredictions.nf"
 include {PHAROKKA} from "./Pharokka.nf"
-include {IPHOP} from "./HostPredictor.nf"
+include {IPHOP;DEEPHOST} from "./HostPredictor.nf"
 
 
 

@@ -184,8 +184,8 @@ process SEEKER{
 
     
     input:
-    val(pair_id)
-    path(contigsFile)
+    tuple val(pair_id), path(contigsFile)
+    
 
     output:
     path("SeekerBacterials")
