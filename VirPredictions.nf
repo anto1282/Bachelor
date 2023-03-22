@@ -45,6 +45,7 @@ process DVF {
 }
 
 process PHAGER {
+    errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
     if (params.server) {
         beforeScript 'conda activate /projects/mjolnir1/apps/py39'
