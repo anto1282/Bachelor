@@ -4,7 +4,7 @@
 #SBATCH --output=/projects/mjolnir1/people/qvx631/Bachelor/BACHELORASSEMBLIES
 #SBATCH --error=/projects/mjolnir1/people/qvx631/Bachelor/errors
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=2
+#SBATCH --cpus-per-task=4
 #SBATCH --mem-per-cpu=4G
 #SBATCH --time=03:00:00
 #SBATCH --mail-type=begin
