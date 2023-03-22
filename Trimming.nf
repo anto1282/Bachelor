@@ -81,8 +81,8 @@ process TRIM {
 process KRAKEN{
 
     if (params.server) {
-        beforeScript 'module load kraken2/2.1.2'
-        afterScript 'module unload kraken2/2.1.2'
+        beforeScript 'module load openmpi kraken2'
+        afterScript 'module unload kraken2 openmpi'
         memory '61 GB'
         cpus 8
     }
