@@ -4,7 +4,7 @@ nextflow.enable.dsl=2
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
 include {SPADES; SPADES1; OFFSETDETECTOR; N50;COVERAGE} from "./Assembly.nf"
 include {SUBSAMPLEFORCOVERAGE; SUBSAMPLEFORN50} from "./SubSampling.nf"
-include {DVF; DVEXTRACT;VIRSORTER;CHECKV; SEEKER} from "./VirPredictions.nf"
+include {DVF; DVEXTRACT;VIRSORTER;CHECKV; SEEKER; PHAGER} from "./VirPredictions.nf"
 include {PHAROKKA} from "./Pharokka.nf"
 include {IPHOP;DEEPHOST;PHIST} from "./HostPredictor.nf"
 
@@ -12,8 +12,6 @@ include {IPHOP;DEEPHOST;PHIST} from "./HostPredictor.nf"
 
 
 workflow{
-    
-   // KrakenDB_ch = Channel.fromPath(params.krakDB)
 
     Channel
         .value(params.IDS)
@@ -31,19 +29,24 @@ workflow{
     ASSEMBLY_ch = SPADES(NoEUReads_ch,OFFSET)
 
     N50CONTIG = N50(ASSEMBLY_ch)
+    
+    
 
+    // VIRUS PREDICTION TOOLS
     VIREXTRACTED_ch = DVF(ASSEMBLY_ch)
     //VIRSORTER_ch = VIRSORTER(ASSEMBLY_ch) //NOT WORKING
     SEEKER_ch = SEEKER(ASSEMBLY_ch)
 
+    PHAGER_ch = PHAGER(ASSEMBLY_ch)
 
+    // HOSTPREDICTION TOOLS
     //HOSTPREDICTION1_ch = DEEPHOST(VIREXTRACTED_ch)
     HOSTPREDICTION2_ch = IPHOP(VIREXTRACTED_ch) 
 
     //HOSTPREDICTION3_ch = PHIST(VIREXTRACTED_ch) 
 
 
-    //PHADB_ch = Channel.fromPath(params.phaDB)
+    //ANNOTATION OF VIRAL CONTIGS
     PHAROKKA_ANNOTATION_ch = PHAROKKA(VIREXTRACTED_ch)
 
     CHECKV(VIREXTRACTED_ch)
