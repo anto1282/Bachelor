@@ -28,7 +28,7 @@ process DVF {
     if (params.server) {
         """
         gzip --decompress --force ${contigs} 
-        ${params.DVFPath} -i ${contigs.baseName} -l 500 -c ${task.cpus}
+        ${params.DVFPath} -i ${contigs.baseName} -l 10000 -c ${task.cpus}
         python3 ${projectDir}/DeepVirExtractor.py *dvfpred.txt ${contigs.baseName} ${params.cutoff}
         gzip --force ${contigs.baseName} 
         """
@@ -36,7 +36,7 @@ process DVF {
     else {
         """
         gzip --decompress --force ${contigs} 
-        python ${params.DVFPath} -i ${contigs.baseName} -l 500 -c ${task.cpus}
+        python ${params.DVFPath} -i ${contigs.baseName} -l 10000 -c ${task.cpus}
         python3 ${projectDir}/DeepVirExtractor.py *dvfpred.txt ${contigs.baseName} ${params.cutoff}
         gzip --force ${contigs.baseName} 
         """
@@ -44,6 +44,47 @@ process DVF {
     
 }
 
+process PHAGER {
+    //Tool for phage prediction from Thomas
+    if (params.server) {
+        
+        afterScript 'module unload gcc theano deepvirfinder/'
+        cpus 8
+        clusterOptions '--partition=gpuqueue'
+            }
+    else {
+        cpus 8
+    }
+    
+    //publishDir "${params.outdir}/${pair_id}/PHAGERResults", mode: 'copy'
+
+
+    input: 
+    tuple val(pair_id), path(contigs)
+
+
+    output:
+    val (pair_id)
+    // path "predicted_viruses.fasta"
+    // path "non_viral_assemblies.fasta"
+    
+    script:
+    if (params.server) {
+        """
+        gzip --decompress --force ${contigs} 
+        phager.py -c 10000 -a ${contigs} -d ${pair_id}_phagerresults -v
+        gzip --force ${contigs.baseName} 
+        """
+            }
+    else {
+        """
+        gzip --decompress --force ${contigs} 
+        phager.py -c 10000 -a ${contigs} -d ${pair_id}_phagerresults -v
+        gzip --force ${contigs.baseName} 
+        """
+    }
+    
+}
 
 process VIRSORTER {
     if (params.server) {
