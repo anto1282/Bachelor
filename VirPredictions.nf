@@ -47,8 +47,8 @@ process DVF {
 process PHAGER {
     //Tool for phage prediction from Thomas
     if (params.server) {
-        
-        afterScript 'module unload gcc theano deepvirfinder/'
+        beforeScript 'conda activate /projects/mjolnir1/apps/py39'
+        afterScript 'conda deactivate'
         cpus 8
         clusterOptions '--partition=gpuqueue'
             }
