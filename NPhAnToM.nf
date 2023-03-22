@@ -33,7 +33,7 @@ workflow{
     N50CONTIG = N50(ASSEMBLY_ch)
 
     VIREXTRACTED_ch = DVF(ASSEMBLY_ch)
-    VIRSORTER_ch = VIRSORTER(ASSEMBLY_ch) //NOT WORKING
+    //VIRSORTER_ch = VIRSORTER(ASSEMBLY_ch) //NOT WORKING (Vi mangler permission til at oprette filer i database mappen til virsorter)
     SEEKER_ch = SEEKER(ASSEMBLY_ch)
 
 
