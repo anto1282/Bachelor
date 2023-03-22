@@ -48,7 +48,7 @@ process PHAGER {
     errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
     if (params.server) {
-        beforeScript 'conda /projects/mjolnir1/apps/py39'
+        beforeScript 'conda activate /projects/mjolnir1/apps/py39'
         cpus 8
         clusterOptions '--partition=gpuqueue'
             }
