@@ -24,12 +24,12 @@ process PHAROKKA {
 
     
     output:
-    path "*"
+    path "pharokka_${pair_id}/*"
     
     
     script:
 
     """
-    pharokka.py -i ${viralcontigs} -o pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
+    pharokka.py -i ${viralcontigs} -o pharokka_${pair_id} -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
     """
 }
