@@ -9,7 +9,7 @@ process FASTERQDUMP {
     else {
         conda 'sra-tools'
     }
-    
+    label 'shortTask'
     memory '1 GB'
     
     publishDir "${params.outdir}/${sra_nr}/reads"
