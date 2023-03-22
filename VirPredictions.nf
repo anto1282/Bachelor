@@ -239,7 +239,7 @@ process SEEKER{
 
     script:
     """
-    reformat.sh in=${contigsFile} out=Contigs_trimmed.fasta minlength=1000 overwrite=True
+    reformat.sh in=${contigsFile} out=Contigs_trimmed.fasta minlength=10000 overwrite=True
     predict-metagenome Contigs_trimmed.fasta > SeekerFile
     python ${projectDir}/SeekerSplitter.py SeekerFile Contigs_trimmed.fasta
     rm SeekerFile
