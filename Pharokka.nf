@@ -13,6 +13,7 @@ process PHAROKKA {
         conda 'pharokka'
         cpus 8
     }
+    errorStrategy = 'ignore'
     
     publishDir "${params.outdir}/${params.IDS}", mode: 'copy'
     
@@ -29,7 +30,7 @@ process PHAROKKA {
     
     script:
     //checking if file is empty
-    if (viralcontigs.isEmpty) {
+    if (viralcontigs.isEmpty()) {
         """
         mkdir pharokka_${pair_id}
         """
