@@ -29,15 +29,10 @@ process PHAROKKA {
     
     
     script:
-    //checking if file is empty
-    if (viralcontigs.isEmpty()) {
-        """
-        mkdir pharokka_${pair_id}
-        """
-    }
-    else {
+    
+    
     """
     pharokka.py -i ${viralcontigs} -o pharokka_${pair_id} -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
     """
-    }
+    
 }
