@@ -28,7 +28,7 @@ process DVF {
     if (params.server) {
         """
         gzip --decompress --force ${contigs} 
-        ${params.DVFPath} -i ${contigs.baseName} -l 10000 -c ${task.cpus}
+        ${params.DVFPath} -i ${contigs.baseName} -l 1000 -c ${task.cpus}
         python3 ${projectDir}/DeepVirExtractor.py *dvfpred.txt ${contigs.baseName} ${params.cutoff}
         gzip --force ${contigs.baseName} 
         """
@@ -36,7 +36,7 @@ process DVF {
     else {
         """
         gzip --decompress --force ${contigs} 
-        python ${params.DVFPath} -i ${contigs.baseName} -l 10000 -c ${task.cpus}
+        python ${params.DVFPath} -i ${contigs.baseName} -l 1000 -c ${task.cpus}
         python3 ${projectDir}/DeepVirExtractor.py *dvfpred.txt ${contigs.baseName} ${params.cutoff}
         gzip --force ${contigs.baseName} 
         """
@@ -48,7 +48,7 @@ process PHAGER {
     errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
     if (params.server) {
-        beforeScript 'conda activate /projects/mjolnir1/apps/py39'
+        conda '/projects/mjolnir1/apps/conda/py39'
         cpus 8
         clusterOptions '--partition=gpuqueue'
             }
@@ -56,7 +56,7 @@ process PHAGER {
         cpus 8
     }
     
-    //publishDir "${params.outdir}/${pair_id}/PHAGERResults", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/PHAGERResults", mode: 'copy'
 
 
     input: 
@@ -65,21 +65,21 @@ process PHAGER {
 
     output:
     val (pair_id)
-    // path "predicted_viruses.fasta"
+    path "${pair_id}_phagerresults/phager_results.csv.gzpredicted_viruses.fasta"
     // path "non_viral_assemblies.fasta"
     
     script:
     if (params.server) {
         """
         gzip --decompress --force ${contigs} 
-        phager.py -c 10000 -a ${contigs} -d ${pair_id}_phagerresults -v
+        phager.py -c 1000 -a ${contigs} -d ${pair_id}_phagerresults -v
         gzip --force ${contigs.baseName} 
         """
             }
     else {
         """
         gzip --decompress --force ${contigs} 
-        phager.py -c 10000 -a ${contigs} -d ${pair_id}_phagerresults -v
+        phager.py -c 1000 -a ${contigs} -d ${pair_id}_phagerresults -v
         gzip --force ${contigs.baseName} 
         """
     }
