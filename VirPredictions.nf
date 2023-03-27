@@ -48,8 +48,8 @@ process PHAGER {
     errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
     if (params.server) {
-        beforeScript 'module load lightgbm'
-        afterScript 'module unload lightgbm'
+        // beforeScript 'module load lightgbm'
+        // afterScript 'module unload lightgbm'
         conda '/maps/projects/mjolnir1/apps/conda/py39'
         cpus 8
         clusterOptions '--partition=gpuqueue'
@@ -73,18 +73,14 @@ process PHAGER {
     script:
     if (params.server) {
         """
+        module load lightgbm
         gzip --decompress --force ${contigs} 
         phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
         gzip --force ${contigs.baseName} 
+        module unload lightgbm
         """
             }
-    else {
-        """
-        gzip --decompress --force ${contigs} 
-        phager.py -c 1000 -a ${contigs} -d ${pair_id}_phagerresults -v
-        gzip --force ${contigs.baseName} 
-        """
-    }
+    
     
 }
 
