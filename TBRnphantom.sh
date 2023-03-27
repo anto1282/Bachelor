@@ -14,6 +14,12 @@
 
 export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
 
+# Get the aliases and functions
+if [ -f ~/.bashrc ]; then
+        . ~/.bashrc
+fi
+
+
 module purge
 module load openjdk/11.0.0
 module load miniconda/py39_23.1 singularity/3.8.0 nextflow
