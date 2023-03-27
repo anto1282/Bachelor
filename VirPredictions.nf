@@ -48,7 +48,7 @@ process PHAGER {
     errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
     if (params.server) {
-        conda '/projects/mjolnir1/apps/conda/py39'
+        conda '/projects/mjolnir1/apps/conda/py311'
         cpus 8
         clusterOptions '--partition=gpuqueue'
             }
@@ -65,8 +65,8 @@ process PHAGER {
 
     output:
     val (pair_id)
-    path "${pair_id}_phagerresults/phager_results.csv.gzpredicted_viruses.fasta"
-    // path "non_viral_assemblies.fasta"
+    path "${pair_id}_phagerresults/phager_results.csv.gz"
+    
     
     script:
     if (params.server) {
