@@ -22,9 +22,9 @@ fi
 
 module purge
 module load openjdk/11.0.0
-module load miniconda/4.10.4 singularity/3.8.0 nextflow
+module load miniconda/py39_23.1 singularity/3.8.0 nextflow
 
-export PATH="/opt/software/miniconda/4.10.4/bin:$PATH"
+export PATH="/opt/software/miniconda/py39_23.1bin:$PATH"
 
 if [ $1 == "-r" ];
 then
