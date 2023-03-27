@@ -28,3 +28,4 @@ else
     srun nextflow run NPhAnToM.nf --IDS SRR23446273	 -profile AC -with-mpi -with-tower
 fi
 
+aa
