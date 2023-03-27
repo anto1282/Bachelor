@@ -19,7 +19,7 @@ module load miniconda singularity/3.8.0 nextflow
 
 export PATH="/opt/software/miniconda/4.10.4/bin:$PATH"
 
-export PATH="//projects/mjolnir1/apps/conda/pkgs/click-8.1.3-py39hf3d152e_0:$PATH"
+export PATH="/projects/mjolnir1/apps/conda/pkgs/click-8.1.3-py39hf3d152e_0/python3.9/site-packages/click:$PATH"
 
 if [ $1 == "-r" ];
 then
