@@ -83,8 +83,11 @@ process KRAKEN{
     if (params.server) {
         beforeScript 'module load openmpi kraken2'
         afterScript 'module unload kraken2 openmpi'
-        memory '61 GB'
+        memory {61.GB * task.attempt}
         cpus 8
+        errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+        maxRetries 3
+
     }
     else {
         conda "kraken2"
@@ -92,7 +95,7 @@ process KRAKEN{
         cpus 4
     }
     
-
+    
     input:
     val(pair_id)
     path (r1)
