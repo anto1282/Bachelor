@@ -114,7 +114,7 @@ process VIRSORTER {
     
     """
     gzip --decompress --force ${contigs} 
-    singularity run ${projectDir}/../../VirSorter2/virsorter2.sif run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} --db-dir ${params.virsorterDB} --min-score 0.8 all --use-conda-off
+    singularity run ${projectDir}/../../VirSorter2/virsorter2.sif run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} --min-score 0.8 all --use-conda-off
     gzip --force ${contigs.baseName} 
     """
     
