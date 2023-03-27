@@ -72,7 +72,7 @@ process PHAGER {
     if (params.server) {
         """
         gzip --decompress --force ${contigs} 
-        phager.py -c 1000 -a ${contigs} -d ${pair_id}_phagerresults -v
+        phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
         gzip --force ${contigs.baseName} 
         """
             }
