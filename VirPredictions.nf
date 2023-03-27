@@ -88,7 +88,7 @@ process PHAGER {
 
 process VIRSORTER {
     if (params.server) {
-        conda "/projects/mjolnir1/apps/conda/virsorter-2.2.4"
+        //conda "/projects/mjolnir1/apps/conda/virsorter-2.2.4"
         //beforeScript 'module load virsorter snakemake'
         //afterScript 'module unload virsorter snakemake'
         cpus 8
@@ -114,7 +114,7 @@ process VIRSORTER {
     
     """
     gzip --decompress --force ${contigs} 
-    virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} --db-dir ${params.virsorterDB} --min-score 0.8 all --use-conda-off
+    singularity run ${projectDir}/../../VirSorter2/virsorter2.sif run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} --min-score 0.8 all --use-conda-off
     gzip --force ${contigs.baseName} 
     """
     
