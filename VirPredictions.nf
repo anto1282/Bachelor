@@ -48,9 +48,11 @@ process PHAGER {
     errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
     if (params.server) {
+        conda '/maps/projects/mjolnir1/apps/conda/py39'
+        
         beforeScript 'module load lightgbm/3.3.2-cpu'
         afterScript 'module unload lightgbm/3.3.2-cpu'
-        conda '/maps/projects/mjolnir1/apps/conda/py39'
+        
         cpus 8
         clusterOptions '--partition=gpuqueue'
             }
