@@ -22,9 +22,10 @@ fi
 
 module purge
 module load openjdk/11.0.0
-module load miniconda/4.12.0 singularity/3.8.0 nextflow
+module load miniconda/4.10.4 singularity/3.8.0 nextflow
 
-export PATH="/opt/software/miniconda/4.12.0/bin:$PATH"
+export PATH="/opt/software/miniconda/4.10.4/bin:/home/qvx631/.dotnet/tools:$PATH"
+
 
 if [ $1 == "-r" ];
 then
