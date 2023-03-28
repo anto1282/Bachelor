@@ -50,7 +50,7 @@ process PHAGER {
     if (params.server) {
         beforeScript 'module load miniconda/py39_23.1 lightgbm/3.3.4'
         afterScript 'module unload lightgbm/3.3.4 miniconda/py39_23.1'
-        //conda '/maps/projects/mjolnir1/apps/conda/py39'
+        conda '/maps/projects/mjolnir1/apps/conda/py39'
         cpus 8
         clusterOptions '--partition=gpuqueue'
             }
