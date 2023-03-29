@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#SBATCH --job-name=NPhAnToM
+#SBATCH --job-name=PHAGERTBR
 #SBATCH --output=/projects/mjolnir1/people/qvx631/Bachelor/BACHELORASSEMBLIES
 #SBATCH --error=/projects/mjolnir1/people/qvx631/Bachelor/errors
 #SBATCH --ntasks=1
