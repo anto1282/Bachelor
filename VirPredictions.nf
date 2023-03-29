@@ -92,15 +92,15 @@ process PHAGER {
 process VIRSORTER {
     if (params.server) {
         //conda "/projects/mjolnir1/apps/conda/virsorter-2.2.4"
-        beforeScript 'module load snakemake screed virsorter'
-        afterScript 'module unload snakemake screed virsorter'
+        beforeScript 'module load snakemake screed click virsorter'
+        afterScript 'module unload snakemake screed click virsorter'
         cpus 8
         memory '32 GB'
         }
     else {
         cpus 8
     }
-    errorStrategy = "ignore"
+    errorStrategy = "finish"
     publishDir "${params.outdir}/${pair_id}/VIRSORTER", mode: 'copy'
     
 
