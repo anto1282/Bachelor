@@ -22,9 +22,9 @@ fi
 
 module purge
 module load openjdk/11.0.0
-module load miniconda/4.10.4 singularity/3.8.0 nextflow
+module load miniconda/4.10.4 nextflow
 
-export PATH="/opt/software/miniconda/4.10.4/bin:/home/qvx631/.dotnet/tools:$PATH"
+export PATH="/opt/software/miniconda/4.10.4/bin:/home/qvx631/.dotnet/tools:/projects/mjolnir1/apps/conda/py39/bin:/opt/software/miniconda/4.10.4/condabin:/home/qvx631/.local/bin:/home/qvx631/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/projects/mjolnir1/apps/bin:~/bin:/opt/software/miniconda/4.10.4/bin:/projects/mjolnir1/apps/conda:/maps/projects/mjolnir1/apps/bin:/maps/projects/mjolnir1/apps/conda/py39:$PATH"
 
 
 if [ $1 == "-r" ];
@@ -33,3 +33,5 @@ then
 else
     srun nextflow run NPhAnToM.nf --IDS SRR23875115 -profile cluster -with-mpi -with-tower --accessToken eyJ0aWQiOiA3MTg2fS43NTEwNGQ1ZmU1ZTllYzI0ZTI0NDg5OWExNWMwMjgwMjY0NGE3OTEx
 fi
+
+echo $PATH
