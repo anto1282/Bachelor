@@ -10,7 +10,7 @@
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 #SBATCH --mail-type=fail
-#SBATCH --mail-user=s203555@dtu.dk
+#SBATCH --mail-user=s203555@dtu.dksb
 
 export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
 
