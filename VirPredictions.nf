@@ -51,7 +51,7 @@ process PHAGER {
     if (params.server) {
         conda '/maps/projects/mjolnir1/apps/conda/py39'
 
-        beforeScript 'module load lightgbm/3.3.2-cpu'
+        //beforeScript 'module load lightgbm/3.3.2-cpu'
         //afterScript 'module unload lightgbm/3.3.2-cpu'
         
         cpus 8
@@ -76,6 +76,8 @@ process PHAGER {
     script:
     if (params.server) {
         """
+        echo $PATH
+        module load lightgbm/3.3.2-cpu
         echo $PATH
         gzip --decompress --force ${contigs} 
         phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
