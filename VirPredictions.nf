@@ -77,7 +77,7 @@ process PHAGER {
     if (params.server) {
         """
         echo $PATH
-        module load lightgbm/3.3.2
+        module load lightgbm/3.3.2-cpu
         echo $PATH
         gzip --decompress --force ${contigs} 
         phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
