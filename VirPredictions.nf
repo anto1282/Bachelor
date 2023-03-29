@@ -45,14 +45,16 @@ process DVF {
 }
 
 process PHAGER {
-    errorStrategy = 'ignore'
+    //errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
     if (params.server) {
-        beforeScript 'module load miniconda/py39_23.1 lightgbm/3.3.4'
-        afterScript 'module unload lightgbm/3.3.4 miniconda/py39_23.1'
-        //conda '/maps/projects/mjolnir1/apps/conda/py39'
+        conda '/maps/projects/mjolnir1/apps/conda/py39'
+
+        beforeScript 'module load lightgbm/3.3.2-cpu'
+        afterScript 'module unload lightgbm/3.3.2-cpu'
+        
         cpus 8
-        clusterOptions '--partition=gpuqueue'
+        //clusterOptions '--partition=gpuqueue'
             }
     else {
         cpus 8
@@ -87,8 +89,8 @@ process PHAGER {
 process VIRSORTER {
     if (params.server) {
         //conda "/projects/mjolnir1/apps/conda/virsorter-2.2.4"
-        beforeScript 'module load virsorter snakemake screed'
-        afterScript 'module unload virsorter snakemake screed'
+        beforeScript 'module load snakemake screed virsorter'
+        afterScript 'module unload snakemake screed virsorter'
         cpus 8
         memory '32 GB'
         }
