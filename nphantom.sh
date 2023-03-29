@@ -16,7 +16,7 @@ export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
 module purge
 module load openjdk/11.0.0
 module load miniconda singularity/3.8.0 nextflow
-module load mash
+module load mash/2.2
 
 export PATH="/opt/software/miniconda/4.10.4/bin:$PATH"
 
