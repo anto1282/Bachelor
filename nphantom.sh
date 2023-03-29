@@ -21,6 +21,7 @@ export PATH="/opt/software/miniconda/4.10.4/bin:$PATH"
 
 export PATH="/projects/mjolnir1/apps/conda/pkgs/click-8.1.3-py39hf3d152e_0/python3.9/site-packages/:$PATH"
 
+
 if [ $1 == "-r" ];
 then
     srun nextflow run NPhAnToM.nf --IDS SRR23446273	 -profile AC -resume -with-mpi -with-tower
@@ -28,3 +29,4 @@ else
     srun nextflow run NPhAnToM.nf --IDS SRR23446273	 -profile AC -with-mpi -with-tower
 fi
 
+aa

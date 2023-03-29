@@ -3,9 +3,9 @@
 
 process PHAROKKA {
     if (params.server){
-        beforeScript 'module load mash/2.2 bcbio-gff/0.7.0 pharokka' 
-        afterScript 'module unload pharokka mash/2.2 bcbio-gff/0.7.0' 
-        
+        conda "conda pharokka mash==2.2 bcbio-gff"
+        //beforeScript 'module load gsl ; module load mash/2.2 ; module load bcbio-gff ; module load pharokka' 
+        //afterScript 'module unload pharokka mash bcbio-gff/0.7.0' 
 
         cpus 16
     }
@@ -13,9 +13,8 @@ process PHAROKKA {
         conda 'pharokka'
         cpus 8
     }
-    errorStrategy = 'ignore'
     
-    publishDir "${params.outdir}/${params.IDS}", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}", mode: 'copy'
     
 
     input: 
