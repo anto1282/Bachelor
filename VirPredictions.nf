@@ -97,7 +97,7 @@ process VIRSORTER {
     else {
         cpus 8
     }
-    
+    errorStrategy = "ignore"
     publishDir "${params.outdir}/${pair_id}/VIRSORTER", mode: 'copy'
     
 
