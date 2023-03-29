@@ -3,7 +3,7 @@
 
 process PHAROKKA {
     if (params.server){
-        conda "/projects/mjolnir1/people/zpx817/KomNy2/39"
+        conda "/projects/mjolnir1/people/zpx817/KomNy2/py39"
         //conda "conda-forge::gsl=2.6"     
         //beforeScript 'mamba activate ' 
         //afterScript 'module unload pharokka mash bcbio-gff/0.7.0' 
