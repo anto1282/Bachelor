@@ -76,6 +76,7 @@ process PHAGER {
     script:
     if (params.server) {
         """
+        echo $PATH
         gzip --decompress --force ${contigs} 
         phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
         gzip --force ${contigs.baseName} 
