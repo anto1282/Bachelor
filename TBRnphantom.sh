@@ -25,10 +25,9 @@ module load openjdk/11.0.0
 module load miniconda/4.10.4 singularity/3.8.0 nextflow
 module load mamba/1.3.1
 
-export PATH="/opt/software/miniconda/4.10.4/bin:$PATH"
+export PATH="/opt/software/miniconda/4.10.4/bin:/projects/mjolnir1/apps/conda/py39/lib/python3.9/site-packages:$PATH"
 
 
-export PATH="/projects/mjolnir1/apps/conda/pkgs/click-8.1.3-py39hf3d152e_0:$PATH"
 
 if [ $1 == "-r" ];
 then
