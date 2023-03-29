@@ -3,7 +3,7 @@
 
 process PHAROKKA {
     if (params.server){
-        conda "/projects/mjolnir1/people/zpx817/KomNy"
+        //conda "/projects/mjolnir1/people/zpx817/KomNy"
         //conda "conda-forge::gsl=2.6"     
         //beforeScript 'mamba activate ' 
         //afterScript 'module unload pharokka mash bcbio-gff/0.7.0' 
@@ -32,7 +32,7 @@ process PHAROKKA {
     
     //module load mash/2.2 ; module load bcbio-gff/0.7.0 ; module load pharokka
     """
-
+    mamba activate /projects/mjolnir1/people/zpx817/KomNy
     pharokka.py -i ${viralcontigs} -o pharokka_${pair_id} -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
     """
     
