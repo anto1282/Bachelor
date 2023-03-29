@@ -33,6 +33,7 @@ process PHAROKKA {
     
     //module load mash/2.2 ; module load bcbio-gff/0.7.0 ; module load pharokka
     """
+    module load mash/2.2; module load bcbio-gff;
     module load pharokka
     pharokka.py -i ${viralcontigs} -o pharokka_${pair_id} -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
     """
