@@ -25,7 +25,7 @@ module load openjdk/11.0.0
 module load miniconda/4.10.4 singularity/3.8.0 nextflow
 module load mamba/1.3.1
 
-export PATH="/opt/software/miniconda/4.10.4/bin:/projects/mjolnir1/apps/conda/py39/lib/python3.9/site-packages:$PATH"
+export PATH="/opt/software/miniconda/4.10.4/bin:/projects/mjolnir1/apps/conda/py39/lib/python3.9/site-packages:/projects/mjolnir1/apps/conda/lightgbm-3.3.4/bin:$PATH"
 
 
 
