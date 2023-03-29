@@ -22,9 +22,9 @@ fi
 
 module purge
 module load openjdk/11.0.0
-module load miniconda/4.10.4 nextflow
+module load miniconda/4.10.4 singularity/3.8.0 nextflow
 
-export PATH="/opt/software/miniconda/4.10.4/bin:/home/qvx631/.dotnet/tools:/projects/mjolnir1/apps/conda/py39/bin:/opt/software/miniconda/4.10.4/condabin:/home/qvx631/.local/bin:/home/qvx631/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:/projects/mjolnir1/apps/bin:~/bin:/opt/software/miniconda/4.10.4/bin:/projects/mjolnir1/apps/conda:/maps/projects/mjolnir1/apps/bin:/maps/projects/mjolnir1/apps/conda/py39:$PATH"
+export PATH="/opt/software/miniconda/4.10.4/bin:$PATH"
 
 
 if [ $1 == "-r" ];
