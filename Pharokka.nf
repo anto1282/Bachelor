@@ -3,7 +3,6 @@
 
 process PHAROKKA {
     if (params.server){
-        beforeScript "module load mamba/1.3.1"
         conda "conda-forge::gsl=2.6 bioconda::mash=2.2 bioconda::bcbio-gff"
         //conda "conda-forge::gsl=2.6"     
         //beforeScript 'module load gsl ; module load mash/2.2 ; module load bcbio-gff/0.7.0 ; module load pharokka' 
