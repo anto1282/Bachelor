@@ -3,6 +3,7 @@
 
 process PHAROKKA {
     if (params.server){
+        beforeScript "module purge  "
         conda "conda bioconda::pharokka bioconda::mash==2.2 bioconda::bcbio-gff"
         //beforeScript 'module load gsl ; module load mash/2.2 ; module load bcbio-gff ; module load pharokka' 
         //afterScript 'module unload pharokka mash bcbio-gff/0.7.0' 
