@@ -51,8 +51,8 @@ process PHAGER {
     if (params.server) {
         //conda '/projects/mjolnir1/apps/conda/py39 /projects/mjolnir1/apps/conda/lightgbm-3.2.1'
 
-        //beforeScript 'module load lightgbm/3.3.2-cpu'
-        //afterScript 'module unload lightgbm/3.3.2-cpu'
+        beforeScript 'module load py311 lightgbm/3.3.4'
+        afterScript 'module unload py311 lightgbm/3.3.4'
         
         cpus 8
         //clusterOptions '--partition=gpuqueue'
