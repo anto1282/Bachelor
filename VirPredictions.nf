@@ -49,10 +49,10 @@ process PHAGER {
     debug true
     //Tool for phage prediction from Thomas
     if (params.server) {
-        //conda '/projects/mjolnir1/apps/conda/py39 /projects/mjolnir1/apps/conda/lightgbm-3.2.1'
+        conda '/projects/mjolnir1/apps/conda/py39'
 
-        beforeScript 'module load py311 lightgbm/3.3.4'
-        afterScript 'module unload py311 lightgbm/3.3.4'
+        //beforeScript 'module load lightgbm/3.2.1'
+        //afterScript 'module unload lightgbm/3.2.1'
         
         cpus 8
         //clusterOptions '--partition=gpuqueue'
@@ -77,7 +77,7 @@ process PHAGER {
     if (params.server) {
         """
         gzip --decompress --force ${contigs} 
-        phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
+        srun phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v --time 1:00:00
         gzip --force ${contigs.baseName} 
         """
         }
