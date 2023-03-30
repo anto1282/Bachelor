@@ -77,7 +77,7 @@ process PHAGER {
     if (params.server) {
         """
         gzip --decompress --force ${contigs} 
-        srun phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v --time 1:00:00
+        srun phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
         gzip --force ${contigs.baseName} 
         """
         }
