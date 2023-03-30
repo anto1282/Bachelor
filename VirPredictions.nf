@@ -49,7 +49,7 @@ process PHAGER {
     debug true
     //Tool for phage prediction from Thomas
     if (params.server) {
-        conda '/projects/mjolnir1/apps/conda/py39 /projects/mjolnir1/apps/conda/lightgbm-3.2.1'
+        //conda '/projects/mjolnir1/apps/conda/py39 /projects/mjolnir1/apps/conda/lightgbm-3.2.1'
 
         //beforeScript 'module load lightgbm/3.3.2-cpu'
         //afterScript 'module unload lightgbm/3.3.2-cpu'
