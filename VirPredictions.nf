@@ -49,7 +49,7 @@ process PHAGER {
     debug true
     //Tool for phage prediction from Thomas
     if (params.server) {
-        conda '/maps/projects/mjolnir1/apps/conda/py39'
+        conda '/projects/mjolnir1/apps/conda/py39 /projects/mjolnir1/apps/conda/lightgbm-3.2.1'
 
         //beforeScript 'module load lightgbm/3.3.2-cpu'
         //afterScript 'module unload lightgbm/3.3.2-cpu'
@@ -76,13 +76,9 @@ process PHAGER {
     script:
     if (params.server) {
         """
-        echo $PATH
-        module load lightgbm/3.3.2-cpu
-        echo $PATH
         gzip --decompress --force ${contigs} 
         phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
         gzip --force ${contigs.baseName} 
-        echo $PATH
         """
         }
     
