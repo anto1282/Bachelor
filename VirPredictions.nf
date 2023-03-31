@@ -49,7 +49,6 @@ process PHAGER {
     //Tool for phage prediction from Thomas
     if (params.server) {
         conda '/projects/mjolnir1/apps/conda/py39'
-        
         cpus 8
         
             }
@@ -66,7 +65,7 @@ process PHAGER {
 
     output:
     val (pair_id)
-    path ("phagerresults/${contigs.simpleName}.phager_results.csv.gz")
+    path ("${pair_id}_phagerresults/${contigs.simpleName}.phager_results.csv.gz")
     
     
     script:
@@ -74,9 +73,8 @@ process PHAGER {
         """
         echo $PATH
         gzip --decompress --force ${contigs} 
-        phager.py -c 1000 -a ${contigs.baseName} -d phagerresults -v
-        gzip --force ${contigs.baseName} 
-        echo ${contigs.simpleName}
+        /projects/mjolnir1/apps/Phager/phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
+        gzip --force ${contigs.baseName}
         """
         }
     
