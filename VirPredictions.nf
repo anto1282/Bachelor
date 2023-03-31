@@ -243,3 +243,26 @@ process SEEKER{
     """
 
 }
+
+process VIREXTRACTOR {
+    publishDir "${params.outdir}/${pair_id}/ViralContigs", mode: 'copy'
+
+    
+    input:
+    tuple val(pair_id), path(contigsFile)
+    
+    path(DVFcontigs)
+    path(SeekerContigs)
+
+    output:
+    path("${pair_id}_ViralContigs.fasta.gz")
+
+
+    script:
+    """
+    gzip -d -f ${contigsFile}
+    python3 virextractor.py ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.7 ${DVFcontigs} ${SeekerContigs}
+    gzip -f ${contigsFile.baseName}
+    gzip -f ${pair_id}_ViralContigs.fasta
+    """
+}
