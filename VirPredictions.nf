@@ -85,7 +85,7 @@ process PHAGER {
 process VIRSORTER {
     if (params.server) {
         conda "python=3.10"
-        beforeScript 'python --version ;echo $PATH ;module load numpy snakemake; module load screed; module load click ; module load virsorter; echo $PATH;python --version'
+        beforeScript 'python --version ;echo $PATH ;module load numpy snakemake; module load screed; module load click ; module load virsorter; echo $PATH;python --version;export PYTHONPATH=$PATH:$PYTHONPATH; echo PYTHONPATH'
         //  afterScript 'module unload snakemake screed click virsorter'
         cpus 8
         memory '32 GB'
@@ -109,8 +109,6 @@ process VIRSORTER {
     script:
     
     """
-    export PYTHONPATH=$PATH:$PYTHONPATH
-    echo $PYTHONPATH
     gzip --decompress --force ${contigs} 
     virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} --min-score 0.8 all --use-conda-off --force-all
     gzip --force ${contigs.baseName} 
