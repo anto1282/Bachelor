@@ -23,11 +23,10 @@ export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
 module purge
 module load openjdk/11.0.0
 module load miniconda/4.10.4 singularity/3.8.0 nextflow
-module load mamba/1.3.1
 
 export PATH="/projects/mjolnir1/apps/conda/py39/lib/python3.9/site-packages:$PATH"
 
-export PATH="/opt/software/miniconda/4.10.4/bin:$PATH"
+#export PATH="/opt/software/miniconda/4.10.4/bin:$PATH"
 
 
 if [ $1 == "-r" ];

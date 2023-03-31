@@ -244,7 +244,6 @@ process VIREXTRACTOR {
     
     input:
     tuple val(pair_id), path(contigsFile)
-    
     path(DVFcontigs)
     path(SeekerContigs)
 
