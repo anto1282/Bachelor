@@ -50,12 +50,9 @@ process PHAGER {
     //Tool for phage prediction from Thomas
     if (params.server) {
         conda '/projects/mjolnir1/apps/conda/py39'
-
-        //beforeScript 'module load lightgbm/3.2.1'
-        //afterScript 'module unload lightgbm/3.2.1'
-        
+      
         cpus 8
-        //clusterOptions '--partition=gpuqueue'
+        
             }
     else {
         cpus 8
@@ -77,7 +74,7 @@ process PHAGER {
     if (params.server) {
         """
         gzip --decompress --force ${contigs} 
-        srun phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
+        srun phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v --mem-per-cpu=4G --cpus-per-task=4 --time=01:00:00
         gzip --force ${contigs.baseName} 
         """
         }
