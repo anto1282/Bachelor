@@ -48,7 +48,8 @@ process PHAGER {
     //errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
     if (params.server) {
-        conda '/projects/mjolnir1/apps/conda/py39'
+        //conda '/projects/mjolnir1/apps/conda/py39'
+        
         cpus 8
         
             }
@@ -71,6 +72,8 @@ process PHAGER {
     script:
     if (params.server) {
         """
+        export PATH="/opt/software/miniconda/4.10.4/bin:$PATH"
+        conda activate /projects/mjolnir1/apps/conda/py39
         gzip --decompress --force ${contigs} 
         phager.py -c 1000 -a ${contigs.baseName} -d phagerresults -v
         gzip --force ${contigs.baseName} 
