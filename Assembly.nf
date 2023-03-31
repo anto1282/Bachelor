@@ -8,15 +8,14 @@ process SPADES {
         memory { 16.GB + (16.GB * 1/2*task.attempt) }
         errorStrategy 'retry'
         maxRetries  = 3
+        afterScript 'module unload spades'
     }
     else {
         conda "spades=3.15.4 conda-forge::openmp"
         cpus 8
         memory '4 GB'
     }
-    if (params.server) {
-        afterScript 'module unload spades'
-    }
+    
     
     publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
 
