@@ -67,14 +67,14 @@ process PHAGER {
 
     output:
     val (pair_id)
-    path "${pair_id}_phagerresults/phager_results.csv.gz"
+    path "phagerresults/phager_results.csv.gz"
     
     
     script:
     if (params.server) {
         """
         gzip --decompress --force ${contigs} 
-        srun phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v --mem-per-cpu=4G --cpus-per-task=4 --time=01:00:00
+        phager.py -c 1000 -a ${contigs.baseName} -d phagerresults -v
         gzip --force ${contigs.baseName} 
         """
         }

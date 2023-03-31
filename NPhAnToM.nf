@@ -34,7 +34,7 @@ workflow{
 
     // VIRUS PREDICTION TOOLS
     VIREXTRACTED_ch = DVF(ASSEMBLY_ch)
-    VIRSORTER_ch = VIRSORTER(ASSEMBLY_ch) //NOT WORKING (Vi mangler permission til at oprette filer i database mappen til virsorter)
+    //VIRSORTER_ch = VIRSORTER(ASSEMBLY_ch) //NOT WORKING (Vi mangler permission til at oprette filer i database mappen til virsorter)
     SEEKER_ch = SEEKER(ASSEMBLY_ch)
 
     PHAGER_ch = PHAGER(ASSEMBLY_ch)
