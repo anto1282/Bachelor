@@ -49,6 +49,7 @@ process PHAGER {
     //Tool for phage prediction from Thomas
     if (params.server) {
         conda '/projects/mjolnir1/apps/conda/py39'
+        module 'python/3.9.9'
         cpus 8
         
             }
@@ -73,7 +74,7 @@ process PHAGER {
         """
         echo $PATH
         gzip --decompress --force ${contigs} 
-        /projects/mjolnir1/apps/Phager/phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
+        phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
         gzip --force ${contigs.baseName}
         """
         }
