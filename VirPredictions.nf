@@ -20,7 +20,6 @@ process DVF {
 
 
     output:
-    val (pair_id)
     path "*dvfpred.txt"
     
     script:
