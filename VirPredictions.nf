@@ -21,15 +21,13 @@ process DVF {
 
     output:
     val (pair_id)
-    path "predicted_viruses.fasta"
-    path "non_viral_assemblies.fasta"
+    path "*dvfpred.txt"
     
     script:
     if (params.server) {
         """
         gzip --decompress --force ${contigs} 
         ${params.DVFPath} -i ${contigs.baseName} -l 1000 -c ${task.cpus}
-        python3 ${projectDir}/DeepVirExtractor.py *dvfpred.txt ${contigs.baseName} ${params.cutoff}
         gzip --force ${contigs.baseName} 
         """
             }
@@ -37,7 +35,6 @@ process DVF {
         """
         gzip --decompress --force ${contigs} 
         python ${params.DVFPath} -i ${contigs.baseName} -l 1000 -c ${task.cpus}
-        python3 ${projectDir}/DeepVirExtractor.py *dvfpred.txt ${contigs.baseName} ${params.cutoff}
         gzip --force ${contigs.baseName} 
         """
     }
@@ -229,16 +226,13 @@ process SEEKER{
     
 
     output:
-    path("SeekerBacterials")
-    path("SeekerPhages")
+    path("SeekerFile")
 
 
     script:
     """
     reformat.sh in=${contigsFile} out=Contigs_trimmed.fasta minlength=10000 overwrite=True
     predict-metagenome Contigs_trimmed.fasta > SeekerFile
-    python ${projectDir}/SeekerSplitter.py SeekerFile Contigs_trimmed.fasta
-    rm SeekerFile
     rm Contigs_trimmed.fasta
     """
 
