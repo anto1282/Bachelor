@@ -27,7 +27,8 @@ module load mamba/1.3.1
 
 export PATH="/projects/mjolnir1/apps/conda/py39/lib/python3.9/site-packages:$PATH"
 
-export PATH="/projects/mjolnir1/apps/conda/py39/bin:/opt/software/miniconda/4.10.4/condabin:/projects/mjolnir1/apps/bin:/opt/software/miniconda/4.10.4/bin:$PATH"
+export PATH="/opt/software/miniconda/4.10.4/bin:$PATH"
+
 
 if [ $1 == "-r" ];
 then
