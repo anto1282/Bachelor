@@ -66,7 +66,7 @@ process PHAGER {
 
     output:
     val (pair_id)
-    path "phagerresults/phager_results.csv.gz"
+    path "phagerresults/${contigs.simpleName}.phager_results.csv.gz"
     
     
     script:
