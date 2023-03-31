@@ -22,7 +22,7 @@ export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
 
 module purge
 module load openjdk/11.0.0
-module load miniconda/py39_23.1 singularity/3.8.0 nextflow
+module load miniconda/4.9.2 singularity/3.8.0 nextflow
 module load mamba/1.3.1
 
 export PATH="/projects/mjolnir1/apps/conda/py39/lib/python3.9/site-packages:$PATH"
