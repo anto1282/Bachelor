@@ -22,12 +22,12 @@ export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
 
 module purge
 module load openjdk/11.0.0
-module load miniconda/4.10.4 singularity/3.8.0 nextflow
+module load miniconda/py39_23.1 singularity/3.8.0 nextflow
 module load mamba/1.3.1
 
-export PATH="/opt/software/miniconda/4.10.4/bin:/projects/mjolnir1/apps/conda/py39/lib/python3.9/site-packages:$PATH"
+export PATH="/projects/mjolnir1/apps/conda/py39/lib/python3.9/site-packages:$PATH"
 
-export PATH="/opt/software/miniconda/py39_23.1/bin:/projects/mjolnir1/apps/bin:/opt/software/miniconda/4.10.4/condabin:/projects/mjolnir1/apps/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:$PATH"
+export PATH="/opt/software/miniconda/py39_23.1/bin:/projects/mjolnir1/apps/bin:/projects/mjolnir1/apps/bin:/usr/share/Modules/bin:/usr/local/bin:/usr/bin:/usr/local/sbin:/usr/sbin:$PATH"
 
 if [ $1 == "-r" ];
 then
