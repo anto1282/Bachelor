@@ -85,7 +85,7 @@ process PHAGER {
 
 process VIRSORTER {
     if (params.server) {
-        conda "python=3.10"
+        //conda "python=3.10"
         beforeScript 'python --version ;echo $PATH ;module load numpy snakemake; module load screed; module load click ; module load virsorter; echo $PATH;python --version;export PYTHONPATH=$PATH:$PYTHONPATH; echo PYTHONPATH'
         //  afterScript 'module unload snakemake screed click virsorter'
         cpus 8
