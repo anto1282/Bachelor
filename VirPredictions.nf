@@ -74,6 +74,7 @@ process PHAGER {
         """
         export PATH="/opt/software/miniconda/4.10.4/bin:$PATH"
         conda activate /projects/mjolnir1/apps/conda/py39
+        echo $PATH
         gzip --decompress --force ${contigs} 
         phager.py -c 1000 -a ${contigs.baseName} -d phagerresults -v
         gzip --force ${contigs.baseName} 
