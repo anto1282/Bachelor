@@ -45,7 +45,7 @@ process DVF {
 }
 
 process PHAGER {
-    errorStrategy = 'ignore'
+    //errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
     if (params.server) {
         conda '/projects/mjolnir1/apps/conda/py39'
@@ -66,7 +66,7 @@ process PHAGER {
 
     output:
     val (pair_id)
-    path "phagerresults/${contigs.simpleName}.phager_results.csv.gz"
+    path ("phagerresults/${contigs.simpleName}.phager_results.csv.gz")
     
     
     script:
@@ -76,6 +76,7 @@ process PHAGER {
         gzip --decompress --force ${contigs} 
         phager.py -c 1000 -a ${contigs.baseName} -d phagerresults -v
         gzip --force ${contigs.baseName} 
+        echo ${contigs.simpleName}
         """
         }
     
