@@ -92,8 +92,8 @@ process PHAGER {
 process VIRSORTER {
     if (params.server) {
         //conda "/projects/mjolnir1/apps/conda/virsorter-2.2.4"
-        beforeScript 'module load snakemake; module load screed; module load click ; module load virsorter'
-        afterScript 'module unload snakemake screed click virsorter'
+        beforeScript 'echo $PATH ;module load snakemake; module load screed; module load click ; module load virsorter; echo $PATH'
+        //  afterScript 'module unload snakemake screed click virsorter'
         cpus 8
         memory '32 GB'
         }
@@ -123,8 +123,6 @@ process VIRSORTER {
     
     
 }
-
-
 
 
 
