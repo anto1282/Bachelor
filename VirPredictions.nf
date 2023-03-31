@@ -49,7 +49,6 @@ process PHAGER {
     //Tool for phage prediction from Thomas
     if (params.server) {
         conda '/projects/mjolnir1/apps/conda/py39'
-      
         cpus 8
         
             }
