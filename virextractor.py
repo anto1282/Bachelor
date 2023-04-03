@@ -13,23 +13,26 @@ seekerfile = sys.argv[5]
 phagerfile = sys.argv[6]
 
 DVFset = set()
-
-
+DVFoverruleset = set()
 
 with open(dvffile,'r') as file: 
     linecount = 0
+    cutoffoverrule = 0.95
     for line in file:
         if linecount > 0:
             if float(line.split()[2]) > cutoff:
                 DVFset.add(line.split()[0])
-            
+            if float(line.split()[2]) > cutoffoverrule:
+                #Adds very likely phages to another set, which is added to the final set no matter what
+                DVFoverruleset.add(line.split()[0])
         linecount += 1
 
-
+print(DVFset)
 SeekerSet = set()
 
 
 with open(seekerfile,'r') as SeekerInFile:
+    SeekerFlag = False
     for line in SeekerInFile:
         if len(line) == 1:
             continue
@@ -49,9 +52,13 @@ with open(phagerfile, 'r') as file:
         if linecount > 0:
             if int(line.split()[3]) == 1:
                 PhagerSet.add(line.split()[1])
+        linecount += 1
 
-final_viral_set = SeekerSet.intersection(DVFset,PhagerSet)
+SeekerDVFInter = SeekerSet.intersection(DVFset)
+SeekerPhagerInter = SeekerSet.intersection(PhagerSet)
+DVFPhagerInter = DVFset.intersection(PhagerSet)
 
+final_viral_set = SeekerDVFInter.union(SeekerPhagerInter,DVFPhagerInter,DVFoverruleset)
 
 virusoutfile = open(outputfilename,'w')
 
@@ -74,7 +81,7 @@ with open(contigfile, 'r') as file:
         
         
         
-    print(seqcount, "sequence entries written to output file:", virusoutfile)
+    print(seqcount, "sequence entries written to output file:", outputfilename)
 
 
     
