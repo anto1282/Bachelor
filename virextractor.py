@@ -25,7 +25,7 @@ with open(dvffile,'r') as file:
             
         linecount += 1
 
-
+print(DVFset)
 SeekerSet = set()
 
 
@@ -53,7 +53,7 @@ with open(phagerfile, 'r') as file:
 
 final_viral_set = SeekerSet.intersection(DVFset,PhagerSet)
 
-
+print(final_viral_set)
 virusoutfile = open(outputfilename,'w')
 
 with open(contigfile, 'r') as file:
