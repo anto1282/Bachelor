@@ -47,7 +47,6 @@ process PHAGER {
         conda '/projects/mjolnir1/apps/conda/py39'
         module 'python/3.9.9'
         cpus 8
-        
             }
     else {
         cpus 8
@@ -256,7 +255,7 @@ process VIREXTRACTOR {
     """
     gzip -d -f ${contigsFile}
     gzip -d -f ${PhagerContigs}
-    python3 virextractor.py ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.7 ${DVFcontigs} ${SeekerContigs} ${PhagerContigs.baseName}
+    python3 ${projectDir}/virextractor.py ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.7 ${DVFcontigs} ${SeekerContigs} ${PhagerContigs.baseName}
     gzip -f ${contigsFile.baseName}
     gzip -d -f ${PhagerContigs.baseName}
     gzip -f ${pair_id}_ViralContigs.fasta
