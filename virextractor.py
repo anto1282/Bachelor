@@ -30,6 +30,7 @@ SeekerSet = set()
 
 
 with open(seekerfile,'r') as SeekerInFile:
+    SeekerFlag = False
     for line in SeekerInFile:
         if len(line) == 1:
             continue
