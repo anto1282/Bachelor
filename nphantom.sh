@@ -24,8 +24,8 @@ export PATH="/opt/software/miniconda/py39_23.1/bin:$PATH"
 
 if [ $1 == "-r" ];
 then
-    srun nextflow run NPhAnToM.nf --IDS SRR23446273	 -profile AC -resume -with-mpi -with-tower
+    srun nextflow run NPhAnToM.nf --IDS SRR23446273	 -profile cluster -resume -with-mpi -with-tower --accessToken eyJ0aWQiOiA3MTg5fS4yNmQwY2Q5N2RjZDdlNWI4NWVkNDE4MTUwYjZjNTk5ODQ3OGMxZDcx
 else
-    srun nextflow run NPhAnToM.nf --IDS SRR23446273	 -profile AC -with-mpi -with-tower
+    srun nextflow run NPhAnToM.nf --IDS SRR23446273	 -profile cluster -with-mpi -with-tower --accessToken eyJ0aWQiOiA3MTg5fS4yNmQwY2Q5N2RjZDdlNWI4NWVkNDE4MTUwYjZjNTk5ODQ3OGMxZDcx
 fi
 
