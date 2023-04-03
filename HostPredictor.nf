@@ -18,12 +18,12 @@ process IPHOP {
     input: 
     val (pair_id)
     path (viral_contigs_fasta)
-    path (non_viral_fasta)
+    //path (non_viral_fasta)
 
 
     output:
     val (pair_id)
-    //path (predictions)
+    path ("iphop_prediction_${pair_id}/*")
     
 
     script:

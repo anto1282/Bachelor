@@ -81,7 +81,7 @@ process PHAGER {
 process VIRSORTER {
     if (params.server) {
         //conda "python=3.10"
-        beforeScript 'module load click virsorter/2.2.4'
+        module "virsorter/2.2.4"
         //beforeScript 'python3 --version ;echo $PATH ;module load numpy/1.21.2 snakemake; module load screed; module load click ; module load virsorter; echo $PATH;python --version;export PYTHONPATH=$PATH:$PYTHONPATH; echo $PYTHONPATH'
         //  afterScript 'module unload snakemake screed click virsorter'
         cpus 4
@@ -192,7 +192,7 @@ process CHECKV {
     input: 
     val(pair_id)
     path(viralcontigs)
-    path(non_viral_contigs)
+    //path(non_viral_contigs)
 
     output:
     path("${pair_id}_checkv/*.tsv")
@@ -248,6 +248,7 @@ process VIREXTRACTOR {
     tuple val(pair_id), path(PhagerContigs)
 
     output:
+    val (pair_id)
     path("${pair_id}_ViralContigs.fasta.gz")
 
 
