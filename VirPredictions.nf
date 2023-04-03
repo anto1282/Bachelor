@@ -247,6 +247,7 @@ process VIREXTRACTOR {
     path(SeekerContigs)
 
     output:
+    val (pair_id)
     path("${pair_id}_ViralContigs.fasta.gz")
 
 
