@@ -23,7 +23,7 @@ process IPHOP {
 
     output:
     val (pair_id)
-    //path (predictions)
+    path ("iphop_prediction_${pair_id}/*")
     
 
     script:
