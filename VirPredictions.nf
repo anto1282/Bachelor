@@ -5,7 +5,7 @@ process DVF {
         afterScript 'module unload gcc theano deepvirfinder/'
         cpus 8
         memory '16 GB'
-        clusterOptions '--partition=gpuqueue'
+        //clusterOptions '--partition=gpuqueue'
             }
     else {
         conda 'python=3.6 numpy theano=1.0.3 keras=2.2.4 scikit-learn Biopython h5py'
