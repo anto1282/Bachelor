@@ -20,7 +20,7 @@ process DVF {
 
 
     output:
-    path "*dvfpred.txt"
+    tuple val(pair_id), path("*dvfpred.txt")
     
     script:
     if (params.server) {
@@ -61,8 +61,8 @@ process PHAGER {
 
 
     output:
-    val (pair_id)
-    path ("${pair_id}_phagerresults/${contigs.simpleName}.phager_results.csv.gz")
+    tuple val (pair_id), path ("${pair_id}_phagerresults/${contigs.simpleName}.phager_results.csv.gz")
+    
     
     
     script:
@@ -225,7 +225,7 @@ process SEEKER{
     
 
     output:
-    path("SeekerFile")
+    tuple val(pair_id), path("SeekerFile")
 
 
     script:
@@ -243,8 +243,9 @@ process VIREXTRACTOR {
     
     input:
     tuple val(pair_id), path(contigsFile)
-    path(DVFcontigs)
-    path(SeekerContigs)
+    tuple val(pair_id), path(DVFcontigs)
+    tuple val(pair_id), path(SeekerContigs)
+    tuple val(pair_id), path(PhagerContigs)
 
     output:
     path("${pair_id}_ViralContigs.fasta.gz")
@@ -253,8 +254,10 @@ process VIREXTRACTOR {
     script:
     """
     gzip -d -f ${contigsFile}
-    python3 virextractor.py ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.7 ${DVFcontigs} ${SeekerContigs}
+    gzip -d -f ${PhagerContigs}
+    python3 virextractor.py ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.7 ${DVFcontigs} ${SeekerContigs} ${PhagerContigs.baseName}
     gzip -f ${contigsFile.baseName}
+    gzip -d -f ${PhagerContigs.baseName}
     gzip -f ${pair_id}_ViralContigs.fasta
     """
 }

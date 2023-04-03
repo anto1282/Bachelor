@@ -10,12 +10,14 @@ outputfilename = sys.argv[2]
 cutoff = float(sys.argv[3])
 dvffile = sys.argv[4]
 seekerfile = sys.argv[5]
+phagerfile = sys.argv[6]
 
 DVFset = set()
 
-linecount = 0
+
 
 with open(dvffile,'r') as file: 
+    linecount = 0
     for line in file:
         if linecount > 0:
             if float(line.split()[2]) > cutoff:
@@ -40,9 +42,15 @@ with open(seekerfile,'r') as SeekerInFile:
 
 #with open(virsorterfile, 'r') as VirSorterFile:
 
+PhagerSet = set()
+with open(phagerfile, 'r') as file:
+    linecount = 0
+    for line in file:
+        if linecount > 0:
+            if int(line.split()[3]) == 1:
+                PhagerSet.add(line.split()[1])
 
-
-final_viral_set = SeekerSet.intersection(DVFset)
+final_viral_set = SeekerSet.intersection(DVFset,PhagerSet)
 
 
 virusoutfile = open(outputfilename,'w')
@@ -67,6 +75,7 @@ with open(contigfile, 'r') as file:
         
         
     print(seqcount, "sequence entries written to output file:", virusoutfile)
-   
+
+
     
 virusoutfile.close()
