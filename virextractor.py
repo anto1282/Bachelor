@@ -55,7 +55,11 @@ with open(phagerfile, 'r') as file:
 
 print(PhagerSet)
 
-final_viral_set = SeekerSet.intersection(DVFset,PhagerSet)
+SeekerDVFInter = SeekerSet.intersection(DVFset)
+SeekerPhagerInter = SeekerSet.intersection(PhagerSet)
+DVFPhagerInter = DVFset.intersection(PhagerSet)
+
+final_viral_set = SeekerDVFInter.add(SeekerPhagerInter).add(DVFPhagerInter)
 
 
 print(final_viral_set)
