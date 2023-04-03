@@ -18,7 +18,7 @@ process IPHOP {
     input: 
     val (pair_id)
     path (viral_contigs_fasta)
-    path (non_viral_fasta)
+    //path (non_viral_fasta)
 
 
     output:
