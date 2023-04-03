@@ -44,7 +44,6 @@ with open(seekerfile,'r') as SeekerInFile:
 
 
 #with open(virsorterfile, 'r') as VirSorterFile:
-print(SeekerSet)
 
 PhagerSet = set()
 with open(phagerfile, 'r') as file:
@@ -55,16 +54,12 @@ with open(phagerfile, 'r') as file:
                 PhagerSet.add(line.split()[1])
         linecount += 1
 
-print(PhagerSet)
-
 SeekerDVFInter = SeekerSet.intersection(DVFset)
 SeekerPhagerInter = SeekerSet.intersection(PhagerSet)
 DVFPhagerInter = DVFset.intersection(PhagerSet)
 
 final_viral_set = SeekerDVFInter.union(SeekerPhagerInter,DVFPhagerInter,DVFoverruleset)
 
-
-print(final_viral_set)
 virusoutfile = open(outputfilename,'w')
 
 with open(contigfile, 'r') as file:
@@ -86,7 +81,7 @@ with open(contigfile, 'r') as file:
         
         
         
-    print(seqcount, "sequence entries written to output file:", virusoutfile)
+    print(seqcount, "sequence entries written to output file:", outputfilename)
 
 
     
