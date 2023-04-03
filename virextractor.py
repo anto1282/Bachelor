@@ -59,7 +59,7 @@ SeekerDVFInter = SeekerSet.intersection(DVFset)
 SeekerPhagerInter = SeekerSet.intersection(PhagerSet)
 DVFPhagerInter = DVFset.intersection(PhagerSet)
 
-final_viral_set = SeekerDVFInter.add(SeekerPhagerInter).add(DVFPhagerInter)
+final_viral_set = SeekerDVFInter.union(SeekerPhagerInter,DVFPhagerInter)
 
 
 print(final_viral_set)
