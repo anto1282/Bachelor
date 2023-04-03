@@ -51,6 +51,7 @@ with open(phagerfile, 'r') as file:
         if linecount > 0:
             if int(line.split()[3]) == 1:
                 PhagerSet.add(line.split()[1])
+        linecount += 1
 
 print(PhagerSet)
 
