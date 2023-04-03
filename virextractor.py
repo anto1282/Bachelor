@@ -42,6 +42,7 @@ with open(seekerfile,'r') as SeekerInFile:
 
 
 #with open(virsorterfile, 'r') as VirSorterFile:
+print(SeekerSet)
 
 PhagerSet = set()
 with open(phagerfile, 'r') as file:
@@ -51,7 +52,10 @@ with open(phagerfile, 'r') as file:
             if int(line.split()[3]) == 1:
                 PhagerSet.add(line.split()[1])
 
+print(PhagerSet)
+
 final_viral_set = SeekerSet.intersection(DVFset,PhagerSet)
+
 
 print(final_viral_set)
 virusoutfile = open(outputfilename,'w')
