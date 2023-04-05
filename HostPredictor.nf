@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 process IPHOP {
-    errorStrategy = 'ignore'
+    //errorStrategy = 'ignore'
     if (params.server) {
         beforeScript 'module load iphop/1.2.0'
         DB = "${params.DATABASEDIR}/iPHoP"
@@ -14,6 +14,7 @@ process IPHOP {
     publishDir "${params.outdir}/${pair_id}/IPHOPPREDICTIONS", mode: 'copy'
     
     cpus 8
+    memory '120 GB'
 
     input: 
     val (pair_id)
