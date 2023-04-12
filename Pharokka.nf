@@ -3,7 +3,9 @@
 
 process PHAROKKA {
     if (params.server){
-        module "mash/2.2 bcbio-gff/0.7.0 pharokka"
+        module "mash/2.2"
+        module "bcbio-gff/0.7.0"
+        module "pharokka"
 
         cpus 16
     }
