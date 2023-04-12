@@ -10,7 +10,7 @@ process IPHOP {
 
     if (params.server) {
         container = "quay.io/biocontainers/iphop:1.2.0--pyhdfd78af_0"
-
+        singularity.runOptions = "-B ${params.iphopDB}"
         DB = "${params.DATABASEDIR}/iPHoP"
     }
     
