@@ -3,11 +3,8 @@
 
 process PHAROKKA {
     if (params.server){
-        module "gsl/2.7.1"
-        module "mash/2.2"
-        module "bcbio-gff/0.7.0"
-        module "pharokka"
-
+        conda "/projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/PharokkaEnv2"
+        module "biopython"
         cpus 16
     }
     else{
