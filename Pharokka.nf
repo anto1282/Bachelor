@@ -4,7 +4,7 @@
 process PHAROKKA {
     errorStrategy= "ignore"
     if (params.server){
-        module load "singularity"
+        beforeScript "singularity pull docker://quay.io/biocontainers/pharokka:1.3.0--hdfd78af_0 "
         cpus 16
     }
     else{
