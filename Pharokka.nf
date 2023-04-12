@@ -4,6 +4,7 @@
 process PHAROKKA {
     if (params.server){
         conda "/projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/PharokkaEnv2"
+        module "biopython"
         cpus 16
     }
     else{
