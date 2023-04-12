@@ -9,7 +9,7 @@ process IPHOP {
     // }
 
     if (params.server) {
-        container = "simroux/iphop:latest"
+        container = "quay.io/biocontainers/iphop:1.2.0--pyhdfd78af_0"
 
         DB = "${params.DATABASEDIR}/iPHoP"
     }
@@ -44,7 +44,7 @@ process IPHOP {
     if (params.server) {
     """
     gzip -d -f ${viral_contigs_fasta}
-    iphop:latest predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id}
+    iphop predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id}
     gzip -f ${viral_contigs_fasta.baseName}
     """
     }
