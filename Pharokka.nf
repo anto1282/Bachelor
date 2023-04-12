@@ -4,6 +4,8 @@
 process PHAROKKA {
     errorStrategy= "ignore"
     if (params.server){
+        module "mash=2.2"
+        module "bcbio-gff"
         module "pharokka"
         module "biopython/1.80"
         cpus 16
