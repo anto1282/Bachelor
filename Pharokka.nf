@@ -2,9 +2,12 @@
 
 
 process PHAROKKA {
+    errorStrategy= "ignore"
     if (params.server){
-        conda "/projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/PharokkaEnv2"
-        module "biopython"
+        module "mash=2.2"
+        module "bcbio-gff"
+        module "pharokka"
+        module "biopython/1.80"
         cpus 16
     }
     else{
@@ -13,7 +16,6 @@ process PHAROKKA {
     }
     
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
-    errorStrategy= "finish"
 
     input: 
     val (pair_id)
