@@ -5,8 +5,8 @@
 #SBATCH --error=/projects/mjolnir1/people/zpx817/errors
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem-per-cpu=4G
-#SBATCH --time=12:00:00
+#SBATCH --mem-per-cpu=2G
+#SBATCH --time=1:00:00
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 #SBATCH --mail-type=fail
