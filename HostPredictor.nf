@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 process IPHOP {
-    errorStrategy = 'ignore'
+    //errorStrategy = 'ignore'
     // if (params.server) {
     //     beforeScript 'module load iphop/1.2.0'
     //     afterScript 'module unload iphop/1.2.0'
