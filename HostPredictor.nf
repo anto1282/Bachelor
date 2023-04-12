@@ -26,10 +26,9 @@ process IPHOP {
 
 
     output:
-    if (params.server) {
     val (pair_id)
     path ("iphop_prediction_${pair_id}/*")
-    }
+    
     
     // script:
     // if (params.server) {
