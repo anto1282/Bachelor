@@ -3,6 +3,7 @@
 
 process PHAROKKA {
     if (params.server){
+        module "gsl/2.7.1"
         module "mash/2.2"
         module "bcbio-gff/0.7.0"
         module "pharokka"
