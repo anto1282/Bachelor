@@ -2,15 +2,18 @@
 
 process IPHOP {
     //errorStrategy = 'ignore'
-    if (params.server) {
-        beforeScript 'module load iphop/1.2.0'
-        DB = "${params.DATABASEDIR}/iPHoP"
-    }
+    // if (params.server) {
+    //     beforeScript 'module load iphop/1.2.0'
+    //     afterScript 'module unload iphop/1.2.0'
+    //     DB = "${params.DATABASEDIR}/iPHoP"
+    // }
 
     if (params.server) {
-        afterScript 'module unload iphop/1.2.0'
+        container = "simroux/iphop:latest"
+        DB = "${params.DATABASEDIR}/iPHoP"
     }
-        
+    
+    
     publishDir "${params.outdir}/${pair_id}/IPHOPPREDICTIONS", mode: 'copy'
     
     cpus 8
@@ -26,14 +29,24 @@ process IPHOP {
     val (pair_id)
     path ("iphop_prediction_${pair_id}/*")
     
+    
+    // script:
+    // if (params.server) {
+    // """
+    // gzip -d -f ${viral_contigs_fasta}
+    // iphop predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id}
+    // gzip -f ${viral_contigs_fasta.baseName}
+    // """
+    // }
 
     script:
+    if (params.server) {
     """
     gzip -d -f ${viral_contigs_fasta}
     iphop predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id}
     gzip -f ${viral_contigs_fasta.baseName}
     """
-
+    }
     
 }   
 
