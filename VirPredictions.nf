@@ -78,6 +78,7 @@ process PHAGER {
 }
 
 process VIRSORTER {
+    errorStrategy = 'ignore'
     if (params.server) {
         //conda "pandas"
         module "virsorter/2.2.4"
@@ -89,7 +90,7 @@ process VIRSORTER {
     else {
         cpus 8
     }
-    errorStrategy = "ignore"
+    
     publishDir "${params.outdir}/${pair_id}/VIRSORTER", mode: 'copy'
     
 
