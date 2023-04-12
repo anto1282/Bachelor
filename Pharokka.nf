@@ -18,7 +18,6 @@ process PHAROKKA {
     input: 
     val (pair_id)
     path(viralcontigs) 
-    path(nonviralcontigs)
 
     
     output:
