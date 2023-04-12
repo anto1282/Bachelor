@@ -24,5 +24,5 @@ nextflow run NPhAnToM.nf --IDS SRR1234567890 -profile cluster
 ## Run the pipeline with nextflow tower
 You need an access token from tower.nf
 ```
-nextflow run NPhAnToM.nf --IDS SRR1234567890 -profile standard -with-tower --accessToken qwerty1234567890
+nextflow run NPhAnToM.nf --IDS SRR1234567890 -profile cluster -with-tower --accessToken qwerty1234567890
 ```
