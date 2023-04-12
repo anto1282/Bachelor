@@ -1,15 +1,14 @@
 #!/usr/bin/env nextflow
 
 process IPHOP {
-    //errorStrategy = 'ignore'
+    errorStrategy = 'ignore'
     // if (params.server) {
     //     beforeScript 'module load iphop/1.2.0'
     //     afterScript 'module unload iphop/1.2.0'
-    //     DB = "${params.DATABASEDIR}/iPHoP"
     // }
 
     if (params.server) {
-        container = "quay.io/biocontainers/iphop:1.2.0--pyhdfd78af_0"
+        container = "quay.io/biocontainers/iphop:1.1.0--pyhdfd78af_2"
         }
     
     
