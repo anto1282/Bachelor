@@ -1,6 +1,9 @@
 #!/usr/bin/env nextflow
 
+// Script that contains nextflow processes for assembling illumina reads, as well as for detecting the offset of 
+// the reads and calculating a N50 score.
 
+// Assembly using spades
 process SPADES {
     if (params.server) {
         beforeScript 'module load spades'
@@ -44,6 +47,7 @@ process SPADES {
 }
 
 
+// Offset detection using offsetdetector.py
 
 process OFFSETDETECTOR {
     cpus 2
@@ -66,6 +70,8 @@ process OFFSETDETECTOR {
     """
 }
 
+
+// Calculating N50 score from contigs using the bbmap stash.sh script
 
 process N50 {
     if (params.server) {
@@ -99,56 +105,3 @@ process N50 {
     """
 
 }
-
-
-
-
-//DEPRECATED FUNCTIONS
-process SPADES1 {
-    conda "spades=3.15.4 conda-forge::openmp seqkit"
-    publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
-
-    cpus 4
-    input: 
-    val (pair_id)
-    val sampleseed
-    path(r1)
-    path(r2)
-    
-    val phred
-
-    output:
-    val (pair_id)
-    path ("n50_${sampleseed}_contigs.fasta.gz")
-
-
-    script:
-    """
-    spades.py -o assembly${r1.baseName} -1 ${r1} -2 ${r2} --meta --phred-offset ${phred}
-    gzip -n assembly${r1.baseName}/contigs.fasta
-    mv assembly${r1.baseName}/contigs.fasta.gz n50_${sampleseed}_contigs.fasta.gz
-
-    """
-}
-
-process COVERAGE {
-    conda 'agbiome::bbtools'
-    
-    input:
-    val pair_id
-    path(contigs_fasta)
-    path(r1)
-    path(r2)
-    
-
-    output:
-    stdout
-    
-
-    script:
-    """
-    python3 ${projectDir}/CoverageFinder.py ${r1} ${r2} ${contigs_fasta}
-    """
-}
-
-
