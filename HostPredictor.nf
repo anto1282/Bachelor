@@ -43,7 +43,7 @@ process IPHOP {
     if (params.server) {
     """
     gzip -d -f ${viral_contigs_fasta}
-    iphop predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id}
+    --userns qvx631 iphop:latest predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id}
     gzip -f ${viral_contigs_fasta.baseName}
     """
     }
