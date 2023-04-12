@@ -1,15 +1,15 @@
 #!/usr/bin/env nextflow
 
 process IPHOP {
-    //errorStrategy = 'ignore'
-    // if (params.server) {
-    //     beforeScript 'module load iphop/1.2.0'
-    //     afterScript 'module unload iphop/1.2.0'
-    // }
-
+    // errorStrategy = 'ignore'
     if (params.server) {
-        container = "quay.io/biocontainers/iphop:1.1.0--pyhdfd78af_2"
-        }
+        beforeScript 'module load iphop/1.2.0'
+        afterScript 'module unload iphop/1.2.0'
+    }
+
+    // if (params.server) {
+    //     container = "quay.io/biocontainers/iphop:1.1.0--pyhdfd78af_2"
+    //     }
     
     
     publishDir "${params.outdir}/${pair_id}/IPHOPPREDICTIONS", mode: 'copy'
@@ -28,15 +28,6 @@ process IPHOP {
     path ("iphop_prediction_${pair_id}/*")
     
     
-    // script:
-    // if (params.server) {
-    // """
-    // gzip -d -f ${viral_contigs_fasta}
-    // iphop predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id}
-    // gzip -f ${viral_contigs_fasta.baseName}
-    // """
-    // }
-
     script:
     if (params.server) {
     """
@@ -45,6 +36,15 @@ process IPHOP {
     gzip -f ${viral_contigs_fasta.baseName}
     """
     }
+
+    // script:
+    // if (params.server) {
+    // """
+    // gzip -d -f ${viral_contigs_fasta}
+    // iphop predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id}
+    // gzip -f ${viral_contigs_fasta.baseName}
+    // """
+    // }
     
 }   
 
