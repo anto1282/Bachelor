@@ -4,7 +4,7 @@
 process PHAROKKA {
     errorStrategy= "ignore"
     if (params.server){
-        conda "/projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/PharokkaEnv2"
+        conda "/projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/PharokkaEnv3"
         module "biopython/1.80"
         cpus 16
     }
