@@ -3,7 +3,7 @@
 
 process PHAROKKA {
     if (params.server){
-        conda "/projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/Conda_envs"
+        conda "/projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/PharokkaEnv"
         cpus 16
     }
     else{
