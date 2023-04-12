@@ -13,7 +13,7 @@ process PHAROKKA {
     }
     
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
-    errorStrategy= "finish"
+    errorStrategy= "ignore"
 
     input: 
     val (pair_id)
