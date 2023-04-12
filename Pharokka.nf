@@ -26,7 +26,7 @@ process PHAROKKA {
     script:
 
     """
-    singularity run quay.io/biocontainers/pharokka:1.3.0--hdfd78af_0 -i ${viralcontigs} -o pharokka_${pair_id} -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
+    singularity run quay.${singularity.cacheDir}/pharokka:1.3.0--hdfd78af_0.img -i ${viralcontigs} -o pharokka_${pair_id} -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
     """
     
 }
