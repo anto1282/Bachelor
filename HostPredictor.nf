@@ -15,8 +15,8 @@ process IPHOP {
     publishDir "${params.outdir}/${pair_id}/IPHOPPREDICTIONS", mode: 'copy'
     
     cpus 8
-    memory '60 GB'
-    time = 2.h
+    memory '30 GB'
+    time = 1.h
 
     input: 
     val (pair_id)
