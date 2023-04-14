@@ -5,7 +5,7 @@
 NPhAnToM is a nextflow pipeline for prediction and annotation of phages in environmental samples, along with phage host prediction using industry standard bioinformatics tools.
 
 The NPhAnTom pipeline consists of several steps:
-- download reads: fasterqdump for downloading illumina reads from the short read archive.
+- Download reads: fasterqdump for downloading illumina reads from the short read archive.
 - Trimming reads: adapterremoval, bbduk.sh
 - Removing eukaryotic reads: kraken
 - Assembly: metagenomic spades
@@ -16,17 +16,18 @@ The NPhAnTom pipeline consists of several steps:
 - Phage host prediction: IPHOP
 
 
-## Install and run the pipeline
+## Install the pipeline
 To install the pipeline, clone the repository using git, and install the necessary dependencies either using conda or mamba. 
 
 ```
 git clone https://github.com/anto1282/Bachelor
 ```
 
-Some of the dependencies need a database, so install those and add the paths for those databases to the
-relevant variables in the nextflow.config file.
+Some of the dependencies need a database, so install those and add the paths for those databases to the relevant variables in the nextflow.config file.
 
 Take a look at the configuration file for the pipeline, the 'nextflow.config' file, and make sure to type in the correct paths for all the databases.
+
+
 
 ## Pipeline profiles (local and cluster)
 ## Running the pipeline locally (local)

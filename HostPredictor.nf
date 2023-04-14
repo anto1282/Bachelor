@@ -3,12 +3,12 @@
 process IPHOP {
     
     // if (params.server) {
-    //     beforeScript 'module load iphop/1.2.0 perl/5.32.1'
-    //     afterScript 'module unload iphop/1.2.0 perl/5.32.1'
+    //     beforeScript 'module load iphop/1.2.0 perl/5.32.1 biopython/1.80'
+    //     afterScript 'module unload iphop/1.2.0 perl/5.32.1 biopython/1.80'
     // }
 
     if (params.server) {
-        container = "quay.io/biocontainers/iphop:1.1.0--pyhdfd78af_2"
+        container = "quay.io/biocontainers/iphop:1.2.0--pyhdfd78af_0"
     }
     
     
