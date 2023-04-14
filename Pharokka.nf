@@ -5,7 +5,7 @@ process PHAROKKA {
     errorStrategy= "ignore"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.2.1--hdfd78af_0"
-        cpus 16
+        cpus 8
     }
     else{
         conda 'pharokka'
@@ -26,7 +26,9 @@ process PHAROKKA {
     script:
 
     """
-    pharokka.py -i ${viralcontigs} -o pharokka_${pair_id} -f -t 4 -d ${params.phaDB}-g prodigal -m
+    gzip -d -f ${viralcontigs}
+    pharokka.py -i ${viralcontigs.baseName} -o pharokka_${pair_id} -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
+    gzip -f ${viralcontigs.baseName}
     """
     
 }
