@@ -103,7 +103,7 @@ process VIRSORTER {
     
     """
     gzip --decompress --force ${contigs} 
-    singularity exec --bind /,/maps/ docker://jiarong/virsorter:latest virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall
+    singularity exec --bind ~/../.. docker://jiarong/virsorter:latest virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall
     gzip --force ${contigs.baseName} 
     """
     
