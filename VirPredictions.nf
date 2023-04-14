@@ -104,7 +104,7 @@ process VIRSORTER {
     
     """
     gzip --decompress --force ${contigs} 
-    singularity exec --bind /maps/projects/mjolnir1/data/databases/virsorter/20230317/conda_envs/,/maps/,$PATH docker://jiarong/virsorter:latest virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall --use-conda-off
+    singularity exec --bind /maps/projects/mjolnir1/data/databases/virsorter/20230317/conda_envs/,/maps/ docker://jiarong/virsorter:latest virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall --use-conda-off
     gzip --force ${contigs.baseName} 
     """
     
