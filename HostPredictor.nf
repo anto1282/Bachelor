@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 process IPHOP {
-    // errorStrategy = 'ignore'
+    
     if (params.server) {
         beforeScript 'module load iphop/1.2.0'
         afterScript 'module unload iphop/1.2.0'
@@ -31,7 +31,7 @@ process IPHOP {
     if (params.server) {
     """
     gzip -d -f ${viral_contigs_fasta}
-    iphop predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id} --debug --num_threads ${task.cpus}
+    iphop predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id} --num_threads ${task.cpus}
     gzip -f ${viral_contigs_fasta.baseName}
     """
     }
@@ -52,11 +52,8 @@ process PHIST {
 
     errorStrategy = 'ignore'
     if (params.server) {
-        cpus 8
-    }
-    else {
-        cpus 4
-    }
+        container = "julvi/hostphinder"
+        }
 
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
@@ -73,9 +70,15 @@ process PHIST {
 
 
     script:
+    script:
+    if (params.server) {
     """
-    python3 ${projectDir}/PHIST/phist.py -t ${task.cpus} ${viral_contigs_fasta} ${non_viral_fasta} phist_results_${pair_id}
+    gzip -d -f ${viral_contigs_fasta}
+    hostphinder --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id}
+    gzip -f ${viral_contigs_fasta.baseName}
     """
+    }
+    
 }  
 
 
