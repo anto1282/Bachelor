@@ -78,6 +78,7 @@ process PHAGER {
 }
 
 process VIRSORTER {
+    errorStrategy = "ignore"
     if (params.server) {
         //conda "pandas"
         container = "quay.io/biocontainers/virsorter:2.2.4--pyhdfd78af_0"
@@ -104,7 +105,7 @@ process VIRSORTER {
     
     """
     gzip --decompress --force ${contigs} 
-    virsorter:latest run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall
+    virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall
     gzip --force ${contigs.baseName} 
     """
     
@@ -189,7 +190,7 @@ process VIREXTRACTOR {
     val (pair_id)
     path("${pair_id}_ViralContigs.fasta.gz")
 
-
+    if (params.server){
     script:
     """
     gzip -d -f ${contigsFile}
@@ -199,6 +200,8 @@ process VIREXTRACTOR {
     gzip -f ${PhagerContigs.baseName}
     gzip -f ${pair_id}_ViralContigs.fasta
     """
+    }
+    
 }
 
 
