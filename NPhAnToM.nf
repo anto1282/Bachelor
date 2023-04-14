@@ -37,7 +37,6 @@ workflow{
 
     // CALCULATES N50 FROM THE ASSEMBLY
     N50CONTIG = N50(ASSEMBLY_ch)
-        
 
     // VIRUS PREDICTION TOOLS
     DVF_ch = DVF(ASSEMBLY_ch)
