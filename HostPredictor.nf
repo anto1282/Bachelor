@@ -16,13 +16,12 @@ process IPHOP {
     
     cpus 8
     memory '60 GB'
+    time = 2.h
 
     input: 
     val (pair_id)
     path (viral_contigs_fasta)
-    //path (non_viral_fasta)
-
-
+   
     output:
     val (pair_id)
     path ("iphop_prediction_${pair_id}/*")
@@ -32,7 +31,7 @@ process IPHOP {
     if (params.server) {
     """
     gzip -d -f ${viral_contigs_fasta}
-    iphop predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id}
+    iphop predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id} --debug --num_threads ${task.cpus}
     gzip -f ${viral_contigs_fasta.baseName}
     """
     }
