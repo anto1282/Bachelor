@@ -5,12 +5,12 @@
 
 import sys
 
-contigfile = sys.argv[1]
-outputfilename = sys.argv[2]
+contigfile = str(sys.argv[1])
+outputfilename = str(sys.argv[2])
 cutoff = float(sys.argv[3])
-dvffile = sys.argv[4]
-seekerfile = sys.argv[5]
-phagerfile = sys.argv[6]
+dvffile = str(sys.argv[4])
+seekerfile = str(sys.argv[5])
+phagerfile = str(sys.argv[6])
 
 DVFset = set()
 DVFoverruleset = set()
