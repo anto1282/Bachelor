@@ -9,7 +9,8 @@ process IPHOP {
 
     if (params.server) {
         container = "quay.io/biocontainers/iphop:1.1.0--pyhdfd78af_2"
-        }
+    }
+    
     
     
     publishDir "${params.outdir}/${pair_id}/IPHOPPREDICTIONS", mode: 'copy'
