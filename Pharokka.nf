@@ -26,7 +26,9 @@ process PHAROKKA {
     script:
 
     """
-    pharokka.py -i ${viralcontigs} -o pharokka_${pair_id} -f -t 4 -d ${params.phaDB} -g prodigal -m
+    gzip -d -f ${viralcontigs}
+    pharokka.py -i ${viralcontigs.baseName} -o pharokka_${pair_id} -f -t 4 -d ${params.phaDB} -g prodigal -m
+    gzip -f ${viralcontigs.baseName}
     """
     
 }
