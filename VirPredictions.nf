@@ -79,7 +79,7 @@ process PHAGER {
 
 process VIRSORTER {
     if (params.server) {
-        //conda "pandas"
+        conda "/maps/projects/mjolnir1/data/databases/virsorter/20230317/conda_envs/88c91c04.yaml"
         //beforeScript "singularity build quay.io/biocontainers/virsorter:2.2.4--pyhdfd78af_0"
         //beforeScript 'python3 --version ;echo $PATH ;module load numpy/1.21.2 snakemake; module load screed; module load click ; module load virsorter; echo $PATH;python --version;export PYTHONPATH=$PATH:$PYTHONPATH; echo $PYTHONPATH'
         //  afterScript 'module unload snakemake screed click virsorter'
@@ -104,7 +104,7 @@ process VIRSORTER {
     
     """
     gzip --decompress --force ${contigs} 
-    singularity exec --bind /maps/projects/mjolnir1/data/databases/virsorter/20230317/conda_envs/,/maps/ docker://jiarong/virsorter:latest virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall 
+    singularity exec --bind /maps/projects/mjolnir1/data/databases/virsorter/20230317/conda_envs/,/maps/,$PATH docker://jiarong/virsorter:latest virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall --use-conda-off
     gzip --force ${contigs.baseName} 
     """
     
