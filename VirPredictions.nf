@@ -189,8 +189,9 @@ process VIREXTRACTOR {
     val (pair_id)
     path("${pair_id}_ViralContigs.fasta.gz")
 
-    if (params.server){
+
     script:
+    if (params.server){
     """
     gzip -d -f ${contigsFile}
     gzip -d -f ${PhagerContigs}
@@ -199,11 +200,6 @@ process VIREXTRACTOR {
     gzip -f ${PhagerContigs.baseName}
     gzip -f ${pair_id}_ViralContigs.fasta
     """
-    }
-    else{
-        """
-        echo hello
-        """
     }
     
 }
