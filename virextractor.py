@@ -33,17 +33,16 @@ print(DVFset)
 
 
 SeekerSet = set()
-def SeekerExtract(seekerfile):
-    with open(seekerfile,'r') as SeekerInFile:
-        SeekerFlag = False
-        for line in SeekerInFile:
-            if len(line) == 1:
-                continue
-            if SeekerFlag == True:
-                if line.split()[1]== "Phage" and float(line.split()[-1]) > cutoff:
-                    SeekerSet.add(line.split()[0])
-            if line.split()[0] =="name":
-                SeekerFlag = True
+def SeekerExtract(SeekerInFile):
+    SeekerFlag = False
+    for line in SeekerInFile:
+        if len(line) == 1:
+            continue
+        if SeekerFlag == True:
+            if line.split()[1]== "Phage" and float(line.split()[-1]) > cutoff:
+                SeekerSet.add(line.split()[0])
+        if line.split()[0] =="name":
+            SeekerFlag = True
     return  SeekerSet               
 
 
