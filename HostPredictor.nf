@@ -3,8 +3,8 @@
 process IPHOP {
     
     if (params.server) {
-        beforeScript 'module load iphop/1.2.0'
-        afterScript 'module unload iphop/1.2.0'
+        beforeScript 'module load iphop/1.2.0 perl/5.32.1'
+        afterScript 'module unload iphop/1.2.0 perl/5.32.1'
     }
 
     // if (params.server) {
