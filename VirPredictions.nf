@@ -79,17 +79,24 @@ process PHAGER {
 
 process VIRSORTER {
     errorStrategy = 'ignore'
-    if (params.server) {
-        //conda "pandas"
-        module "virsorter/2.2.4"
-        //beforeScript 'python3 --version ;echo $PATH ;module load numpy/1.21.2 snakemake; module load screed; module load click ; module load virsorter; echo $PATH;python --version;export PYTHONPATH=$PATH:$PYTHONPATH; echo $PYTHONPATH'
-        //  afterScript 'module unload snakemake screed click virsorter'
-        cpus 4
-        memory '16 GB'
-        }
-    else {
+    // if (params.server) {
+    //     //conda "pandas"
+    //     module "virsorter/2.2.4"
+    //     //beforeScript 'python3 --version ;echo $PATH ;module load numpy/1.21.2 snakemake; module load screed; module load click ; module load virsorter; echo $PATH;python --version;export PYTHONPATH=$PATH:$PYTHONPATH; echo $PYTHONPATH'
+    //     //  afterScript 'module unload snakemake screed click virsorter'
+    //     cpus 8
+    //     memory '16 GB'
+    //     }
+    // else {
+    //     cpus 8
+    // }
+
+    if (params.server){
+        container = "jiarong/virsorter:latest"
         cpus 8
+        memory '16 GB'
     }
+    
     
     publishDir "${params.outdir}/${pair_id}/VIRSORTER", mode: 'copy'
     
@@ -107,7 +114,7 @@ process VIRSORTER {
     
     """
     gzip --decompress --force ${contigs} 
-    virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall
+    virsorter:latest run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall
     gzip --force ${contigs.baseName} 
     """
     
