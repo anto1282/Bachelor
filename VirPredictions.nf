@@ -81,7 +81,7 @@ process VIRSORTER {
     errorStrategy = "ignore"
     if (params.server) {
         //conda "pandas"
-        container = "quay.io/biocontainers/virsorter:2.2.4--pyhdfd78af_0"
+        //beforeScript "singularity build quay.io/biocontainers/virsorter:2.2.4--pyhdfd78af_0"
         //beforeScript 'python3 --version ;echo $PATH ;module load numpy/1.21.2 snakemake; module load screed; module load click ; module load virsorter; echo $PATH;python --version;export PYTHONPATH=$PATH:$PYTHONPATH; echo $PYTHONPATH'
         //  afterScript 'module unload snakemake screed click virsorter'
         cpus 4
@@ -105,7 +105,7 @@ process VIRSORTER {
     
     """
     gzip --decompress --force ${contigs} 
-    virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall
+    singularity exec quay.io/biocontainers/virsorter:2.2.4--pyhdfd78af_0 virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall
     gzip --force ${contigs.baseName} 
     """
     
