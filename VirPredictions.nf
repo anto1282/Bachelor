@@ -80,7 +80,7 @@ process PHAGER {
 process VIRSORTER {
     if (params.server) {
         //conda "pandas"
-        module "virsorter/2.2.4"
+        container = "quay.io/biocontainers/virsorter:2.2.4--pyhdfd78af_0"
         //beforeScript 'python3 --version ;echo $PATH ;module load numpy/1.21.2 snakemake; module load screed; module load click ; module load virsorter; echo $PATH;python --version;export PYTHONPATH=$PATH:$PYTHONPATH; echo $PYTHONPATH'
         //  afterScript 'module unload snakemake screed click virsorter'
         cpus 4
