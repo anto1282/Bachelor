@@ -15,10 +15,11 @@ phagerfile = sys.argv[6]
 DVFset = set()
 DVFoverruleset = set()
 
-with open(dvffile,'r') as file: 
+
+def DVFExtract(DVFfile):
     linecount = 0
     cutoffoverrule = 0.95
-    for line in file:
+    for line in DVFfile:
         if linecount > 0:
             if float(line.split()[2]) > cutoff:
                 DVFset.add(line.split()[0])
@@ -26,33 +27,58 @@ with open(dvffile,'r') as file:
                 #Adds very likely phages to another set, which is added to the final set no matter what
                 DVFoverruleset.add(line.split()[0])
         linecount += 1
+    return DVFset, DVFoverruleset
 
 print(DVFset)
+
+
 SeekerSet = set()
-
-
-with open(seekerfile,'r') as SeekerInFile:
-    SeekerFlag = False
-    for line in SeekerInFile:
-        if len(line) == 1:
-            continue
-        if SeekerFlag == True:
-            if line.split()[1]== "Phage" and float(line.split()[-1]) > cutoff:
-                SeekerSet.add(line.split()[0])
-        if line.split()[0] =="name":
-            SeekerFlag = True
+def SeekerExtract(seekerfile):
+    with open(seekerfile,'r') as SeekerInFile:
+        SeekerFlag = False
+        for line in SeekerInFile:
+            if len(line) == 1:
+                continue
+            if SeekerFlag == True:
+                if line.split()[1]== "Phage" and float(line.split()[-1]) > cutoff:
+                    SeekerSet.add(line.split()[0])
+            if line.split()[0] =="name":
+                SeekerFlag = True
+    return  SeekerSet               
 
 
 #with open(virsorterfile, 'r') as VirSorterFile:
 
 PhagerSet = set()
-with open(phagerfile, 'r') as file:
+def PhagerExtract(file):
     linecount = 0
     for line in file:
         if linecount > 0:
             if int(line.split()[3]) == 1:
                 PhagerSet.add(line.split()[1])
         linecount += 1
+    return PhagerSet
+
+
+#Burde ikke give problemer, men fungerer ikke som det skal:
+try:
+    DVFfile = open(dvffile,"r")
+    SeekerInFile = open(seekerfile,"r")
+    PhagerInfile = open(phagerfile,"r")
+except FileNotFoundError:
+    try:
+        SeekerInFile = open(seekerfile,"r")
+        PhagerInfile = open(phagerfile,"r")
+    except:
+        try:
+            PhagerInfile = open(phagerfile,"r")
+        except:
+            print("No files found, exiting")
+            
+DVFset, DVFoverruleset = DVFExtract(DVFfile)
+SeekerSet = SeekerExtract(SeekerInFile)
+PhagerSet = PhagerExtract(PhagerInfile)
+
 
 SeekerDVFInter = SeekerSet.intersection(DVFset)
 SeekerPhagerInter = SeekerSet.intersection(PhagerSet)
@@ -84,5 +110,9 @@ with open(contigfile, 'r') as file:
     print(seqcount, "sequence entries written to output file:", outputfilename)
 
 
-    
+
+
+
+
+
 virusoutfile.close()
