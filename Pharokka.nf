@@ -27,7 +27,7 @@ process PHAROKKA {
 
     """
     gzip -d -f ${viralcontigs}
-    pharokka.py -i ${viralcontigs.baseName} -o pharokka_${pair_id} -f -t 4 -d ${params.phaDB} -g prodigal -m
+    pharokka.py -i ${viralcontigs.baseName} -o pharokka_${pair_id} -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
     gzip -f ${viralcontigs.baseName}
     """
     
