@@ -5,7 +5,7 @@ process PHAROKKA {
     errorStrategy= "ignore"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.2.1--hdfd78af_0"
-        cpus 16
+        cpus 8
     }
     else{
         conda 'pharokka'
