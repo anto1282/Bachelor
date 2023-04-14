@@ -104,7 +104,7 @@ process VIRSORTER {
     
     """
     gzip --decompress --force ${contigs} 
-    singularity exec -B /maps/ quay.io/biocontainers/virsorter:2.2.4--pyhdfd78af_0 virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall
+    singularity exec -B /maps/ docker://jiarong/virsorter:latest virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall
     gzip --force ${contigs.baseName} 
     """
     
