@@ -78,7 +78,7 @@ process PHAGER {
 }
 
 process VIRSORTER {
-    errorStrategy = "ignore"
+    errorStrategy "ignore"
     if (params.server) {
         //conda "pandas"
         //beforeScript "singularity build quay.io/biocontainers/virsorter:2.2.4--pyhdfd78af_0"
