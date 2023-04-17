@@ -3,14 +3,14 @@
 process IPHOP {
     
     if (params.server) {
-        conda "/maps/projects/mjolnir1/apps/conda/iphop-1.2.0"
+        conda "/iphop.yaml"
     }
 
     // if (params.server) {
     //     container = "quay.io/biocontainers/iphop:1.2.0--pyhdfd78af_0"
     // }
     // else {
-    //     conda = 
+    //     
     // }
     
     

@@ -18,7 +18,7 @@ DVFoverruleset = set()
 
 def DVFExtract(DVFfile):
     linecount = 0
-    cutoffoverrule = 0.95
+    cutoffoverrule = 0.999
     for line in DVFfile:
         if linecount > 0:
             if float(line.split()[2]) > cutoff:
