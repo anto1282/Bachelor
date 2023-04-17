@@ -1,7 +1,7 @@
 #!/bin/bash
-#SBATCH --job-name=BACHBOYS
-#SBATCH --output=/projects/mjolnir1/people/zpx817/BachAssemblies
-#SBATCH --error=/projects/mjolnir1/people/zpx817/errors
+#SBATCH --job-name=IphopTest
+#SBATCH --output=/projects/mjolnir1/people/zpx817/iphopLog
+#SBATCH --error=/projects/mjolnir1/people/zpx817/iphopErrors
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=8
 #SBATCH --mem-per-cpu=8G
