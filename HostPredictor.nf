@@ -25,7 +25,7 @@ process IPHOP {
     script:
     if (params.server) {
     """
-    export PERL5LIB=/projects/mjolnir1/apps/conda/iphop-1.2.0/lib/perl5/site_perl/5.22.0:/projects/mjolnir1/apps/conda/iphop-1.2.0/lib/perl5/site_perl/
+    export PERL5LIB=/projects/mjolnir1/apps/conda/iphop-1.2.0/lib/perl5/site_perl/5.22.0:/projects/mjolnir1/apps/conda/iphop-1.2.0/lib/perl5/site_perl/:
 
     env
     which python3
