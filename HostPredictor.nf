@@ -3,8 +3,8 @@
 process IPHOP {
     
     if (params.server) {
-        beforeScript 'module load iphop/1.2.0 perl/5.32.1 biopython/1.80' 
-        afterScript 'module unload iphop/1.2.0 perl/5.32.1 biopython/1.80'
+        module 'iphop/1.2.0 perl/5.32.1 biopython/1.80'
+        
     }
 
     // if (params.server) {
