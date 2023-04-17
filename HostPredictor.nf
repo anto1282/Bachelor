@@ -3,7 +3,7 @@
 process IPHOP {
     
     if (params.server) {
-        conda "/iphop.yaml"
+        conda "iphop.yaml"
     }
 
     // if (params.server) {
