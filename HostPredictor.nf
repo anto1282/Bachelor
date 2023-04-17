@@ -3,7 +3,7 @@
 process IPHOP {
     
     if (params.server) {
-        beforeScript 'module purge'
+        beforeScript 'export CONDA_EXE=/opt/software/miniconda/py39_23.1/bin/'
         conda '/projects/mjolnir1/apps/conda/iphop-1.2.0'
     }
    
@@ -25,8 +25,8 @@ process IPHOP {
     script:
     if (params.server) {
     """
-    export PERL5LIB=/projects/mjolnir1/apps/conda/iphop-1.2.0/lib/perl5/site_perl/5.22.0:/projects/mjolnir1/apps/conda/iphop-1.2.0/lib/perl5/site_perl/
-
+    
+    
     env
     which python3
     which perl
