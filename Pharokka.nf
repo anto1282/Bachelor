@@ -4,7 +4,7 @@
 process PHAROKKA {
     errorStrategy= "ignore"
     if (params.server){
-        container = "docker://quay.io/biocontainers/pharokka:1.2.1--hdfd78af_0"
+        container = "docker://quay.io/biocontainers/pharokka:1.3.0--hdfd78af_0"
         cpus 8
     }
     else{
