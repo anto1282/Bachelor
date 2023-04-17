@@ -3,9 +3,7 @@
 process IPHOP {
     
     if (params.server) {
-        module "iphop/1.2.0"
-        module "perl/5.32.1"
-        module "biopython/1.80"
+        conda "/maps/projects/mjolnir1/apps/conda/iphop-1.2.0"
     }
 
     // if (params.server) {
