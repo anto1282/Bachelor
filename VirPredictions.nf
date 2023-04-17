@@ -44,6 +44,7 @@ process PHAGER {
     //errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
     if (params.server) {
+        beforeScript "module unload miniconda/4.11.0"
         conda '/projects/mjolnir1/apps/conda/py39'
         module 'python/3.9.9'
         cpus 8
