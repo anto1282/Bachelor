@@ -18,7 +18,7 @@ DVFoverruleset = set()
 
 def DVFExtract(DVFfile):
     linecount = 0
-    cutoffoverrule = 0.95
+    cutoffoverrule = 0.999
     for line in DVFfile:
         if linecount > 0:
             if float(line.split()[2]) > cutoff:
@@ -29,7 +29,7 @@ def DVFExtract(DVFfile):
         linecount += 1
     return DVFset, DVFoverruleset
 
-print(DVFset)
+
 
 
 SeekerSet = set()
@@ -78,6 +78,11 @@ DVFset, DVFoverruleset = DVFExtract(DVFfile)
 SeekerSet = SeekerExtract(SeekerInFile)
 PhagerSet = PhagerExtract(PhagerInfile)
 
+
+print(DVFset)
+print(SeekerSet)
+print(PhagerSet)
+print(DVFoverruleset)
 
 SeekerDVFInter = SeekerSet.intersection(DVFset)
 SeekerPhagerInter = SeekerSet.intersection(PhagerSet)

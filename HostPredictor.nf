@@ -10,7 +10,7 @@ process IPHOP {
     //     container = "quay.io/biocontainers/iphop:1.2.0--pyhdfd78af_0"
     // }
     // else {
-    //     conda = 
+    //     
     // }
     
     
