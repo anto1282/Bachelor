@@ -107,7 +107,7 @@ process VIRSORTER {
     gzip --force ${contigs.baseName} 
     """
     
-    
+
 }
 
 
