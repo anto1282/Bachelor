@@ -11,7 +11,7 @@
 #SBATCH --mail-type=fail
 #SBATCH --mail-user=s203557@dtu.dk
 
-module load mamba/1.3.1
+
 conda activate /projects/mjolnir1/apps/conda/iphop-1.2.0
 env
 echo $PERL5LIB
