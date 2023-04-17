@@ -3,7 +3,9 @@
 process IPHOP {
     
     if (params.server) {
-        module 'iphop/1.2.0 perl/5.32.1 biopython/1.80'
+       module "iphop/1.2.0" 
+       module "perl/5.32.1 "
+       module "biopython/1.80"
         
     }
 
