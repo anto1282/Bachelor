@@ -21,7 +21,7 @@ def DVFExtract(DVFfile):
             if float(line.split()[2]) > dvfcutoff:
                 DVFset.add(line.split()[0])
         linecount += 1
-    return DVFset, DVFoverruleset
+    return DVFset
 
 
 
@@ -68,7 +68,7 @@ except FileNotFoundError:
         except:
             print("No files found, exiting")
             
-DVFset, DVFoverruleset = DVFExtract(DVFfile)
+DVFset = DVFExtract(DVFfile)
 SeekerSet = SeekerExtract(SeekerInFile)
 PhagerSet = PhagerExtract(PhagerInfile)
 
@@ -76,7 +76,7 @@ PhagerSet = PhagerExtract(PhagerInfile)
 print(DVFset)
 print(SeekerSet)
 print(PhagerSet)
-print(DVFoverruleset)
+
 
 SeekerDVFInter = SeekerSet.intersection(DVFset)
 SeekerPhagerInter = SeekerSet.intersection(PhagerSet)
