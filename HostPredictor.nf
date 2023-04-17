@@ -3,7 +3,7 @@
 process IPHOP {
     
     if (params.server) {
-        beforeScript 'export CONDA_EXE=/opt/software/miniconda/py39_23.1/bin/'
+        beforeScript 'module purge; export CONDA_EXE=/opt/software/miniconda/py39_23.1/bin/'
         conda '/projects/mjolnir1/apps/conda/iphop-1.2.0'
     }
    
