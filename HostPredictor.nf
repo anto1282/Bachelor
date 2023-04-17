@@ -3,7 +3,7 @@
 process IPHOP {
     
     if (params.server) {
-        conda "/maps/projects/mjolnir1/apps/conda/iphop-1.2.0"
+        container = "quay.io/biocontainers/iphop:1.3.0--pyhdfd78af_0"
     }
 
     // if (params.server) {
@@ -14,7 +14,7 @@ process IPHOP {
     // }
     
     
-    
+
     publishDir "${params.outdir}/${pair_id}/IPHOPPREDICTIONS", mode: 'copy'
     
     cpus 8
