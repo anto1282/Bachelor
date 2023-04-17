@@ -3,18 +3,10 @@
 process IPHOP {
     
     if (params.server) {
-        container = "quay.io/biocontainers/iphop:1.3.0--pyhdfd78af_0"
+        beforeScript 'module purge'
+        conda '/projects/mjolnir1/apps/conda/iphop-1.2.0'
     }
-
-    // if (params.server) {
-    //     container = "quay.io/biocontainers/iphop:1.2.0--pyhdfd78af_0"
-    // }
-    // else {
-    //     
-    // }
-    
-    
-
+   
     publishDir "${params.outdir}/${pair_id}/IPHOPPREDICTIONS", mode: 'copy'
     
     cpus 8
@@ -33,6 +25,13 @@ process IPHOP {
     script:
     if (params.server) {
     """
+    export PERL5LIB=/projects/mjolnir1/apps/conda/iphop-1.2.0/lib/perl5/site_perl/5.22.0:/projects/mjolnir1/apps/conda/iphop-1.2.0/lib/perl5/site_perl/
+
+    env
+    which python3
+    which perl
+    echo \$PERL5LIB
+    
     gzip -d -f ${viral_contigs_fasta}
     iphop predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id} --num_threads ${task.cpus}
     gzip -f ${viral_contigs_fasta.baseName}
