@@ -26,14 +26,14 @@ process DVF {
     if (params.server) {
         """
         gzip --decompress --force ${contigs} 
-        ${params.DVFPath} -i ${contigs.baseName} -l 1000 -c ${task.cpus}
+        ${params.DVFPath} -i ${contigs.baseName} -l 5000 -c ${task.cpus}
         gzip --force ${contigs.baseName} 
         """
             }
     else {
         """
         gzip --decompress --force ${contigs} 
-        python ${params.DVFPath} -i ${contigs.baseName} -l 1000 -c ${task.cpus}
+        python ${params.DVFPath} -i ${contigs.baseName} -l 5000 -c ${task.cpus}
         gzip --force ${contigs.baseName} 
         """
     }
@@ -69,7 +69,7 @@ process PHAGER {
         """
         echo $PATH
         gzip --decompress --force ${contigs} 
-        phager.py -c 1000 -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
+        phager.py -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
         gzip --force ${contigs.baseName}
         """
         }
@@ -167,7 +167,7 @@ process SEEKER{
 
     script:
     """
-    reformat.sh in=${contigsFile} out=Contigs_trimmed.fasta minlength=10000 overwrite=True
+    reformat.sh in=${contigsFile} out=Contigs_trimmed.fasta minlength=5000 overwrite=True
     predict-metagenome Contigs_trimmed.fasta > SeekerFile
     rm Contigs_trimmed.fasta
     """
