@@ -3,6 +3,7 @@
 process IPHOP {
     
     if (params.server) {
+        beforeScript 'module purge'
         conda '/projects/mjolnir1/apps/conda/iphop-1.2.0'
     }
    
