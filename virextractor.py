@@ -78,6 +78,9 @@ DVFset, DVFoverruleset = DVFExtract(DVFfile)
 SeekerSet = SeekerExtract(SeekerInFile)
 PhagerSet = PhagerExtract(PhagerInfile)
 
+print(SeekerSet)
+print(DVFset)
+print(PhagerSet)
 
 SeekerDVFInter = SeekerSet.intersection(DVFset)
 SeekerPhagerInter = SeekerSet.intersection(PhagerSet)
