@@ -7,10 +7,11 @@ import sys
 
 contigfile = str(sys.argv[1])
 outputfilename = str(sys.argv[2])
-cutoff = float(sys.argv[3])
+dvfcutoff = float(sys.argv[3])
 dvffile = str(sys.argv[4])
-seekerfile = str(sys.argv[5])
-phagerfile = str(sys.argv[6])
+seekercutoff = float(sys.argv[5])
+seekerfile = str(sys.argv[6])
+phagerfile = str(sys.argv[7])
 
 DVFset = set()
 DVFoverruleset = set()
@@ -21,7 +22,7 @@ def DVFExtract(DVFfile):
     cutoffoverrule = 0.999
     for line in DVFfile:
         if linecount > 0:
-            if float(line.split()[2]) > cutoff:
+            if float(line.split()[2]) > dvfcutoff:
                 DVFset.add(line.split()[0])
             if float(line.split()[2]) > cutoffoverrule:
                 #Adds very likely phages to another set, which is added to the final set no matter what
@@ -39,7 +40,7 @@ def SeekerExtract(SeekerInFile):
         if len(line) == 1:
             continue
         if SeekerFlag == True:
-            if line.split()[1]== "Phage" and float(line.split()[-1]) > cutoff:
+            if line.split()[1]== "Phage" and float(line.split()[-1]) > seekercutoff:
                 SeekerSet.add(line.split()[0])
         if line.split()[0] =="name":
             SeekerFlag = True

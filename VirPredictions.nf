@@ -26,14 +26,14 @@ process DVF {
     if (params.server) {
         """
         gzip --decompress --force ${contigs} 
-        ${params.DVFPath} -i ${contigs.baseName} -l 5000 -c ${task.cpus}
+        ${params.DVFPath} -i ${contigs.baseName} -l ${params.minLength} -c ${task.cpus}
         gzip --force ${contigs.baseName} 
         """
             }
     else {
         """
         gzip --decompress --force ${contigs} 
-        python ${params.DVFPath} -i ${contigs.baseName} -l 5000 -c ${task.cpus}
+        python ${params.DVFPath} -i ${contigs.baseName} -l ${params.minLength} -c ${task.cpus}
         gzip --force ${contigs.baseName} 
         """
     }
@@ -69,7 +69,7 @@ process PHAGER {
         """
         echo $PATH
         gzip --decompress --force ${contigs} 
-        phager.py -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
+        phager.py -c ${params.minLength} -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
         gzip --force ${contigs.baseName}
         """
         }
@@ -78,11 +78,22 @@ process PHAGER {
 }
 
 process VIRSORTER {
-    if (params.server) {
-        //beforeScript "singularity build quay.io/biocontainers/virsorter:2.2.4--pyhdfd78af_0"
-        //beforeScript 'python3 --version ;echo $PATH ;module load numpy/1.21.2 snakemake; module load screed; module load click ; module load virsorter; echo $PATH;python --version;export PYTHONPATH=$PATH:$PYTHONPATH; echo $PYTHONPATH'
-        //  afterScript 'module unload snakemake screed click virsorter'
-        cpus 4
+    errorStrategy = 'ignore'
+    // if (params.server) {
+    //     //conda "pandas"
+    //     module "virsorter/2.2.4"
+    //     //beforeScript 'python3 --version ;echo $PATH ;module load numpy/1.21.2 snakemake; module load screed; module load click ; module load virsorter; echo $PATH;python --version;export PYTHONPATH=$PATH:$PYTHONPATH; echo $PYTHONPATH'
+    //     //  afterScript 'module unload snakemake screed click virsorter'
+    //     cpus 8
+    //     memory '16 GB'
+    //     }
+    // else {
+    //     cpus 8
+    // }
+
+    if (params.server){
+        container = "jiarong/virsorter:latest"
+        cpus 8
         memory '16 GB'
     }
     
@@ -103,11 +114,11 @@ process VIRSORTER {
     
     """
     gzip --decompress --force ${contigs} 
-    singularity exec --bind ~/../..,/maps/ docker://jiarong/virsorter:latest virsorter run -i ${contigs.baseName} -w predictions --min-length 1000 -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall
+    virsorter run -i ${contigs.baseName} -w predictions --min-length ${params.minLength} -j ${task.cpus} -d ${params.virsorterDB} --min-score 0.8 all --forceall
     gzip --force ${contigs.baseName} 
     """
     
-
+    
 }
 
 
@@ -167,7 +178,7 @@ process SEEKER{
 
     script:
     """
-    reformat.sh in=${contigsFile} out=Contigs_trimmed.fasta minlength=5000 overwrite=True
+    reformat.sh in=${contigsFile} out=Contigs_trimmed.fasta minlength=${params.minLength} overwrite=True
     predict-metagenome Contigs_trimmed.fasta > SeekerFile
     rm Contigs_trimmed.fasta
     """
@@ -190,17 +201,14 @@ process VIREXTRACTOR {
 
 
     script:
-    if (params.server){
     """
     gzip -d -f ${contigsFile}
     gzip -d -f ${PhagerContigs}
-    python3 ${projectDir}/virextractor.py ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.9 ${DVFcontigs} ${SeekerContigs} ${PhagerContigs.baseName}
+    python3 ${projectDir}/virextractor.py ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.9 ${DVFcontigs} 0.9 ${SeekerContigs} ${PhagerContigs.baseName}
     gzip -f ${contigsFile.baseName}
     gzip -f ${PhagerContigs.baseName}
     gzip -f ${pair_id}_ViralContigs.fasta
     """
-    }
-    
 }
 
 
