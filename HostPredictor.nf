@@ -3,7 +3,7 @@
 process IPHOP {
     
     if (params.server) {
-        beforeScript 'export LD_LIBRARY_PATH=/projects/mjolnir1/apps/conda/iphop-1.2.0/x86_64-conda-linux-gnu/lib/:/projects/mjolnir1/apps/conda/iphop-1.2.0/lib/:'
+        beforeScript 'module purge; export LD_LIBRARY_PATH=/projects/mjolnir1/apps/conda/iphop-1.2.0/x86_64-conda-linux-gnu/lib/:/projects/mjolnir1/apps/conda/iphop-1.2.0/lib/:'
         conda '/projects/mjolnir1/apps/conda/iphop-1.2.0'
     }
    
