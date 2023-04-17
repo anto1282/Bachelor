@@ -14,19 +14,12 @@ seekerfile = str(sys.argv[6])
 phagerfile = str(sys.argv[7])
 
 DVFset = set()
-DVFoverruleset = set()
-
-
 def DVFExtract(DVFfile):
     linecount = 0
-    cutoffoverrule = 0.999
     for line in DVFfile:
         if linecount > 0:
             if float(line.split()[2]) > dvfcutoff:
                 DVFset.add(line.split()[0])
-            if float(line.split()[2]) > cutoffoverrule:
-                #Adds very likely phages to another set, which is added to the final set no matter what
-                DVFoverruleset.add(line.split()[0])
         linecount += 1
     return DVFset, DVFoverruleset
 
@@ -89,7 +82,7 @@ SeekerDVFInter = SeekerSet.intersection(DVFset)
 SeekerPhagerInter = SeekerSet.intersection(PhagerSet)
 DVFPhagerInter = DVFset.intersection(PhagerSet)
 
-final_viral_set = SeekerDVFInter.union(SeekerPhagerInter,DVFPhagerInter,DVFoverruleset)
+final_viral_set = SeekerDVFInter.union(SeekerPhagerInter,DVFPhagerInter)
 
 virusoutfile = open(outputfilename,'w')
 
