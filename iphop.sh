@@ -1,3 +1,4 @@
+#!/bin/bash
 #SBATCH --job-name=BACHBOYS
 #SBATCH --output=/projects/mjolnir1/people/zpx817/BachAssemblies
 #SBATCH --error=/projects/mjolnir1/people/zpx817/errors
