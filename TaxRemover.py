@@ -52,6 +52,7 @@ for line in infile1:
 
 infile1.close()
 outfile1.close()
+
 Counter = 0
 for line in infile2:
     if line.startswith("@"+sraNR):
@@ -63,7 +64,7 @@ for line in infile2:
         print(line.strip(), file = outfile2)
     if Flag == True:
         Counter += 1
-
+print("Number of eukaryotic sequences removed:", Counter)
 ReadNumSet.clear()
 infile2.close()
 outfile2.close()
