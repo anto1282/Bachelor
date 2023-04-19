@@ -44,6 +44,9 @@ with open(iphoppredictions, 'r') as file:
         line = line.split(',')
         iphopdict[line[0]] = line[1]
 
+print(virusdict)
+
+print(iphopdict)
 
 html_template = '''
 <!DOCTYPE html>
