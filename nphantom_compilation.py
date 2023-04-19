@@ -134,7 +134,7 @@ if not os.path.exists('pages'):
 # Generate an HTML file for each key
 for key in iphopdict:
     outputfilename = os.path.join('pages', '{}.html'.format(key))
-    host = "Likely host: " + iphopdict[key]
+    host = ("Likely host: " + iphopdict[key])
     DNA = "The DNA of the phage:\n"
     contig = virusdict[key]
     picture = "test.jpg"
