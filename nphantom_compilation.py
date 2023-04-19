@@ -100,7 +100,7 @@ html_template = '''
 			<div class="tab-buttons">
 				{}
 			</div>
-			{}
+			{{}}
 			<a href="index.html">Back to Index</a>
 		</div>
 		<script>
@@ -136,7 +136,7 @@ for key in iphopdict:
     DNA = "The DNA of the phage:"
     contig = virusdict[key]
     picture = "test.jpg"
-    html = html_template.format(outputfilename, key, host, picture, DNA, contig,"button")
+    html = html_template.format(outputfilename, outputfilename, key, host, picture, DNA, contig, key)
     with open(outputfilename, 'w') as f:
         f.write(html)
 
