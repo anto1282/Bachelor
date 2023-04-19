@@ -15,7 +15,7 @@
 #Add a picture of the assembled phage
 
 import sys
-from virextractor import *
+
 
 contigname = str(sys.argv[1])
 predictedviruses = str(sys.argv[2])
