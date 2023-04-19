@@ -40,9 +40,12 @@ with open(predictedviruses,'r') as file:
 
 iphopdict = dict()
 with open(iphoppredictions, 'r') as file:
+    linecount = 0 
     for line in file:
-        line = line.split(',')
-        iphopdict[line[0]] = line[1]
+        if linecount > 0:
+            line = line.split(',')
+            iphopdict[line[0]] = line[2]
+        linecount += 1
 
 print(virusdict)
 
@@ -72,7 +75,7 @@ with open(outputfilename,'w') as file:
         host = "Likely host: " + iphopdict[key]
         DNA = "The DNA of the phage: "
         contig = virusdict[key]
-        file.write(html_template.format(contigname,key,host, DNA, contig))
+        file.write(html_template.format(outputfilename,key,host, DNA, contig))
 
 
 
