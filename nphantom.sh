@@ -18,7 +18,7 @@ module purge
 module load openjdk/11.0.0
 module load singularity/3.8.0 nextflow miniconda/4.11.0
 
-export PATH="/opt/software/miniconda/py39_23.1/bin:$PATH"
+#export PATH="/opt/software/miniconda/py39_23.1/bin:$PATH"
 export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/zpx817/SingularityTMP"
 export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/zpx817/SingularityTMP"
 
