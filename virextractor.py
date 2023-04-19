@@ -12,7 +12,6 @@ dvffile = str(sys.argv[4])
 seekercutoff = float(sys.argv[5])
 seekerfile = str(sys.argv[6])
 phagerfile = str(sys.argv[7])
-phage_output_list = str(sys.argv[8])
 
 DVFset = set()
 def DVFExtract(DVFfile):
@@ -107,9 +106,6 @@ with open(contigfile, 'r') as file:
         
         
     print(seqcount, "sequence entries written to output file:", outputfilename)
-
-
-
 
 
 
