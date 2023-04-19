@@ -17,7 +17,7 @@
 import sys
 
 
-contigname = str(sys.argv[1])
+outputfilename = str(sys.argv[1])
 predictedviruses = str(sys.argv[2])
 iphoppredictions = str(sys.argv[3])
 
