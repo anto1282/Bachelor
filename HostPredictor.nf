@@ -25,7 +25,8 @@ process IPHOP {
     script:
     if (params.server) {
     """
-    
+    export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH/projects/mjolnir1/scratch/zpx817
+
     
     env
     which python3
