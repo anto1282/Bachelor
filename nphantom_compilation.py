@@ -47,7 +47,7 @@ with open(iphoppredictions, 'r') as file:
             iphopdict[line[0]] = line[2]
         linecount += 1
 
-print(virusdict)
+print(virusdict.keys)
 
 print(iphopdict)
 
