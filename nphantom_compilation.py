@@ -32,7 +32,7 @@ with open(predictedviruses,'r') as file:
             if linecount > 0:
                 virusdict[phagekey[1:]] = phagecontig
             
-            print(phagekey)
+        
         else:
             phagecontig += line
     
@@ -49,9 +49,7 @@ with open(iphoppredictions, 'r') as file:
             iphopdict[line[0]] = line[2]
         linecount += 1
 
-print(virusdict.keys())
 
-print(iphopdict)
 
 html_template = '''
 <!DOCTYPE html>
@@ -138,7 +136,7 @@ for key in iphopdict:
     DNA = "The DNA of the phage:"
     contig = virusdict[key]
     picture = "test.jpg"
-    html = html_template.format(outputfilename, key, host, picture, DNA, contig)
+    html = html_template.format(outputfilename, key, host, picture, DNA, contig,"button")
     with open(outputfilename, 'w') as f:
         f.write(html)
 
