@@ -30,7 +30,6 @@ process IPHOP {
     
 
 
-    env
     which python3
     which perl
     echo \$PERL5LIB
