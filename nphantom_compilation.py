@@ -30,7 +30,7 @@ with open(predictedviruses,'r') as file:
         if line.startswith(">"):
             phagekey = line.strip()
             if linecount > 0:
-                virusdict[phagekey] = phagecontig
+                virusdict[phagekey[1:]] = phagecontig
             
             print(phagekey)
         else:
