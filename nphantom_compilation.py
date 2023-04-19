@@ -31,6 +31,7 @@ with open(predictedviruses,'r') as file:
             if linecount > 0:
                 virusdict[phagekey] = phagecontig
             phagekey = line.strip()
+            print(phagekey)
         else:
             phagecontig += line
     
@@ -47,7 +48,7 @@ with open(iphoppredictions, 'r') as file:
             iphopdict[line[0]] = line[2]
         linecount += 1
 
-print(virusdict.keys)
+print(virusdict.keys())
 
 print(iphopdict)
 
