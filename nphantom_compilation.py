@@ -126,12 +126,13 @@ html_template = '''
 
 
 # Create a directory to store the HTML files
-if not os.path.exists('pages'):
-    os.makedirs('pages')
+if not os.path.exists('html_files'):
+    os.makedirs('html_files')
+
 
 # Generate an HTML file for each key
 for key in iphopdict:
-    outputfilename = os.path.join('pages', '{}.html'.format(key))
+    outputfilename = os.path.join('html_files', '{}.html'.format(key))
     host = ("Likely host: " + iphopdict[key])
     DNA = "The DNA of the phage:"
     contig = virusdict[key]
@@ -140,14 +141,58 @@ for key in iphopdict:
     with open(outputfilename, 'w') as f:
         f.write(html)
 
-# #Creating a file for each phage with name, contig and genus
-# with open(outputfilename,'w') as file:
-#     for key in iphopdict:
-        
-        
-#         file.write(html_template.format(outputfilename,key,host, DNA, contig))
+jscript = """
+// app.js
+const fileList = document.getElementById('file-list');
 
+fetch('html_files/')
+  .then(response => response.text())
+  .then(html => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const links = doc.querySelectorAll('a');
 
+    links.forEach(link => {
+      const filename = link.textContent;
+      link.onclick = (event) => {
+        event.preventDefault();
+        fetch(`html_files/${filename}`)
+          .then(response => response.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const doc = parser.parseFromString(html, 'text/html');
+            document.documentElement.innerHTML = doc.documentElement.innerHTML;
+            document.title = doc.title;
+            history.pushState({}, '', filename);
+          })
+      }
+      fileList.appendChild(link);
+    });
+  });
+
+"""
+
+with open("results.js", 'w') as file:
+    file.write(jscript)
+
+indexscript  = """
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>HTML Files</title>
+  </head>
+  <body>
+    <h1>HTML Files</h1>
+    <ul id="file-list"></ul>
+    <script src="results.js"></script>
+  </body>
+</html>
+"""
+
+with open("index.html",'w') as file:
+    file.write(indexscript)
 
 
 
