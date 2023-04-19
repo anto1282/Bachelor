@@ -6,15 +6,15 @@
 // Assembly using spades
 process SPADES {
     if (params.server) {
-        beforeScript 'module load spades'
+        beforeScript 'module load spades/3.15.5'
         cpus 24
         memory { 16.GB + (16.GB * 1/2*task.attempt) }
         errorStrategy 'retry'
         maxRetries  = 3
-        afterScript 'module unload spades'
+        afterScript 'module unload spades/3.15.5'
     }
     else {
-        conda "spades=3.15.4 conda-forge::openmp"
+        conda "spades=3.15.5 conda-forge::openmp"
         cpus 8
         memory '4 GB'
     }
@@ -31,7 +31,7 @@ process SPADES {
     val phred
 
     output:
-    tuple val(pair_id), path ("contigs.fasta.gz")
+    tuple val(pair_id), path ("${params.contigs}.fasta.gz")
 
     
     script:
@@ -39,8 +39,8 @@ process SPADES {
     gzip -d -f ${r1}
     gzip -d -f ${r2}
     spades.py -o Assembly${pair_id} -1 ${r1.baseName} -2 ${r2.baseName} --meta --threads ${task.cpus} --memory ${task.cpus + (8 * task.attempt)} --phred-offset ${phred} 
-    gzip -n Assembly${pair_id}/contigs.fasta   
-    mv Assembly${pair_id}/contigs.fasta.gz contigs.fasta.gz
+    gzip -n Assembly${pair_id}/${params.contigs}.fasta   
+    mv Assembly${pair_id}/${params.contigs}.fasta.gz ${params.contigs}.fasta.gz
     gzip ${r1.baseName}
     gzip ${r2.baseName}
     """
