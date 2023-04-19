@@ -93,9 +93,7 @@ process N50 {
     
 
 
-    output:
-    path("assemblyStats_${pair_id}")
-    
+    output:    
 
     script:
     """
