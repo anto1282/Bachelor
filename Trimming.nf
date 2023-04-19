@@ -60,7 +60,7 @@ process TRIM {
     if (params.refGenome == ""){
     """
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
-    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${r1.simpleName}_trimmed.fastq -out2=${r2.simpleName}_trimmed.fastq trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t
+    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${r1.simpleName}_trimmed.fastq -out2=${r2.simpleName}_trimmed.fastq trimq=17 qtrim=w forcetrimleft=15 overwrite=true ordered=t
     gzip ${r1.simpleName}_trimmed.fastq
     gzip ${r2.simpleName}_trimmed.fastq
     rm read?_tmp
@@ -69,7 +69,7 @@ process TRIM {
     else{
      """
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
-    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${r1.simpleName}_trimmed.fastq -out2=${r2.simpleName}_trimmed.fastq ref=${params.refGenome} trimq=25 qtrim=r forcetrimleft=15 overwrite=true ordered=t
+    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${r1.simpleName}_trimmed.fastq -out2=${r2.simpleName}_trimmed.fastq ref=${params.refGenome} trimq=17 qtrim=w forcetrimleft=15 overwrite=true ordered=t
     gzip ${r1.simpleName}_trimmed.fastq
     gzip ${r2.simpleName}_trimmed.fastq
     rm read?_tmp
