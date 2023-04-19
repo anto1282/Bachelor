@@ -27,7 +27,7 @@ with open(predictedviruses,'r') as file:
     phagekey, phagecontig = "", ""
     linecount = 0
     for line in file:
-        if line.startswith(">"):
+        if line.startswith("NODE"):
             if linecount > 0:
                 virusdict[phagekey] = phagecontig
             phagekey = line.strip()
