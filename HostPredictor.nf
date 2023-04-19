@@ -29,7 +29,7 @@ process IPHOP {
     export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:/opt/software/miniconda/4.10.4/pkgs/smrtlink-tools-10.1.0.119588-h5e1937b_0/share/smrtlink-tools-10.1.0.119588-0/install/smrtlink-release_10.1.0.119588/bundles/smrttools/install/smrttools-release_10.1.0.119588/private/thirdparty/gcc/gcc_8.4.0-2.12.1/lib/
     
 
-
+    env
     which python3
     which perl
     echo \$PERL5LIB
