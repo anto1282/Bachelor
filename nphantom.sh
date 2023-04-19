@@ -25,7 +25,7 @@ export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/zpx817/SingularityTMP"
 
 if [ $1 == "-r" ];
 then
-    srun nextflow run NPhAnToM.nf --IDS SRR23446275	 -profile cluster -resume -with-mpi -with-tower --accessToken eyJ0aWQiOiA3MTg5fS4yNmQwY2Q5N2RjZDdlNWI4NWVkNDE4MTUwYjZjNTk5ODQ3OGMxZDcx
+    srun nextflow run NPhAnToM.nf --IDS SRR23446275	 -profile cluster -resume -with-mpi -with-tower --accessToken eyJ0aWQiOiA3MTg5fS4yNmQwY2Q5N2RjZDdlNWI4NWVkNDE4MTUwYjZjNTk5ODQ3OGMxZDcx 
 else
     srun nextflow run NPhAnToM.nf --IDS SRR23446275	 -profile cluster -with-mpi -with-tower --accessToken eyJ0aWQiOiA3MTg5fS4yNmQwY2Q5N2RjZDdlNWI4NWVkNDE4MTUwYjZjNTk5ODQ3OGMxZDcx
 fi
