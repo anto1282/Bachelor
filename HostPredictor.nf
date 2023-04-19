@@ -25,8 +25,8 @@ process IPHOP {
     script:
     if (params.server) {
     """
-    export PERL5LIB=\$PERL5LIB/home/hsf378/.conda/envs/mamba/x86_64-conda-linux-gnu/sysroot/lib64/
-    export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH/home/hsf378/.conda/envs/mamba/x86_64-conda-linux-gnu/sysroot/lib64/
+    export PERL5LIB=\$PERL5LIB:/home/hsf378/.conda/envs/mamba/x86_64-conda-linux-gnu/sysroot/lib64/
+    export LD_LIBRARY_PATH=\$LD_LIBRARY_PATH:/home/hsf378/.conda/envs/mamba/x86_64-conda-linux-gnu/sysroot/lib64/
     
 
 
