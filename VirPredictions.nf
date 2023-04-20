@@ -199,6 +199,7 @@ process VIREXTRACTOR {
     output:
     val (pair_id)
     path("${pair_id}_ViralContigs.fasta.gz")
+    path("phage_*.fasta") //Might not work, used for pharokka_plotter.py
 
 
     script:

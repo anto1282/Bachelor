@@ -20,10 +20,9 @@ import sys, os
 outputfilename = str(sys.argv[1])
 predictedviruses = str(sys.argv[2])
 iphoppredictions = str(sys.argv[3])
+imagefile = str(sys.argv[4]) #list of images with the name $seq_id.fasta
 
 virusdict = dict()
-
-virusdict = {}
 with open(predictedviruses, 'r') as fasta_file:
 	header = ''
 	sequence = ''
