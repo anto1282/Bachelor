@@ -23,24 +23,23 @@ iphoppredictions = str(sys.argv[3])
 
 virusdict = dict()
 
-with open(predictedviruses,'r') as file:
-    phagekey, phagecontig = "", ""
-    linecount = 0
-    for line in file:
-        if line.startswith(">"):
-            phagekey = line.strip()
-            if linecount > 0:
-                virusdict[phagekey[1:]] = phagecontig
-            
-        
-        else:
-            phagecontig += line
-    
-        linecount += 1
-    #Adding the last key/value combination to the set
-    virusdict[phagekey] = phagecontig
+virusdict = {}
+with open(predictedviruses, 'r') as fasta_file:
+	header = ''
+	sequence = ''
+	for line in fasta_file:
+		line = line.strip()
+		if line.startswith('>'):
+			if header != '':
+				virusdict[header] = sequence
+				sequence = ''
+			header = line[1:]
+		else:
+			sequence += line
+	virusdict[header] = sequence
+
 print(virusdict.keys())
-print(virusdict.values()[:50])
+
 
 iphopdict = dict()
 with open(iphoppredictions, 'r') as file:
