@@ -141,58 +141,124 @@ for key in iphopdict:
     with open(outputfilename, 'w') as f:
         f.write(html)
 
-jscript = """
-// app.js
-const fileList = document.getElementById('file-list');
-
-fetch('html_files/')
-  .then(response => response.text())
-  .then(html => {
-    const parser = new DOMParser();
-    const doc = parser.parseFromString(html, 'text/html');
-    const links = doc.querySelectorAll('a');
-
-    links.forEach(link => {
-      const filename = link.textContent;
-      link.onclick = (event) => {
-        event.preventDefault();
-        fetch(`html_files/${filename}`)
-          .then(response => response.text())
-          .then(html => {
-            const parser = new DOMParser();
-            const doc = parser.parseFromString(html, 'text/html');
-            document.documentElement.innerHTML = doc.documentElement.innerHTML;
-            document.title = doc.title;
-            history.pushState({}, '', filename);
-          })
-      }
-      fileList.appendChild(link);
-    });
-  });
-
-"""
-
-with open("results.js", 'w') as file:
-    file.write(jscript)
-
-indexscript  = """
-<!-- index.html -->
+webpage = """
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <title>HTML Files</title>
-  </head>
-  <body>
-    <h1>HTML Files</h1>
-    <ul id="file-list"></ul>
-    <script src="results.js"></script>
-  </body>
-</html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+body {font-family: Arial;}
+
+/* Style the tab */
+.tab {
+  overflow: hidden;
+  border: 1px solid #ccc;
+  background-color: #f1f1f1;
+}
+
+/* Style the buttons inside the tab */
+.tab button {
+  background-color: inherit;
+  float: left;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  padding: 14px 16px;
+  transition: 0.3s;
+  font-size: 17px;
+}
+
+/* Change background color of buttons on hover */
+.tab button:hover {
+  background-color: #ddd;
+}
+
+/* Create an active/current tablink class */
+.tab button.active {
+  background-color: #ccc;
+}
+
+/* Style the tab content */
+.tabcontent {
+  display: none;
+  padding: 6px 12px;
+  border: 1px solid #ccc;
+  border-top: none;
+}
+</style>
+</head>
+<body>
+
+<h2>Tabs</h2>
+<p>Click on the buttons inside the tabbed menu:</p>
+
+
+
 """
 
-with open("index.html",'w') as file:
-    file.write(indexscript)
 
 
+bottomofpage = """
+<script>
+function openCity(evt, cityName) {
+  var i, tabcontent, tablinks;
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+   
+</body>
+</html> 
+"""
 
+opentab = """
+
+  	<button class="tablinks" onclick="openCity(event, {})">{}</button>
+
+"""
+
+tabs = """
+<div id="{}" class="tabcontent">
+	<h1>{}</h1>
+	<p><strong>Host:</strong> {}</p>
+	<p><strong>Picture:</strong></p>
+	<img class="picture" src="{}" alt="Illustration of annotated phage">
+	<p><strong>DNA:</strong> {}</p>
+	<p><strong>Contig:</strong> {}</p>
+</div>
+"""
+
+
+# Create a directory to store the HTML files
+if not os.path.exists('webresults'):
+    os.makedirs('webresults')
+
+
+# Generate an HTML file for each key
+outputfilename = os.path.join('webresults', '.html')
+buttonstring = """<div class="tab">"""
+tabstring = """"""
+with open(outputfilename, 'w') as f:  
+	f.write(webpage)
+	for key in iphopdict:
+		host = ("Likely host: " + iphopdict[key])
+		DNA = "The DNA of the phage:"
+		contig = virusdict[key]
+		picture = "test.jpg"
+		buttonstring += (opentab.format(key,key))
+		tabstring += tabs.format(key,key,host,picture,DNA,contig)
+	buttonstring += "</div>"
+	f.write(buttonstring)
+	f.write(tabstring)
+	f.write(bottomofpage)
+    
+        
+    
