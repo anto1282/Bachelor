@@ -221,7 +221,7 @@ function openCity(evt, cityName) {
 
 opentab = """
 
-  	<button class="tablinks" onclick="openCity(event, "{}")">{}</button>
+  	<button class="tablinks" onclick="openCity(event, '{}')">{}</button>
 
 """
 
