@@ -30,12 +30,12 @@ with open(predictedviruses, 'r') as fasta_file:
 	for line in fasta_file:
 		
 		if line.startswith('>'):
-			if header != '':
-				virusdict[header] = sequence
+			if header.strip() != '':
+				virusdict[header.strip()] = sequence
 				sequence = ''
 			header = line[1:]
 		else:
-			sequence += line
+			sequence += line 
 	virusdict[header] = sequence
 
 
@@ -250,6 +250,8 @@ tabstring = """"""
 with open(outputfilename, 'w') as f:  
 	f.write(webpage)
 	for key in iphopdict:
+		print(key)
+		print(virusdict[key][:50])
 		host = ("Likely host: " + iphopdict[key])
 		DNAtext = "The DNA of the phage:"
 		contig = virusdict[key]
