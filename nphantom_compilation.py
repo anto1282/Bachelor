@@ -39,7 +39,7 @@ with open(predictedviruses,'r') as file:
         linecount += 1
     #Adding the last key/value combination to the set
     virusdict[phagekey] = phagecontig
-
+print(virusdict.keys())
 iphopdict = dict()
 with open(iphoppredictions, 'r') as file:
     linecount = 0 
