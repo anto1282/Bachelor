@@ -51,95 +51,95 @@ with open(iphoppredictions, 'r') as file:
 
 
 
-html_template = '''
-<!DOCTYPE html>
-<html>
-	<head>
-		<meta charset="UTF-8">
-		<title>{}</title>
-		<style>
-			body {{
-				font-family: Arial, sans-serif;
-			}}
-			.container {{
-				margin: 0 auto;
-				max-width: 800px;
-			}}
-			.tab {{
-				display: none;
-			}}
-			.tab.active {{
-				display: block;
-			}}
-			.tab-button {{
-				background-color: #f2f2f2;
-				border: none;
-				color: black;
-				padding: 10px;
-				font-size: 16px;
-				cursor: pointer;
-			}}
-			.tab-button.active {{
-				background-color: #ccc;
-			}}
-			.picture {{
-				max-width: 100%;
-			}}
-		</style>
-	</head>
-	<body>
-		<div class="container">
-			<h1>{}</h1>
-			<p><strong>Key:</strong> {}</p>
-			<p><strong>Host:</strong> {}</p>
-			<p><strong>Picture:</strong></p>
-			<img class="picture" src="{}" alt="Example Picture">
-			<p><strong>DNA:</strong> {}</p>
-			<p><strong>Contig:</strong> {}</p>
-			<pre>print("Hello, world!")</pre>
-			<div class="tab-buttons">
-				{}
-			</div>
-			{{}}
-			<a href="index.html">Back to Index</a>
-		</div>
-		<script>
-			var tabs = document.querySelectorAll('.tab');
-			var buttons = document.querySelectorAll('.tab-button');
-			buttons.forEach(function(button, index) {{
-				button.addEventListener('click', function() {{
-					tabs.forEach(function(tab) {{
-						tab.classList.remove('active');
-					}});
-					buttons.forEach(function(button) {{
-						button.classList.remove('active');
-					}});
-					tabs[index].classList.add('active');
-					buttons[index].classList.add('active');
-				}});
-			}});
-		</script>
-	</body>
-</html>
+# html_template = '''
+# <!DOCTYPE html>
+# <html>
+# 	<head>
+# 		<meta charset="UTF-8">
+# 		<title>{}</title>
+# 		<style>
+# 			body {{
+# 				font-family: Arial, sans-serif;
+# 			}}
+# 			.container {{
+# 				margin: 0 auto;
+# 				max-width: 800px;
+# 			}}
+# 			.tab {{
+# 				display: none;
+# 			}}
+# 			.tab.active {{
+# 				display: block;
+# 			}}
+# 			.tab-button {{
+# 				background-color: #f2f2f2;
+# 				border: none;
+# 				color: black;
+# 				padding: 10px;
+# 				font-size: 16px;
+# 				cursor: pointer;
+# 			}}
+# 			.tab-button.active {{
+# 				background-color: #ccc;
+# 			}}
+# 			.picture {{
+# 				max-width: 100%;
+# 			}}
+# 		</style>
+# 	</head>
+# 	<body>
+# 		<div class="container">
+# 			<h1>{}</h1>
+# 			<p><strong>Key:</strong> {}</p>
+# 			<p><strong>Host:</strong> {}</p>
+# 			<p><strong>Picture:</strong></p>
+# 			<img class="picture" src="{}" alt="Example Picture">
+# 			<p><strong>DNA:</strong> {}</p>
+# 			<p><strong>Contig:</strong> {}</p>
+# 			<pre>print("Hello, world!")</pre>
+# 			<div class="tab-buttons">
+# 				{}
+# 			</div>
+# 			{{}}
+# 			<a href="index.html">Back to Index</a>
+# 		</div>
+# 		<script>
+# 			var tabs = document.querySelectorAll('.tab');
+# 			var buttons = document.querySelectorAll('.tab-button');
+# 			buttons.forEach(function(button, index) {{
+# 				button.addEventListener('click', function() {{
+# 					tabs.forEach(function(tab) {{
+# 						tab.classList.remove('active');
+# 					}});
+# 					buttons.forEach(function(button) {{
+# 						button.classList.remove('active');
+# 					}});
+# 					tabs[index].classList.add('active');
+# 					buttons[index].classList.add('active');
+# 				}});
+# 			}});
+# 		</script>
+# 	</body>
+# </html>
 
-'''
-
-
-# Create a directory to store the HTML files
-if not os.path.exists('html_files'):
-    os.makedirs('html_files')
+# '''
 
 
-# Generate an HTML file for each key
-for key in iphopdict:
-    outputfilename = os.path.join('html_files', '{}.html'.format(key))
-    host = ("Likely host: " + iphopdict[key])
-    DNA = "The DNA of the phage:"
-    contig = virusdict[key]
-    picture = "test.jpg"
-    html = html_template.format(outputfilename, outputfilename, key, host, picture, DNA, contig, key)
-    with open(outputfilename, 'w') as f:
-        f.write(html)
+# # Create a directory to store the HTML files
+# if not os.path.exists('html_files'):
+#     os.makedirs('html_files')
+
+
+# # Generate an HTML file for each key
+# for key in iphopdict:
+#     outputfilename = os.path.join('html_files', '{}.html'.format(key))
+#     host = ("Likely host: " + iphopdict[key])
+#     DNA = "The DNA of the phage:"
+#     contig = virusdict[key]
+#     picture = "test.jpg"
+#     html = html_template.format(outputfilename, outputfilename, key, host, picture, DNA, contig, key)
+#     with open(outputfilename, 'w') as f:
+#         f.write(html)
 
 webpage = """
 <!DOCTYPE html>
@@ -243,7 +243,7 @@ if not os.path.exists('webresults'):
 
 
 # Generate an HTML file for each key
-outputfilename = os.path.join('webresults', '.html')
+
 buttonstring = """<div class="tab">"""
 tabstring = """"""
 with open(outputfilename, 'w') as f:  
