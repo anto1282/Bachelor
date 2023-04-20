@@ -40,6 +40,7 @@ with open(predictedviruses,'r') as file:
     #Adding the last key/value combination to the set
     virusdict[phagekey] = phagecontig
 print(virusdict.keys())
+print(virusdict.values()[:50])
 
 iphopdict = dict()
 with open(iphoppredictions, 'r') as file:
