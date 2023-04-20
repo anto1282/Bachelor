@@ -251,6 +251,7 @@ with open(outputfilename, 'w') as f:
 	f.write(webpage)
 	for key in iphopdict:
 		print(key)
+		print(iphopdict[key][:50])
 		host = ("Likely host: " + iphopdict[key])
 		DNAtext = "The DNA of the phage:"
 		contig = virusdict[key]
