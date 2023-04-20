@@ -40,6 +40,7 @@ with open(predictedviruses,'r') as file:
     #Adding the last key/value combination to the set
     virusdict[phagekey] = phagecontig
 print(virusdict.keys())
+
 iphopdict = dict()
 with open(iphoppredictions, 'r') as file:
     linecount = 0 
@@ -249,12 +250,13 @@ tabstring = """"""
 with open(outputfilename, 'w') as f:  
 	f.write(webpage)
 	for key in iphopdict:
+		print(key)
 		host = ("Likely host: " + iphopdict[key])
-		DNA = "The DNA of the phage:"
+		DNAtext = "The DNA of the phage:"
 		contig = virusdict[key]
 		picture = "test.jpg"
 		buttonstring += (opentab.format(key,key))
-		tabstring += tabs.format(key,key,host,picture,DNA,contig)
+		tabstring += tabs.format(key,key,host,picture,DNAtext,contig)
 	buttonstring += "</div>"
 	f.write(buttonstring)
 	f.write(tabstring)
