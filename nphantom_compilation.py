@@ -108,8 +108,8 @@ body {font-family: Arial;}
 </head>
 <body>
 
-<h2>Tabs</h2>
-<p>Click on the buttons inside the tabbed menu:</p>
+<h1>NPhAnToM Pipeline Results</h1>
+<p>Click on the buttons inside the tabbed menu to see the annotated phages:</p>
 
 
 
