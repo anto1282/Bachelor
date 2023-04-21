@@ -110,7 +110,7 @@ process RESULTS_COMPILATION {
     script:
 
     """   
-    python3 nphantom_compilation.py results/compiled_results.html ${viralcontigs} ${iphop_predictions}/Host_prediction_to_genus_m90.csv ${checkv_results}/completeness.tsv
+    python3 nphantom_compilation.py results/compiled_results.html ${viralcontigs} ${iphop_predictions}/Host_prediction_to_genus_m90.csv ${checkv_results}/completeness.tsv ${pair_id}
     """
     
 }

@@ -15,7 +15,7 @@ predictedviruses = str(sys.argv[2])
 iphoppredictions = str(sys.argv[3])
 checkvpredictions = str(sys.argv[4])
 assemblystats = str(sys.argv[5])
-
+SRA_nr = str(sys.argv[6])
 
 virusdict = dict()
 with open(predictedviruses, 'r') as fasta_file:
@@ -189,8 +189,9 @@ with open(outputfilename, 'w') as f:
 
 	
 	buttonstring += ("""<button onclick="window.location.href = 'fastp.html';">Fastp output</button>'""")
-	
-	
+	buttonstring += ("""<button onclick="window.location.href = '{}_1_trimmed_fastqc.html';">Quality of Read1</button>'""").format(SRA_nr)
+	buttonstring += ("""<button onclick="window.location.href = '{}_2_trimmed_fastqc.html';">Quality of Read2</button>'""").format(SRA_nr)
+
 	#Creating the tabs for the phages
 	for key in iphopdict:
 		print(key)
