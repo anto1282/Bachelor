@@ -41,7 +41,7 @@ process DVF {
 }
 
 process PHAGER {
-    //errorStrategy = 'ignore'
+    errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
     if (params.server) {
         beforeScript "module unload miniconda/4.11.0"
@@ -162,7 +162,7 @@ process SEEKER{
         cpus 8
             }
     else {
-        beforeScript 'conda activate seeker'
+        conda 'seeker python=3.7 pip'
         cpus 8
     }
 

@@ -99,7 +99,7 @@ process N50 {
     script:
     """
     gzip -f -d ${contigs_fasta}
-    stats.sh in=${contigs_fasta.baseName} >> ${params.outdir}/${pair_id}/assemblyStats
+    stats.sh in=${contigs_fasta.baseName} >> ${projectDir}/${params.outdir}/${pair_id}/assemblyStats
     gzip ${contigs_fasta.baseName}
     """
 
