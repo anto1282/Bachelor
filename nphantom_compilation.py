@@ -143,7 +143,7 @@ tabs = """
 	<h1>{}</h1>
 	<p><strong>Host:</strong> {}</p>
     <p><strong>Length:</strong> {} bp</p>
-    <p><strong>Phage completeness (from CheckV):</strong> {} %</p>
+    <p><strong>Phage completeness (from CheckV):</strong> {} </p>
 	<p><strong>Illustration of annotated phage:</strong></p>
 	<img class="picture" src="{}" alt="Illustration of annotated phage">
 	<p><strong>{}</strong></p>
@@ -153,9 +153,9 @@ tabs = """
 """
 
 
-# Create a directory to store the HTML files
-if not os.path.exists('webresults'):
-    os.makedirs('webresults')
+# # Create a directory to store the HTML files
+# if not os.path.exists('webresults'):
+#     os.makedirs('webresults')
 
 
 # Generate an HTML file for each key
