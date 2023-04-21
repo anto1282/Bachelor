@@ -134,7 +134,7 @@ process CHECKV {
         cpus 8
     }
     
-    publishDir "${params.outdir}/${pair_id}/CHECKVResults", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/", mode: 'copy'
 
     
 
@@ -144,12 +144,13 @@ process CHECKV {
     //path(non_viral_contigs)
 
     output:
-    path("${pair_id}_checkv/*.tsv")
+    
+    path("CHECKV_RESULTS_${pair_id}/")
     
     script:
     """
     
-    checkv end_to_end ${viralcontigs} ${pair_id}_checkv -t ${task.cpus} -d ${params.checkVDB}
+    checkv end_to_end ${viralcontigs} CHECKV_RESULTS_${pair_id} -t ${task.cpus} -d ${params.checkVDB}
     
     """
 }
@@ -199,7 +200,7 @@ process VIREXTRACTOR {
     output:
     val (pair_id)
     path("${pair_id}_ViralContigs.fasta.gz")
-    path("phage_*.fasta") //Might not work, used for pharokka_plotter.py
+    
 
 
     script:

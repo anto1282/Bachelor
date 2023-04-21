@@ -44,6 +44,15 @@ with open(iphoppredictions, 'r') as file:
         linecount += 1
 
 
+completenessdict = dict()
+with open(checkvpredictions, 'r') as file:
+    linecount = 0 
+    for line in file:
+        if linecount > 0:
+            line = line.split()
+            completenessdict[line[0]] = [line[1], line[4]]
+        linecount += 1
+
 
 webpage = """
 <!DOCTYPE html>
@@ -133,10 +142,13 @@ tabs = """
 <div id="{}" class="tabcontent">
 	<h1>{}</h1>
 	<p><strong>Host:</strong> {}</p>
-	<p><strong>Picture:</strong></p>
+    <p><strong>Length:</strong> {} bp</p>
+    <p><strong>Phage completeness (from CheckV):</strong> {} %</p>
+	<p><strong>Illustration of annotated phage:</strong></p>
 	<img class="picture" src="{}" alt="Illustration of annotated phage">
-	<p><strong>DNA:</strong> {}</p>
-	<p><strong>Contig:</strong> {}</p>
+	<p><strong>{}</strong></p>
+	<p>{}</p>
+	
 </div>
 """
 
@@ -154,18 +166,17 @@ with open(outputfilename, 'w') as f:
 	f.write(webpage)
 	for key in iphopdict:
 		print(key)
-		host = ("Likely host: " + iphopdict[key])
-		DNAtext = "The DNA of the phage:"
-		contig = virusdict[key]
+		host = (iphopdict[key])
+		length = (completenessdict[key][0])
+		completeness = completenessdict[key][1]
 		picturepath = key + ".png"
+		DNAtext = "Phage DNA:"
+		contig = virusdict[key]
 		buttonstring += (opentab.format(key,key))
-		tabstring += tabs.format(key,key,host,picturepath,DNAtext,contig)
+		tabstring += tabs.format(key,key,host,length, completeness, picturepath,DNAtext,contig)
 	buttonstring += "</div>"
 	f.write(buttonstring)
 	f.write(tabstring)
 	f.write(bottomofpage)
     
-        
-    
-  #Add length, completeness to html
   #Format 
