@@ -56,7 +56,7 @@ with open(checkvpredictions, 'r') as file:
     for line in file:
         if linecount > 0:
             line = line.split()
-            completenessdict[line[0]] = [line[1], int(line[4])]
+            completenessdict[line[0]] = [line[1], round(float(line[4]),2)]
         linecount += 1
 
 
