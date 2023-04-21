@@ -18,10 +18,8 @@ process IPHOP {
     path (viral_contigs_fasta)
    
     output:
-    val (pair_id)
     path ("iphop_prediction_${pair_id}/")
 
-    
     
     script:
     if (params.server) {
