@@ -95,13 +95,23 @@ process RESULTS_COMPILATION {
     
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
-    input: 
-    val (pair_id)
-    path(viralcontigs)
+    if (params.server) {
+    
+        input: 
+        
+        val (pair_id)
+        path(viralcontigs)
 
-    path(iphop_predictions)
+        path(iphop_predictions)
 
-    path(checkv_results)
+        path(checkv_results)
+    }
+    else {
+        val (pair_id)
+        path(viralcontigs)
+
+        path(checkv_results)
+    }
 
     output:
     path "results/compiled_results.html"
@@ -109,8 +119,14 @@ process RESULTS_COMPILATION {
     
     script:
 
+    if (params.server) {
     """   
     python3 nphantom_compilation.py results/compiled_results.html ${viralcontigs} ${iphop_predictions}/Host_prediction_to_genus_m90.csv ${checkv_results}/completeness.tsv ${pair_id}
     """
-    
+    }
+    else {
+    """   
+    python3 nphantom_compilation.py results/compiled_results.html ${viralcontigs} NOIPHOP ${checkv_results}/completeness.tsv ${pair_id}
+    """
+    }
 }

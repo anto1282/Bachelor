@@ -25,39 +25,39 @@ with open(predictedviruses, 'r') as fasta_file:
 		
 		if line.startswith('>'):
 			if header.strip() != '':
-				virusdict[header.strip()] = sequence
+				virusdict[header.strip()] = [sequence]
 				sequence = ''
 			header = line[1:]
 		else:
 			sequence += line 
-	virusdict[header] = sequence
+	virusdict[header] = [sequence]
 
+#iphopdict = dict()
 
-
-
-iphopdict = dict()
-with open(iphoppredictions, 'r') as file:
-	linecount = 0 
-	for line in file:
-		if linecount > 0:
-			line = line.split(',')
-			hostgenus = line[2].split(";")
-			hostgenus_formatted = ""
-			for element in hostgenus:
+if (iphoppredictions != "NOIPHOP"):
+	with open(iphoppredictions, 'r') as file:
+		linecount = 0 
+		for line in file:
+			if linecount > 0:
+				line = line.split(',')
+				hostgenus = line[2].split(";")
+				hostgenus_formatted = ""
+				for element in hostgenus:
+					
+					hostgenus_formatted += element[3:] + "; "
 				
-				hostgenus_formatted += element[3:] + "; "
-			
-			iphopdict[line[0]] = hostgenus_formatted.strip("; ")
-		linecount += 1
+				virusdict[line[0]].append(hostgenus_formatted.strip("; "))
+			linecount += 1
+else:
+	for key in virusdict:
+		virusdict[key].append("No taxonomic information, since IPHOP wasn't run")
 
-
-completenessdict = dict()
 with open(checkvpredictions, 'r') as file:
     linecount = 0 
     for line in file:
         if linecount > 0:
             line = line.split()
-            completenessdict[line[0]] = [line[1], round(float(line[4]),2)]
+            virusdict[line[0]].append(line[1]).append(round(float(line[4]),2))
         linecount += 1
 
 assemblystatistics = ""
@@ -193,14 +193,14 @@ with open(outputfilename, 'w') as f:
 	buttonstring += ("""<button onclick="window.location.href = '{}_2_trimmed_fastqc.html';">Quality of Read2</button>'""").format(SRA_nr)
 
 	#Creating the tabs for the phages
-	for key in iphopdict:
+	for key in virusdict:
 		print(key)
-		host = (iphopdict[key])
-		length = (completenessdict[key][0])
-		completeness = completenessdict[key][1]
+		host = (virusdict[key][1])
+		length = (virusdict[key][2])
+		completeness = virusdict[key][3]
 		picturepath = key + ".png"
 		DNAtext = "Phage DNA:"
-		contig = virusdict[key]
+		contig = virusdict[key][0]
 		buttonstring += (opentab.format(key,key))
 		tabstring += tabs.format(key,key,host,length, completeness, picturepath,DNAtext,contig)
 	buttonstring += "</div>"
