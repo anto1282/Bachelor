@@ -38,9 +38,15 @@ iphopdict = dict()
 with open(iphoppredictions, 'r') as file:
     linecount = 0 
     for line in file:
-        if linecount > 0:
-            line = line.split(',')
-            iphopdict[line[0]] = line[2]
+		if linecount > 0:
+			line = line.split(',')
+			hostgenus = line[2].split(";")
+			hostgenus_formatted = ""
+			for element in hostgenus:
+				
+				hostgenus_formatted += element[3:] + ";"
+			
+			iphopdict[line[0]] = hostgenus_formatted.strip(";")
         linecount += 1
 
 
@@ -50,7 +56,7 @@ with open(checkvpredictions, 'r') as file:
     for line in file:
         if linecount > 0:
             line = line.split()
-            completenessdict[line[0]] = [line[1], line[4]]
+            completenessdict[line[0]] = [line[1], int(line[4])]
         linecount += 1
 
 
@@ -141,9 +147,9 @@ opentab = """
 tabs = """
 <div id="{}" class="tabcontent">
 	<h1>{}</h1>
-	<p><strong>Host:</strong> {}</p>
+	<p><strong>Host taxonomy:</strong> {}</p>
     <p><strong>Length:</strong> {} bp</p>
-    <p><strong>Phage completeness (from CheckV):</strong> {} </p>
+    <p><strong>Phage completeness (from CheckV):</strong> {} %</p>
 	<p><strong>Illustration of annotated phage:</strong></p>
 	<img class="picture" src="{}" alt="Illustration of annotated phage">
 	<p><strong>{}</strong></p>
