@@ -60,7 +60,7 @@ process TRIM {
     if (params.refGenome == ""){
     """
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
-    fastp -i read1_tmp -I read2_tmp -o ${r1.simpleName}_trimmed.fastq  -O ${r2.simpleName}_trimmed.fastq  -W 5 -M 30 -5 -3 -e 30 -f 15 -t 15
+    fastp -i read1_tmp -I read2_tmp -o ${r1.simpleName}_trimmed.fastq  -O ${r2.simpleName}_trimmed.fastq  -W 5 -M 30 -5 -3 -e 25 -f 15 -t 15
     
     mkdir -p ${projectDir}/${params.outdir}/${pair_id}/results/
     mv fastp.html ${projectDir}/${params.outdir}/${pair_id}/results/fastp.html
@@ -122,7 +122,7 @@ process KRAKEN{
         gzip -d -f ${r1}
         gzip -d -f ${r2}
         kraken2 -d ${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
-        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${params.outdir}/${pair_id}/assemblyStats
+        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${projectDir}/${params.outdir}/${pair_id}/assemblyStats
         
         rm ${r1.baseName}
         rm ${r2.baseName} 
@@ -135,7 +135,7 @@ process KRAKEN{
         gzip -d -f ${r1}
         gzip -d -f ${r2}
         kraken2 -d ${params.DATABASEDIR}/${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
-        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${params.outdir}/${pair_id}/assemblyStats  
+        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${projectDir}/${params.outdir}/${pair_id}/assemblyStats  
         rm ${r1.baseName}
         rm ${r2.baseName} 
         gzip ${pair_id}_1.TrimmedSubNoEu.fastq
