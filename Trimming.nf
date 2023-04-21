@@ -34,11 +34,11 @@ process FASTERQDUMP {
 process TRIM {
     
     if (params.server) {
-        beforeScript 'module load openjdk perl adapterremoval fastqc'
-        afterScript 'module unload openjdk perl adapterremoval fastqc'
+        beforeScript 'module load openjdk perl adapterremoval fastqc fastp'
+        afterScript 'module unload openjdk perl adapterremoval fastqc fastp'
     }
     else {
-        conda 'adapterremoval agbiome::bbtools fastqc'
+        conda 'adapterremoval agbiome::bbtools fastqc fastp'
     }
      
     cpus 4
