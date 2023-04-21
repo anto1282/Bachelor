@@ -25,7 +25,8 @@ with open(predictedviruses, 'r') as fasta_file:
 		
 		if line.startswith('>'):
 			if header.strip() != '':
-				virusdict[header.strip()] = [sequence]
+				virusdict[header.strip()] = []
+				virusdict[header.strip()].append(sequence)
 				sequence = ''
 			header = line[1:]
 		else:
