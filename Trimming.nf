@@ -192,7 +192,7 @@ process FASTQC{
 
     script:    
     """ 
-    fastqc r1 r2
+    fastqc ${r1} ${r2}
     mv *.html ${projectDir}/${params.outdir}/${pair_id}/results/
     """
 
