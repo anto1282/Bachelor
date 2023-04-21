@@ -54,13 +54,13 @@ else:
 		virusdict[key].append("No taxonomic information, since IPHOP wasn't run")
 
 with open(checkvpredictions, 'r') as file:
-    linecount = 0 
-    for line in file:
-        if linecount > 0:
-            line = line.split()
-            virusdict[line[0]].append(line[1])
-	    	virusdict[line[0]].append(round(float(line[4]),2))
-        linecount += 1
+	linecount = 0 
+	for line in file:
+		if linecount > 0:
+			line = line.split()
+			virusdict[line[0]].append(line[1])
+			virusdict[line[0]].append(round(float(line[4]),2))
+		linecount += 1
 
 assemblystatistics = ""
 with open(assemblystats,'r') as file:
