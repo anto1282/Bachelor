@@ -62,8 +62,8 @@ process TRIM {
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
     fastp -i read1_tmp -I read2_tmp -o ${r1.simpleName}_trimmed.fastq  -O ${r2.simpleName}_trimmed.fastq  -W 5 -M 30 -5 -3 -e 30 -f 15 -t 15
     
-    mkdir ${params.outdir}/${pair_id}/results/
-    mv fastp.html ${params.outdir}/${pair_id}/results/fastp.html
+    
+    mv fastp.html ${projectDir}/${params.outdir}/${pair_id}/results/fastp.html
     
     gzip ${r1.simpleName}_trimmed.fastq
     gzip ${r2.simpleName}_trimmed.fastq
