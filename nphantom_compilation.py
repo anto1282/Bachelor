@@ -207,6 +207,4 @@ with open(outputfilename, 'w') as f:
 	f.write(tabstring)
 	f.write(bottomofpage)
     
-#Statistics, N50 from assemblystats
-#Trimmed 
 #Quality tab

@@ -141,7 +141,6 @@ process CHECKV {
     input: 
     val(pair_id)
     path(viralcontigs)
-    //path(non_viral_contigs)
 
     output:
     
