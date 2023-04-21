@@ -35,10 +35,10 @@ process TRIM {
     
     if (params.server) {
         beforeScript 'module load openjdk perl adapterremoval fastqc'
-        afterScript 'module unload adapterremoval bbmap'
+        afterScript 'module unload openjdk perl adapterremoval fastqc'
     }
     else {
-        conda 'adapterremoval agbiome::bbtools'
+        conda 'adapterremoval agbiome::bbtools fastqc'
     }
      
     cpus 4
