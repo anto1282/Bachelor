@@ -22,7 +22,7 @@ process SPADES {
     
     
     publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
-${projectDir}
+
     
     input: 
     val(pair_id)
