@@ -117,7 +117,7 @@ process KRAKEN{
         gzip -d -f ${r1}
         gzip -d -f ${r2}
         kraken2 -d ${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
-        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken ${projectDir}/Results > ${projectDir}/Results/assemblyStats_${pair_id}
+        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${params.outdir}/${pair_id}/assemblyStats
         
         rm ${r1.baseName}
         rm ${r2.baseName} 
@@ -130,7 +130,7 @@ process KRAKEN{
         gzip -d -f ${r1}
         gzip -d -f ${r2}
         kraken2 -d ${params.DATABASEDIR}/${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
-        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken ${projectDir}/Results >> ${projectDir}/Results/assemblyStats_${pair_id}    
+        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${params.outdir}/${pair_id}/assemblyStats  
         rm ${r1.baseName}
         rm ${r2.baseName} 
         gzip ${pair_id}_1.TrimmedSubNoEu.fastq
