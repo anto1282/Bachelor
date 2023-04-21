@@ -50,6 +50,9 @@ if (iphoppredictions != "NOIPHOP"):
 				print(hostgenus_formatted)
 				print(line[0])
 			linecount += 1
+	for key in virusdict:
+		if len(virusdict[key]) == 1:
+			virusdict[key].append(("No taxonomic information, since host score was too low"))
 else:
 	for key in virusdict:
 		virusdict[key].append("No taxonomic information, since IPHOP wasn't run")
@@ -198,7 +201,6 @@ with open(outputfilename, 'w') as f:
 	#Creating the tabs for the phages
 	for key in virusdict:
 		print(key)
-		print(virusdict[key])
 		host = (virusdict[key][1])
 		length = (virusdict[key][2])
 		completeness = (virusdict[key][3])
