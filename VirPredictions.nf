@@ -162,7 +162,7 @@ process SEEKER{
         cpus 8
             }
     else {
-        beforeScript 'conda activate seeker'
+        conda 'seeker python=3.7 pip'
         cpus 8
     }
 
