@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 nextflow.enable.dsl=2
 
-include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE} from "./Trimming.nf"
+include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE; FASTQC} from "./Trimming.nf"
 include {SPADES; OFFSETDETECTOR; N50} from "./Assembly.nf"
 include {DVF;VIRSORTER;CHECKV; SEEKER; PHAGER; VIREXTRACTOR} from "./VirPredictions.nf"
 include {PHAROKKA; PHAROKKA_PLOTTER; RESULTS_COMPILATION;FASTASPLITTER} from "./Pharokka.nf"
@@ -27,6 +27,8 @@ workflow{
 
     // TRIMS BAD QUALITY READS
     TrimmedFiles_ch = TRIM(read_pairs_ch)
+
+    FASTQC(TrimmedFiles_ch)
     
     // REMOVES EUKARYOTIC READS USING KRAKEN
     CleanedReads_ch = KRAKEN(TrimmedFiles_ch)
