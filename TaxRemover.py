@@ -7,7 +7,6 @@ read1TrimmedSub, read2TrimmedSub= sys.argv[1], sys.argv[2]
 sraNR = sys.argv[3]
 report_kraken = sys.argv[4]
 read_kraken = sys.argv[5]
-Dir = sys.argv[6]
 
 infile = open(report_kraken, "r")
 Flag = False
