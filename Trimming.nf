@@ -38,7 +38,7 @@ process TRIM {
         afterScript 'module unload openjdk perl adapterremoval fastqc fastp'
     }
     else {
-        conda 'adapterremoval agbiome::bbtools fastqc fastp'
+        conda 'adapterremoval fastqc fastp'
     }
      
     cpus 4
