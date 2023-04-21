@@ -36,8 +36,8 @@ with open(predictedviruses, 'r') as fasta_file:
 
 iphopdict = dict()
 with open(iphoppredictions, 'r') as file:
-    linecount = 0 
-    for line in file:
+	linecount = 0 
+	for line in file:
 		if linecount > 0:
 			line = line.split(',')
 			hostgenus = line[2].split(";")
@@ -47,7 +47,7 @@ with open(iphoppredictions, 'r') as file:
 				hostgenus_formatted += element[3:] + ";"
 			
 			iphopdict[line[0]] = hostgenus_formatted.strip(";")
-        linecount += 1
+		linecount += 1
 
 
 completenessdict = dict()
