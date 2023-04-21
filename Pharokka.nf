@@ -62,7 +62,7 @@ process FASTASPLITTER {
 
 
 
-process PHAROKKAPLOTTER {
+process PHAROKKA_PLOTTER {
     errorStrategy= "ignore"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.0--hdfd78af_0"
