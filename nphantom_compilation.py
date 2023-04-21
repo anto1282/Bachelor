@@ -1,17 +1,10 @@
 #!/usr/bin/env python3
 
-
-# Create file/folder for each phage with the following information
-# Alternatively, an html script that makes a website for each phage
-
-# Statistics file, how much eukaryote we removed
-
-
 #Create a script that runs pharokkas imager tool
-
 
 #Take the extracted viruses from virextractor.py
 #Find the corresponding viruses in the iphop results
+#Show length of phage and completeness using checkv
 #Add a picture of the assembled phage
 
 import sys, os
@@ -20,7 +13,8 @@ import sys, os
 outputfilename = str(sys.argv[1])
 predictedviruses = str(sys.argv[2])
 iphoppredictions = str(sys.argv[3])
-imagefile = str(sys.argv[4]) #list of images with the name $seq_id.fasta
+checkvpredictions = str(sys.argv[4])
+
 
 virusdict = dict()
 with open(predictedviruses, 'r') as fasta_file:
@@ -50,96 +44,6 @@ with open(iphoppredictions, 'r') as file:
         linecount += 1
 
 
-
-# html_template = '''
-# <!DOCTYPE html>
-# <html>
-# 	<head>
-# 		<meta charset="UTF-8">
-# 		<title>{}</title>
-# 		<style>
-# 			body {{
-# 				font-family: Arial, sans-serif;
-# 			}}
-# 			.container {{
-# 				margin: 0 auto;
-# 				max-width: 800px;
-# 			}}
-# 			.tab {{
-# 				display: none;
-# 			}}
-# 			.tab.active {{
-# 				display: block;
-# 			}}
-# 			.tab-button {{
-# 				background-color: #f2f2f2;
-# 				border: none;
-# 				color: black;
-# 				padding: 10px;
-# 				font-size: 16px;
-# 				cursor: pointer;
-# 			}}
-# 			.tab-button.active {{
-# 				background-color: #ccc;
-# 			}}
-# 			.picture {{
-# 				max-width: 100%;
-# 			}}
-# 		</style>
-# 	</head>
-# 	<body>
-# 		<div class="container">
-# 			<h1>{}</h1>
-# 			<p><strong>Key:</strong> {}</p>
-# 			<p><strong>Host:</strong> {}</p>
-# 			<p><strong>Picture:</strong></p>
-# 			<img class="picture" src="{}" alt="Example Picture">
-# 			<p><strong>DNA:</strong> {}</p>
-# 			<p><strong>Contig:</strong> {}</p>
-# 			<pre>print("Hello, world!")</pre>
-# 			<div class="tab-buttons">
-# 				{}
-# 			</div>
-# 			{{}}
-# 			<a href="index.html">Back to Index</a>
-# 		</div>
-# 		<script>
-# 			var tabs = document.querySelectorAll('.tab');
-# 			var buttons = document.querySelectorAll('.tab-button');
-# 			buttons.forEach(function(button, index) {{
-# 				button.addEventListener('click', function() {{
-# 					tabs.forEach(function(tab) {{
-# 						tab.classList.remove('active');
-# 					}});
-# 					buttons.forEach(function(button) {{
-# 						button.classList.remove('active');
-# 					}});
-# 					tabs[index].classList.add('active');
-# 					buttons[index].classList.add('active');
-# 				}});
-# 			}});
-# 		</script>
-# 	</body>
-# </html>
-
-# '''
-
-
-# # Create a directory to store the HTML files
-# if not os.path.exists('html_files'):
-#     os.makedirs('html_files')
-
-
-# # Generate an HTML file for each key
-# for key in iphopdict:
-#     outputfilename = os.path.join('html_files', '{}.html'.format(key))
-#     host = ("Likely host: " + iphopdict[key])
-#     DNA = "The DNA of the phage:"
-#     contig = virusdict[key]
-#     picture = "test.jpg"
-#     html = html_template.format(outputfilename, outputfilename, key, host, picture, DNA, contig, key)
-#     with open(outputfilename, 'w') as f:
-#         f.write(html)
 
 webpage = """
 <!DOCTYPE html>
@@ -200,7 +104,7 @@ body {font-family: Arial;}
 
 bottomofpage = """
 <script>
-function openCity(evt, cityName) {
+function openPhage(evt, phageName) {
   var i, tabcontent, tablinks;
   tabcontent = document.getElementsByClassName("tabcontent");
   for (i = 0; i < tabcontent.length; i++) {
@@ -210,7 +114,7 @@ function openCity(evt, cityName) {
   for (i = 0; i < tablinks.length; i++) {
     tablinks[i].className = tablinks[i].className.replace(" active", "");
   }
-  document.getElementById(cityName).style.display = "block";
+  document.getElementById(phageName).style.display = "block";
   evt.currentTarget.className += " active";
 }
 </script>
@@ -221,7 +125,7 @@ function openCity(evt, cityName) {
 
 opentab = """
 
-  	<button class="tablinks" onclick="openCity(event, '{}')">{}</button>
+  	<button class="tablinks" onclick="openPhage(event, '{}')">{}</button>
 
 """
 
@@ -253,9 +157,9 @@ with open(outputfilename, 'w') as f:
 		host = ("Likely host: " + iphopdict[key])
 		DNAtext = "The DNA of the phage:"
 		contig = virusdict[key]
-		picture = "test.jpg"
+		picturepath = key + ".png"
 		buttonstring += (opentab.format(key,key))
-		tabstring += tabs.format(key,key,host,picture,DNAtext,contig)
+		tabstring += tabs.format(key,key,host,picturepath,DNAtext,contig)
 	buttonstring += "</div>"
 	f.write(buttonstring)
 	f.write(tabstring)
@@ -263,3 +167,5 @@ with open(outputfilename, 'w') as f:
     
         
     
+  #Add length, completeness to html
+  #Format 

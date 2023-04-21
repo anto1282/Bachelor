@@ -19,7 +19,8 @@ process IPHOP {
    
     output:
     val (pair_id)
-    path ("iphop_prediction_${pair_id}/*")
+    path ("iphop_prediction_${pair_id}/")
+
     
     
     script:
