@@ -14,6 +14,7 @@ outputfilename = str(sys.argv[1])
 predictedviruses = str(sys.argv[2])
 iphoppredictions = str(sys.argv[3])
 checkvpredictions = str(sys.argv[4])
+assemblystats = str(sys.argv[5])
 
 
 virusdict = dict()
@@ -58,6 +59,11 @@ with open(checkvpredictions, 'r') as file:
             line = line.split()
             completenessdict[line[0]] = [line[1], round(float(line[4]),2)]
         linecount += 1
+
+assemblystatistics = ""
+with open(assemblystats,'r') as file:
+	for line in file:
+		assemblystatistics += line
 
 
 webpage = """
@@ -158,18 +164,28 @@ tabs = """
 </div>
 """
 
+statisticstabs = """
+<div id="{}" class="tabcontent">
+	<h1>{}</h1>
+	<p>{}</p>
+	
+</div>
+"""
 
-# # Create a directory to store the HTML files
-# if not os.path.exists('webresults'):
-#     os.makedirs('webresults')
 
 
-# Generate an HTML file for each key
-
+# Generating the HTML file with a tab for each phage and a statistics tab
 buttonstring = """<div class="tab">"""
 tabstring = """"""
+
 with open(outputfilename, 'w') as f:  
 	f.write(webpage)
+
+	#Creating a tab for statistics
+	buttonstring += opentab.format("Statistics","Assembly Statistics")
+	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics)
+
+	#Creating the tabs for the phages
 	for key in iphopdict:
 		print(key)
 		host = (iphopdict[key])
@@ -185,4 +201,5 @@ with open(outputfilename, 'w') as f:
 	f.write(tabstring)
 	f.write(bottomofpage)
     
-  #Format 
+#Statistics, N50 from assemblystats
+
