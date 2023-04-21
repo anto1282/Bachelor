@@ -183,8 +183,14 @@ with open(outputfilename, 'w') as f:
 
 	#Creating a tab for statistics
 	buttonstring += opentab.format("Statistics","Assembly Statistics")
-	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics)
 
+	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics)
+	
+
+	
+	buttonstring += ("""<button onclick="window.location.href = 'fastp.html';">Trimming</button>'""")
+	
+	
 	#Creating the tabs for the phages
 	for key in iphopdict:
 		print(key)
@@ -202,4 +208,5 @@ with open(outputfilename, 'w') as f:
 	f.write(bottomofpage)
     
 #Statistics, N50 from assemblystats
-
+#Trimmed 
+#Quality tab
