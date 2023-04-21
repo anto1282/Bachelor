@@ -44,9 +44,9 @@ with open(iphoppredictions, 'r') as file:
 			hostgenus_formatted = ""
 			for element in hostgenus:
 				
-				hostgenus_formatted += element[3:] + ";"
+				hostgenus_formatted += element[3:] + "; "
 			
-			iphopdict[line[0]] = hostgenus_formatted.strip(";")
+			iphopdict[line[0]] = hostgenus_formatted.strip("; ")
 		linecount += 1
 
 
