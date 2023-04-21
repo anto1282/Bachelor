@@ -188,7 +188,7 @@ with open(outputfilename, 'w') as f:
 	
 
 	
-	buttonstring += ("""<button onclick="window.location.href = 'fastp.html';">Trimming</button>'""")
+	buttonstring += ("""<button onclick="window.location.href = 'fastp.html';">Fastp output</button>'""")
 	
 	
 	#Creating the tabs for the phages

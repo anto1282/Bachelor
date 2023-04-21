@@ -104,7 +104,7 @@ process RESULTS_COMPILATION {
     path(checkv_results)
 
     output:
-    path "compiled_results.html"
+    path "results/compiled_results.html"
     
     
     script:

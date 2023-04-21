@@ -161,3 +161,31 @@ process TAXREMOVE{
     """
 
 }
+
+
+process FASTQC{
+
+    if (params.server) {
+        beforeScript 'module load fastqc'
+        afterScript 'module unload fastqc'
+    }
+    else {
+        conda "fastqc"
+    }
+    
+
+    input:
+    val(pair_id)
+    path (r1)
+    path (r2)
+
+    output:
+    val(pair_id)
+    path (results)
+
+    script:    
+    """ 
+    fastqc r1 r2
+    """
+
+}
