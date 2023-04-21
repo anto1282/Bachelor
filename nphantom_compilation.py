@@ -33,7 +33,6 @@ with open(predictedviruses, 'r') as fasta_file:
 			sequence += line 
 	virusdict[header] = [sequence]
 
-#iphopdict = dict()
 
 if (iphoppredictions != "NOIPHOP"):
 	with open(iphoppredictions, 'r') as file:
@@ -48,6 +47,7 @@ if (iphoppredictions != "NOIPHOP"):
 					hostgenus_formatted += element[3:] + "; "
 				
 				virusdict[line[0]].append(hostgenus_formatted.strip("; "))
+				print(hostgenus_formatted)
 			linecount += 1
 else:
 	for key in virusdict:
