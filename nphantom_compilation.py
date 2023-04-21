@@ -202,14 +202,15 @@ with open(outputfilename, 'w') as f:
 	for key in virusdict:
 		print(key)
 		print(virusdict[key])
-		host = (virusdict[key][1])
-		length = (virusdict[key][2])
-		completeness = (virusdict[key][3])
-		picturepath = key + ".png"
-		DNAtext = "Phage DNA:"
-		contig = virusdict[key][0]
-		buttonstring += (opentab.format(key,key))
-		tabstring += tabs.format(key,key,host,length, completeness, picturepath,DNAtext,contig)
+		if (len(virusdict[key]) == 4):
+			host = (virusdict[key][1])
+			length = (virusdict[key][2])
+			completeness = (virusdict[key][3])
+			picturepath = key + ".png"
+			DNAtext = "Phage DNA:"
+			contig = virusdict[key][0]
+			buttonstring += (opentab.format(key,key))
+			tabstring += tabs.format(key,key,host,length, completeness, picturepath,DNAtext,contig)
 	buttonstring += "</div>"
 	f.write(buttonstring)
 	f.write(tabstring)
