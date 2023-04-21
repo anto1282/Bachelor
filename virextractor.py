@@ -111,3 +111,4 @@ with open(contigfile, 'r') as file:
 
 
 virusoutfile.close()
+fastp -W 5 -M 30 -5 -3 -e 20 -f 15 -t 15
