@@ -1,17 +1,17 @@
 #!/usr/bin/env python3
 
 
-#Program that extracts viral contigs from various phage prediction tools
+#Program that extracts viral contigs from various phage prediction tools and saves each contig to its own file
 
 import sys
 
 contigfile = str(sys.argv[1])
-outputfilename = str(sys.argv[2])
-dvfcutoff = float(sys.argv[3])
-dvffile = str(sys.argv[4])
-seekercutoff = float(sys.argv[5])
-seekerfile = str(sys.argv[6])
-phagerfile = str(sys.argv[7])
+
+dvfcutoff = float(sys.argv[2])
+dvffile = str(sys.argv[3])
+seekercutoff = float(sys.argv[4])
+seekerfile = str(sys.argv[5])
+phagerfile = str(sys.argv[6])
 
 DVFset = set()
 def DVFExtract(DVFfile):
@@ -54,19 +54,10 @@ def PhagerExtract(file):
 
 
 #Burde ikke give problemer, men fungerer ikke som det skal:
-try:
-    DVFfile = open(dvffile,"r")
-    SeekerInFile = open(seekerfile,"r")
-    PhagerInfile = open(phagerfile,"r")
-except FileNotFoundError:
-    try:
-        SeekerInFile = open(seekerfile,"r")
-        PhagerInfile = open(phagerfile,"r")
-    except:
-        try:
-            PhagerInfile = open(phagerfile,"r")
-        except:
-            print("No files found, exiting")
+DVFfile = open(dvffile,"r")
+SeekerInFile = open(seekerfile,"r")
+PhagerInfile = open(phagerfile,"r")
+
             
 DVFset = DVFExtract(DVFfile)
 SeekerSet = SeekerExtract(SeekerInFile)
@@ -84,29 +75,35 @@ DVFPhagerInter = DVFset.intersection(PhagerSet)
 
 final_viral_set = SeekerDVFInter.union(SeekerPhagerInter,DVFPhagerInter)
 
-virusoutfile = open(outputfilename,'w')
 
 
-#Prints out all phages into one file
-with open(contigfile, 'r') as file:
-    virusflag = False
+def extract_sequences(fasta_file, ids_set):
+    """
+    Searches through a fasta file and extracts the sequences for a given set of IDs.
+    Writes each ID and sequence to a separate output file with the given prefix.
+    """
+    fasta_dict = {}
+    with open(fasta_file, 'r') as infile:
+        header = ''
+        sequence = ''
+        for line in infile:
+            line = line
+            if line.startswith('>'):
+                if header != '':
+                    fasta_dict[header] = sequence
+                    sequence = ''
+                header = line[1:].strip()
+            else:
+                sequence += line
+        fasta_dict[header] = sequence
 
-    seqcount = 0
-    for line in file:
-        if line.startswith(">"):
-            virusflag = False             
-        
-        if virusflag == True:
-            virusoutfile.write(line)
-        
-        elif line.startswith(">") and line[1:].strip().split()[0] in final_viral_set:
-            virusflag = True
-            virusoutfile.write(line)
-            seqcount += 1
-        
-        
-        
-    print(seqcount, "sequence entries written to output file:", outputfilename)
+    for seq_id in ids_set:
+        output_file = 'contig_' + seq_id + '.fasta'
+        if seq_id in fasta_dict:
+            with open(output_file, 'w') as outfile:
+                outfile.write('>' + seq_id + '\n' + fasta_dict[seq_id] + '\n')
+                print(f"Sequence {seq_id} found and written to {output_file}.")
+        else:
+            print(f"Sequence {seq_id} not found in the fasta file.")
 
-virusoutfile.close()
-
+extract_sequences(contigfile, final_viral_set)
