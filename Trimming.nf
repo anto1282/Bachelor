@@ -189,13 +189,11 @@ process FASTQC{
     path (r1)
     path (r2)
 
-    output:
-    val(pair_id)
-    path (results)
 
     script:    
     """ 
     fastqc r1 r2
+    mv *.html ${projectDir}/${params.outdir}/${pair_id}/results/
     """
 
 }
