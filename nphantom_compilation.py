@@ -201,6 +201,7 @@ with open(outputfilename, 'w') as f:
 	#Creating the tabs for the phages
 	for key in virusdict:
 		print(key)
+		print(virusdict[key])
 		host = (virusdict[key][1])
 		length = (virusdict[key][2])
 		completeness = (virusdict[key][3])
