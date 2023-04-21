@@ -69,7 +69,6 @@ process TRIM {
     gzip ${r2.simpleName}_trimmed.fastq
     rm read?_tmp
     
-    rm *.html
     """
     }
     else{
@@ -83,8 +82,7 @@ process TRIM {
     gzip ${r1.simpleName}_trimmed.fastq
     gzip ${r2.simpleName}_trimmed.fastq
     rm read?_tmp
-    
-    rm *.html
+
     """
     }
 }
