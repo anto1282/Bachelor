@@ -38,7 +38,7 @@ process SPADES {
     """
     gzip -d -f ${r1}
     gzip -d -f ${r2}
-    spades.py -o Assembly${pair_id} -1 ${r1.baseName} -2 ${r2.baseName} --meta --threads ${task.cpus} --memory ${task.cpus + (8 * task.attempt)} --phred-offset ${phred} 
+    spades.py -o Assembly${pair_id} -1 ${r1.baseName} -2 ${r2.baseName} --meta --careful -k 21,33,55,77,99 --threads ${task.cpus} --memory ${task.cpus + (8 * task.attempt)} --phred-offset ${phred} 
     gzip -n Assembly${pair_id}/${params.contigs}.fasta   
     mv Assembly${pair_id}/${params.contigs}.fasta.gz ${params.contigs}.fasta.gz
     gzip ${r1.baseName}
