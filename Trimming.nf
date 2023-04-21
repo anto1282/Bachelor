@@ -34,7 +34,7 @@ process FASTERQDUMP {
 process TRIM {
     
     if (params.server) {
-        beforeScript 'module load adapterremoval bbmap'
+        beforeScript 'module load openjdk perl adapterremoval fastqc'
         afterScript 'module unload adapterremoval bbmap'
     }
     else {
@@ -60,19 +60,23 @@ process TRIM {
     if (params.refGenome == ""){
     """
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
-    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${r1.simpleName}_trimmed.fastq -out2=${r2.simpleName}_trimmed.fastq trimq=17 qtrim=w forcetrimleft=15 overwrite=true ordered=t
+    fastp -i read1_tmp -I read2_tmp -o ${r1.simpleName}_trimmed.fastq  -O ${r2.simpleName}_trimmed.fastq  -W 5 -M 30 -5 -3 -e 30 -f 15 -t 15
     gzip ${r1.simpleName}_trimmed.fastq
     gzip ${r2.simpleName}_trimmed.fastq
     rm read?_tmp
+    rm *.zip
+    rm *.html
     """
     }
     else{
      """
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
-    bbduk.sh -in=read1_tmp -in2=read2_tmp -out=${r1.simpleName}_trimmed.fastq -out2=${r2.simpleName}_trimmed.fastq ref=${params.refGenome} trimq=17 qtrim=w forcetrimleft=15 overwrite=true ordered=t
+    fastp -i read1_tmp -I read2_tmp -o ${r1.simpleName}_trimmed.fastq  -O ${r2.simpleName}_trimmed.fastq  -W 5 -M 30 -5 -3 -e 30 -f 15 -t 15 
     gzip ${r1.simpleName}_trimmed.fastq
     gzip ${r2.simpleName}_trimmed.fastq
     rm read?_tmp
+    rm *.zip
+    rm *.html
     """
     }
 }
@@ -125,7 +129,7 @@ process KRAKEN{
         gzip -d -f ${r1}
         gzip -d -f ${r2}
         kraken2 -d ${params.DATABASEDIR}/${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
-        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken ${projectDir}/Results >> ${projectDir}/Results/assemblyStats_${pair_id}s    
+        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken ${projectDir}/Results >> ${projectDir}/Results/assemblyStats_${pair_id}    
         rm ${r1.baseName}
         rm ${r2.baseName} 
         gzip ${pair_id}_1.TrimmedSubNoEu.fastq
