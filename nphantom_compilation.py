@@ -64,7 +64,9 @@ with open(checkvpredictions, 'r') as file:
 			line = line.split()
 			print(line[0])
 			virusdict[line[0]].append(line[1])
-			virusdict[line[0]].append(round(float(line[4]),2))
+			completenessscore = line[4]
+			if completenessscore != "NA":
+				virusdict[line[0]].append(round(float(line[4]),2))
 		linecount += 1
 
 assemblystatistics = ""
