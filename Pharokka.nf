@@ -77,7 +77,7 @@ process PHAROKKA_PLOTTER {
 
     output:
     path("${phage_contig.baseName}.png")
-        
+    
     script:
 
     """   
