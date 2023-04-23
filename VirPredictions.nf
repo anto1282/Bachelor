@@ -1,5 +1,10 @@
 
 process DVF {
+    params.minLength = {params.minLength * task.attempt }
+
+
+    errorStrategy { task.exitStatus in 1..140 ? 'retry' : 'finish' }
+    maxRetries 3
     if (params.server) {
         beforeScript 'module load gcc theano deepvirfinder'
         afterScript 'module unload gcc theano deepvirfinder/'
@@ -41,7 +46,12 @@ process DVF {
 }
 
 process PHAGER {
-    errorStrategy = 'ignore'
+    params.minLength = {params.minLength * task.attempt }
+
+
+    errorStrategy { task.exitStatus in 1..140 ? 'retry' : 'finish' }
+    maxRetries 3
+    //errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
     if (params.server) {
         beforeScript "module unload miniconda/4.11.0"
@@ -155,6 +165,10 @@ process CHECKV {
 
 
 process SEEKER{
+    params.minLength = {params.minLength * task.attempt }
+
+    errorStrategy { task.exitStatus in 1..140 ? 'retry' : 'finish' }
+    maxRetries 3
     if (params.server) {
         beforeScript 'module load seeker bbmap'
         afterScript 'module unload seeker bbmap'
@@ -207,6 +221,6 @@ process VIREXTRACTOR {
     python3 ${projectDir}/virextractor.py ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.94 ${DVFcontigs} 0.82 ${SeekerContigs} ${PhagerContigs.baseName}
     gzip -f ${contigsFile.baseName}
     gzip -f ${PhagerContigs.baseName}
-    
+    gzip -f ${pair_id}_ViralContigs.fasta
     """
 }

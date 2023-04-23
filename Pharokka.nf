@@ -48,13 +48,13 @@ process FASTASPLITTER {
 
     script:
     """
-    gzip -d -f ${viralcontigs}
+    
     cat ${viralcontigs.baseName} | awk '{
         if (substr(\$0, 1, 1)==">") {filename=(substr(\$1,2) ".fasta")}
         print \$0 >> filename
         close(filename)
     }'
-    gzip -f ${viralcontigs.baseName}
+    
     """
 }
 
