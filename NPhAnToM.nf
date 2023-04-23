@@ -64,6 +64,8 @@ workflow{
 
         //ANNOTATION OF VIRAL CONTIGS USING PHAROKKA
         PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch)
+
+        
     }
     
     
@@ -79,7 +81,9 @@ workflow{
         RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch, HOSTPREDICTION_ch, CHECKV_ch)
     }
     else {
-        RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch, CHECKV_ch, CHECKV_ch)
+        EMPTYFILE_ch = Channel.fromPath('/path/that/doesnt/exist.txt') //Replaces the hostprediction channel
+        RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch, EMPTYFILE_ch, CHECKV_ch)
     }
+
 
 }
