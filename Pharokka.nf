@@ -52,7 +52,6 @@ process FASTASPLITTER {
     
     """
     python3 ${projectDir}/fastasplitter.py ${viralcontigs}
-
     """
 }
 
