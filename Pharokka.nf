@@ -39,7 +39,7 @@ process FASTASPLITTER {
     // Creates fasta files for each contig
     
     input:
-    tuple val (pair_id), path(viralcontigs)
+    tuple val(pair_id), path(viralcontigs)
 
     output:
     val (pair_id)
@@ -74,7 +74,8 @@ process PHAROKKA_PLOTTER {
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
     input: 
-    tuple val (pair_id), path(phage_contig) 
+    val(pair_id)
+    path(phage_contig) 
 
     path(pharokka_output_dir)
 
