@@ -90,7 +90,7 @@ process PHAROKKA_PLOTTER {
 process RESULTS_COMPILATION {
     
     
-    publishDir "${params.outdir}/${pair_id}", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
 
     
     input:
@@ -104,19 +104,19 @@ process RESULTS_COMPILATION {
     
 
     output:
-    path "results/compiled_results.html"
+    path "compiled_results.html"
     
     
     script:
 
     if (params.server) {
     """   
-    python3 ${projectDir}/nphantom_compilation.py results/compiled_results.html ${viralcontigs} ${iphop_predictions}/Host_prediction_to_genus_m90.csv ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/assemblyStats ${pair_id}
+    python3 ${projectDir}/nphantom_compilation.py compiled_results.html ${viralcontigs} ${iphop_predictions}/Host_prediction_to_genus_m90.csv ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/assemblyStats ${pair_id}
     """
     }
     else {
     """   
-    python3 ${projectDir}/nphantom_compilation.py results/compiled_results.html ${viralcontigs} NOIPHOP ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/assemblyStats ${pair_id}
+    python3 ${projectDir}/nphantom_compilation.py compiled_results.html ${viralcontigs} NOIPHOP ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/assemblyStats ${pair_id}
     """
     }
 }
