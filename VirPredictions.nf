@@ -199,7 +199,7 @@ process VIREXTRACTOR {
     tuple val(pair_id), path(PhagerContigs)
 
     output:
-    tuple val(pair_id), path("${pair_id}_ViralContigs.fasta.gz")
+    tuple val(pair_id), path("${pair_id}_ViralContigs.fasta")
     
 
 
