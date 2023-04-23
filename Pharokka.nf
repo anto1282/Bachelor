@@ -47,14 +47,13 @@ process FASTASPLITTER {
     
 
     script:
+
+    //Reads a fasta file and saves each sequence to a separate output file.
+    //The output file name is the same as the sequence header with a .fasta extension.
+    
     """
-    
-    cat ${viralcontigs} | awk '{
-        if (substr(\$0, 1, 1)==">") {filename=(substr(\$1,2) ".fasta")}
-        print \$0 >> filename
-        close(filename)
-    }'
-    
+    python3 fastasplitter.py ${viralcontigs}
+
     """
 }
 
