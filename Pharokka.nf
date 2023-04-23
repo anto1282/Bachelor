@@ -49,7 +49,7 @@ process FASTASPLITTER {
     script:
     """
     
-    cat ${viralcontigs.baseName} | awk '{
+    cat ${viralcontigs} | awk '{
         if (substr(\$0, 1, 1)==">") {filename=(substr(\$1,2) ".fasta")}
         print \$0 >> filename
         close(filename)
