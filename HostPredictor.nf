@@ -14,8 +14,7 @@ process IPHOP {
     time = 1.h
 
     input: 
-    val (pair_id)
-    path (viral_contigs_fasta)
+    tuple val(pair_id), path(viral_contigs_fasta)
    
     output:
     path ("iphop_prediction_${pair_id}/")
