@@ -61,7 +61,7 @@ with open(checkvpredictions, 'r') as file:
 	linecount = 0 
 	for line in file:
 		if linecount > 0:
-			line = line.split("\s")
+			line = line.split()
 			print(line[0])
 			virusdict[line[0]].append(line[1])
 			virusdict[line[0]].append(round(float(line[4]),2))
