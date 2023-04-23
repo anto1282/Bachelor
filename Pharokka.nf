@@ -42,8 +42,7 @@ process FASTASPLITTER {
     tuple val(pair_id), path(viralcontigs)
 
     output:
-    val (pair_id)
-    path("*.fasta")
+    tuple val(pair_id), path("*.fasta")
     
 
     script:
