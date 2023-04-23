@@ -177,8 +177,8 @@ process TAXREMOVE{
 process FASTQC{
 
     if (params.server) {
-        beforeScript 'module load openjdk perl fastqc'
-        afterScript 'module unload openjdk perl fastqc'
+        beforeScript 'module load perl fastqc'
+        afterScript 'module unload perl fastqc'
     }
     else {
         conda "fastqc"
