@@ -32,9 +32,9 @@ process IPHOP {
     which perl
     echo \$PERL5LIB
     
-    gzip -d -f ${viral_contigs_fasta}
-    iphop predict --fa_file ${viral_contigs_fasta.baseName} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id} --num_threads ${task.cpus}
-    gzip -f ${viral_contigs_fasta.baseName}
+    
+    iphop predict --fa_file ${viral_contigs_fasta} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id} --num_threads ${task.cpus}
+    
     """
     }
 
