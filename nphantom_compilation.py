@@ -63,10 +63,13 @@ with open(checkvpredictions, 'r') as file:
 		if linecount > 0:
 			line = line.split()
 			print(line[0])
-			virusdict[line[0]].append(line[1])
-			completenessscore = line[4]
-			if completenessscore != "NA":
-				virusdict[line[0]].append(round(float(line[4]),2))
+			try:
+				virusdict[line[0]].append(line[1])
+				completenessscore = line[4]
+				if completenessscore != "NA":
+					virusdict[line[0]].append(round(float(line[4]),2))
+			except KeyError as error:
+				print("Contig not in dictionary")
 		linecount += 1
 
 assemblystatistics = ""
