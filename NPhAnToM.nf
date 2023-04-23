@@ -70,9 +70,9 @@ workflow{
     
     
     // CREATING PLOTS OF EACH PHAGE
-    FASTASPLITTER(VIRAL_CONTIGS_ch)
-    .flatten()
-    .set{FASTASPLITS_ch}
+    
+    FASTASPLITS_ch = Channel.fromPath(FASTASPLITTER(VIRAL_CONTIGS_ch))
+   
 
     PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(FASTASPLITS_ch, PHAROKKA_ANNOTATION_ch)
 
