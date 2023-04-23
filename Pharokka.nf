@@ -99,7 +99,7 @@ process RESULTS_COMPILATION {
     
         input: 
         
-        val (pair_id)
+        val(pair_id)
         path(viralcontigs)
 
         path(iphop_predictions)
@@ -107,6 +107,7 @@ process RESULTS_COMPILATION {
         path(checkv_results)
     }
     else {
+        input: 
         val (pair_id)
         path(viralcontigs)
 
