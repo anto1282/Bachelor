@@ -190,6 +190,8 @@ statisticstabs = """
 buttonstring = """<div class="tab">"""
 tabstring = """"""
 
+
+
 with open(outputfilename, 'w') as f:  
 	f.write(webpage)
 
