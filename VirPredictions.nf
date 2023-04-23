@@ -139,8 +139,7 @@ process CHECKV {
     
 
     input: 
-    val(pair_id)
-    path(viralcontigs)
+    tuple val(pair_id), path(viralcontigs)
 
     output:
     
@@ -197,8 +196,7 @@ process VIREXTRACTOR {
     tuple val(pair_id), path(PhagerContigs)
 
     output:
-    val (pair_id)
-    path("${pair_id}_ViralContigs.fasta.gz")
+    tuple val(pair_id), path("${pair_id}_ViralContigs.fasta.gz")
     
 
 
