@@ -7,7 +7,7 @@
 #Show length of phage and completeness using checkv
 #Add a picture of the assembled phage
 
-import sys, os
+import sys
 
 
 outputfilename = str(sys.argv[1])
