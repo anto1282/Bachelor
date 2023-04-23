@@ -74,7 +74,7 @@ process PHAROKKA_PLOTTER {
 
     input: 
     val(pair_id)
-    path(phage_contig) 
+    each (phage_contig) 
 
     path(pharokka_output_dir)
 
