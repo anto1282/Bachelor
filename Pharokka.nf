@@ -96,8 +96,7 @@ process RESULTS_COMPILATION {
     
     input:
             
-    val(pair_id)
-    path(viralcontigs)
+    tuple val(pair_id), path(viralcontigs)
 
     path(iphop_predictions)
 
