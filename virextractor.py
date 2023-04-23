@@ -67,15 +67,16 @@ except FileNotFoundError:
             PhagerInfile = open(phagerfile,"r")
         except:
             print("No files found, exiting")
+            sys.exit(1)
             
 DVFset = DVFExtract(DVFfile)
 SeekerSet = SeekerExtract(SeekerInFile)
 PhagerSet = PhagerExtract(PhagerInfile)
 
 
-print(DVFset)
-print(SeekerSet)
-print(PhagerSet)
+# print(DVFset)
+# print(SeekerSet)
+# print(PhagerSet)
 
 
 SeekerDVFInter = SeekerSet.intersection(DVFset)

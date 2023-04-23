@@ -1,10 +1,6 @@
 
 process DVF {
-    minLength = {params.minLength * task.attempt }
-
-
-    errorStrategy { task.exitStatus in 1..140 ? 'retry' : 'finish' }
-    maxRetries 3
+    
     if (params.server) {
         beforeScript 'module load gcc theano deepvirfinder'
         afterScript 'module unload gcc theano deepvirfinder/'
@@ -46,11 +42,7 @@ process DVF {
 }
 
 process PHAGER {
-    params.minLength = {params.minLength * task.attempt }
-
-
-    errorStrategy { task.exitStatus in 1..140 ? 'retry' : 'finish' }
-    maxRetries 3
+    
     //errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
     if (params.server) {
@@ -165,10 +157,7 @@ process CHECKV {
 
 
 process SEEKER{
-    params.minLength = {params.minLength * task.attempt }
-
-    errorStrategy { task.exitStatus in 1..140 ? 'retry' : 'finish' }
-    maxRetries 3
+    
     if (params.server) {
         beforeScript 'module load seeker bbmap'
         afterScript 'module unload seeker bbmap'
