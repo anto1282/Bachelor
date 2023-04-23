@@ -48,8 +48,7 @@ if (iphoppredictions != "NOIPHOP"):
 					hostgenus_formatted += element[3:] + "; "
 				
 				virusdict[line[0]].append(hostgenus_formatted.strip("; "))
-				print(hostgenus_formatted)
-				print(line[0])
+				
 			linecount += 1
 	for key in virusdict:
 		if len(virusdict[key]) == 1:
@@ -62,7 +61,7 @@ with open(checkvpredictions, 'r') as file:
 	linecount = 0 
 	for line in file:
 		if linecount > 0:
-			line = line.split()
+			line = line.split("\s")
 			print(line[0])
 			virusdict[line[0]].append(line[1])
 			virusdict[line[0]].append(round(float(line[4]),2))
