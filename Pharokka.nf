@@ -72,7 +72,7 @@ process PHAROKKA_PLOTTER {
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
     input: 
-    tuple val(pair_id), path (phage_contig) 
+    tuple val(pair_id), each (phage_contig) 
 
     path(pharokka_output_dir)
 
