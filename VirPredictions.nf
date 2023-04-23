@@ -1,6 +1,6 @@
 
 process DVF {
-    params.minLength = {params.minLength * task.attempt }
+    minLength = {params.minLength * task.attempt }
 
 
     errorStrategy { task.exitStatus in 1..140 ? 'retry' : 'finish' }
@@ -221,6 +221,6 @@ process VIREXTRACTOR {
     python3 ${projectDir}/virextractor.py ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.94 ${DVFcontigs} 0.82 ${SeekerContigs} ${PhagerContigs.baseName}
     gzip -f ${contigsFile.baseName}
     gzip -f ${PhagerContigs.baseName}
-    gzip -f ${pair_id}_ViralContigs.fasta
+    
     """
 }
