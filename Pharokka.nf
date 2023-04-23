@@ -19,7 +19,7 @@ process PHAROKKA {
 
     
     output:
-    path "pharokka_${pair_id}/*"
+    path "pharokka_${pair_id}/"
     
     
     script:
@@ -79,7 +79,7 @@ process PHAROKKA_PLOTTER {
     script:
 
     """   
-    pharokka_plotter.py -i ${phage_contig} -n results/${phage_contig.simpleName} -o ${pharokka_output_dir} -t ${phage_contig.simpleName}
+    pharokka_plotter.py -i ${phage_contig} -n results/${phage_contig.baseName} -o ${pharokka_output_dir} -t ${phage_contig.baseName}
     """
     
 }
