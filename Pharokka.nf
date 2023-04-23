@@ -95,10 +95,9 @@ process RESULTS_COMPILATION {
     
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
+    input: 
     if (params.server) {
     
-        input: 
-        
         val(pair_id)
         path(viralcontigs)
 
@@ -107,7 +106,7 @@ process RESULTS_COMPILATION {
         path(checkv_results)
     }
     else {
-        input: 
+
         val (pair_id)
         path(viralcontigs)
 
