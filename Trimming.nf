@@ -33,9 +33,10 @@ process FASTERQDUMP {
 
 process TRIM {
     
+    // Openjdk is already loaded, should not also be loaded here
     if (params.server) {
-        beforeScript 'module load openjdk perl adapterremoval fastqc fastp'
-        afterScript 'module unload openjdk perl adapterremoval fastqc fastp'
+        beforeScript 'module load perl adapterremoval fastqc fastp'
+        afterScript 'module unload perl adapterremoval fastqc fastp'
     }
     else {
         conda 'adapterremoval fastqc fastp'
