@@ -2,7 +2,7 @@
 
 
 process PHAROKKA {
-    errorStrategy= "ignore"
+    errorStrategy= "finish"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.0--hdfd78af_0"
         cpus 8
@@ -25,9 +25,9 @@ process PHAROKKA {
     script:
 
     """
-    gzip -d -f ${viralcontigs}
-    pharokka.py -i ${viralcontigs.baseName} -o pharokka_${pair_id} -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
-    gzip -f ${viralcontigs.baseName}
+    
+    pharokka.py -i ${viralcontigs} -o pharokka_${pair_id} -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
+    
     """
     
 }
@@ -88,7 +88,7 @@ process PHAROKKA_PLOTTER {
 }
 
 process RESULTS_COMPILATION {
-    errorStrategy= "ignore"
+    
     
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
