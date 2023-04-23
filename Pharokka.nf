@@ -52,7 +52,7 @@ process FASTASPLITTER {
     //The output file name is the same as the sequence header with a .fasta extension.
     
     """
-    python3 fastasplitter.py ${viralcontigs}
+    python3 ${projectDir}/fastasplitter.py ${viralcontigs}
 
     """
 }
@@ -111,12 +111,12 @@ process RESULTS_COMPILATION {
 
     if (params.server) {
     """   
-    python3 nphantom_compilation.py results/compiled_results.html ${viralcontigs} ${iphop_predictions}/Host_prediction_to_genus_m90.csv ${checkv_results}/completeness.tsv ${pair_id}
+    python3 ${projectDir}/nphantom_compilation.py results/compiled_results.html ${viralcontigs} ${iphop_predictions}/Host_prediction_to_genus_m90.csv ${checkv_results}/completeness.tsv ${pair_id}
     """
     }
     else {
     """   
-    python3 nphantom_compilation.py results/compiled_results.html ${viralcontigs} NOIPHOP ${checkv_results}/completeness.tsv ${pair_id}
+    python3 ${projectDir}/nphantom_compilation.py results/compiled_results.html ${viralcontigs} NOIPHOP ${checkv_results}/completeness.tsv ${pair_id}
     """
     }
 }
