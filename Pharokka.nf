@@ -96,22 +96,16 @@ process RESULTS_COMPILATION {
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
     
-    if (params.server) {
-        input:
-        val(pair_id)
-        path(viralcontigs)
+    input:
+            
+    val(pair_id)
+    path(viralcontigs)
 
-        path(iphop_predictions)
+    path(iphop_predictions)
 
-        path(checkv_results)
-    }
-    else {
-        input:
-        val (pair_id)
-        path(viralcontigs)
-
-        path(checkv_results)
-    }
+    path(checkv_results)
+    
+    
 
     output:
     path "results/compiled_results.html"
