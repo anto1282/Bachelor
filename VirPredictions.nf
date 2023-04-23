@@ -140,7 +140,7 @@ process CHECKV {
         cpus 8
             }
     else {
-        conda 'checkv'
+        conda 'checkv/1.0.1'
         cpus 8
     }
     
