@@ -32,9 +32,9 @@ export PATH="/projects/mjolnir1/apps/conda/py39/lib/python3.9/site-packages:$PAT
 
 if [ $1 == "-r" ];
 then
-    srun nextflow run NPhAnToM.nf --IDS SRR8799138	-profile cluster -with-mpi -with-tower -resume --accessToken eyJ0aWQiOiA3MTg2fS43NTEwNGQ1ZmU1ZTllYzI0ZTI0NDg5OWExNWMwMjgwMjY0NGE3OTEx
+    srun nextflow run NPhAnToM.nf --IDS SRR23875115	-profile cluster -with-mpi -with-tower -resume --accessToken eyJ0aWQiOiA3MTg2fS43NTEwNGQ1ZmU1ZTllYzI0ZTI0NDg5OWExNWMwMjgwMjY0NGE3OTEx
 else
-    srun nextflow run NPhAnToM.nf --IDS SRR23875115 -profile cluster -with-mpi -with-tower --accessToken eyJ0aWQiOiA3MTg2fS43NTEwNGQ1ZmU1ZTllYzI0ZTI0NDg5OWExNWMwMjgwMjY0NGE3OTEx
+    srun nextflow run NPhAnToM.nf --IDS SRR8799138 -profile cluster -with-mpi -with-tower --accessToken eyJ0aWQiOiA3MTg2fS43NTEwNGQ1ZmU1ZTllYzI0ZTI0NDg5OWExNWMwMjgwMjY0NGE3OTEx
 fi
 
 echo $PATH
