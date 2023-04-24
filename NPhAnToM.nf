@@ -76,8 +76,10 @@ workflow{
     
     // FASTASPLITS_ch = FASTASPLITTER(VIRAL_CONTIGS_ch) | collect
     // FASTASPLITS_ch.view()    
-    VIRAL_CONTIGS_ch.splitFasta(file: [record:header]).set{FASTASPLITS_ch}
+    FASTASPLITS_ch = VIRAL_CONTIGS_ch.splitFasta(file: true) | flatten
     FASTASPLITS_ch.view()
+    // FASTANAMES_ch = VIRAL_CONTIGS_ch.splitFasta(record: [header: true])
+    // FASTANAMES_ch.view()
     PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(FASTASPLITS_ch, PHAROKKA_ANNOTATION_ch)
 
     
