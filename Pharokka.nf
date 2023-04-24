@@ -70,6 +70,8 @@ process PHAROKKA_PLOTTER {
     else{
         conda 'pharokka'
         cpus 1
+        memory '2 GB'
+        time = 1.h
     }
     
     publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
@@ -88,13 +90,14 @@ process PHAROKKA_PLOTTER {
 
     """ 
     pharokka_plotter.py -i ${phage_contig} -n ${fastaname} -o ${projectDir}/${params.outdir}/${pair_id}/pharokka_${pair_id} --label_hypotheticals 
-    rm ${phage_contig}
-
     """
     
 }
 
 process RESULTS_COMPILATION {
+    cpus 1
+    memory '2 GB'
+    time = 1.m
     errorStrategy = 'finish'
     
     publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
