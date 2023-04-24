@@ -103,6 +103,7 @@ process RESULTS_COMPILATION {
 
     path(iphop_predictions)
 
+
     path(checkv_results)
     
     
