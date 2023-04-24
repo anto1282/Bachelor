@@ -73,14 +73,14 @@ workflow{
     
     
     // CREATING PLOTS OF EACH PHAGE
-    // FASTASPLITS_ch = (FASTASPLITTER(VIRAL_CONTIGS_ch))
-    // FASTASPLITS_ch.view()
-    FASTASPLITS_ch = VIRAL_CONTIGS_ch.splitFasta(file:true)
-    FASTANAMES_ch = VIRAL_CONTIGS_ch.splitFasta(record: [id:true]) 
+    FASTASPLITS_ch = (FASTASPLITTER(VIRAL_CONTIGS_ch)) | flatten
     FASTASPLITS_ch.view()
-    FASTANAMES_ch.view()
-    PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(FASTASPLITS_ch,FASTANAMES_ch)
-
+    // FASTASPLITS_ch = VIRAL_CONTIGS_ch.splitFasta(file:true)
+    // FASTANAMES_ch = VIRAL_CONTIGS_ch.splitFasta(record: [id:true]) 
+    // FASTASPLITS_ch.view()
+    // FASTANAMES_ch.view()
+    //PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(FASTASPLITS_ch,FASTANAMES_ch)
+    //PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(FASTASPLITS_ch)
     
     // CHECKS THE QUALITY OF THE VIRAL CONTIGS
     CHECKV_ch = CHECKV(VIRAL_CONTIGS_ch)
