@@ -104,7 +104,6 @@ process RESULTS_COMPILATION {
     tuple val(pair_id), path(viralcontigs)
 
     path(iphop_predictions)
-
     path(checkv_results)
     
     
