@@ -74,18 +74,20 @@ process PHAROKKA_PLOTTER {
     input: 
     tuple val(pair_id), path(phage_contig) 
 
-    tuple val(pair_id), val(fastaname)
+    val(pair_id)
+    val(fastaname)
     
     //path(pharokka_output_dir)
 
     output:
-    path("'${fastaname}.png'")
+    path("*.png'")
 
     script:
 
     """ 
     pharokka_plotter.py -i ${phage_contig} -n ${fastaname} -o ${projectDir}/${params.outdir}/${pair_id}/pharokka_${pair_id} -t ${phage_contig.baseName}
     rm ${phage_contig}
+
     """
     
 }
