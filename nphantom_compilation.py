@@ -122,6 +122,14 @@ body {font-family: Arial;}
   border: 1px solid #ccc;
   border-top: none;
 }
+
+/* Centering the pictures on the page*/
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
 </style>
 </head>
 <body>
@@ -169,7 +177,7 @@ tabs = """
     <p><strong>Length:</strong> {} bp</p>
     <p><strong>Phage completeness (from CheckV):</strong> {} %</p>
 	<p><strong>Illustration of annotated phage:</strong></p>
-	<img class="picture" src="{}" alt="Illustration of annotated phage">
+	<img class="center" src="{}" alt="Illustration of annotated phage">
 	<p><strong>{}</strong></p>
 	<p>{}</p>
 	
