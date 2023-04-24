@@ -74,8 +74,7 @@ process PHAROKKA_PLOTTER {
     input: 
     tuple val(pair_id), path(phage_contig) 
 
-    val(pair_id)
-    val(fastaname)
+    tuple val(pair_id), val(fastaname)
     
     //path(pharokka_output_dir)
 
