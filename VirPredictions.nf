@@ -213,3 +213,28 @@ process VIREXTRACTOR {
     
     """
 }
+
+
+process DEEPVIREXTRACTOR {
+    //Used instead of virextractor when only deepvirfinder is run
+    
+    publishDir "${params.outdir}/${pair_id}/ViralContigs", mode: 'copy'
+
+    
+    input:
+    tuple val(pair_id), path(contigsFile)
+    tuple val(pair_id), path(DVFcontigs)
+
+
+    output:
+    tuple val(pair_id), path("${pair_id}_ViralContigs.fasta")
+    
+
+
+    script:
+    """
+    gzip -d -f ${contigsFile}
+    python3 ${projectDir}/DeepVirExtractor.py ${DVFcontigs} ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.50
+    gzip -f ${contigsFile.baseName}
+    """
+}

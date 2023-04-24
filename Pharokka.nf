@@ -42,10 +42,10 @@ process FASTASPLITTER {
     tuple val(pair_id), path(viralcontigs)
 
     output:
-    val(pair_id)
-    val("*.fasta")
+    tuple val(pair_id), path("*.fasta")
+    //val (pair_id)
     //path("*.fasta")
-
+    
     script:
 
     //Reads a fasta file and saves each sequence to a separate output file.
@@ -72,9 +72,7 @@ process PHAROKKA_PLOTTER {
     publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
 
     input: 
-    val(pair_id)
-    path (phage_contig) 
-    //path(phage_contig)
+    tuple val(pair_id), path(phage_contig) 
     path(pharokka_output_dir)
 
     output:

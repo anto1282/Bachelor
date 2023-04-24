@@ -3,7 +3,7 @@ nextflow.enable.dsl=2
 
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE; FASTQC} from "./Trimming.nf"
 include {SPADES; OFFSETDETECTOR; N50} from "./Assembly.nf"
-include {DVF;VIRSORTER;CHECKV; SEEKER; PHAGER; VIREXTRACTOR} from "./VirPredictions.nf"
+include {DVF;VIRSORTER;CHECKV; SEEKER; PHAGER; VIREXTRACTOR;DEEPVIREXTRACTOR} from "./VirPredictions.nf"
 include {PHAROKKA; PHAROKKA_PLOTTER; RESULTS_COMPILATION;FASTASPLITTER} from "./Pharokka.nf"
 include {IPHOP} from "./HostPredictor.nf"
 
@@ -60,7 +60,10 @@ workflow{
     else {
         // Simpler virus predition using only deepvirfinder, when running locally
         // VIRUS PREDICTION TOOLS
-        VIRAL_CONTIGS_ch = DVF(ASSEMBLY_ch)
+
+        DVF_ch = DVF(ASSEMBLY_ch)
+        VIRAL_CONTIGS_ch = DEEPVIREXTRACTOR(ASSEMBLY_ch,DVF_ch)
+        //DEEPVIREXTRACTOR NEEDS TO BE ADDED
 
         //ANNOTATION OF VIRAL CONTIGS USING PHAROKKA
         PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch)
@@ -71,9 +74,8 @@ workflow{
     
     // CREATING PLOTS OF EACH PHAGE
     
-    FASTASPLITS_ch = (FASTASPLITTER(VIRAL_CONTIGS_ch))
-    
-    
+    FASTASPLITS_ch = FASTASPLITTER(VIRAL_CONTIGS_ch) | flatten
+    FASTASPLITS_ch.view()    
     PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(FASTASPLITS_ch, PHAROKKA_ANNOTATION_ch)
 
     
