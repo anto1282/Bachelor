@@ -79,7 +79,7 @@ process PHAROKKA_PLOTTER {
     //path(pharokka_output_dir)
 
     output:
-    path("${phage_contig.baseName}.png")
+    path("${fastaname}.png")
 
     script:
 
