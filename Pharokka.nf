@@ -65,10 +65,13 @@ process PHAROKKA_PLOTTER {
         cpus 1
         memory '2 GB'
         time = 1.h
+        // time = 1.m
     }
     else{
         conda 'pharokka'
         cpus 1
+        memory '2 GB'
+        time = 1.h
     }
     
     publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
@@ -86,15 +89,16 @@ process PHAROKKA_PLOTTER {
     script:
 
     """ 
-    pharokka_plotter.py -i ${phage_contig} -n ${fastaname} -o ${projectDir}/${params.outdir}/${pair_id}/pharokka_${pair_id} -t ${phage_contig.baseName}
-    rm ${phage_contig}
-
+    pharokka_plotter.py -i ${phage_contig} -n ${fastaname} -o ${projectDir}/${params.outdir}/${pair_id}/pharokka_${pair_id} --label_hypotheticals 
     """
     
 }
 
 process RESULTS_COMPILATION {
-    
+    cpus 1
+    memory '2 GB'
+    time = 1.m
+    errorStrategy = 'finish'
     
     publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
 
@@ -104,15 +108,13 @@ process RESULTS_COMPILATION {
     tuple val(pair_id), path(viralcontigs)
 
     path(iphop_predictions)
+    
     path(checkv_results)
     
-    
-
     output:
     path "compiled_results.html"
     
-
-    
+   
     script:
 
     if (params.server) {

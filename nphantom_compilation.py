@@ -122,6 +122,14 @@ body {font-family: Arial;}
   border: 1px solid #ccc;
   border-top: none;
 }
+
+/* Centering the pictures on the page*/
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+}
 </style>
 </head>
 <body>
@@ -169,7 +177,7 @@ tabs = """
     <p><strong>Length:</strong> {} bp</p>
     <p><strong>Phage completeness (from CheckV):</strong> {} %</p>
 	<p><strong>Illustration of annotated phage:</strong></p>
-	<img class="picture" src="{}" alt="Illustration of annotated phage">
+	<img class="center" src="{}" alt="Illustration of annotated phage">
 	<p><strong>{}</strong></p>
 	<p>{}</p>
 	
@@ -188,7 +196,7 @@ statisticstabs = """
 
 # Generating the HTML file with a tab for each phage and a statistics tab
 buttonstring = """<div class="tab">"""
-tabstring = """"""
+tabstring = ""
 
 
 
@@ -198,7 +206,7 @@ with open(outputfilename, 'w') as f:
 	#Creating a tab for statistics
 	buttonstring += opentab.format("Statistics","Assembly Statistics")
 
-	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics)
+	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics.replace("\n","<br>"))
 	
 
 	
@@ -218,7 +226,7 @@ with open(outputfilename, 'w') as f:
 			DNAtext = "Phage DNA:"
 			contig = virusdict[key][0]
 			buttonstring += (opentab.format(key,key))
-			tabstring += tabs.format(key,key,host,length, completeness, picturepath,DNAtext,contig)
+			tabstring += tabs.format(key,key,host,length, completeness, picturepath,DNAtext,contig.replace("\n","<br>"))
 	buttonstring += "</div>"
 	f.write(buttonstring)
 	f.write(tabstring)
