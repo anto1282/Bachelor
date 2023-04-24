@@ -79,7 +79,7 @@ process PHAROKKA_PLOTTER {
     //path(pharokka_output_dir)
 
     output:
-    path("${fastaname}.png")
+    path("'${fastaname}.png'")
 
     script:
 
