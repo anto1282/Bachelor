@@ -20,7 +20,7 @@ process PHAROKKA {
 
     
     output:
-    tuple(val("${pair_id}"), path("pharokka_${pair_id}/pharokka.g*"))
+    tuple(val(pair_id), path("pharokka_${pair_id}/pharokka.g*"))
     
     
     script:
