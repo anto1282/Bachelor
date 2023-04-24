@@ -64,7 +64,7 @@ process PHAROKKA_PLOTTER {
         container = "docker://quay.io/biocontainers/pharokka:1.3.0--hdfd78af_0"
         cpus 1
         memory '2 GB'
-        time = 10.m
+        time = 1.h
     }
     else{
         conda 'pharokka'
