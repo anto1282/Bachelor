@@ -124,7 +124,6 @@ process RESULTS_COMPILATION {
     }
     else {
     """   
-
     python3 ${projectDir}/nphantom_compilation.py compiled_results.html ${viralcontigs} NOIPHOP ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/assemblyStats ${pair_id}
     """
     }
