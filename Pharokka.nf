@@ -86,7 +86,7 @@ process PHAROKKA_PLOTTER {
     script:
 
     """ 
-    pharokka_plotter.py -i ${phage_contig} -n ${fastaname} -o ${projectDir}/${params.outdir}/${pair_id}/pharokka_${pair_id} -t ${phage_contig.baseName}
+    pharokka_plotter.py -i ${phage_contig} -n ${fastaname} -o ${projectDir}/${params.outdir}/${pair_id}/pharokka_${pair_id} --label_hypotheticals 
     rm ${phage_contig}
 
     """
@@ -104,15 +104,13 @@ process RESULTS_COMPILATION {
     tuple val(pair_id), path(viralcontigs)
 
     path(iphop_predictions)
+    
     path(checkv_results)
     
-    
-
     output:
     path "compiled_results.html"
     
-
-    
+   
     script:
 
     if (params.server) {

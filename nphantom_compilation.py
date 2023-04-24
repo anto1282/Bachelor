@@ -188,7 +188,7 @@ statisticstabs = """
 
 # Generating the HTML file with a tab for each phage and a statistics tab
 buttonstring = """<div class="tab">"""
-tabstring = """"""
+tabstring = ""
 
 
 
@@ -198,7 +198,7 @@ with open(outputfilename, 'w') as f:
 	#Creating a tab for statistics
 	buttonstring += opentab.format("Statistics","Assembly Statistics")
 
-	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics)
+	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics.replace("\n","<br>"))
 	
 
 	
@@ -218,7 +218,7 @@ with open(outputfilename, 'w') as f:
 			DNAtext = "Phage DNA:"
 			contig = virusdict[key][0]
 			buttonstring += (opentab.format(key,key))
-			tabstring += tabs.format(key,key,host,length, completeness, picturepath,DNAtext,contig)
+			tabstring += tabs.format(key,key,host,length, completeness, picturepath,DNAtext,contig.replace("\n","<br>"))
 	buttonstring += "</div>"
 	f.write(buttonstring)
 	f.write(tabstring)
