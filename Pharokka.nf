@@ -62,11 +62,13 @@ process PHAROKKA_PLOTTER {
     errorStrategy= "finish"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.0--hdfd78af_0"
-        cpus 8
+        cpus 1
+        memory '2 GB'
+        time = 1.h
     }
     else{
         conda 'pharokka'
-        cpus 8
+        cpus 1
     }
     
     publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
