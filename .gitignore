@@ -16,3 +16,5 @@ CheckVRes
 
 PythonPipeline/
 checkv-db-v1.5
+*.png
+*.html
