@@ -16,11 +16,11 @@ process PHAROKKA {
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
     input: 
-    tuple val (pair_id), path(viralcontigs) 
+    tuple val(pair_id), path(viralcontigs) 
 
     
     output:
-    tuple(val ${pair_id}, path("pharokka_${pair_id}/pharokka.g*"))
+    tuple(val("${pair_id}"), path("pharokka_${pair_id}/pharokka.g*"))
     
     
     script:
