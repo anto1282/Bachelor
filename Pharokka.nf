@@ -84,7 +84,7 @@ process PHAROKKA_PLOTTER {
     script:
 
     """ 
-    pharokka_plotter.py -i ${phage_contig} -n ${fastaname} -o ${params.outdir}/${pair_id}/pharokka_${pair_id} -t ${phage_contig.baseName}
+    pharokka_plotter.py -i ${phage_contig} -n ${fastaname} -o ${projectDir}/${params.outdir}/${pair_id}/pharokka_${pair_id} -t ${phage_contig.baseName}
     rm ${phage_contig}
     """
     
