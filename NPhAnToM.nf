@@ -58,7 +58,7 @@ workflow{
         PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch)
     }
     else {
-        // Simpler virus predition using only deepvirfinder, when running locally
+        // Simpler virus prediction using only deepvirfinder, when running locally
         // VIRUS PREDICTION TOOLS
 
         DVF_ch = DVF(ASSEMBLY_ch)
@@ -73,14 +73,13 @@ workflow{
     
     
     // CREATING PLOTS OF EACH PHAGE
-    
-    // FASTASPLITS_ch = FASTASPLITTER(VIRAL_CONTIGS_ch) | collect
-    // FASTASPLITS_ch.view()    
-    FASTASPLITS_ch = VIRAL_CONTIGS_ch.splitFasta(file: true) | flatten
+    // FASTASPLITS_ch = (FASTASPLITTER(VIRAL_CONTIGS_ch))
+    // FASTASPLITS_ch.view()
+    FASTASPLITS_ch = VIRAL_CONTIGS_ch.splitFasta(file:true)
+    FASTANAMES_ch = VIRAL_CONTIGS_ch.splitFasta(record:[id:true])
     FASTASPLITS_ch.view()
-    // FASTANAMES_ch = VIRAL_CONTIGS_ch.splitFasta(record: [header: true])
-    // FASTANAMES_ch.view()
-    PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(FASTASPLITS_ch, PHAROKKA_ANNOTATION_ch)
+    FASTANAMES_ch.view()
+    PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(FASTASPLITS_ch,FASTANAMES_ch)
 
     
     // CHECKS THE QUALITY OF THE VIRAL CONTIGS

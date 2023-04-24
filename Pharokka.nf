@@ -42,9 +42,9 @@ process FASTASPLITTER {
     tuple val(pair_id), path(viralcontigs)
 
     output:
-    tuple val(pair_id), path("*.fasta")
-    //val (pair_id)
-    //path("*.fasta")
+    //tuple val(pair_id), path("*.fasta")
+    val (pair_id)
+    path("*.fasta")
     
     script:
 
@@ -73,16 +73,18 @@ process PHAROKKA_PLOTTER {
 
     input: 
     tuple val(pair_id), path(phage_contig) 
+
+    val(fastaname)
     
-    path(pharokka_output_dir)
+    //path(pharokka_output_dir)
 
     output:
     path("${phage_contig.baseName}.png")
 
     script:
 
-    """   
-    pharokka_plotter.py -i ${phage_contig} -n ${phage_contig.baseName} -o ${pharokka_output_dir} -t ${phage_contig.baseName}
+    """ 
+    pharokka_plotter.py -i ${phage_contig} -n ${fastaname} -o ${params.outdir}/${pair_id}/pharokka_${pair_id} -t ${phage_contig.baseName}
     rm ${phage_contig}
     """
     
