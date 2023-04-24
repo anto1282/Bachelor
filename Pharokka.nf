@@ -99,8 +99,8 @@ process RESULTS_COMPILATION {
     publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
 
     
-    input:
-            
+    input:        
+    
     tuple val(pair_id), path(viralcontigs)
 
     path(iphop_predictions)
@@ -111,6 +111,7 @@ process RESULTS_COMPILATION {
     output:
     path "compiled_results.html"
     
+
     
     script:
 
