@@ -73,6 +73,16 @@ workflow{
     
     
     // CREATING PLOTS OF EACH PHAGE
+<<<<<<< HEAD
+    FASTASPLITS_ch = (FASTASPLITTER(VIRAL_CONTIGS_ch)) | flatten
+    FASTASPLITS_ch.view()
+    // FASTASPLITS_ch = VIRAL_CONTIGS_ch.splitFasta(file:true)
+    // FASTANAMES_ch = VIRAL_CONTIGS_ch.splitFasta(record: [id:true]) 
+    // FASTASPLITS_ch.view()
+    // FASTANAMES_ch.view()
+    //PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(FASTASPLITS_ch,FASTANAMES_ch)
+    //PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(FASTASPLITS_ch)
+=======
     // FASTASPLITS_ch = (FASTASPLITTER(VIRAL_CONTIGS_ch))
     // FASTASPLITS_ch.view()
     PHAROKKA_SPLITS_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch)
@@ -82,6 +92,7 @@ workflow{
     FASTANAMES_ch.view()
     PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch)
 
+>>>>>>> e79cdf148f648e67d589e5f1abe6ecb1758315be
     
     // CHECKS THE QUALITY OF THE VIRAL CONTIGS
     CHECKV_ch = CHECKV(VIRAL_CONTIGS_ch)
@@ -93,6 +104,5 @@ workflow{
         EMPTYFILE_ch = Channel.fromPath('/path/that/doesnt/exist.txt') //Replaces the hostprediction channel
         RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch, EMPTYFILE_ch, CHECKV_ch)
     }
-
 
 }

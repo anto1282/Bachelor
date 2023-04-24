@@ -4,11 +4,12 @@
 process PHAROKKA {
     errorStrategy= "finish"
     if (params.server){
-        container = "docker://quay.io/biocontainers/pharokka:1.3.0--hdfd78af_0"
+        container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 8
     }
     else{
-        conda 'pharokka'
+        conda 'pharokka=1.2.1'
+        //container = "shub://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 8
     }
     
@@ -43,7 +44,7 @@ process FASTASPLITTER {
 
     output:
     //tuple val(pair_id), path("*.fasta")
-    val (pair_id)
+    //val (pair_id)
     path("*.fasta")
     
     script:
@@ -84,7 +85,8 @@ process PHAROKKA_PLOTTER {
         // time = 1.m
     }
     else{
-        conda 'pharokka'
+        container = "docker://quay.io/biocontainers/pharokka:1.3.0--hdfd78af_0"
+        //conda 'pharokka'
         cpus 1
         memory '2 GB'
         time = 1.h
@@ -125,7 +127,7 @@ process RESULTS_COMPILATION {
     path(checkv_results)
     
     output:
-    path "compiled_results.html"
+    path ("compiled_results.html")
     
    
     script:
