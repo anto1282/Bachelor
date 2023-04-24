@@ -1,4 +1,4 @@
-# Pipeline for discovering bacteriophages from metagenomic illumina reads.
+# Pipeline for discovering bacteriophages from metagenomic illumina reads
 ### A work in progress
 
 ## About NPhAnToM - Nextflow Pipeline for Phage AnnoTation of Metagenomic samples
