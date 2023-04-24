@@ -65,6 +65,7 @@ process PHAROKKA_PLOTTER {
         cpus 1
         memory '2 GB'
         time = 1.h
+        // time = 1.m
     }
     else{
         conda 'pharokka'
@@ -94,7 +95,7 @@ process PHAROKKA_PLOTTER {
 }
 
 process RESULTS_COMPILATION {
-    
+    errorStrategy = 'finish'
     
     publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
 
@@ -120,6 +121,7 @@ process RESULTS_COMPILATION {
     }
     else {
     """   
+
     python3 ${projectDir}/nphantom_compilation.py compiled_results.html ${viralcontigs} NOIPHOP ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/assemblyStats ${pair_id}
     """
     }
