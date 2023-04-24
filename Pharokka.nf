@@ -20,7 +20,7 @@ process PHAROKKA {
 
     
     output:
-    path "pharokka_${pair_id}/"
+    tuple(val ${pair_id}, path("pharokka_${pair_id}/pharokka.g*"))
     
     
     script:
@@ -59,6 +59,22 @@ process FASTASPLITTER {
 
 
 
+process PHAROKKASPLITTER {
+    
+    input:
+    tuple(val(pair_id), path(files))
+
+    output:
+    tuple(path("NODE_*.gff"), path("NODE_*.gbk"))
+    
+    script:
+  
+    """
+    python3 ${projectDir}/PharokkaSplitter.py ${files[0]} ${files[1]}
+    """
+}
+
+
 process PHAROKKA_PLOTTER {
     errorStrategy= "finish"
     if (params.server){
@@ -79,10 +95,7 @@ process PHAROKKA_PLOTTER {
     publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
 
     input: 
-    tuple val(pair_id), path(phage_contig) 
-
-    tuple val(pair_id), val(fastaname)
-    
+    tuple(path(gffFile), path(gbkFile))
     //path(pharokka_output_dir)
 
     output:
@@ -91,7 +104,7 @@ process PHAROKKA_PLOTTER {
     script:
 
     """ 
-    pharokka_plotter.py -i ${phage_contig} -n ${fastaname} -o ${projectDir}/${params.outdir}/${pair_id}/pharokka_${pair_id} --label_hypotheticals 
+    pharokka_plotter.py -i ${phage_contig} -n ${fastaname} --gff ${gffFile} --genbank ${gbkFile} --label_hypotheticals 
     """
     
 }
