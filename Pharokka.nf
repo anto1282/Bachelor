@@ -15,7 +15,7 @@ process PHAROKKA {
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
     input: 
-    tuple val (pair_id), path(viralcontigs) 
+    tuple val(pair_id), path(viralcontigs) 
 
     
     output:
