@@ -224,4 +224,4 @@ with open(outputfilename, 'w') as f:
 	f.write(tabstring)
 	f.write(bottomofpage)
     
-#Quality tab
+
