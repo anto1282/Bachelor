@@ -66,7 +66,8 @@ process PHAROKKASPLITTER {
     
 
     output:
-    tuple(path("NODE_*.gff"), path("NODE_*.gbk"))
+    path("NODE_*.gff") 
+    path("NODE_*.gbk")
     path("NODE_*.fasta")
 
     script:
@@ -97,8 +98,9 @@ process PHAROKKA_PLOTTER {
     publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
 
     input: 
-    tuple(path(gffFile), path(gbkFile))
-    path(phage_contig)
+    path(gffFile).flatten()
+    path(gbkFile).flatten()
+    path(phage_contig).flatten()
 
     output:
     path("*")
