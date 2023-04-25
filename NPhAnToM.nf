@@ -82,7 +82,7 @@ workflow{
     FASTANAMES_ch = VIRAL_CONTIGS_ch.splitFasta(record: [id:true]) 
     //FASTASPLITS_ch.view()
     //FASTANAMES_ch.view()
-    PHAROKKA_SPLITS_ch.flatten().view()
+    PHAROKKA_SPLITS_ch | flatten | view
     PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch)
 
     
