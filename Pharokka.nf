@@ -78,7 +78,7 @@ process PHAROKKASPLITTER {
 }
 
 
-process PHAROKKA_PLOTTER {
+process PHAROKKA_PLOTTE {
     errorStrategy= "finish"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
