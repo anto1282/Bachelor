@@ -4,7 +4,7 @@ nextflow.enable.dsl=2
 include {FASTERQDUMP;TRIM; KRAKEN; TAXREMOVE; FASTQC} from "./Trimming.nf"
 include {SPADES; OFFSETDETECTOR; N50} from "./Assembly.nf"
 include {DVF;VIRSORTER;CHECKV; SEEKER; PHAGER; VIREXTRACTOR;DEEPVIREXTRACTOR} from "./VirPredictions.nf"
-include {PHAROKKA; PHAROKKA_PLOTTE; RESULTS_COMPILATION;FASTASPLITTER; PHAROKKASPLITTER} from "./Pharokka.nf"
+include {PHAROKKA; PHAROKKA_PLOTTER; RESULTS_COMPILATION;FASTASPLITTER; PHAROKKASPLITTER} from "./Pharokka.nf"
 include {IPHOP} from "./HostPredictor.nf"
 
 
