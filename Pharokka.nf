@@ -98,9 +98,9 @@ process PHAROKKA_PLOTTE {
     publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
 
     input: 
-    path(gffFile).flatten()
-    path(gbkFile).flatten()
-    path(phage_contig).flatten()
+    path(gffFile)
+    path(gbkFile)
+    path(phage_contig)
 
     output:
     path("*")
