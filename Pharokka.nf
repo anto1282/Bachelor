@@ -70,7 +70,7 @@ process PHAROKKASPLITTER {
     script:
   
     """
-    python3 ${projectDir}/PharokkaSplitter.py ${files[0]} ${files[1]}
+    python3 ${projectDir}/PharokkaSplitter.py ${files[1]} ${files[0]}
     """
 }
 
