@@ -63,10 +63,12 @@ process PHAROKKASPLITTER {
     
     input:
     tuple(val(pair_id), path(files))
+    
 
     output:
     tuple(path("NODE_*.gff"), path("NODE_*.gbk"))
-    
+    path("NODE_*.fasta")
+
     script:
   
     """
@@ -96,7 +98,7 @@ process PHAROKKA_PLOTTER {
 
     input: 
     tuple(path(gffFile), path(gbkFile))
-    //path(pharokka_output_dir)
+    path(phage_contig)
 
     output:
     path("*")
@@ -104,7 +106,7 @@ process PHAROKKA_PLOTTER {
     script:
 
     """ 
-    pharokka_plotter.py -i ${phage_contig} -n ${fastaname} --gff ${gffFile} --genbank ${gbkFile} --label_hypotheticals 
+    pharokka_plotter.py -i ${phage_contig} -n ${gffFile.simpleName} --gff ${gffFile} --genbank ${gbkFile} --label_hypotheticals 
     """
     
 }

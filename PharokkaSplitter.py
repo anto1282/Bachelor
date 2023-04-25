@@ -17,10 +17,12 @@ GFFFile.close()
 GFFFile = open(PharokkaGFFFile, "r")
 GBKFile = open(PharokkaGBKFile, "r")
 
+
 FastaFlag = False
 for Nodes in contigs:
     GFFOutFile = open(Nodes + ".gff","w")
     GBKOutfile = open(Nodes + ".gbk", "w")
+    FASTAOutFile = open(Nodes + ".fasta", "w")
     for line in GFFFile:
         if line.split()[0] == Nodes:
             print(line, file = GFFOutFile, end="")
@@ -29,7 +31,8 @@ for Nodes in contigs:
             if line == ">" + Nodes:
                 FastaFlag = True
         if FastaFlag == True:
-            print(line, file =GFFOutFile, end= "")
+            print(line, file = FASTAOutFile, end= "")
+            print(line, file = GFFOutFile, end= "")
     GBKFlag = False
     for line in GBKFile:
         if line.split()[0] == "LOCUS":
