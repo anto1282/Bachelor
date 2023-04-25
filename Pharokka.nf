@@ -80,14 +80,14 @@ process PHAROKKASPLITTER {
 process PHAROKKA_PLOTTER {
     errorStrategy= "finish"
     if (params.server){
-        container = "docker://quay.io/biocontainers/pharokka:1.3.0--hdfd78af_0"
+        container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 1
         memory '2 GB'
         time = 1.h
         // time = 1.m
     }
     else{
-        container = "docker://quay.io/biocontainers/pharokka:1.3.0--hdfd78af_0"
+        container = "docker://quay.io/biocontainers/pharokka:1.3.1-hdfd78af_0"
         //conda 'pharokka'
         cpus 1
         memory '2 GB'
