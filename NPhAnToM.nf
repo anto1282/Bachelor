@@ -77,7 +77,7 @@ workflow{
     // FASTASPLITS_ch.view()
     PHAROKKA_ANNOTATION_ch.view()
     PHAROKKA_SPLITS_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch)
-    PHAROKKA_SPLITS_ch.view()
+    //PHAROKKA_SPLITS_ch.view()
     FASTASPLITS_ch = VIRAL_CONTIGS_ch.splitFasta(file:true)
     FASTANAMES_ch = VIRAL_CONTIGS_ch.splitFasta(record: [id:true]) 
     //FASTASPLITS_ch.view()
