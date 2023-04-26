@@ -52,8 +52,8 @@ done
 
 
 
-export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/zpx817/SingularityTMP"
-export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/zpx817/SingularityTMP"
+export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/$USER/SingularityTMP"
+export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/$USER/SingularityTMP"
 
 
 
