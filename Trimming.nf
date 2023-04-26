@@ -25,6 +25,7 @@ process FASTERQDUMP {
 
     script:
     """
+    prefetch ${sra_nr}
     fasterq-dump ${sra_nr} --split-files
     gzip ${sra_nr}_1.fastq
     gzip ${sra_nr}_2.fastq
