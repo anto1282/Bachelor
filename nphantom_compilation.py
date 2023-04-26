@@ -69,7 +69,7 @@ with open(checkvpredictions, 'r') as file:
 				if completenessscore != "NA":
 					virusdict[line[0]].append(round(float(line[4]),2))
 			except KeyError as error:
-				print("Contig not in dictionary")
+				print("KeyError: Contig name not among predicted viruses found in dictionary")
 		linecount += 1
 
 assemblystatistics = ""
