@@ -1,8 +1,8 @@
 #!/bin/bash
 
 #SBATCH --job-name=BACHBOYS
-#SBATCH --output=/projects/mjolnir1/people/zpx817/BachAssemblies
-#SBATCH --error=/projects/mjolnir1/people/zpx817/errors
+#SBATCH --output=/projects/mjolnir1/people/$USER/BachAssemblies
+#SBATCH --error=/projects/mjolnir1/people/$USER/errors
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem-per-cpu=4G
@@ -10,7 +10,7 @@
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 #SBATCH --mail-type=fail
-#SBATCH --mail-user=s203557@dtu.dk
+#SBATCH --mail-user=$MAILUSER
 
 while [[ $# -gt 0 ]]; do
   case $1 in
