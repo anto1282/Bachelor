@@ -79,5 +79,5 @@ module purge
 module load openjdk/11.0.0
 module load singularity/3.8.0 nextflow miniconda/4.11.0
 
-srun nextflow run NPhAnToM.nf --IDS ${SRRNUMBER} -profile ${PROFILE} ${RESUME} -with-mpi -with-tower --accessToken ${TOWERTOKEN} --minlength ${MINLENGTH} --contigs ${CONTIGS}
+srun nextflow run NPhAnToM.nf --IDS ${SRRNUMBER} -profile ${PROFILE} ${RESUME} -with-mpi -with-tower --accessToken ${TOWERTOKEN} --minLength ${MINLENGTH} --contigs ${CONTIGS}
 
