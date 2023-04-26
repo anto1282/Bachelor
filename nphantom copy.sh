@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 while [[ $# -gt 0 ]]; do
   case $1 in
     -e|--extension)
@@ -39,17 +38,36 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-#SBATCH --job-name=BACHBOYS
-#SBATCH --output=/projects/mjolnir1/people/zpx817/BachAssemblies
-#SBATCH --error=/projects/mjolnir1/people/zpx817/errors
-#SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem-per-cpu=4G
-#SBATCH --time=4:00:00
-#SBATCH --mail-type=begin
-#SBATCH --mail-type=end
-#SBATCH --mail-type=fail
-#SBATCH --mail-user=s203557@dtu.dk
+if [${USER} == "ANG"]
+then
+  #SBATCH --job-name=BACHBOYS
+  #SBATCH --output=/projects/mjolnir1/people/zpx817/BachAssemblies
+  #SBATCH --error=/projects/mjolnir1/people/zpx817/errors
+  #SBATCH --ntasks=1
+  #SBATCH --cpus-per-task=4
+  #SBATCH --mem-per-cpu=4G
+  #SBATCH --time=4:00:00
+  #SBATCH --mail-type=begin
+  #SBATCH --mail-type=end
+  #SBATCH --mail-type=fail
+  #SBATCH --mail-user=s203557@dtu.dk
+elif [${USER}== "TBR"]
+then
+  #SBATCH --job-name=BACHBOYS
+  #SBATCH --output=/projects/mjolnir1/people/qvx631/BachAssemblies
+  #SBATCH --error=/projects/mjolnir1/people/qvx631/errors
+  #SBATCH --ntasks=1
+  #SBATCH --cpus-per-task=4
+  #SBATCH --mem-per-cpu=4G
+  #SBATCH --time=4:00:00
+  #SBATCH --mail-type=begin
+  #SBATCH --mail-type=end
+  #SBATCH --mail-type=fail
+  #SBATCH --mail-user=s203555@dtu.dk
+else
+  echo Please choose either specify --user (TBR or ANG)
+fi
+
 export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
 export NXF_CONDA_ENABLED=true
 
