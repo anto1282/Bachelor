@@ -6,6 +6,9 @@ process IPHOP {
         beforeScript 'module purge'
         conda '/projects/mjolnir1/apps/conda/iphop-1.2.0'
     }
+    else {
+        conda 'iphop'
+    }
    
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
     
