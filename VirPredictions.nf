@@ -9,7 +9,7 @@ process DVF {
         //clusterOptions '--partition=gpuqueue'
             }
     else {
-        conda 'python=3.6 numpy theano=1.0.3 keras=2.2.4 scikit-learn Biopython h5py'
+        conda 'python=3.6 numpy theano=1.0.3 keras=2.2.4 scikit-learn Biopython h5py hcc::deepvirfinder'
         cpus 8
     }
     
@@ -132,7 +132,7 @@ process CHECKV {
         cpus 8
             }
     else {
-        conda 'checkv=1.0.1'
+        conda 'bioconda::checkv=1.0.1'
         cpus 8
     }
     

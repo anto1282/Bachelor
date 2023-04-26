@@ -222,7 +222,7 @@ with open(outputfilename, 'w') as f:
 			host = (virusdict[key][1])
 			length = (virusdict[key][2])
 			completeness = (virusdict[key][3])
-			picturepath = "[id:" + key + "].png"
+			picturepath = key + ".png"
 			DNAtext = "Phage DNA:"
 			contig = virusdict[key][0]
 			buttonstring += (opentab.format(key,key))
