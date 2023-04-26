@@ -184,7 +184,7 @@ process FASTQC{
         conda "fastqc"
     }
     
-    publishDir "${params.outdir}/${sra_nr}/Results"
+    publishDir "${params.outdir}/${pair_id}/Results"
     input:
     val(pair_id)
     path (r1)
