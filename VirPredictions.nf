@@ -22,7 +22,7 @@ process DVF {
 
 
     output:
-    tuple val(pair_id), path("*dvfpred.txt")
+    tuple val(pair_id), path("DVFpredictions.txt")
     
     script:
     if (params.server) {
@@ -37,6 +37,7 @@ process DVF {
         gzip --decompress --force ${contigs} 
         python ${params.DVFPath} -i ${contigs.baseName} -l ${params.minLength} -c ${task.cpus}
         gzip --force ${contigs.baseName} 
+        mv *dvfpred.txt DVFpredictions.txt
         """
     }
     
@@ -64,7 +65,7 @@ process PHAGER {
 
 
     output:
-    tuple val (pair_id), path ("VirusPredictions/${contigs.simpleName}.phager_results.csv.gz")
+    tuple val (pair_id), path ("VirusPredictions/PhagerResults.csv.gz")
     
     
     
@@ -75,6 +76,7 @@ process PHAGER {
         gzip --decompress --force ${contigs} 
         phager.py -c ${params.minLength} -a ${contigs.baseName} -d VirusPredictions -v
         gzip --force ${contigs.baseName}
+        mv VirusPredictions/${contigs.simpleName}.phager_results.csv.gz VirusPredictions/PhagerResults.csv.gz
         """
         }
     
@@ -177,13 +179,13 @@ process SEEKER{
     
 
     output:
-    tuple val(pair_id), path("SeekerFile")
+    tuple val(pair_id), path("SeekerPredictions")
 
 
     script:
     """
     reformat.sh in=${contigsFile} out=Contigs_trimmed.fasta minlength=${params.minLength} overwrite=True
-    predict-metagenome Contigs_trimmed.fasta > SeekerFile
+    predict-metagenome Contigs_trimmed.fasta > SeekerPredictions
     rm Contigs_trimmed.fasta
     """
 

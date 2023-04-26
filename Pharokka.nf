@@ -97,7 +97,7 @@ process PHAROKKA_PLOTTER {
         time = 1.h
     }
     
-    publishDir "${params.outdir}/${pair_id}/Results", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/CompiledResults", mode: 'copy'
 
     input: 
     val(pair_id)
@@ -122,7 +122,7 @@ process RESULTS_COMPILATION {
     time = 1.m
     errorStrategy = 'finish'
     
-    publishDir "${params.outdir}/${pair_id}/Results", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/CompiledResults", mode: 'copy'
 
     
     input:        
@@ -141,12 +141,12 @@ process RESULTS_COMPILATION {
 
     if (params.server) {
     """   
-    python3 ${projectDir}/nphantom_compilation.py compiled_results.html ${viralcontigs} ${iphop_predictions}/Host_prediction_to_genus_m90.csv ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/assemblyStats ${pair_id}
+    python3 ${projectDir}/nphantom_compilation.py compiled_results.html ${viralcontigs} ${iphop_predictions}/Host_prediction_to_genus_m90.csv ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/assemblyStats.txt ${pair_id}
     """
     }
     else {
     """   
-    python3 ${projectDir}/nphantom_compilation.py compiled_results.html ${viralcontigs} NOIPHOP ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/assemblyStats ${pair_id}
+    python3 ${projectDir}/nphantom_compilation.py compiled_results.html ${viralcontigs} NOIPHOP ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/assemblyStats.txt ${pair_id}
     """
     }
 }
