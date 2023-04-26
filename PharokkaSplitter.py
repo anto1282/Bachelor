@@ -12,6 +12,7 @@ for line in GFFFile:
     if line[0:4] == "NODE":
         break
 
+print(contigs)
 GFFFile.close()
 
 GFFFile = open(PharokkaGFFFile, "r")
@@ -28,7 +29,7 @@ for Nodes in contigs:
             print(line, file = GFFOutFile, end="")
         if line[0] == ">":
             FastaFlag = False
-            if line == ">" + Nodes:
+            if line.strip() == ">" + Nodes:
                 FastaFlag = True
         if FastaFlag == True:
             print(line, file = FASTAOutFile, end= "")
@@ -42,6 +43,7 @@ for Nodes in contigs:
         if GBKFlag == True:
             print(line, file = GBKOutfile, end = "")
 
+FASTAOutFile.close()
 GBKFile.close()
 GFFFile.close()
 
