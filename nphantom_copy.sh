@@ -61,10 +61,10 @@ fi
 else
   CONTIGS="contigs"
 fi
+echo ${SRRNUMBER} ${PROFILE} 
 
-
-export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/$USER/SingularityTMP"
-export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/$USER/SingularityTMP"
+export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP"
+export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP"
 
 
 
