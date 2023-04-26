@@ -50,11 +50,11 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [${CONTIGS} == "c"]
+if [ ${CONTIGS} == "c" ]
 then
   CONTIGS="contigs"
 fi
-elif [${CONTIGS} == "s"]
+elif [ ${CONTIGS} == "s" ]
 then
   CONTIGS="scaffolds"
 fi
