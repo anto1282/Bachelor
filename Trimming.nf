@@ -150,7 +150,7 @@ process KRAKEN{
 }
 
 process TAXREMOVE{
-
+3
     cpus 1
     memory '500 MB'
 
