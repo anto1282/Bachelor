@@ -1,8 +1,8 @@
 #!/bin/bash
 
-#SBATCH --job-name=BACHBOYS
-#SBATCH --output=/projects/mjolnir1/people/zpx817/BachAssemblies
-#SBATCH --error=/projects/mjolnir1/people/zpx817/errors
+#SBATCH --job-name=NPhAnToM_%j
+#SBATCH --output=/projects/mjolnir1/people/%u/BachAssemblies_%j_%a
+#SBATCH --error=/projects/mjolnir1/people/%u/errors_%j_%a
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem-per-cpu=4G
