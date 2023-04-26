@@ -8,7 +8,7 @@ process PHAROKKA {
         cpus 8
     }
     else{
-        conda 'pharokka=1.2.1'
+        conda 'pharokka=1.3.1'
         //container = "shub://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 8
     }
