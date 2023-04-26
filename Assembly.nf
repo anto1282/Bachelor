@@ -21,7 +21,7 @@ process SPADES {
     }
     
     
-    publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
     
     input: 
@@ -32,16 +32,15 @@ process SPADES {
     val phred
 
     output:
-    tuple val(pair_id), path ("${params.contigs}.fasta.gz")
+    tuple val(pair_id), path ("Assembly/${params.contigs}.fasta.gz")
 
     
     script:
     """
     gzip -d -f ${r1}
     gzip -d -f ${r2}
-    spades.py -o Assembly${pair_id} -1 ${r1.baseName} -2 ${r2.baseName} --meta --threads ${task.cpus} --memory ${task.cpus + (8 * task.attempt)} --phred-offset ${phred} 
-    gzip -n Assembly${pair_id}/${params.contigs}.fasta   
-    mv Assembly${pair_id}/${params.contigs}.fasta.gz ${params.contigs}.fasta.gz
+    spades.py -o Assembly -1 ${r1.baseName} -2 ${r2.baseName} --meta --threads ${task.cpus} --memory ${task.cpus + (8 * task.attempt)} --phred-offset ${phred} 
+    gzip -n Assembly/${params.contigs}.fasta   
     gzip ${r1.baseName}
     gzip ${r2.baseName}
     """
@@ -85,7 +84,7 @@ process N50 {
         cpus 4
         memory '4 GB'
     }
-    publishDir "${params.outdir}/${pair_id}/Assembly", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
 
 
@@ -99,7 +98,7 @@ process N50 {
     script:
     """
     gzip -f -d ${contigs_fasta}
-    stats.sh in=${contigs_fasta.baseName} >> ${projectDir}/${params.outdir}/${pair_id}/assemblyStats
+    stats.sh in=${contigs_fasta.baseName} >> ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats
     gzip ${contigs_fasta.baseName}
     """
 

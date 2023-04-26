@@ -13,7 +13,7 @@ process DVF {
         cpus 8
     }
     
-    publishDir "${params.outdir}/${pair_id}/DVFResults", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/VirusPredictions/", mode: 'copy'
 
 
     input: 
@@ -55,7 +55,7 @@ process PHAGER {
         cpus 8
     }
     
-    publishDir "${params.outdir}/${pair_id}/PHAGERResults", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}", mode: 'copy'
 
 
     input: 
@@ -63,7 +63,7 @@ process PHAGER {
 
 
     output:
-    tuple val (pair_id), path ("${pair_id}_phagerresults/${contigs.simpleName}.phager_results.csv.gz")
+    tuple val (pair_id), path ("VirusPredictions/${contigs.simpleName}.phager_results.csv.gz")
     
     
     
@@ -72,7 +72,7 @@ process PHAGER {
         """
         echo $PATH
         gzip --decompress --force ${contigs} 
-        phager.py -c ${params.minLength} -a ${contigs.baseName} -d ${pair_id}_phagerresults -v
+        phager.py -c ${params.minLength} -a ${contigs.baseName} -d VirusPredictions -v
         gzip --force ${contigs.baseName}
         """
         }
@@ -145,12 +145,12 @@ process CHECKV {
 
     output:
     
-    path("CHECKV_RESULTS_${pair_id}/")
+    path("CheckV/")
     
     script:
     """
     
-    checkv end_to_end ${viralcontigs} CHECKV_RESULTS_${pair_id} -t ${task.cpus} -d ${params.checkVDB}
+    checkv end_to_end ${viralcontigs} CheckV -t ${task.cpus} -d ${params.checkVDB}
     
     """
 }
@@ -168,7 +168,7 @@ process SEEKER{
         cpus 8
     }
 
-    publishDir "${params.outdir}/${pair_id}/SEEKER", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/VirusPredictions", mode: 'copy'
 
     
     input:
@@ -189,7 +189,7 @@ process SEEKER{
 }
 
 process VIREXTRACTOR {
-    publishDir "${params.outdir}/${pair_id}/ViralContigs", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/VirusPredictions", mode: 'copy'
 
     
     input:
@@ -218,7 +218,7 @@ process VIREXTRACTOR {
 process DEEPVIREXTRACTOR {
     //Used instead of virextractor when only deepvirfinder is run
     
-    publishDir "${params.outdir}/${pair_id}/ViralContigs", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/VirusPredictions", mode: 'copy'
 
     
     input:
@@ -234,7 +234,7 @@ process DEEPVIREXTRACTOR {
     script:
     """
     gzip -d -f ${contigsFile}
-    python3 ${projectDir}/DeepVirExtractor.py ${DVFcontigs} ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.50
+    python3 ${projectDir}/DeepVirExtractor.py ${DVFcontigs} ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.94
     gzip -f ${contigsFile.baseName}
     """
 }
