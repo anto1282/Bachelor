@@ -2,11 +2,6 @@
 
 while [[ $# -gt 0 ]]; do
   case $1 in
-    -e|--extension)
-      EXTENSION="$2"
-      shift # past argument
-      shift # past value
-      ;;
     --SRR)
       SRRNUMBER="$2"
       shift # past argument
