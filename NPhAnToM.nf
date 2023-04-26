@@ -50,9 +50,6 @@ workflow{
         
         // EXTRACTS AND JOINS VIRAL PHAGE CONTIGS FROM THE THREE VIRUS PREDICTION TOOLS
         VIRAL_CONTIGS_ch = VIREXTRACTOR(ASSEMBLY_ch, DVF_ch, SEEKER_ch,PHAGER_ch)
-
-        // HOSTPREDICTION TOOL
-        HOSTPREDICTION_ch = IPHOP(VIRAL_CONTIGS_ch) 
         
         //ANNOTATION OF VIRAL CONTIGS USING PHAROKKA
         PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch)
@@ -70,6 +67,13 @@ workflow{
 
         
     }
+
+    if (params.iphopDB != false) {
+        // If a iphop database path is provided, run the hostprediction
+        // HOSTPREDICTION TOOL
+        HOSTPREDICTION_ch = IPHOP(VIRAL_CONTIGS_ch) 
+    }
+    
     
     
     // CREATING PLOTS OF EACH PHAGE
@@ -88,7 +92,7 @@ workflow{
     // CHECKS THE QUALITY OF THE VIRAL CONTIGS
     CHECKV_ch = CHECKV(VIRAL_CONTIGS_ch)
 
-    if (params.server) {
+    if (params.iphopDB != false) {
         RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch, HOSTPREDICTION_ch, CHECKV_ch)
     }
     else {
