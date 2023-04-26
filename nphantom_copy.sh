@@ -50,6 +50,12 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
+if [ ${minlength} -lt 1000 ]
+then 
+  echo minlength must be more than 1000, exiting
+  exit 1
+fi
+
 if [ ${CONTIGS} == "c" ]
 then
   CONTIGS="contigs"
