@@ -67,7 +67,7 @@ process PHAROKKASPLITTER {
     
 
     output:
-    val(pair_id)
+    
     path("NODE_*.gff") 
     path("NODE_*.gbk")
     path("NODE_*.fasta")
@@ -97,10 +97,10 @@ process PHAROKKA_PLOTTER {
         time = 1.h
     }
     
-    publishDir "${params.outdir}/${pair_id}/CompiledResults", mode: 'copy'
+    publishDir "${params.outdir}/${params.IDS}/CompiledResults", mode: 'copy'
 
     input: 
-    val(pair_id)
+    
     path(gffFile)
     path(gbkFile)
     path(phage_contig)

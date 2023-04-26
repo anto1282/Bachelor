@@ -86,7 +86,7 @@ workflow{
     //FASTASPLITS_ch.view()
     //FASTANAMES_ch.view()
     
-    PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch[0], PHAROKKA_SPLITS_ch[1].flatten(), PHAROKKA_SPLITS_ch[2].flatten(),PHAROKKA_SPLITS_ch[3].flatten())
+    PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch[0].flatten(), PHAROKKA_SPLITS_ch[1].flatten(), PHAROKKA_SPLITS_ch[2].flatten())
 
     
     // CHECKS THE QUALITY OF THE VIRAL CONTIGS
