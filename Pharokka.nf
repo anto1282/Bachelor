@@ -8,7 +8,8 @@ process PHAROKKA {
         cpus 8
     }
     else{
-        conda 'pharokka=1.3.1'
+        conda 'conda-forge::pycirclize bioconda::pharokka=1.3.1 mash==2.2 bcbio-gff'
+        //conda '/home/tbr/miniconda3/envs/PHAROKKA'
         //container = "shub://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 8
     }
@@ -88,7 +89,7 @@ process PHAROKKA_PLOTTER {
         // time = 1.m
     }
     else{
-        container = "docker://quay.io/biocontainers/pharokka:1.3.1-hdfd78af_0"
+        conda "conda-forge::pycirclize bioconda::pharokka=1.3.1 mash==2.2 bcbio-gff"
         //conda 'pharokka'
         cpus 1
         memory '2 GB'
