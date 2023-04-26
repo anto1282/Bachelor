@@ -43,11 +43,6 @@ while [[ $# -gt 0 ]]; do
         RESUME=-resume
         shift
         ;;
-    --default)
-      DEFAULT=YES
-      shift # past argument
-      ;;
-
     -*|--*)
       echo "Unknown option $1"
       exit 1
