@@ -51,6 +51,8 @@ then
   #SBATCH --mail-type=end
   #SBATCH --mail-type=fail
   #SBATCH --mail-user=s203557@dtu.dk
+  export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/zpx817/SingularityTMP"
+  export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/zpx817/SingularityTMP"
 elif [${USER}== "TBR"]
 then
   #SBATCH --job-name=BACHBOYS
@@ -64,8 +66,10 @@ then
   #SBATCH --mail-type=end
   #SBATCH --mail-type=fail
   #SBATCH --mail-user=s203555@dtu.dk
+  export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/qvx631/SingularityTMP"
+  export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/qvx631/SingularityTMP"
 else
-  echo Please choose either specify --user (TBR or ANG)
+  echo Please specify --user (TBR or ANG)
 fi
 
 export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
@@ -74,15 +78,6 @@ export NXF_CONDA_ENABLED=true
 module purge
 module load openjdk/11.0.0
 module load singularity/3.8.0 nextflow miniconda/4.11.0
-
-#export PATH="/opt/software/miniconda/py39_23.1/bin:$PATH"
-export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/zpx817/SingularityTMP"
-export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/zpx817/SingularityTMP"
-
-
-POSITIONAL_ARGS=()
-
-
 
 srun nextflow run NPhAnToM.nf --IDS ${SRRNUMBER} -profile ${PROFILE} ${RESUME} -with-mpi -with-tower --accessToken ${TOWERTOKEN} 
 
