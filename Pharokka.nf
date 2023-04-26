@@ -100,7 +100,7 @@ process PHAROKKA_PLOTTER {
     publishDir "${params.outdir}/${pair_id}/Results", mode: 'copy'
 
     input: 
-    val${pair_id}
+    val{pair_id}
     path(gffFile)
     path(gbkFile)
     path(phage_contig)
