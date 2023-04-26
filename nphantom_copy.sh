@@ -1,16 +1,16 @@
 #!/bin/bash
 
 #SBATCH --job-name=BACHBOYS
-#SBATCH --output=/projects/mjolnir1/people/$USER/BachAssemblies
-#SBATCH --error=/projects/mjolnir1/people/$USER/errors
+#SBATCH --output=/projects/mjolnir1/people/zpx817/BachAssemblies
+#SBATCH --error=/projects/mjolnir1/people/zpx817/errors
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=4
-#SBATCH --mem-per-cpu=4G
-#SBATCH --time=4:00:00
+#SBATCH --cpus-per-task=1
+#SBATCH --mem-per-cpu=1G
+#SBATCH --time=0:30:00
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 #SBATCH --mail-type=fail
-#SBATCH --mail-user=$MAILUSER
+#SBATCH --mail-user=s203557@dtu.dk
 
 while [[ $# -gt 0 ]]; do
   case $1 in
@@ -61,10 +61,10 @@ fi
 else
   CONTIGS="contigs"
 fi
+echo ${SRRNUMBER} ${PROFILE} 
 
-
-export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/$USER/SingularityTMP"
-export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/$USER/SingularityTMP"
+export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP"
+export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP"
 
 
 
