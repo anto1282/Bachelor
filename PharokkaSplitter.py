@@ -24,6 +24,8 @@ for Nodes in contigs:
     GFFOutFile = open(Nodes + ".gff","w")
     GBKOutfile = open(Nodes + ".gbk", "w")
     FASTAOutFile = open(Nodes + ".fasta", "w")
+    GFFFile = open(PharokkaGFFFile, "r")
+    GBKFile = open(PharokkaGBKFile, "r")
     for line in GFFFile:
         if line.split()[0] == Nodes:
             print(line, file = GFFOutFile, end="")
@@ -42,6 +44,8 @@ for Nodes in contigs:
                  GBKFlag = True
         if GBKFlag == True:
             print(line, file = GBKOutfile, end = "")
+    GBKFile.close()
+    GFFFile.close()
 
 FASTAOutFile.close()
 GBKFile.close()
