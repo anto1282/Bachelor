@@ -53,11 +53,9 @@ done
 if [ ${CONTIGS} == "c" ]
 then
   CONTIGS="contigs"
-fi
 elif [ ${CONTIGS} == "s" ]
 then
   CONTIGS="scaffolds"
-fi
 else
   CONTIGS="contigs"
 fi
