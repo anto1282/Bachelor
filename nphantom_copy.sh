@@ -1,12 +1,12 @@
 #!/bin/bash
 
-#SBATCH --job-name=BACHBOYS
-#SBATCH --output=/projects/mjolnir1/people/zpx817/BachAssemblies
-#SBATCH --error=/projects/mjolnir1/people/zpx817/errors
+#SBATCH --job-name=NPhAnToM_%j
+#SBATCH --output=/projects/mjolnir1/people/%u/BachAssemblies_%j_%a
+#SBATCH --error=/projects/mjolnir1/people/%u/errors_%j_%a
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=1
-#SBATCH --mem-per-cpu=1G
-#SBATCH --time=0:30:00
+#SBATCH --cpus-per-task=4
+#SBATCH --mem-per-cpu=4G
+#SBATCH --time=5:00:00
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 #SBATCH --mail-type=fail
@@ -50,14 +50,12 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [${CONTIGS} == "c"]
+if [ ${CONTIGS} == "c" ]
 then
   CONTIGS="contigs"
-fi
-elif [${CONTIGS} == "s"]
+elif [ ${CONTIGS} == "s" ]
 then
   CONTIGS="scaffolds"
-fi
 else
   CONTIGS="contigs"
 fi
