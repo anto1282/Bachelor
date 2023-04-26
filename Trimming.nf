@@ -12,7 +12,7 @@ process FASTERQDUMP {
     label 'shortTask'
     
     
-    publishDir "${params.outdir}/${sra_nr}/reads"
+    publishDir "${params.outdir}/${sra_nr}/Reads"
 
     input: 
     val sra_nr
@@ -63,8 +63,8 @@ process TRIM {
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
     fastp -i read1_tmp -I read2_tmp -o ${r1.simpleName}_trimmed.fastq  -O ${r2.simpleName}_trimmed.fastq  -W 5 -M 30 -5 -3 -e 25 -f 15 -t 15
     
-    mkdir -p ${projectDir}/${params.outdir}/${pair_id}/results/
-    mv fastp.html ${projectDir}/${params.outdir}/${pair_id}/results/fastp.html
+    mkdir -p ${projectDir}/${params.outdir}/${pair_id}/Results/
+    mv fastp.html ${projectDir}/${params.outdir}/${pair_id}/Results/fastp.html
     
     gzip ${r1.simpleName}_trimmed.fastq
     gzip ${r2.simpleName}_trimmed.fastq
@@ -77,8 +77,8 @@ process TRIM {
     AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
     fastp -i read1_tmp -I read2_tmp -o ${r1.simpleName}_trimmed.fastq  -O ${r2.simpleName}_trimmed.fastq  -W 5 -M 30 -5 -3 -e 30 -f 15 -t 15 
     
-    mkdir -p ${projectDir}/${params.outdir}/${pair_id}/results/
-    mv fastp.html ${projectDir}/${params.outdir}/${pair_id}/results/fastp.html
+    mkdir -p ${projectDir}/${params.outdir}/${pair_id}/Results/
+    mv fastp.html ${projectDir}/${params.outdir}/${pair_id}/Results/fastp.html
     
     gzip ${r1.simpleName}_trimmed.fastq
     gzip ${r2.simpleName}_trimmed.fastq
@@ -123,7 +123,7 @@ process KRAKEN{
         gzip -d -f ${r1}
         gzip -d -f ${r2}
         kraken2 -d ${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
-        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${projectDir}/${params.outdir}/${pair_id}/assemblyStats
+        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats
         
         rm ${r1.baseName}
         rm ${r2.baseName} 
@@ -136,7 +136,7 @@ process KRAKEN{
         gzip -d -f ${r1}
         gzip -d -f ${r2}
         kraken2 -d ${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
-        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${projectDir}/${params.outdir}/${pair_id}/assemblyStats  
+        python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats
         rm ${r1.baseName}
         rm ${r2.baseName} 
         gzip ${pair_id}_1.TrimmedSubNoEu.fastq
@@ -184,17 +184,18 @@ process FASTQC{
         conda "fastqc"
     }
     
-
+    publishDir "${params.outdir}/${sra_nr}/Results"
     input:
     val(pair_id)
     path (r1)
     path (r2)
 
+    output:
+    path("*.html")
 
     script:    
     """ 
     fastqc ${r1} ${r2}
-    mv *.html ${projectDir}/${params.outdir}/${pair_id}/results/
     """
 
 }

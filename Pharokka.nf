@@ -21,14 +21,14 @@ process PHAROKKA {
 
     
     output:
-    tuple(val(pair_id), path("pharokka_${pair_id}/pharokka.g*"))
-    
+    tuple(val(pair_id), path("Pharokka/pharokka.g*"))
+    path("Pharokka/")
     
     script:
 
     """
     
-    pharokka.py -i ${viralcontigs} -o pharokka_${pair_id} -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
+    pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
     
     """
     
@@ -97,7 +97,7 @@ process PHAROKKA_PLOTTER {
         time = 1.h
     }
     
-    publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/Results", mode: 'copy'
 
     input: 
     val${pair_id}
@@ -122,7 +122,7 @@ process RESULTS_COMPILATION {
     time = 1.m
     errorStrategy = 'finish'
     
-    publishDir "${params.outdir}/${pair_id}/results", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}/Results", mode: 'copy'
 
     
     input:        

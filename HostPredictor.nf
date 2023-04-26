@@ -7,7 +7,7 @@ process IPHOP {
         conda '/projects/mjolnir1/apps/conda/iphop-1.2.0'
     }
    
-    publishDir "${params.outdir}/${pair_id}/IPHOPPREDICTIONS", mode: 'copy'
+    publishDir "${params.outdir}/${pair_id}", mode: 'copy'
     
     cpus 16
     memory '30 GB'
@@ -17,7 +17,7 @@ process IPHOP {
     tuple val(pair_id), path(viral_contigs_fasta)
    
     output:
-    path ("iphop_prediction_${pair_id}/")
+    path ("IphopPrediction/")
 
     
     script:
@@ -33,7 +33,7 @@ process IPHOP {
     echo \$PERL5LIB
     
     
-    iphop predict --fa_file ${viral_contigs_fasta} --db_dir ${params.iphopDB} --out_dir iphop_prediction_${pair_id} --num_threads ${task.cpus}
+    iphop predict --fa_file ${viral_contigs_fasta} --db_dir ${params.iphopDB} --out_dir IphopPrediction/ --num_threads ${task.cpus}
     
     """
     }
