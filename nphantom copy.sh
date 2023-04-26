@@ -59,13 +59,13 @@ if [${CONTIGS} == "c"]
 then
   CONTIGS="contigs"
 fi
-elif [${CONTIGS} == "c"]
+elif [${CONTIGS} == "s"]
 then
-  CONTIGS="contigs"
+  CONTIGS="scaffolds"
 fi
 else
   CONTIGS="contigs"
-
+fi
 
 
 export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/$USER/SingularityTMP"
