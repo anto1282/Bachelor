@@ -6,7 +6,7 @@
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
 #SBATCH --mem-per-cpu=4G
-#SBATCH --time=5:00:00
+#SBATCH --time=10:00:00
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 #SBATCH --mail-type=fail
@@ -50,7 +50,7 @@ while [[ $# -gt 0 ]]; do
   esac
 done
 
-if [ ${minlength} -lt 1000 ]
+if [ ${minlength} < 1000 ]
 then 
   echo minlength must be more than 1000, exiting
   exit 1
@@ -68,7 +68,7 @@ fi
 echo ${SRRNUMBER} ${PROFILE} 
 
 export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP"
-export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP"
+export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/${USER}/SingulquarityTMP"
 
 
 
@@ -78,6 +78,7 @@ export NXF_CONDA_ENABLED=true
 module purge
 module load openjdk/11.0.0
 module load singularity/3.8.0 nextflow miniconda/4.11.0
+
 
 srun nextflow run NPhAnToM.nf --IDS ${SRRNUMBER} -profile ${PROFILE} ${RESUME} -with-mpi -with-tower --accessToken ${TOWERTOKEN} --minLength ${MINLENGTH} --contigs ${CONTIGS}
 
