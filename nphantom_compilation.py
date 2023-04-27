@@ -74,9 +74,31 @@ with open(checkvpredictions, 'r') as file:
 
 assemblystatistics = ""
 with open(assemblystats,'r') as file:
+	flag = False
 	for line in file:
-		assemblystatistics += line
+		if line.startswith("A"):
+			linesplit = line.strip().split()
+			line = """
+			<table>
+				<tr>
+			"""
+			for elem in linesplit:
+				line += "<th>" + elem + "</th>"
+			line += "</tr>"
+			flag = True
+		elif flag:
+			linesplit = line.strip().split()
+			line = """<tr>
+			"""
+			for elem in linesplit:
+				line += "<td>" + elem + "</td>"
+			line += """
+				</tr>
+			</table>"""
+			flag = False
 
+		assemblystatistics += line
+		
 
 webpage = """
 <!DOCTYPE html>
@@ -206,7 +228,7 @@ with open(outputfilename, 'w') as f:
 	#Creating a tab for statistics
 	buttonstring += opentab.format("Statistics","Assembly Statistics")
 
-	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics.replace("\n","<br>").replace(" ","    "))
+	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics.replace("\n","<br>"))
 	
 
 	

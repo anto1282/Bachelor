@@ -30,6 +30,7 @@ process DVF {
         gzip --decompress --force ${contigs} 
         ${params.DVFPath} -i ${contigs.baseName} -l ${params.minLength} -c ${task.cpus}
         gzip --force ${contigs.baseName} 
+        mv *dvfpred.txt DVFpredictions.txt
         """
             }
     else {

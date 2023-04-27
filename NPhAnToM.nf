@@ -79,7 +79,7 @@ workflow{
     // CREATING PLOTS OF EACH PHAGE
     // FASTASPLITS_ch = (FASTASPLITTER(VIRAL_CONTIGS_ch))
     // FASTASPLITS_ch.view()
-    PHAROKKA_ANNOTATION_ch[0].view()
+    
     PHAROKKA_SPLITS_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch[0]) 
     FASTASPLITS_ch = VIRAL_CONTIGS_ch.splitFasta(file:true)
     FASTANAMES_ch = VIRAL_CONTIGS_ch.splitFasta(record: [id:true]) 
