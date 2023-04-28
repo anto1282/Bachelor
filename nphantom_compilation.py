@@ -87,7 +87,8 @@ with open(assemblystats,'r') as file:
 			"""
 			for elem in linesplit:
 				line += "<th>" + elem + "</th>"
-			line += "</tr>"
+			line += """</tr>
+			"""
 			ACGTflag = True
 		elif ACGTflag:
 			linesplit = line.strip().split()
@@ -109,7 +110,8 @@ with open(assemblystats,'r') as file:
 			"""
 			for elem in linesplit:
 				line += "<td>" + elem + "</td>"
-			line += "</tr>"
+			line += """</tr>
+			"""
 		elif line.startswith("%") and mainflag:
 			
 			linesplit = line.strip().split(":")
@@ -126,7 +128,8 @@ with open(assemblystats,'r') as file:
 			line = "<tr>"
 			for elem in linesplit:
 				line += "<td>" + elem + "</td>"
-			line += "</tr>"
+			line += """</tr>
+			"""
 		elif line.startswith("Minimum"):
 			statsflag = True
 			linesplit = line.strip().split()
@@ -142,7 +145,8 @@ with open(assemblystats,'r') as file:
 			line = "<tr>"
 			for elem in linesplit:
 				line += "<th>" + elem + "</th>"
-			line += "</tr>"
+			line += """</tr>
+			"""
 		
 		elif statsflag and "KB" in line and line.split()[0] == "25":
 			linesplit = line.strip().split()
@@ -162,6 +166,7 @@ with open(assemblystats,'r') as file:
 				line += "<td>" + elem + "</td>"
 			line += """
 				</tr>
+
 				"""
 		elif statsflag:
 			linesplit = line.strip().split()
@@ -170,6 +175,7 @@ with open(assemblystats,'r') as file:
 				line += "<td>" + elem + "</td>"
 			line += """
 				</tr>
+
 				"""
 		#print(line)
 		
