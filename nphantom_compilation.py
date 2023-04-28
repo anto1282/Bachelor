@@ -32,7 +32,8 @@ with open(predictedviruses, 'r') as fasta_file:
 		else:
 			sequence += line 
 	virusdict[header] = [sequence]
-
+for key in virusdict:
+	print(key)
 
 if (iphoppredictions != "NOIPHOP"):
 	with open(iphoppredictions, 'r') as file:
