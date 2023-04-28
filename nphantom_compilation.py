@@ -303,7 +303,7 @@ with open(outputfilename, 'w') as f:
 	#Creating a tab for statistics
 	buttonstring += opentab.format("Statistics","Assembly Statistics")
 
-	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics.replace("\n","<br>"))
+	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics)
 	
 
 	
