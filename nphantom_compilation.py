@@ -327,9 +327,9 @@ with open(outputfilename, 'w') as f:
 	
 
 	
-	buttonstring += ("""<button onclick="window.location.href = 'fastp.html';">Fastp output</button>'""")
-	buttonstring += ("""<button onclick="window.location.href = '{}_1_trimmed_fastqc.html';">Quality of Read1</button>'""").format(SRA_nr)
-	buttonstring += ("""<button onclick="window.location.href = '{}_2_trimmed_fastqc.html';">Quality of Read2</button>'""").format(SRA_nr)
+	buttonstring += ("""<button onclick="window.location.href = 'fastp.html';">Fastp output</button>""")
+	buttonstring += ("""<button onclick="window.location.href = '{}_1_trimmed_fastqc.html';">Quality of Read1</button>""").format(SRA_nr)
+	buttonstring += ("""<button onclick="window.location.href = '{}_2_trimmed_fastqc.html';">Quality of Read2</button>""").format(SRA_nr)
 
 	#Creating the tabs for the phages
 	for key in virusdict:
