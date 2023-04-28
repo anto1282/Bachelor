@@ -62,6 +62,7 @@ workflow{
     }
 
     else{
+    VIRAL_CONTIGS_ch[1].view()
     //ANNOTATION OF VIRAL CONTIGS USING PHAROKKA
     PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch)
 
