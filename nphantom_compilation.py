@@ -297,7 +297,7 @@ opentab = """
 tabs = """
 <div id="{}" class="tabcontent">
 	<h1>{}</h1>
-	<p><strong>Host taxonomy:</strong> {}</p>
+	<p><strong>Predicted host taxonomy:</strong> {}</p>
     <p><strong>Length:</strong> {} bp</p>
     <p><strong>Phage completeness (from CheckV):</strong> {} %</p>
 	<p><strong>Illustration of annotated phage:</strong></p>
@@ -343,6 +343,9 @@ with open(outputfilename, 'w') as f:
 		print("Contig info to HTML:", key)
 		#print(virusdict[key])
 		#if (len(virusdict[key]) == 4):
+		host = ""
+		for taxonomy in virusdict[key][1]:
+			host += taxonomy + "<br>"
 		host = (virusdict[key][1])
 		print(host)
 		length = (virusdict[key][2])
