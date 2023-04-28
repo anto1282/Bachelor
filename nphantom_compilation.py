@@ -12,10 +12,11 @@ import sys
 
 outputfilename = str(sys.argv[1])
 predictedviruses = str(sys.argv[2])
-iphoppredictions = str(sys.argv[3])
-checkvpredictions = str(sys.argv[4])
-assemblystats = str(sys.argv[5])
-SRA_nr = str(sys.argv[6])
+iphopGenusPredictions = str(sys.argv[3])
+iphopGenomePredictions = str(sys.argv[4])
+checkvpredictions = str(sys.argv[5])
+assemblystats = str(sys.argv[6])
+SRA_nr = str(sys.argv[7])
 
 virusdict = dict()
 with open(predictedviruses, 'r') as fasta_file:
@@ -36,33 +37,35 @@ with open(predictedviruses, 'r') as fasta_file:
 for key in virusdict:
 	print("Contigs in predicted viruses file:", key)
 
-if (iphoppredictions != "NOIPHOP"):
-	#Extracts taxonomic information from the IPHOP results file and appends it to the virusdict
-	with open(iphoppredictions, 'r') as file:
-		linecount = 0 
-		for line in file:
-			if linecount > 0:
-				line = line.strip().split(',')
-				hostgenus = line[2].split(";")
-				hostgenus_formatted = ""
-				
-				for element in hostgenus:
+if (iphopGenusPredictions != "NOIPHOP"):
+	for filename in [iphopGenusPredictions,iphopGenomePredictions]:
+		#Extracts taxonomic information from the IPHOP results files and appends it to the virusdict
+		with open(filename, 'r') as file:
+			linecount = 0 
+			for line in file:
+				if linecount > 0:
+					line = line.strip().split(',')
+					hostgenus = line[2].split(";")
+					hostgenus_formatted = ""
 					
-					hostgenus_formatted += element[3:] + "; "
-				#Creates set with the host genus information
-				if len(virusdict[line[0]]) == 1:
-					virusdict[line[0]].append({hostgenus_formatted.strip("; ")})
-				
-				else:
-					virusdict[line[0]][1].add(hostgenus_formatted.strip("; "))
-				
-			linecount += 1
-	for key in virusdict:
-		if len(virusdict[key]) == 1:
-			virusdict[key].append(("No taxonomic information found for this contig"))
-else:
-	for key in virusdict:
-		virusdict[key].append("No taxonomic information, since IPHOP wasn't run")
+					for element in hostgenus:
+						
+						hostgenus_formatted += element[3:] + "; "
+					#Creates set with the host genus information
+					if len(virusdict[line[0]]) == 1:
+						virusdict[line[0]].append({hostgenus_formatted.strip("; ")})
+					
+					else:
+						virusdict[line[0]][1].add(hostgenus_formatted.strip("; "))
+					
+				linecount += 1
+		for key in virusdict:
+			if len(virusdict[key]) == 1:
+				virusdict[key].append(("No taxonomic information found for this contig"))
+	else:
+		for key in virusdict:
+			virusdict[key].append("No taxonomic information, since IPHOP wasn't run")
+
 
 with open(checkvpredictions, 'r') as file:
 	#Extracts phage completeness score from the checkV file as well as the length of the contig
