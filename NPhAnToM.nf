@@ -49,10 +49,7 @@ workflow{
         PHAGER_ch = PHAGER(ASSEMBLY_ch)
         
         // EXTRACTS AND JOINS VIRAL PHAGE CONTIGS FROM THE THREE VIRUS PREDICTION TOOLS
-        VIRAL_CONTIGS_ch = VIREXTRACTOR(ASSEMBLY_ch, DVF_ch, SEEKER_ch,PHAGER_ch)
-        
-        //ANNOTATION OF VIRAL CONTIGS USING PHAROKKA
-        PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch)
+        VIRAL_CONTIGS_ch = VIREXTRACTOR(ASSEMBLY_ch, DVF_ch, SEEKER_ch,PHAGER_ch)   
     }
     else {
         // Simpler virus prediction using only deepvirfinder, when running locally
@@ -60,13 +57,15 @@ workflow{
 
         DVF_ch = DVF(ASSEMBLY_ch)
         VIRAL_CONTIGS_ch = DEEPVIREXTRACTOR(ASSEMBLY_ch,DVF_ch)
-        //DEEPVIREXTRACTOR NEEDS TO BE ADDED
-
-        //ANNOTATION OF VIRAL CONTIGS USING PHAROKKA
-        PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch)
-
-        
     }
+
+    if (VIRAL_CONTIGS_ch[1] == "0"){
+        System.err.println "No Viral Contigs found. Please choose another dataset or reduce cutoff values (--minlength, --cutoff)"
+    }
+    else{
+    //ANNOTATION OF VIRAL CONTIGS USING PHAROKKA
+    PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch)
+
 
     if (params.iphopDB != false) {
         // If a iphop database path is provided, run the hostprediction
@@ -92,4 +91,5 @@ workflow{
         RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch[0], EMPTYFILE_ch, CHECKV_ch)
     }
 
+    }   
 }
