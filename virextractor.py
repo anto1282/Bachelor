@@ -106,7 +106,7 @@ with open(contigfile, 'r') as file:
         
 
 
-print(len(final_viral_set))
+print(len(final_viral_set), end= "")
 
 virusoutfile.close()
 
