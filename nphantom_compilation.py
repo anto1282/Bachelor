@@ -140,7 +140,7 @@ with open(assemblystats,'r') as file:
 				line += "<th>" + elem + "</th>"
 			line += "</tr>"
 		
-		elif statsflag and "KB" in line and line.startswith("25 KB"):
+		elif statsflag and "KB" in line and line.startswith("25"):
 			linesplit = line.strip().split()
 			line = "<tr>" + "<td>" + linesplit[0:2] + "</td>"
 			for elem in linesplit[2:]:
@@ -149,6 +149,7 @@ with open(assemblystats,'r') as file:
 					</tr>
 				</table>
 				"""
+			statsflag = False
 		
 		elif statsflag and "KB" in line:
 			linesplit = line.strip().split()
