@@ -99,8 +99,9 @@ with open(assemblystats,'r') as file:
 				</tr>
 			</table>"""
 			ACGTflag = False
-			mainflag = True
+			
 		elif line.startswith("Main") and not mainflag :
+			mainflag = True
 			linesplit = line.strip().split(":")
 			line = """
 			<table>
