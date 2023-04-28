@@ -47,10 +47,6 @@ for Nodes in contigs:
             print(line, file = GBKOutfile, end = "")
     GBKFile.close()
     GFFFile.close()
-    if len(contigs) <= 1:
-        print(1)
-    else:
-        print(0)
 
 FASTAOutFile.close()
 GBKFile.close()

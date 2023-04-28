@@ -74,7 +74,6 @@ process PHAROKKASPLITTER {
     path("NODE_*.gff") 
     path("NODE_*.gbk")
     path("NODE_*.fasta")
-    stdout
 
     script:
   

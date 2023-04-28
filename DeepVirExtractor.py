@@ -30,9 +30,7 @@ with open(predfile,'r') as file:
             
         linecount += 1
 
-print(linecount - 1, "total entries.")
-print(len(virusnames), "fasta entries passed cutoff.")
-
+print(len(virusnames))
 virusoutfile = open(virusfile,"w")
 nonvirusoutfile = open(nonvirusfile,'w')
 
