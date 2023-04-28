@@ -339,6 +339,7 @@ with open(outputfilename, 'w') as f:
 		host = (virusdict[key][1])
 		length = (virusdict[key][2])
 		completeness = (virusdict[key][3])
+		print(length, completeness)
 		picturepath = key + ".png"
 		DNAtext = "Phage DNA:"
 		contig = virusdict[key][0]
