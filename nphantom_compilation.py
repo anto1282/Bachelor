@@ -113,6 +113,7 @@ with open(assemblystats,'r') as file:
 		elif line.startswith("%") and mainflag:
 			
 			linesplit = line.strip().split(":")
+			line = "<tr>"
 			for elem in linesplit:
 				line += "<td>" + elem + "</td>"
 			line += """
@@ -122,8 +123,10 @@ with open(assemblystats,'r') as file:
 
 		elif mainflag:
 			linesplit = line.strip().split(":")
+			line = "<tr>"
 			for elem in linesplit:
 				line += "<td>" + elem + "</td>"
+			line = "</tr>"
 		elif line.startswith("Minimum"):
 			statsflag = True
 			linesplit = line.strip().split()
