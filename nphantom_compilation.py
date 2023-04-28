@@ -142,7 +142,7 @@ with open(assemblystats,'r') as file:
 		
 		elif statsflag and "KB" in line and line.split()[0] == "25":
 			linesplit = line.strip().split()
-			line = "<tr>" + "<td>" + linesplit[0:2] + "</td>"
+			line = "<tr>" + "<td>" + ' '.join(linesplit[0:2]) + "</td>"
 			for elem in linesplit[2:]:
 				line += "<td>" + elem + "</td>"
 			line += """
