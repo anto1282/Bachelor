@@ -126,7 +126,7 @@ with open(assemblystats,'r') as file:
 			line = "<tr>"
 			for elem in linesplit:
 				line += "<td>" + elem + "</td>"
-			line = "</tr>"
+			line += "</tr>"
 		elif line.startswith("Minimum"):
 			statsflag = True
 			linesplit = line.strip().split()
