@@ -34,7 +34,7 @@ with open(predictedviruses, 'r') as fasta_file:
 			sequence += line 
 	virusdict[header] = [sequence]
 for key in virusdict:
-	print(key)
+	print("Contigs in predicted viruses file:", key)
 
 if (iphoppredictions != "NOIPHOP"):
 	#Extracts taxonomic information from the IPHOP results file and appends it to the virusdict
@@ -334,7 +334,7 @@ with open(outputfilename, 'w') as f:
 
 	#Creating the tabs for the phages
 	for key in virusdict:
-		print(key)
+		print("Contig info to HTML:", key)
 		#print(virusdict[key])
 		#if (len(virusdict[key]) == 4):
 		host = (virusdict[key][1])
