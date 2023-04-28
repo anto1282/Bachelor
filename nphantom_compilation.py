@@ -39,7 +39,7 @@ if (iphoppredictions != "NOIPHOP"):
 		linecount = 0 
 		for line in file:
 			if linecount > 0:
-				line = line.split(',')
+				line = line.strip().split(',')
 				hostgenus = line[2].split(";")
 				hostgenus_formatted = ""
 				
@@ -52,7 +52,7 @@ if (iphoppredictions != "NOIPHOP"):
 			linecount += 1
 	for key in virusdict:
 		if len(virusdict[key]) == 1:
-			virusdict[key].append(("No taxonomic information, since host score was too low"))
+			virusdict[key].append(("No taxonomic information found for this  contig"))
 else:
 	for key in virusdict:
 		virusdict[key].append("No taxonomic information, since IPHOP wasn't run")
@@ -71,8 +71,10 @@ with open(checkvpredictions, 'r') as file:
 				else:
 					virusdict[line[0]].append("Not Available")
 			except KeyError as error:
-				print("KeyError: Contig name not among predicted viruses found in dictionary")
+				print("KeyError: Contig name found in CheckV file, not among predicted viruses found in dictionary")
 				print(line[0])
+				virusdict[line[0]].append("NA")
+				virusdict[line[0]].append("NA")
 		linecount += 1
 
 assemblystatistics = ""
