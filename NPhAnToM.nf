@@ -71,33 +71,25 @@ workflow{
     if (params.iphopDB != false) {
         // If a iphop database path is provided, run the hostprediction
         // HOSTPREDICTION TOOL
-        HOSTPREDICTION_ch = IPHOP(VIRAL_CONTIGS_ch) 
+        HOSTPREDICTION_ch = IPHOP(VIRAL_CONTIGS_ch[0]) 
     }
     
     
     
     // CREATING PLOTS OF EACH PHAGE
-    // FASTASPLITS_ch = (FASTASPLITTER(VIRAL_CONTIGS_ch))
-    // FASTASPLITS_ch.view()
-    
     PHAROKKA_SPLITS_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch[0]) 
-    FASTASPLITS_ch = VIRAL_CONTIGS_ch.splitFasta(file:true)
-    FASTANAMES_ch = VIRAL_CONTIGS_ch.splitFasta(record: [id:true]) 
-    //FASTASPLITS_ch.view()
-    //FASTANAMES_ch.view()
-    
     PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch[0].flatten(), PHAROKKA_SPLITS_ch[1].flatten(), PHAROKKA_SPLITS_ch[2].flatten())
 
     
     // CHECKS THE QUALITY OF THE VIRAL CONTIGS
-    CHECKV_ch = CHECKV(VIRAL_CONTIGS_ch)
+    CHECKV_ch = CHECKV(VIRAL_CONTIGS_ch[0])
 
     if (params.iphopDB != false) {
-        RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch, HOSTPREDICTION_ch, CHECKV_ch)
+        RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch[0], HOSTPREDICTION_ch, CHECKV_ch)
     }
     else {
         EMPTYFILE_ch = Channel.fromPath('/path/that/doesnt/exist.txt') //Replaces the hostprediction channel
-        RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch, EMPTYFILE_ch, CHECKV_ch)
+        RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch[0], EMPTYFILE_ch, CHECKV_ch)
     }
 
 }

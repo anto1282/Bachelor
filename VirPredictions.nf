@@ -204,7 +204,7 @@ process VIREXTRACTOR {
 
     output:
     tuple val(pair_id), path("${pair_id}_ViralContigs.fasta")
-    
+    stdout
 
 
     script:
@@ -232,7 +232,7 @@ process DEEPVIREXTRACTOR {
 
     output:
     tuple val(pair_id), path("${pair_id}_ViralContigs.fasta")
-    
+    stdout    
 
 
     script:

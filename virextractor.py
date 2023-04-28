@@ -87,7 +87,6 @@ final_viral_set = SeekerDVFInter.union(SeekerPhagerInter,DVFPhagerInter)
 
 virusoutfile = open(outputfilename,'w')
 
-
 #Prints out all phages into one file
 with open(contigfile, 'r') as file:
     virusflag = False
@@ -106,8 +105,7 @@ with open(contigfile, 'r') as file:
             seqcount += 1
         
         
-        
-    print(seqcount, "sequence entries written to output file:", outputfilename)
+    print(seqcount)
 
 virusoutfile.close()
 
