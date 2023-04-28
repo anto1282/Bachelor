@@ -166,7 +166,7 @@ with open(assemblystats,'r') as file:
 			line += """
 				</tr>
 				"""
-		
+		print(line)
 		
 
 
