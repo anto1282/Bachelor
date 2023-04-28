@@ -242,12 +242,12 @@ body {font-family: Arial;}
 <body>
 
 <h1>NPhAnToM Pipeline Results</h1>
-<h2>%%</h2>
+<h2>%s</h2>
 <p>Click on the buttons inside the tabbed menu to see the annotated phages:</p>
 
 
 
-""".format(SRA_nr)
+""" % SRA_nr
 
 
 
