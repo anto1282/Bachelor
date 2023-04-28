@@ -288,7 +288,7 @@ tabs = """
 statisticstabs = """
 <div id="{}" class="tabcontent">
 	<h1>{}</h1>
-	<p>{}</p>
+	{}
 	
 </div>
 """
