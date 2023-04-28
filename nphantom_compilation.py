@@ -61,7 +61,7 @@ if (iphopGenusPredictions != "NOIPHOP"):
 				linecount += 1
 	for key in virusdict:
 		if len(virusdict[key]) == 1:
-			virusdict[key].append(("No taxonomic information found for this contig"))
+			virusdict[key].append({"No taxonomic information found for this contig"})
 else:
 	for key in virusdict:
 		virusdict[key].append("No taxonomic information, since IPHOP wasn't run")
@@ -343,11 +343,10 @@ with open(outputfilename, 'w') as f:
 		print("Contig info to HTML:", key)
 		#print(virusdict[key])
 		host = ""
-		if (len(virusdict[key][1]) > 1):
-			for taxonomy in virusdict[key][1]:
-				host += taxonomy + "<br>"
-		else:
-			host = virusdict[key][1]
+
+		for taxonomy in virusdict[key][1]:
+			host += taxonomy + "<br>"
+		
 		print(host)
 		length = (virusdict[key][2])
 		completeness = (virusdict[key][3])
