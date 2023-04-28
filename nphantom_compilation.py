@@ -68,6 +68,8 @@ with open(checkvpredictions, 'r') as file:
 				completenessscore = line[4]
 				if completenessscore != "NA":
 					virusdict[line[0]].append(round(float(line[4]),2))
+				else:
+					virusdict[line[0]].append("Not Available")
 			except KeyError as error:
 				print("KeyError: Contig name not among predicted viruses found in dictionary")
 				print(line[0])
@@ -326,15 +328,15 @@ with open(outputfilename, 'w') as f:
 	for key in virusdict:
 		print(key)
 		#print(virusdict[key])
-		if (len(virusdict[key]) == 4):
-			host = (virusdict[key][1])
-			length = (virusdict[key][2])
-			completeness = (virusdict[key][3])
-			picturepath = key + ".png"
-			DNAtext = "Phage DNA:"
-			contig = virusdict[key][0]
-			buttonstring += (opentab.format(key,key))
-			tabstring += tabs.format(key,key,host,length, completeness, picturepath,DNAtext,contig.replace("\n","<br>"))
+		#if (len(virusdict[key]) == 4):
+		host = (virusdict[key][1])
+		length = (virusdict[key][2])
+		completeness = (virusdict[key][3])
+		picturepath = key + ".png"
+		DNAtext = "Phage DNA:"
+		contig = virusdict[key][0]
+		buttonstring += (opentab.format(key,key))
+		tabstring += tabs.format(key,key,host,length, completeness, picturepath,DNAtext,contig.replace("\n","<br>"))
 	buttonstring += "</div>"
 	f.write(buttonstring)
 	f.write(tabstring)
