@@ -23,7 +23,7 @@ def offsetDetector(read1,read2):
                             maxASCII = char
                         if minASCII is None or char < minASCII:
                             minASCII = char
-                    
+                
                     if minASCII < "@":
                         phredoffset = "33"
                         #print("Phred-Offset:", phredoffset)
