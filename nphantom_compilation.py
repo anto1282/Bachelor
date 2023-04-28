@@ -74,7 +74,9 @@ with open(checkvpredictions, 'r') as file:
 
 assemblystatistics = ""
 with open(assemblystats,'r') as file:
-	flag = False
+	ACGTflag = False
+	mainflag = False
+	statsflag = False
 	for line in file:
 		if line.startswith("A"):
 			linesplit = line.strip().split()
@@ -85,8 +87,8 @@ with open(assemblystats,'r') as file:
 			for elem in linesplit:
 				line += "<th>" + elem + "</th>"
 			line += "</tr>"
-			flag = True
-		elif flag:
+			ACGTflag = True
+		elif ACGTflag:
 			linesplit = line.strip().split()
 			line = """<tr>
 			"""
@@ -95,7 +97,78 @@ with open(assemblystats,'r') as file:
 			line += """
 				</tr>
 			</table>"""
-			flag = False
+			ACGTflag = False
+			mainflag = True
+		elif line.startswith("Main") and mainflag:
+			linesplit = line.strip().split(":")
+			line = """
+			<table>
+				<tr>
+			"""
+			for elem in linesplit:
+				line += "<td>" + elem + "</td>"
+			line += "</tr>"
+		elif line.startswith("%") and mainflag:
+			
+			linesplit = line.strip().split(":")
+			for elem in linesplit:
+				line += "<td>" + elem + "</td>"
+			line += """
+				</tr>
+			</table>"""
+			mainflag = False
+
+		elif mainflag:
+			linesplit = line.strip().split(":")
+			for elem in linesplit:
+				line += "<td>" + elem + "</td>"
+		elif line.startswith("Minimum"):
+			statsflag = True
+			linesplit = line.strip().split()
+			line = """
+			<table>
+				<tr>
+			"""
+			for elem in linesplit:
+				line += "<th>" + elem + "</th>"
+			line += "</tr>"
+		elif line.startswith("Scaffold") or line.startswith("Length"):
+			linesplit = line.strip().split()
+			line = "<tr>"
+			for elem in linesplit:
+				line += "<th>" + elem + "</th>"
+			line += "</tr>"
+		
+		elif statsflag and "KB" in line and line.startswith("25 KB"):
+			linesplit = line.strip().split()
+			line = "<tr>" + "<td>" + linesplit[0:2] + "</td>"
+			for elem in linesplit[2:]:
+				line += "<td>" + elem + "</td>"
+			line += """
+					</tr>
+				</table>
+				"""
+		
+		elif statsflag and "KB" in line:
+			linesplit = line.strip().split()
+			line = "<tr>" + "<td>" + linesplit[0:2] + "</td>"
+			for elem in linesplit[2:]:
+				line += "<td>" + elem + "</td>"
+			line += """
+				</tr>
+				"""
+		elif statsflag:
+			linesplit = line.strip().split()
+			line = "<tr>"
+			for elem in linesplit:
+				line += "<td>" + elem + "</td>"
+			line += """
+				</tr>
+				"""
+		
+		
+
+
 
 		assemblystatistics += line
 		

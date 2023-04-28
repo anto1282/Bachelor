@@ -26,3 +26,5 @@ Script for downloading databases
 
 Adding fastqc
 
+
+Error code when pipeline crashes
