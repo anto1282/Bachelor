@@ -18,19 +18,22 @@ process PHAROKKA {
 
     input: 
     tuple val(pair_id), path(viralcontigs) 
-
+    val(meta)
     
     output:
     tuple(val(pair_id), path("Pharokka/pharokka.g*"))
     path("Pharokka/")
     
     script:
-
+    if (meta == "1"){
     """
-    
+    pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal
+    """
+    }
+    else{
+    """
     pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
-    
-    """
+    """}
     
 }
 
@@ -71,6 +74,7 @@ process PHAROKKASPLITTER {
     path("NODE_*.gff") 
     path("NODE_*.gbk")
     path("NODE_*.fasta")
+    stdout
 
     script:
   
