@@ -100,7 +100,7 @@ with open(assemblystats,'r') as file:
 			</table>"""
 			ACGTflag = False
 			mainflag = True
-		elif line.startswith("Main") and mainflag:
+		elif line.startswith("Main"):
 			linesplit = line.strip().split(":")
 			line = """
 			<table>
