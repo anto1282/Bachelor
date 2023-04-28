@@ -308,7 +308,7 @@ with open(outputfilename, 'w') as f:
 	buttonstring += opentab.format("Statistics","Assembly Statistics")
 
 	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics)
-	
+	print(tabstring)
 
 	
 	buttonstring += ("""<button onclick="window.location.href = 'fastp.html';">Fastp output</button>'""")
