@@ -185,7 +185,7 @@ with open(assemblystats,'r') as file:
 		assemblystatistics += line
 	print(assemblystatistics)
 
-webpage = """
+webpage = f"""
 <!DOCTYPE html>
 <html>
 <head>
@@ -194,14 +194,14 @@ webpage = """
 body {font-family: Arial;}
 
 /* Style the tab */
-.tab {
+.tab {{
   overflow: hidden;
   border: 1px solid #ccc;
   background-color: #f1f1f1;
-}
+}}
 
 /* Style the buttons inside the tab */
-.tab button {
+.tab button {{
   background-color: inherit;
   float: left;
   border: none;
@@ -210,44 +210,44 @@ body {font-family: Arial;}
   padding: 14px 16px;
   transition: 0.3s;
   font-size: 17px;
-}
+}}
 
 /* Change background color of buttons on hover */
-.tab button:hover {
+.tab button:hover {{
   background-color: #ddd;
-}
+}}
 
 /* Create an active/current tablink class */
-.tab button.active {
+.tab button.active {{
   background-color: #ccc;
-}
+}}
 
 /* Style the tab content */
-.tabcontent {
+.tabcontent {{
   display: none;
   padding: 6px 12px;
   border: 1px solid #ccc;
   border-top: none;
-}
+}}
 
 /* Centering the pictures on the page*/
-.center {
+.center {{
   display: block;
   margin-left: auto;
   margin-right: auto;
   width: 50%;
-}
+}}
 </style>
 </head>
 <body>
 
 <h1>NPhAnToM Pipeline Results</h1>
-<h2>%s</h2>
+<h2>{SRA_nr}</h2>
 <p>Click on the buttons inside the tabbed menu to see the annotated phages:</p>
 
 
 
-""" % SRA_nr
+"""
 
 
 
