@@ -341,6 +341,7 @@ with open(outputfilename, 'w') as f:
 		#print(virusdict[key])
 		#if (len(virusdict[key]) == 4):
 		host = (virusdict[key][1])
+		print(host)
 		length = (virusdict[key][2])
 		completeness = (virusdict[key][3])
 		print(length, completeness)
