@@ -342,11 +342,12 @@ with open(outputfilename, 'w') as f:
 	for key in virusdict:
 		print("Contig info to HTML:", key)
 		#print(virusdict[key])
-		#if (len(virusdict[key]) == 4):
 		host = ""
-		for taxonomy in virusdict[key][1]:
-			host += taxonomy + "<br>"
-		
+		if (len(virusdict[key][1]) > 1):
+			for taxonomy in virusdict[key][1]:
+				host += taxonomy + "<br>"
+		else:
+			host = virusdict[key][1]
 		print(host)
 		length = (virusdict[key][2])
 		completeness = (virusdict[key][3])
