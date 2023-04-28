@@ -77,12 +77,14 @@ with open(checkvpredictions, 'r') as file:
 				
 				contiglength = line[1]
 				completenessscore = line[4]
+				confidence = line[5]
 				virusdict[line[0]].append(contiglength) # Contig length
 				#Completeness
 				if completenessscore != "NA":
 					virusdict[line[0]].append(round(float(line[4]),2))
 				else:
 					virusdict[line[0]].append("Not Available")
+				virusdict[line[0]].append(confidence)
 			except KeyError as error:
 				print("KeyError: Contig name found in CheckV file, but not among predicted viruses found in dictionary")
 				print("Key:", line[0])
@@ -297,9 +299,9 @@ opentab = """
 tabs = """
 <div id="{}" class="tabcontent">
 	<h1>{}</h1>
-	<p><strong>Predicted host taxonomy:</strong> {}</p>
+	<p><strong>Predicted host taxonomy:</strong><br> {}</p>
     <p><strong>Length:</strong> {} bp</p>
-    <p><strong>Phage completeness (from CheckV):</strong> {} %</p>
+    <p><strong>Phage completeness % / confidence (from CheckV):</strong> {} % / {}</p>
 	<p><strong>Illustration of annotated phage:</strong></p>
 	<img class="center" src="{}" alt="Illustration of annotated phage">
 	<p><strong>{}</strong></p>
@@ -350,12 +352,13 @@ with open(outputfilename, 'w') as f:
 		print(host)
 		length = (virusdict[key][2])
 		completeness = (virusdict[key][3])
+		confidence = (virusdict[key][4])
 		print(length, completeness)
 		picturepath = key + ".png"
 		DNAtext = "Phage DNA:"
 		contig = virusdict[key][0]
 		buttonstring += (opentab.format(key,key))
-		tabstring += tabs.format(key,key,host,length, completeness, picturepath,DNAtext,contig.replace("\n","<br>"))
+		tabstring += tabs.format(key,key,host,length, completeness, confidence, picturepath,DNAtext,contig.replace("\n","<br>"))
 	buttonstring += "</div>"
 	f.write(buttonstring)
 	f.write(tabstring)
