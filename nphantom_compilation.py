@@ -66,7 +66,7 @@ with open(checkvpredictions, 'r') as file:
 	for line in file:
 		if linecount > 0:
 			line = line.split()
-			print(line[0])
+			
 			try:
 				
 				contiglength = line[1]
