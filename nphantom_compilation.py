@@ -19,6 +19,7 @@ SRA_nr = str(sys.argv[6])
 
 virusdict = dict()
 with open(predictedviruses, 'r') as fasta_file:
+	# Extracts sequence and header from file and adds it to the virusdict
 	header = ''
 	sequence = ''
 	for line in fasta_file:
@@ -36,6 +37,7 @@ for key in virusdict:
 	print(key)
 
 if (iphoppredictions != "NOIPHOP"):
+	#Extracts taxonomic information from the IPHOP results file and appends it to the virusdict
 	with open(iphoppredictions, 'r') as file:
 		linecount = 0 
 		for line in file:
@@ -53,29 +55,32 @@ if (iphoppredictions != "NOIPHOP"):
 			linecount += 1
 	for key in virusdict:
 		if len(virusdict[key]) == 1:
-			virusdict[key].append(("No taxonomic information found for this  contig"))
+			virusdict[key].append(("No taxonomic information found for this contig"))
 else:
 	for key in virusdict:
 		virusdict[key].append("No taxonomic information, since IPHOP wasn't run")
 
 with open(checkvpredictions, 'r') as file:
+	#Extracts phage completeness score from the checkV file as well as the length of the contig
 	linecount = 0 
 	for line in file:
 		if linecount > 0:
 			line = line.split()
 			print(line[0])
 			try:
-				virusdict[line[0]].append(line[1])
+				
+				contiglength = line[1]
 				completenessscore = line[4]
+				virusdict[line[0]].append(contiglength) # Contig length
+				#Completeness
 				if completenessscore != "NA":
 					virusdict[line[0]].append(round(float(line[4]),2))
 				else:
 					virusdict[line[0]].append("Not Available")
 			except KeyError as error:
-				print("KeyError: Contig name found in CheckV file, not among predicted viruses found in dictionary")
-				print(line[0])
-				virusdict[line[0]].append("NA")
-				virusdict[line[0]].append("NA")
+				print("KeyError: Contig name found in CheckV file, but not among predicted viruses found in dictionary")
+				print("Key:", line[0])
+				sys.exit(1)
 		linecount += 1
 
 assemblystatistics = ""
