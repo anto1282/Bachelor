@@ -167,13 +167,13 @@ with open(assemblystats,'r') as file:
 			line += """
 				</tr>
 				"""
-		print(line)
+		#print(line)
 		
 
 
 
 		assemblystatistics += line
-		
+	print(assemblystatistics)
 
 webpage = """
 <!DOCTYPE html>
