@@ -39,8 +39,6 @@ workflow{
 
     // CALCULATES N50 FROM THE ASSEMBLY
     N50CONTIG = N50(ASSEMBLY_ch)
-
-   
     
     if (params.server) {
          // VIRUS PREDICTION TOOLS
@@ -62,34 +60,32 @@ workflow{
     if (VIRAL_CONTIGS_ch[1] == "0"){
         System.err.println "No Viral Contigs found. Please choose another dataset or reduce cutoff values (--minlength, --cutoff)"
     }
+
     else{
     //ANNOTATION OF VIRAL CONTIGS USING PHAROKKA
     PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch)
 
 
-    if (params.iphopDB != false) {
-        // If a iphop database path is provided, run the hostprediction
-        // HOSTPREDICTION TOOL
-        HOSTPREDICTION_ch = IPHOP(VIRAL_CONTIGS_ch[0]) 
-    }
-    
-    
-    
-    // CREATING PLOTS OF EACH PHAGE
-    PHAROKKA_SPLITS_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch[0]) 
-    PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch[0].flatten(), PHAROKKA_SPLITS_ch[1].flatten(), PHAROKKA_SPLITS_ch[2].flatten())
+        if (params.iphopDB != false) {
+            // If a iphop database path is provided, run the hostprediction
+            // HOSTPREDICTION TOOL
+            HOSTPREDICTION_ch = IPHOP(VIRAL_CONTIGS_ch[0]) 
+        }
+        
+        // CREATING PLOTS OF EACH PHAGE
+        PHAROKKA_SPLITS_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch[0]) 
+        PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch[0].flatten(), PHAROKKA_SPLITS_ch[1].flatten(), PHAROKKA_SPLITS_ch[2].flatten())
 
-    
-    // CHECKS THE QUALITY OF THE VIRAL CONTIGS
-    CHECKV_ch = CHECKV(VIRAL_CONTIGS_ch[0])
+        
+        // CHECKS THE QUALITY OF THE VIRAL CONTIGS
+        CHECKV_ch = CHECKV(VIRAL_CONTIGS_ch[0])
 
-    if (params.iphopDB != false) {
-        RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch[0], HOSTPREDICTION_ch, CHECKV_ch)
-    }
-    else {
-        EMPTYFILE_ch = Channel.fromPath('/path/that/doesnt/exist.txt') //Replaces the hostprediction channel
-        RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch[0], EMPTYFILE_ch, CHECKV_ch)
-    }
-
+        if (params.iphopDB != false) {
+            RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch[0], HOSTPREDICTION_ch, CHECKV_ch)
+        }
+        else {
+            EMPTYFILE_ch = Channel.fromPath('/path/that/doesnt/exist.txt') //Replaces the hostprediction channel
+            RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch[0], EMPTYFILE_ch, CHECKV_ch)
+        }
     }   
 }
