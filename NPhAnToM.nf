@@ -13,7 +13,7 @@ include {IPHOP} from "./HostPredictor.nf"
 
 workflow{
     
-    if (params.file_pair_names = "NOFILENAMEGIVEN") 
+    if (params.file_pair_names == "NOFILENAMEGIVEN") 
     {
     // CREATES A NEXTFLOW CHANNEL CONTAINING THE READ IDS
     Channel
