@@ -12,19 +12,14 @@ Write down how people should download our pipeline
 
 Testing/benchmarking: Running on a known dataset
 
-Talk with Guillermo
-
-
-
-Get a big dataset from Thomas when the time is right
-
 
 
 Assembly using other tools than spades
 
 Script for downloading databases
 
-Adding fastqc
 
 
 Error code when pipeline crashes
+
+The reason why offsetdetector is slow, probably due to having to decompress the file and compress them again (big files, long time)

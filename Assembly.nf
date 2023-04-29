@@ -65,9 +65,11 @@ process OFFSETDETECTOR {
     gzip -d ${r1} -f
     gzip -d ${r2} -f
     python3 ${projectDir}/offsetdetector.py ${r1.baseName} ${r2.baseName}
-    gzip ${r1.baseName}
-    gzip ${r2.baseName}
+    rm ${r1.baseName}
+    rm ${r2.baseName}
     """
+
+
 }
 
 

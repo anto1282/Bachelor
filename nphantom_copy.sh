@@ -15,7 +15,7 @@
 while [[ $# -gt 0 ]]; do
   case $1 in
     --SRR)
-      SRRNUMBER="$2"
+      SRRNUMBER="--IDS $2"
       shift # past argument
       shift # past value
       ;;
@@ -40,9 +40,14 @@ while [[ $# -gt 0 ]]; do
       shift
       ;;
     --resume)
-        RESUME=-resume
-        shift
-        ;;
+      RESUME=-resume
+      shift
+      ;;
+    --filename)
+      FILENAME="--pair_file_names $2"
+      shift
+      shift
+      ;;
     -*|--*)
       echo "Unknown option $1"
       exit 1
@@ -80,5 +85,5 @@ module load openjdk/11.0.0
 module load singularity/3.8.0 nextflow miniconda/4.11.0
 
 
-srun nextflow run NPhAnToM.nf --IDS ${SRRNUMBER} -profile ${PROFILE} ${RESUME} -with-mpi -with-tower --accessToken ${TOWERTOKEN} --minLength ${MINLENGTH} --contigs ${CONTIGS}
+srun nextflow run NPhAnToM.nf ${SRRNUMBER} ${FILENAME} -profile ${PROFILE} ${RESUME} -with-mpi -with-tower --accessToken ${TOWERTOKEN} --minLength ${MINLENGTH} --contigs ${CONTIGS}
 

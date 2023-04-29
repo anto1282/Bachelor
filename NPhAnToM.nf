@@ -13,6 +13,7 @@ include {IPHOP} from "./HostPredictor.nf"
 
 workflow{
     
+    if (params.IDS != "NOIDS") {
     // CREATES A NEXTFLOW CHANNEL CONTAINING THE READ IDS
     Channel
         .value(params.IDS)
@@ -21,7 +22,16 @@ workflow{
 
     // DOWNLOADS THE CORRESPONDING READS USING FASTERQDUMP 
     read_pairs_ch = FASTERQDUMP(read_IDS_ch)
-
+    }
+    else {
+    // CREATING CHANNEL WITH TWO READS FROM PROVIDED FILEPATH
+    // MUST BE IN THE FORM OF path/to/directory/SOMESRANR_*.fastq.gz
+    // WHERE THE * SIGNIFIES R1 and R2
+    Channel
+        .path(params.pair_file_names)
+        .flatten()
+        .set {read_pairs_ch}
+    }
     // DETECTING WHICH OFFSET IS USED FOR THE READS
     OFFSET = OFFSETDETECTOR(read_pairs_ch)
 
