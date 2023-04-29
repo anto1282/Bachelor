@@ -33,6 +33,7 @@ workflow{
         .fromFilePairs(params.pair_file_names)
         .set {read_pairs_ch}
     }
+    read_pairs_ch.view()
     // DETECTING WHICH OFFSET IS USED FOR THE READS
     OFFSET = OFFSETDETECTOR(read_pairs_ch)
 
