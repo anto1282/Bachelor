@@ -13,7 +13,7 @@ include {IPHOP} from "./HostPredictor.nf"
 
 workflow{
     
-    if (params.file_pair_names == "NOFILENAMEGIVEN") 
+    if (params.IDS != false)
     {
     // CREATES A NEXTFLOW CHANNEL CONTAINING THE READ IDS
     Channel
@@ -24,7 +24,7 @@ workflow{
     // DOWNLOADS THE CORRESPONDING READS USING FASTERQDUMP 
     read_pairs_ch = FASTERQDUMP(read_IDS_ch)
     }
-    else if (params.IDS == "NOID")
+    else if (params.file_pair_names != false)
     {
     // CREATING CHANNEL WITH TWO READS FROM PROVIDED FILEPATH
     // MUST BE IN THE FORM OF path/to/directory/SOMESRANR_*.fastq.gz
