@@ -105,7 +105,9 @@ process KRAKEN{
         memory "6 GB"
         cpus 4
     }
-        
+    publishDir "${params.outdir}/${pair_id}/KrakenResults", mode: 'copy'
+
+
     input:
     val(pair_id)
     path (r1)
