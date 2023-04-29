@@ -24,7 +24,7 @@ workflow{
     // DOWNLOADS THE CORRESPONDING READS USING FASTERQDUMP 
     read_pairs_ch = FASTERQDUMP(read_IDS_ch)
     }
-    else if (params.file_pair_names != false)
+    else if (params.pair_file_names != false)
     {
     // CREATING CHANNEL WITH TWO READS FROM PROVIDED FILEPATH
     // MUST BE IN THE FORM OF path/to/directory/SOMESRANR_*.fastq.gz
