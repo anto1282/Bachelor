@@ -11,29 +11,6 @@
 #SBATCH --mail-type=end
 #SBATCH --mail-type=fail
 
-# Parse arguments for slurm
-while [[ $# -gt 0 ]]
-do
-    key="$1"
-
-    case $key in
-        --mail-user)
-        mail_user="$2"
-        shift
-        shift
-        ;;
-        *)    # Unknown option
-        echo "Unknown option: $1"
-        exit 1
-        ;;
-    esac
-done
-
-# Check if mail-user argument was passed
-if [ -z "$mail_user" ]; then
-  echo "mail-user argument is required"
-  exit 1
-fi
 
 export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP"
 export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/${USER}/SingulquarityTMP"
