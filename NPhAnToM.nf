@@ -30,8 +30,7 @@ workflow{
     // MUST BE IN THE FORM OF path/to/directory/SOMESRANR_*.fastq.gz
     // WHERE THE * SIGNIFIES R1 and R2
     Channel
-        .fromPath(params.pair_file_names)
-        .flatten()
+        .fromFilePairs(params.pair_file_names)
         .set {read_pairs_ch}
     }
     // DETECTING WHICH OFFSET IS USED FOR THE READS
