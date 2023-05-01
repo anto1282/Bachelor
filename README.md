@@ -52,21 +52,20 @@ In the command for running NPhAnToM, provide the path like this:
 
 ### Kraken Database
 A Kraken Database path must be supplied. For a regular PC we recommend the 8 GB minikraken v2 database as it is small enough to run on a PC. See this github for links to the different kraken databases: https://github.com/BenLangmead/aws-indexes/blob/master/docs/k2.md
-Download an appropriate database and provide nextflow with the path to it like this:
+Download an appropriate database and provide nextflow with the ```--krakDB``` path like this:
 ```
 --krakDB path/to/KRAKENDB
 ```
 
 ### CheckV Database 
 To download the CheckV Database, you unfortunately have to download CheckV separately through conda, see https://bitbucket.org/berkeleylab/checkv/src/master/. Follow the steps to download CheckV and the database. 
-The path to the database must be provided like so:
+The path to the ```--checkVDB``` database must be provided like so:
 ```
 --checkVDB path/to/CHECKVDB
 ```
 
 ### PharokkaDB
-To download the Pharokka database you need to download pharokka using conda. When Pharokka is downloaded, install the database by following the guide here: https://github.com/gbouras13/pharokka#database-installation
-
+To download the Pharokka database you need to download pharokka using conda. When Pharokka is downloaded, install the database by following the guide here: https://github.com/gbouras13/pharokka#database-installation. Provide the ```--phaDB``` like this:
 ```
 --phaDB path/to/pharokkaDB
 ```
@@ -74,7 +73,7 @@ To download the Pharokka database you need to download pharokka using conda. Whe
 ### IPHOP Database 
 When using the local profile in NPhAnToM, the host prediction tool IPHOP is not run as standard, since the IPHOP database takes up more than 100 GB of space. 
 
-If you run the pipeline on an HPC, or want to run the iphop on a local PC anyway, just provide the path to the database and IPHOP should run without any issues.
+If you run the pipeline on an HPC, or want to run the iphop on a local PC anyway, just provide the ```--iphopDB``` path to the database and IPHOP should run without any issues.
 Follow this link to download IPHOP and the proper database: https://bitbucket.org/srouxjgi/iphop/src/main/
 
 ```
@@ -83,12 +82,13 @@ Follow this link to download IPHOP and the proper database: https://bitbucket.or
 
 ## Pipeline profiles (local and cluster)
 ## Running the pipeline locally (local)
-To run the pipeline on a local system:
+To run the pipeline on a local system use the local profile:
 ```
 nextflow run NPhAnToM.nf --IDS SRR1234567890 -profile local
 ```
 When running the pipeline on your local system, be aware that the host prediction tool IpHoP, is not practical to run, since the database required is very large (> 100 GB).
-We recommend at minimum 8 GB of ram, preferrably 16 GB to run the pipeline locally.
+>**NOTE**
+>We recommend a minimum of 8 GB ram, preferrably 16 GB to run the pipeline locally.
 
 ## Running the pipeline on a HPC (cluster)
 ```
@@ -104,5 +104,6 @@ nextflow run NPhAnToM.nf --IDS SRR1234567890 -profile cluster -with-tower --acce
 ```
 
 # Links to the tools we use
+
 
 
