@@ -2,7 +2,7 @@
 
 
 process PHAROKKA {
-    errorStrategy= "finish"
+    errorStrategy= "ignore"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 8
@@ -86,7 +86,7 @@ process PHAROKKASPLITTER {
 
 
 process PHAROKKA_PLOTTER {
-    errorStrategy= "finish"
+    errorStrategy= "ignore"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 1
@@ -125,7 +125,7 @@ process RESULTS_COMPILATION {
     cpus 1
     memory '2 GB'
     time = 1.m
-    errorStrategy = 'finish'
+    errorStrategy = 'ignore'
     
     publishDir "${params.outdir}/${pair_id}/CompiledResults", mode: 'copy'
 
