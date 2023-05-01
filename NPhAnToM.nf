@@ -64,6 +64,7 @@ workflow{
     else {
         // Simpler virus prediction using only deepvirfinder, when running locally
         // VIRUS PREDICTION TOOLS
+
         DVF_ch = DVF(ASSEMBLY_ch)
         VIRAL_CONTIGS_ch = DEEPVIREXTRACTOR(ASSEMBLY_ch,DVF_ch)
     }
@@ -73,6 +74,8 @@ workflow{
     }
 
     else{
+    VIRAL_CONTIGS_ch[0].view()
+    VIRAL_CONTIGS_ch[1].view()
     //ANNOTATION OF VIRAL CONTIGS USING PHAROKKA
     PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch)
 
@@ -85,7 +88,8 @@ workflow{
         
         // CREATING PLOTS OF EACH PHAGE
         PHAROKKA_SPLITS_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch[0]) 
-        PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch[0].flatten(), PHAROKKA_SPLITS_ch[1].flatten(), PHAROKKA_SPLITS_ch[2].flatten())
+        
+        PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch[0], PHAROKKA_SPLITS_ch[1].flatten(), PHAROKKA_SPLITS_ch[2].flatten(), PHAROKKA_SPLITS_ch[3].flatten())
 
         
         // CHECKS THE QUALITY OF THE VIRAL CONTIGS
