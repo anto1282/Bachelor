@@ -20,9 +20,8 @@ The NPhAnTom pipeline consists of several steps:
 ## Install the pipeline
 To install the pipeline, clone the repository using git, and install the necessary dependencies either using conda or mamba. See thorough guide below for how to setup your PC to run NPhAnToM. You must also install nextflow its dependencies to run the pipeline.
 
-Some of the parts of the pipeline need a database, so install those and add the paths for those databases to the relevant variables in the nextflow.config file. See guide below.
+Some of the parts of the pipeline need a database, so follow the guide to install those and add the paths for those databases to the relevant variables in the nextflow.config file. 
 
-##Installing pipeline
 When running locally on a PC, make sure that nextflow and conda / mamba is properly installed. Our pipeline uses mamba as the standard package manager. 
 When running the pipeline on an cluster, the pipeline uses modules to load a specific environment. Therefore the modules must be installed and named the same way on the cluster as they are in the pipeline script. If they are not, either ask your system administrator to download the proper modules or simply change the names of the modules inside the script to match the proper names. 
 If you haven't already done it, now is the time to clone the NPhAnToM repository to your desired working directory:
