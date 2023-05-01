@@ -64,18 +64,15 @@ workflow{
     else {
         // Simpler virus prediction using only deepvirfinder, when running locally
         // VIRUS PREDICTION TOOLS
-
         DVF_ch = DVF(ASSEMBLY_ch)
         VIRAL_CONTIGS_ch = DEEPVIREXTRACTOR(ASSEMBLY_ch,DVF_ch)
     }
 
-    if (VIRAL_CONTIGS_ch[1] == "0"){
+    if (VIRAL_CONTIGS_ch[1].isEmpty){
         System.err.println "No Viral Contigs found. Please choose another dataset or reduce cutoff values (--minlength, --cutoff)"
     }
 
     else{
-    VIRAL_CONTIGS_ch[0].view()
-    VIRAL_CONTIGS_ch[1].view()
     //ANNOTATION OF VIRAL CONTIGS USING PHAROKKA
     PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch)
 
