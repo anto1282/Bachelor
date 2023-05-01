@@ -40,24 +40,19 @@ OutName1 = sraNR+"_1.TrimmedSubNoEu.fastq"
 OutName2 = sraNR+"_2.TrimmedSubNoEu.fastq"
 outfile1 = open(OutName1,"w")
 outfile2 = open(OutName2, "w")
-Counter = 0
 
 for line in infile1:
     if line.split(" ")[0][0] == "@":
-        print(line.split()[0][0])
-        print(line.split()[0][1:])
         if line.split()[0][1:] in ReadNumSet:
             Flag = True
         else:
             Flag = False
     if Flag == False:
         print(line.strip(), file = outfile1)
-    if Flag == True:
-        Counter += 1
 
 infile1.close()
 outfile1.close()
-
+Counter = 0
 for line in infile2:
     if line.split(" ")[0][0] == "@":
         if line.split(" ")[0] in ReadNumSet:
