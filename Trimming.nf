@@ -50,8 +50,8 @@ process TRIM {
 
     output:
     val(pair_id)
-    path("${r1.simpleName}_trimmed.fastq.gz")
-    path("${r2.simpleName}_trimmed.fastq.gz")
+    path("${reads[0].simpleName}_trimmed.fastq.gz")
+    path("${reads[1].simpleName}_trimmed.fastq.gz")
 
     
     script:
