@@ -52,9 +52,8 @@ process SPADES {
 process OFFSETDETECTOR {
     cpus 2
     input:
-    val(pair_id)
-    path(r1)
-    path(r2)
+    tuple(val(pair_id), path(reads))
+
 
     output:
     stdout
@@ -62,11 +61,11 @@ process OFFSETDETECTOR {
     script:
     
     """
-    gzip -d ${r1} -f
-    gzip -d ${r2} -f
-    python3 ${projectDir}/offsetdetector.py ${r1.baseName} ${r2.baseName}
-    rm ${r1.baseName}
-    rm ${r2.baseName}
+    gzip -d ${reads[0]} -f
+    gzip -d ${reads[1]} -f
+    python3 ${projectDir}/offsetdetector.py ${reads[0].baseName} ${reads[1].baseName}
+    rm ${reads[0].baseName}
+    rm ${reads[1].baseName}
     """
 
 
