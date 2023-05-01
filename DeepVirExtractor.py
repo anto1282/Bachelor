@@ -57,9 +57,6 @@ with open(contigfile, 'r') as file:
             nonvirusoutfile.write(line)
         
         
-    print(seqcount, "sequence entries written to output file:", virusfile)
-    print("The remaining entries was written to the non-viral file:", nonvirusfile)
-    
     
 virusoutfile.close()
 nonvirusoutfile.close()
