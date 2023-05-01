@@ -115,10 +115,8 @@ process KRAKEN{
     
 
     output:
-    val(pair_id)
-    path("${pair_id}_1.TrimmedSubNoEu.fastq.gz")
-    path("${pair_id}_2.TrimmedSubNoEu.fastq.gz")
-    
+    tuple(val(pair_id), path("${pair_id}_{1,2}.TrimmedSubNoEu.fastq.gz"))
+
     script:
     if (params.server) {
         """
