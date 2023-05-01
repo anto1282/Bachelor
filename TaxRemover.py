@@ -43,6 +43,8 @@ outfile2 = open(OutName2, "w")
 
 for line in infile1:
     if line.split(" ")[0][0] == "@":
+        print(line.split(" ")[0][0])
+        print(line.split(" ")[1:])
         if line.split(" ")[1:] in ReadNumSet:
             Flag = True
         else:
