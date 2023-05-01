@@ -14,7 +14,7 @@ The NPhAnTom pipeline consists of several steps:
 - Quality check of viral contigs: CheckV
 - Phage annotation: Pharokka
 - Phage host prediction: IPHOP
-- Compilation of 
+- Compilation of the pipelines results to an HTML file
 
 
 ## Install the pipeline
