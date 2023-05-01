@@ -50,7 +50,7 @@ for line in infile1:
     if Flag == False:
         print(line.strip(), file = outfile1)
     if Flag == True:
-        Counter =+ 1
+        Counter += 1
 print("Number of eukaryotic sequences removed from read1:", Counter)
        
 
