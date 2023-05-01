@@ -29,3 +29,8 @@ then
 else
     srun nextflow run NPhAnToM.nf --IDS ERR575692	 -profile cluster -with-mpi -with-tower --accessToken eyJ0aWQiOiA3MTg5fS4yNmQwY2Q5N2RjZDdlNWI4NWVkNDE4MTUwYjZjNTk5ODQ3OGMxZDcx
 fi
+
+
+/projects/mjolnir1/data/databases/kraken2/kraken2_RefSeqV205_Complete_500GB
+
+sbatch --mail-user=s203557@dtu.dk --time=12:00:00  nphantom_2.sh --SRR SRR7521204 --tower eyJ0aWQiOiA3MTg5fS4yNmQwY2Q5N2RjZDdlNWI4NWVkNDE4MTUwYjZjNTk5ODQ3OGMxZDcx --profile cluster --minlength 5000 --contigs scaffolds --krakDB /projects/mjolnir1/data/databases/kraken2/kraken2_RefSeqV205_Complete_500GB
