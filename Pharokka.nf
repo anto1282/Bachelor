@@ -25,18 +25,17 @@ process PHAROKKA {
     path("Pharokka/")
     
     script:
+    if [meta == "1"]{
     """
-    nr='\$(cat ${viralcontigs} | grep > | wc -l)' 
-
-    if [\$nr -eq 1]
-    then 
-        pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal
-    else
-        pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
-    fi
+    pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal
+    """   
+    }
+    else{    
+    """
+    pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
 
     """
-    
+    }
 }
 
 
