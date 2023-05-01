@@ -31,9 +31,9 @@ git clone https://github.com/anto1282/Bachelor
 
 # Paths to databases and scripts
 There are two ways of providing the paths to the following script and databases, either by writing the paths in the terminal like this:
-'''
+```
 nextflow run NPhAnToM.py --DVFPath path/to/DeepVirFinder/dvf.py --krakDB path/to/KRAKENDB --phaDB path/to/phaDB etc. 
-'''
+```
 
 or by editing your version of the nextflow.config file in order to contain the correct paths to your scripts and databases. 
 
@@ -46,30 +46,30 @@ If you only intend to run DVF from within nextflow, you do not need to create a 
 Remember the full path to DeepVirFinder/dvf.py as you need to provide it when running the Pipeline. 
 Alternatively, you can also add the DVFpath parameter directly to the nextflow.config file and add the DVFpath in there. 
 In the command for running NPhAnToM, provide the path like this:
-'''
+```
 --DVFPath path/to/DeepVirFinder/dvf.py
-'''
+```
 
 # Kraken Database
 A Kraken Database path must be supplied. For a regular PC we recommend the 8 GB minikraken v2 database as it is small enough to run on a PC. See this github for links to the different kraken databases: https://github.com/BenLangmead/aws-indexes/blob/master/docs/k2.md
 Download an appropriate database and provide nextflow with the path to it like this:
-'''
+```
 --krakDB path/to/KRAKENDB
-'''
+```
 
 # CheckV Database 
 To download the CheckV Database, you unfortunately have to download CheckV separately through conda, see https://bitbucket.org/berkeleylab/checkv/src/master/. Follow the steps to download CheckV and the database. 
 The path to the database must be provided like so:
-'''
+```
 --checkVDB path/to/CHECKVDB
-'''
+```
 
 # PharokkaDB
 To download the Pharokka database you need to download pharokka using conda. When Pharokka is downloaded, install the database by following the guide here: https://github.com/gbouras13/pharokka#database-installation
 
-'''
+```
 --phaDB path/to/pharokkaDB
-'''
+```
 
 # IPHOP Database 
 When using the local profile in NPhAnToM, the host prediction tool IPHOP is not run as standard, since the IPHOP database takes up more than 100 GB of space. 
@@ -77,9 +77,9 @@ When using the local profile in NPhAnToM, the host prediction tool IPHOP is not 
 If you run the pipeline on an HPC, or want to run the iphop on a local PC anyway, just provide the path to the database and IPHOP should run without any issues.
 Follow this link to download IPHOP and the proper database: https://bitbucket.org/srouxjgi/iphop/src/main/
 
-'''
+```
 --iphopDB path/to/iphopDB
-'''
+```
 
 ## Pipeline profiles (local and cluster)
 ## Running the pipeline locally (local)
