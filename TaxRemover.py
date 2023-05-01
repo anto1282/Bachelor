@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 import os
 import sys
+import re
 
 
 read1TrimmedSub, read2TrimmedSub= sys.argv[1], sys.argv[2]
@@ -19,7 +20,6 @@ for line in infile:
         if Flag == True:
             Flag = False
             break
-        
     if Flag == True:
         TaxIDSet.add(line.split()[4])
 infile.close()
@@ -32,7 +32,7 @@ infile = open(read_kraken)
 for line in infile:
     if line.split()[2] in TaxIDSet:
         ReadNumSet.add(line.split()[1])
-
+print(ReadNumSet)
 TaxIDSet.clear()
 infile.close()
 
@@ -44,8 +44,8 @@ outfile1 = open(OutName1,"w")
 outfile2 = open(OutName2, "w")
 
 for line in infile1:
-    if line.startswith("@"+sraNR):
-        if line.split()[0][1:] in ReadNumSet:
+    if line.split(" ")[0][0] == "@":
+        if line.split(" ")[0] in ReadNumSet:
             Flag = True
         else:
             Flag = False
@@ -57,13 +57,13 @@ outfile1.close()
 
 Counter = 0
 for line in infile2:
-    if line.startswith("@"+sraNR):
-        if line.split()[0][1:] in ReadNumSet:
+    if line.split(" ")[0][0] == "@":
+        if line.split(" ")[0] in ReadNumSet:
             Flag = True
         else:
             Flag = False
     if Flag == False:
-        print(line.strip(), file = outfile2)
+        print(line.strip(), file = outfile1)
     if Flag == True:
         Counter += 1
 print("Number of eukaryotic sequences removed:", Counter)
