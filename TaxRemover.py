@@ -16,8 +16,10 @@ for line in infile:
     if line.split()[-1] == "Eukaryota":
         Flag = True
     if line.split()[-1] in ["Archaea","Bacteria","Viruses"]:
-        Flag = False
-        break
+        if Flag == True:
+            Flag = False
+            break
+        
     if Flag == True:
         TaxIDSet.add(line.split()[4])
 infile.close()
