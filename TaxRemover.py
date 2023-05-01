@@ -15,7 +15,7 @@ TaxIDSet = set()
 for line in infile:
     if line.split()[-1] == "Eukaryota":
         Flag = True
-    if line.split()[-1] in ["Archaea","Bacteria"]:
+    if line.split()[-1] in ["Archaea","Bacteria","Viruses"]:
         Flag = False
         break
     if Flag == True:
@@ -23,6 +23,7 @@ for line in infile:
 infile.close()
 
 Flag = False
+print(TaxIDSet)
 
 ReadNumSet = set()
 infile = open(read_kraken)
