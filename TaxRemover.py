@@ -55,12 +55,12 @@ outfile1.close()
 Counter = 0
 for line in infile2:
     if line.split(" ")[0][0] == "@":
-        if line.split(" ")[0] in ReadNumSet:
+        if line.split()[0][1:] in ReadNumSet:
             Flag = True
         else:
             Flag = False
     if Flag == False:
-        print(line.strip(), file = outfile1)
+        print(line.strip(), file = outfile2)
     if Flag == True:
         Counter += 1
 print("Number of eukaryotic sequences removed:", Counter)
