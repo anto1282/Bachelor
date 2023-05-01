@@ -68,7 +68,7 @@ workflow{
         VIRAL_CONTIGS_ch = DEEPVIREXTRACTOR(ASSEMBLY_ch,DVF_ch)
     }
 
-    if (VIRAL_CONTIGS_ch[1].isEmpty()){
+    if (VIRAL_CONTIGS_ch[1] == "0"){
         System.err.println "No Viral Contigs found. Please choose another dataset or reduce cutoff values (--minlength, --cutoff)"
     }
 
