@@ -44,7 +44,7 @@ or by editing your version of the nextflow.config file in order to contain the c
 Since DeepVirFinder (DVF) doesn't seem to work using conda or mamba, it must be downloaded manually, so download DeepVirFinder by following the instructions from their github: https://github.com/jessieren/DeepVirFinder
 If you only intend to run DVF from within nextflow, you do not need to create a conda environment, as the instructions otherwise tell you to do, since our pipeline creates the proper environment automatically.
 Remember the full path to DeepVirFinder/dvf.py as you need to provide it when running the Pipeline. 
-Alternatively, you can also add the DVFpath parameter directly to the nextflow.config file and add the ``--DVFpath``` in there. 
+Alternatively, you can also add the DVFpath parameter directly to the nextflow.config file and add the ```--DVFpath``` in there. 
 In the command for running NPhAnToM, provide the path like this:
 ```
 --DVFPath path/to/DeepVirFinder/dvf.py
