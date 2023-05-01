@@ -31,8 +31,6 @@ workflow{
     // WHERE THE * SIGNIFIES R1 and R2
     Channel
         .fromFilePairs(params.pair_file_names)
-        .flatten()
-        .flatten()
         .set {read_pairs_ch}
     }
     read_pairs_ch.view()
