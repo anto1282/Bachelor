@@ -4,7 +4,9 @@
 NPhAnToM is a nextflow pipeline for prediction and annotation of phages in environmental samples, along with phage host prediction using industry standard bioinformatics tools.
 
 The NPhAnTom pipeline consists of several steps:
-- Download reads: fasterqdump for downloading illumina reads from the short read archive.
+- Providing reads either by:
+    - Downloading reads: fasterqdump for downloading illumina reads from the NCBI Sequence Read Archive.
+    - Fetching reads from local directory
 - Trimming reads: adapterremoval, bbduk.sh
 - Removing eukaryotic reads: kraken
 - FastQC: Checking the quality of the FastQ reads
@@ -41,7 +43,7 @@ or by editing your version of the nextflow.config file in order to contain the c
 >Be aware that you only need to install the databases and the DeepVirFinder script if you don't have them installed already. 
 
 ### DeepVirFinder 
-Since DeepVirFinder (DVF) doesn't seem to work using conda or mamba, it must be downloaded manually, so download DeepVirFinder by following the instructions from their github: https://github.com/jessieren/DeepVirFinder
+Since DeepVirFinder (DVF) doesn't seem to work using conda or mamba, it must be downloaded manually, so download DeepVirFinder by following the instructions from their github: https://github.com/jessieren/DeepVirFinder.
 If you only intend to run DVF from within nextflow, you do not need to create a conda environment, as the instructions otherwise tell you to do, since our pipeline creates the proper environment automatically.
 Remember the full path to DeepVirFinder/dvf.py as you need to provide it when running the Pipeline. 
 Alternatively, you can also add the DVFpath parameter directly to the nextflow.config file and add the ```--DVFpath``` in there. 
@@ -51,7 +53,7 @@ In the command for running NPhAnToM, provide the path like this:
 ```
 
 ### Kraken Database
-A Kraken Database path must be supplied. For a regular PC we recommend the 8 GB minikraken v2 database as it is small enough to run on a PC. See this github for links to the different kraken databases: https://github.com/BenLangmead/aws-indexes/blob/master/docs/k2.md
+A Kraken Database path must be supplied. For a regular PC we recommend the 8 GB minikraken v2 database as it is small enough to run on a PC. See this github for links to the different kraken databases: https://github.com/BenLangmead/aws-indexes/blob/master/docs/k2.md.
 Download an appropriate database and provide nextflow with the ```--krakDB``` path like this:
 ```
 --krakDB path/to/KRAKENDB
@@ -74,7 +76,7 @@ To download the Pharokka database you need to download pharokka using conda. Whe
 When using the local profile in NPhAnToM, the host prediction tool IPHOP is not run as standard, since the IPHOP database takes up more than 100 GB of space. 
 
 If you run the pipeline on an HPC, or want to run the iphop on a local PC anyway, just provide the ```--iphopDB``` path to the database and IPHOP should run without any issues.
-Follow this link to download IPHOP and the proper database: https://bitbucket.org/srouxjgi/iphop/src/main/
+Follow this link to download IPHOP and the proper database: https://bitbucket.org/srouxjgi/iphop/src/main/.
 
 ```
 --iphopDB path/to/iphopDB
