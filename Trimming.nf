@@ -91,7 +91,7 @@ process KRAKEN{
     if (params.server) {
         beforeScript 'module load openmpi kraken2'
         afterScript 'module unload kraken2 openmpi'
-        memory {520.GB * task.attempt}
+        memory {61.GB * task.attempt}
         cpus 8
         errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
         maxRetries 3
