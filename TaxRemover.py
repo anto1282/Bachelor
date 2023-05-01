@@ -49,7 +49,7 @@ for line in infile1:
             Flag = False
     if Flag == False:
         print(line.strip(), file = outfile1)
-    if Flag == True:
+    if Flag == True and line.split(" ")[0][0] == "@":
         Counter += 1
 print("Number of eukaryotic sequences removed from read1:", Counter)
        
@@ -65,7 +65,7 @@ for line in infile2:
             Flag = False
     if Flag == False:
         print(line.strip(), file = outfile2)
-    if Flag == True:
+    if Flag == True and line.split(" ")[0][0] == "@":
         Counter += 1
 print("Number of eukaryotic sequences removed from read2:", Counter)
 ReadNumSet.clear()
