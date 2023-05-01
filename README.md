@@ -29,7 +29,7 @@ If you haven't already done it, now is the time to clone the NPhAnToM repository
 git clone https://github.com/anto1282/Bachelor
 ```
 
-# Paths to databases and scripts
+### Paths to databases and scripts
 There are two ways of providing the paths to the following script and databases, either by writing the paths in the terminal like this:
 ```
 nextflow run NPhAnToM.py --DVFPath path/to/DeepVirFinder/dvf.py --krakDB path/to/KRAKENDB --phaDB path/to/phaDB etc. 
@@ -40,38 +40,38 @@ or by editing your version of the nextflow.config file in order to contain the c
 >**Note**
 >Be aware that you only need to install the databases and the DeepVirFinder script if you don't have them installed already. 
 
-# DeepVirFinder 
+### DeepVirFinder 
 Since DeepVirFinder (DVF) doesn't seem to work using conda or mamba, it must be downloaded manually, so download DeepVirFinder by following the instructions from their github: https://github.com/jessieren/DeepVirFinder
 If you only intend to run DVF from within nextflow, you do not need to create a conda environment, as the instructions otherwise tell you to do, since our pipeline creates the proper environment automatically.
 Remember the full path to DeepVirFinder/dvf.py as you need to provide it when running the Pipeline. 
-Alternatively, you can also add the DVFpath parameter directly to the nextflow.config file and add the DVFpath in there. 
+Alternatively, you can also add the DVFpath parameter directly to the nextflow.config file and add the ``--DVFpath``` in there. 
 In the command for running NPhAnToM, provide the path like this:
 ```
 --DVFPath path/to/DeepVirFinder/dvf.py
 ```
 
-# Kraken Database
+### Kraken Database
 A Kraken Database path must be supplied. For a regular PC we recommend the 8 GB minikraken v2 database as it is small enough to run on a PC. See this github for links to the different kraken databases: https://github.com/BenLangmead/aws-indexes/blob/master/docs/k2.md
 Download an appropriate database and provide nextflow with the path to it like this:
 ```
 --krakDB path/to/KRAKENDB
 ```
 
-# CheckV Database 
+### CheckV Database 
 To download the CheckV Database, you unfortunately have to download CheckV separately through conda, see https://bitbucket.org/berkeleylab/checkv/src/master/. Follow the steps to download CheckV and the database. 
 The path to the database must be provided like so:
 ```
 --checkVDB path/to/CHECKVDB
 ```
 
-# PharokkaDB
+### PharokkaDB
 To download the Pharokka database you need to download pharokka using conda. When Pharokka is downloaded, install the database by following the guide here: https://github.com/gbouras13/pharokka#database-installation
 
 ```
 --phaDB path/to/pharokkaDB
 ```
 
-# IPHOP Database 
+### IPHOP Database 
 When using the local profile in NPhAnToM, the host prediction tool IPHOP is not run as standard, since the IPHOP database takes up more than 100 GB of space. 
 
 If you run the pipeline on an HPC, or want to run the iphop on a local PC anyway, just provide the path to the database and IPHOP should run without any issues.
