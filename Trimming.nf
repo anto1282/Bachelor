@@ -19,6 +19,7 @@ process FASTERQDUMP {
     
     output:
     tuple(val(pair_id), path("${pair_id}_{1,2}.fastq.gz"))
+
     
 
     script:
