@@ -33,7 +33,6 @@ process FASTERQDUMP {
 
 process TRIM {
     
-    // Openjdk is already loaded, should not also be loaded here
     if (params.server) {
         beforeScript 'module load perl adapterremoval fastqc fastp'
         afterScript 'module unload perl adapterremoval fastqc fastp'
@@ -45,9 +44,8 @@ process TRIM {
     cpus 4
 
     input: 
-    val(pair_id)
-    path(r1) 
-    path(r2)
+    tuple(val(pair_id), path(reads))
+   
 
 
     output:
