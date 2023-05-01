@@ -18,9 +18,7 @@ process FASTERQDUMP {
     val sra_nr
     
     output:
-    val (sra_nr)
-    path("${sra_nr}_1.fastq.gz")
-    path("${sra_nr}_2.fastq.gz")
+    tuple(val(pair_id), path("${pair_id}_{1,2}.fastq.gz"))
     
 
     script:
@@ -115,8 +113,10 @@ process KRAKEN{
     
 
     output:
-    tuple(val(pair_id), path("${pair_id}_{1,2}.TrimmedSubNoEu.fastq.gz"))
-
+    val(pair_id)
+    path("${pair_id}_1.TrimmedSubNoEu.fastq.gz")
+    path("${pair_id}_2.TrimmedSubNoEu.fastq.gz")
+    
     script:
     if (params.server) {
         """
