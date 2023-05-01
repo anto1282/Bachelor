@@ -12,10 +12,10 @@ process FASTERQDUMP {
     label 'shortTask'
     
     
-    publishDir "${params.outdir}/${sra_nr}/Reads"
+    publishDir "${params.outdir}/${pair_id}/Reads"
 
     input: 
-    val sra_nr
+    val pair_id
     
     output:
     tuple(val(pair_id), path("${pair_id}_{1,2}.fastq.gz"))
@@ -24,10 +24,10 @@ process FASTERQDUMP {
 
     script:
     """
-    prefetch ${sra_nr}
-    fasterq-dump ${sra_nr} --split-files
-    gzip ${sra_nr}_1.fastq
-    gzip ${sra_nr}_2.fastq
+    prefetch ${pair_id}
+    fasterq-dump ${pair_id} --split-files
+    gzip ${pair_id}_1.fastq
+    gzip ${pair_id}_2.fastq
     """
 }
 
