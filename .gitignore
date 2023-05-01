@@ -20,4 +20,3 @@ checkv-db-v1.5
 *.html
 .conda_cache
 env-*
-.*
