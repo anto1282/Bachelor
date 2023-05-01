@@ -10,6 +10,7 @@
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 #SBATCH --mail-type=fail
+#SBATCH --array=4194-4200
 
 
 export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP"
@@ -26,4 +27,4 @@ module load singularity/3.8.0 nextflow miniconda/4.11.0
 
 
 # srun nextflow run NPhAnToM.nf ${SRRNUMBER} -profile ${PROFILE} ${RESUME} -with-mpi -with-tower --accessToken ${TOWERTOKEN} --minLength ${MINLENGTH} --contigs ${CONTIGS}
-srun nextflow run NPhAnToM.nf $@
+srun nextflow run NPhAnToM.nf $@ --pair_file_names $SLURM_ARRAY_TASK_ID{_R1,_R2}.fastq.gz
