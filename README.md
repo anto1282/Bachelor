@@ -66,7 +66,7 @@ The path to the ```--checkVDB``` database must be provided like so:
 --checkVDB path/to/CHECKVDB
 ```
 
-### PharokkaDB
+### Pharokka Database
 To download the Pharokka database you need to download pharokka using conda. When Pharokka is downloaded, install the database by following the guide here: https://github.com/gbouras13/pharokka#database-installation. Provide the ```--phaDB``` like this:
 ```
 --phaDB path/to/pharokkaDB
