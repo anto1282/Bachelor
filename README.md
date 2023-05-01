@@ -37,8 +37,8 @@ nextflow run NPhAnToM.py --DVFPath path/to/DeepVirFinder/dvf.py --krakDB path/to
 
 or by editing your version of the nextflow.config file in order to contain the correct paths to your scripts and databases. 
 
-**Note**
-Be aware that you only need to install the databases and the DeepVirFinder script if you don't have them installed already. 
+>**Note**
+>Be aware that you only need to install the databases and the DeepVirFinder script if you don't have them installed already. 
 
 # DeepVirFinder 
 Since DeepVirFinder (DVF) doesn't seem to work using conda or mamba, it must be downloaded manually, so download DeepVirFinder by following the instructions from their github: https://github.com/jessieren/DeepVirFinder
