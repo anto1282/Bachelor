@@ -13,7 +13,7 @@
 
 
 export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP"
-export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/${USER}/SingulquarityTMP"
+export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP"
 
 
 
