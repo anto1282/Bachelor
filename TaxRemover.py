@@ -25,14 +25,12 @@ for line in infile:
 infile.close()
 
 Flag = False
-print(TaxIDSet)
 
 ReadNumSet = set()
 infile = open(read_kraken)
 for line in infile:
     if line.split()[2] in TaxIDSet:
         ReadNumSet.add(line.split()[1])
-print(ReadNumSet)
 TaxIDSet.clear()
 infile.close()
 
@@ -45,7 +43,7 @@ outfile2 = open(OutName2, "w")
 
 for line in infile1:
     if line.split(" ")[0][0] == "@":
-        if line.split(" ")[0] in ReadNumSet:
+        if line.split(" ")[1:] in ReadNumSet:
             Flag = True
         else:
             Flag = False
