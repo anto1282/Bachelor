@@ -25,7 +25,7 @@ process PHAROKKA {
     path("Pharokka/")
     
     script:
-    if [meta == "1"]{
+    if (meta == "1"){
     """
     pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal
     """   
