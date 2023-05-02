@@ -56,9 +56,9 @@ process TRIM {
     
     script:
    
-    if (params.refGenome == ""){
+   
     """
-    AdapterRemoval --file1 ${reads[0]}  --file2 ${reads[1]} --output1 read1_tmp --output2 read2_tmp 
+    AdapterRemoval --file1 ${reads[0]}  --file2 ${reads[1]} --collapse --output1 read1_tmp --output2 read2_tmp 
     fastp -i read1_tmp -I read2_tmp -o ${reads[0].simpleName}_trimmed.fastq  -O ${reads[1].simpleName}_trimmed.fastq  -W 5 -M 30 -e 25 -f 15
     
     mkdir -p ${projectDir}/${params.outdir}/${pair_id}/CompiledResults/
@@ -67,23 +67,8 @@ process TRIM {
     gzip ${reads[0].simpleName}_trimmed.fastq
     gzip ${reads[1].simpleName}_trimmed.fastq
     rm read?_tmp
-    
     """
-    }
-    else{
-     """
-    AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
-    fastp -i read1_tmp -I read2_tmp -o ${r1.simpleName}_trimmed.fastq  -O ${r2.simpleName}_trimmed.fastq  -W 5 -M 30 -e 30 -f 15 -t 15 
     
-    mkdir -p ${projectDir}/${params.outdir}/${pair_id}/CompiledResults/
-    mv fastp.html ${projectDir}/${params.outdir}/${pair_id}/CompiledResults/fastp.html
-    
-    gzip ${r1.simpleName}_trimmed.fastq
-    gzip ${r2.simpleName}_trimmed.fastq
-    rm read?_tmp
-
-    """
-    }
 }
 
 process KRAKEN{
