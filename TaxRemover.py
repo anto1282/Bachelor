@@ -46,10 +46,9 @@ DeletedFile2 = open("DeletedSeqs2" , "w")
 LineCounter = 0
 Counter = 0
 for line in infile1:
-    LineCounter = LineCounter + 1
     if LineCounter % 4 == 0 or LineCounter == 0:
         Flag = False
-        print(line.split()[0][1:])
+        print(line.split()[0])
         if line.split()[0][1:] in ReadNumSet:
             Flag = True
             Counter += 1
@@ -57,6 +56,7 @@ for line in infile1:
         print(line, file = DeletedFile1,end = "")
     if Flag == False:
         print(line, file = outfile1, end = "")
+    LineCounter = LineCounter + 1
 print("Number of eukaryotic sequences removed from read1:", Counter)
        
 
@@ -65,7 +65,6 @@ outfile1.close()
 LineCounter = 0
 Counter = 0
 for line in infile2:
-    LineCounter = LineCounter + 1
     if LineCounter % 4 == 0 or LineCounter == 0:
         Flag = False
         if line.split()[0][1:] in ReadNumSet:
@@ -77,6 +76,7 @@ for line in infile2:
         print(line, file = DeletedFile2,end = "")
     if Flag == False:
         print(line, file = outfile2, end = "")
+    LineCounter = LineCounter + 1
 
 
 print("Number of eukaryotic sequences removed from read2:", Counter)
