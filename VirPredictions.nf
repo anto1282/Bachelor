@@ -4,7 +4,7 @@ process DVF {
     if (params.server) {
         beforeScript 'module load gcc theano deepvirfinder'
         afterScript 'module unload gcc theano deepvirfinder/'
-        cpus 16
+        cpus 12
         time = 20.m
         memory '16 GB'
         //clusterOptions '--partition=gpuqueue'
