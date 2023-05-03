@@ -197,7 +197,7 @@ with open(assemblystats,'r') as file:
 				"""
 		elif line.startswith("Number"):
 			line = line.replace("\n","<br>")
-			print(line)
+			
 		#print(line)
 		
 
@@ -349,7 +349,6 @@ with open(outputfilename, 'w') as f:
 		print("Contig info to HTML:", key)
 		#print(virusdict[key])
 		host = ""
-		print(type(virusdict[key][1]))
 		if isinstance(virusdict[key][1],list):
 			print(virusdict[key][1])
 			for taxonomy in virusdict[key][1]:
