@@ -107,14 +107,14 @@ process KRAKEN{
     script:
     if (params.server) {
         """
-        mkdir ${params.outdir}/${pair_id}/KrakenResults
+        mkdir ${projectDir}/${params.outdir}/${pair_id}/KrakenResults
         gzip -d -f ${r1}
         gzip -d -f ${r2}
         mkdir -p ${projectDir}/${params.outdir}/${pair_id}/Assembly
         kraken2 -d ${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
         python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats.txt
         mv report.kraken.txt ${params.outdir}/${pair_id}/KrakenResults
-        mv read.kraken ${params.outdir}/${pair_id}/KrakenResults
+        mv read.kraken ${projectDir}/${params.outdir}/${pair_id}/KrakenResults
 
 
         rm ${r1.baseName}
