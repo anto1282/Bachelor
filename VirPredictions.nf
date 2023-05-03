@@ -152,7 +152,7 @@ process CHECKV {
 
     output:
     
-    path("CheckV/")
+    tuple val(pair_id), path("CheckV/")
     
     script:
     """
