@@ -102,7 +102,7 @@ with open(contigfile, 'r') as file:
             seqcount += 1
         
 
-
+print(final_viral_set)
 print(len(final_viral_set), end= "")
 
 virusoutfile.close()
