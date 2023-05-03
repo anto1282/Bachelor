@@ -47,8 +47,8 @@ LineCounter = 0
 Counter = 0
 for line in infile1:
     LineCounter = LineCounter + 1
-    print(LineCounter % 4)
     if LineCounter % 4 == 0 or LineCounter == 0:
+        print(LineCounter)
         Flag = False
         if line.split()[0][1:] in ReadNumSet:
             Flag = True
