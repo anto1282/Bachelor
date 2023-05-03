@@ -207,11 +207,7 @@ process VIREXTRACTOR {
     // tuple val(pair_id), path(DVFcontigs)
     // tuple val(pair_id), path(SeekerContigs)
     // tuple val(pair_id), path(PhagerContigs)
-    val(pair_id)
-    path(contigsFile)
-    path(DVFcontigs)
-    path(SeekerContigs)
-    path(PhagerContigs)
+    val(pair_id), path(contigsFile), path(DVFcontigs), path(SeekerContigs), path(PhagerContigs)
 
     output:
     tuple val(pair_id), path("${pair_id}_ViralContigs.fasta")
@@ -241,9 +237,7 @@ process DEEPVIREXTRACTOR {
     input:
     // tuple val(pair_id), path(contigsFile)
     // tuple val(pair_id), path(DVFcontigs)
-    val(pair_id)
-    path(contigsFile)
-    path(DVFcontigs)
+    tuple val(pair_id), path(contigsFile), path(DVFcontigs)
 
     output:
     tuple val(pair_id), path("${pair_id}_ViralContigs.fasta")
