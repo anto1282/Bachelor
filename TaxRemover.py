@@ -40,31 +40,34 @@ OutName1 = sraNR+"_1.TrimmedSubNoEu.fastq"
 OutName2 = sraNR+"_2.TrimmedSubNoEu.fastq"
 outfile1 = open(OutName1,"w")
 outfile2 = open(OutName2, "w")
+
+LineCounter = 0
 Counter = 0
 for line in infile1:
-    if line.split(" ")[0][0] == "@":
+    LineCounter += 1
+    if LineCounter % 4 == 0 or LineCounter == 0:
+        Flag = False
         if line.split()[0][1:] in ReadNumSet:
             Flag = True
             Counter += 1
-        else:
-            Flag = False
     if Flag == False:
-        print(line.strip(), file = outfile1)
+        print(line, file = outfile1, end = "")
 print("Number of eukaryotic sequences removed from read1:", Counter)
        
 
 infile1.close()
 outfile1.close()
+LineCounter = 0
 Counter = 0
 for line in infile2:
-    if line.split(" ")[0][0] == "@":
+    LineCounter += 1
+    if LineCounter % 4 == 0 or LineCounter == 0:
+        Flag = False
         if line.split()[0][1:] in ReadNumSet:
             Flag = True
             Counter += 1
-        else:
-            Flag = False
     if Flag == False:
-        print(line.strip(), file = outfile2)
+        print(line, file = outfile2, end = "")
 
 
 print("Number of eukaryotic sequences removed from read2:", Counter)
