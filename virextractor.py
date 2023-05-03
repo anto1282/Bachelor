@@ -54,7 +54,6 @@ def PhagerExtract(file):
     return PhagerSet
 
 
-#Burde ikke give problemer, men fungerer ikke som det skal:
 try:
     DVFfile = open(dvffile,"r")
     SeekerInFile = open(seekerfile,"r")
@@ -67,9 +66,10 @@ SeekerSet = SeekerExtract(SeekerInFile)
 PhagerSet = PhagerExtract(PhagerInfile)
 
 
-# print(DVFset)
-# print(SeekerSet)
-# print(PhagerSet)
+
+print(DVFset)
+print(SeekerSet)
+print(PhagerSet)
 
 if intersectionOrUnion == "intersection":
     #Creates intersection of each of the three pairs of sets, and then takes the union of the intersections
