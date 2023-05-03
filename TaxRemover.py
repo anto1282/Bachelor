@@ -21,7 +21,6 @@ for line in infile:
     if Flag == True:
         TaxIDSet.add(line.split()[4])
 infile.close()
-print(TaxIDSet)
 Flag = False
 
 ReadNumSet = set()
@@ -32,7 +31,6 @@ for line in infile:
 TaxIDSet.clear()
 infile.close()
 
-print(ReadNumSet)
 
 infile1 = open(read1TrimmedSub)
 infile2 = open(read2TrimmedSub)
@@ -41,8 +39,8 @@ OutName2 = sraNR+"_2.TrimmedNoEu.fastq"
 outfile1 = open(OutName1,"w")
 outfile2 = open(OutName2, "w")
 
-DeletedFile1 = open("DeletedSeqs" , "w")
-DeletedFile2 = open("DeletedSeqs2" , "w")
+DeletedFile1 = open(sraNR+"_DeletedSeqs1" , "w")
+DeletedFile2 = open(sraNR+"_DeletedSeqs2" , "w")
 LineCounter = 0
 Counter = 0
 for line in infile1:
