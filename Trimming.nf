@@ -181,7 +181,7 @@ process FASTQC{
     time = 3.m
     memory 2.GB
     
-    publishDir "${params.outdir}/${pair_id}/CompiledResults"
+    publishDir "${params.outdir}/${pair_id}/CompiledResults", mode: 'copy', overwrite: true
     input:
     val(pair_id)
     path (r1)
