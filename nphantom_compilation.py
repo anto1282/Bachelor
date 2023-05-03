@@ -196,7 +196,8 @@ with open(assemblystats,'r') as file:
 
 				"""
 		elif line.startswith("Number"):
-			line.replace("\n","<br>")
+			line = line.replace("\n","<br>")
+			print(line)
 		#print(line)
 		
 
