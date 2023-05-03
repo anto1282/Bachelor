@@ -346,9 +346,12 @@ with open(outputfilename, 'w') as f:
 		#print(virusdict[key])
 		host = ""
 
-		for taxonomy in virusdict[key][1]:
-			host += taxonomy + "<br>"
-		
+		if len(virusdict) > 1:
+			for taxonomy in virusdict[key][1]:
+				host += taxonomy + "<br>"
+		else:
+			host = virusdict[key][1]
+
 		print(host)
 		length = (virusdict[key][2])
 		completeness = (virusdict[key][3])
