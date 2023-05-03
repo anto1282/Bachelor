@@ -185,7 +185,7 @@ process FASTQC{
 
     output:
     path("*.html")
-
+z
     script:    
     """ 
     fastqc ${r1} ${r2}
