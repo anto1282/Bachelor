@@ -34,8 +34,8 @@ process FASTERQDUMP {
 process TRIM {
     
     if (params.server) {
-        beforeScript 'module load perl adapterremoval fastqc fastp'
-        afterScript 'module unload perl adapterremoval fastqc fastp'
+        beforeScript 'module load adapterremoval fastp'
+        afterScript 'module unload adapterremoval fastp'
     }
     else {
         conda 'adapterremoval fastqc fastp'
@@ -52,8 +52,8 @@ process TRIM {
 
     output:
     val(pair_id)
-    path("${pair_id}_1_trimmed.fastq")
-    path("${pair_id}_2_trimmed.fastq")
+    path("${pair_id}_1_trimmed.fastq.gz")
+    path("${pair_id}_2_trimmed.fastq.gz")
 
     
     script:
