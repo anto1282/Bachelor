@@ -239,9 +239,11 @@ process DEEPVIREXTRACTOR {
 
     
     input:
-    tuple val(pair_id), path(contigsFile)
-    tuple val(pair_id), path(DVFcontigs)
-
+    // tuple val(pair_id), path(contigsFile)
+    // tuple val(pair_id), path(DVFcontigs)
+    val(pair_id)
+    path(contigsFile)
+    path(DVFcontigs)
 
     output:
     tuple val(pair_id), path("${pair_id}_ViralContigs.fasta")
