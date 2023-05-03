@@ -133,11 +133,7 @@ process RESULTS_COMPILATION {
     
     input:        
     
-    tuple val(pair_id), path(viralcontigs)
-
-    path(iphop_predictions)
-    
-    path(checkv_results)
+    tuple val(pair_id), path(viralcontigs), path(iphop_predictions), path(checkv_results)
     
     output:
     path ("compiled_results.html")
@@ -145,7 +141,7 @@ process RESULTS_COMPILATION {
    
     script:
 
-    if (params.server) {
+    if (params.iphopDB != false) {
     """   
     python3 ${projectDir}/nphantom_compilation.py compiled_results.html ${viralcontigs} ${iphop_predictions}/Host_prediction_to_genus_m90.csv  ${iphop_predictions}/Host_prediction_to_genome_m90.csv ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats.txt ${pair_id}
     """

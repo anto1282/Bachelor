@@ -106,7 +106,7 @@ workflow{
             
             VIRAL_CONTIGS_ch[0].combine(CHECKV_ch, by: 0).combine(CHECKV_ch, by: 0).set {COMBINED_RESULTS_ch} // CHECK_V twice to act as empty path for missing iphop results
             
-            RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch[0], EMPTYFILE_ch, CHECKV_ch)
+            RESULTS_COMPILATION_ch = RESULTS_COMPILATION(COMBINED_RESULTS_ch)
         }
     }   
 }
