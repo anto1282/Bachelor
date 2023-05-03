@@ -36,8 +36,8 @@ infile.close()
 
 infile1 = open(read1TrimmedSub)
 infile2 = open(read2TrimmedSub)
-OutName1 = sraNR+"_1.TrimmedSubNoEu.fastq"
-OutName2 = sraNR+"_2.TrimmedSubNoEu.fastq"
+OutName1 = sraNR+"_1.TrimmedNoEu.fastq"
+OutName2 = sraNR+"_2.TrimmedNoEu.fastq"
 outfile1 = open(OutName1,"w")
 outfile2 = open(OutName2, "w")
 

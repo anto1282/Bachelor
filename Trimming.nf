@@ -92,8 +92,6 @@ process KRAKEN{
         memory "6 GB"
         cpus 4
     }
-    publishDir "${params.outdir}/${pair_id}/KrakenResults", mode: 'copy'
-
 
     input:
     val(pair_id)
@@ -103,22 +101,26 @@ process KRAKEN{
 
     output:
     val(pair_id)
-    path("${pair_id}_1.TrimmedSubNoEu.fastq.gz")
-    path("${pair_id}_2.TrimmedSubNoEu.fastq.gz")
+    path("${pair_id}_1.TrimmedNoEu.fastq.gz")
+    path("${pair_id}_2.TrimmedNoEu.fastq.gz")
     
     script:
     if (params.server) {
         """
+        mkdir ${params.outdir}/${pair_id}/KrakenResults
         gzip -d -f ${r1}
         gzip -d -f ${r2}
         mkdir -p ${projectDir}/${params.outdir}/${pair_id}/Assembly
         kraken2 -d ${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
         python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats.txt
-        
+        mv report.kraken.txt ${params.outdir}/${pair_id}/KrakenResults
+        mv read.kraken ${params.outdir}/${pair_id}/KrakenResults
+
+
         rm ${r1.baseName}
         rm ${r2.baseName} 
-        gzip ${pair_id}_1.TrimmedSubNoEu.fastq
-        gzip ${pair_id}_2.TrimmedSubNoEu.fastq
+        gzip ${pair_id}_1.TrimmedNoEu.fastq
+        gzip ${pair_id}_2.TrimmedNoEu.fastq
         """
     }
     else {
