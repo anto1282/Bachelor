@@ -12,7 +12,7 @@ process SPADES {
         errorStrategy 'retry'
         maxRetries  = 3
         afterScript 'module unload spades/3.15.5'
-         time = 2.h
+        time = 2.h
     }
     else {
         conda "spades=3.15.5 conda-forge::openmp"
@@ -51,6 +51,7 @@ process SPADES {
 
 process OFFSETDETECTOR {
     cpus 2
+    time = 10.m
     input:
     tuple(val(pair_id), path(reads))
 
@@ -78,6 +79,7 @@ process N50 {
     if (params.server) {
         beforeScript 'module load bbmap'
         cpus 1
+        time = 5.m
         memory '4 GB'
     }
     else {

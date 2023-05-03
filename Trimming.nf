@@ -42,6 +42,7 @@ process TRIM {
     }
      
     cpus 4
+    time = 20.m
 
     input: 
     tuple(val(pair_id), path(reads))
@@ -81,6 +82,7 @@ process KRAKEN{
         }
         else{
             memory {61.GB * task.attempt}
+            time = 20.m
         }
         cpus 3
         errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
@@ -91,7 +93,9 @@ process KRAKEN{
         conda "kraken2"
         memory "6 GB"
         cpus 2
+        time = 20.m
     }
+    
 
     input:
     val(pair_id)
@@ -176,6 +180,7 @@ process FASTQC{
     else {
         conda "fastqc"
     }
+    time = 3.m
     
     publishDir "${params.outdir}/${pair_id}/CompiledResults"
     input:

@@ -5,6 +5,7 @@ process DVF {
         beforeScript 'module load gcc theano deepvirfinder'
         afterScript 'module unload gcc theano deepvirfinder/'
         cpus 8
+        time = 20.m
         memory '16 GB'
         //clusterOptions '--partition=gpuqueue'
             }
@@ -52,6 +53,7 @@ process PHAGER {
         beforeScript "module unload miniconda/4.11.0"
         conda '/projects/mjolnir1/apps/conda/py39'
         module 'python/3.9.9'
+        time = 20.m
         cpus 4
             }
     else {
@@ -133,6 +135,7 @@ process CHECKV {
     if (params.server) {
         beforeScript 'module load checkv'
         afterScript 'module unload checkv'
+        time = 10.m
         cpus 8
             }
     else {
@@ -165,6 +168,7 @@ process SEEKER{
     if (params.server) {
         beforeScript 'module load seeker bbmap'
         afterScript 'module unload seeker bbmap'
+        time = 20.m
         cpus 8
             }
     else {
@@ -194,6 +198,7 @@ process SEEKER{
 
 process VIREXTRACTOR {
     cpus 1
+    time = 20.m
     publishDir "${params.outdir}/${pair_id}/VirusPredictions", mode: 'copy'
 
     
@@ -222,6 +227,7 @@ process VIREXTRACTOR {
 
 process DEEPVIREXTRACTOR {
     cpus 1
+    time = 20.m
     //Used instead of virextractor when only deepvirfinder is run
     
     publishDir "${params.outdir}/${pair_id}/VirusPredictions", mode: 'copy'
