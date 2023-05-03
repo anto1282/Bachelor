@@ -77,12 +77,12 @@ process OFFSETDETECTOR {
 process N50 {
     if (params.server) {
         beforeScript 'module load bbmap'
-        cpus 4
-        memory '16 GB'
+        cpus 1
+        memory '4 GB'
     }
     else {
         conda "agbiome::bbtools"
-        cpus 4
+        cpus 1
         memory '4 GB'
     }
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
