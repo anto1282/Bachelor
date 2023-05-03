@@ -203,7 +203,8 @@ with open(assemblystats,'r') as file:
 
 
 		assemblystatistics += line
-	
+
+assemblystatistics += """</table>"""
 
 webpage = f"""
 <!DOCTYPE html>
@@ -334,7 +335,7 @@ with open(outputfilename, 'w') as f:
 	#Creating a tab for statistics
 	buttonstring += opentab.format("Statistics","Assembly Statistics")
 
-	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics, "</div>")
+	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics) 
 	
 
 	
