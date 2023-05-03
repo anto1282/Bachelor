@@ -52,8 +52,8 @@ process TRIM {
 
     output:
     val(pair_id)
-    path("${reads[0].simpleName}_trimmed.fastq.gz")
-    path("${reads[1].simpleName}_trimmed.fastq.gz")
+    path("${pair_id}_1_trimmed.fastq")
+    path("${pair_id}_2_trimmed.fastq")
 
     
     script:
@@ -61,13 +61,13 @@ process TRIM {
    
     """
     AdapterRemoval --file1 ${reads[0]}  --file2 ${reads[1]} --collapse --output1 read1_tmp --output2 read2_tmp --adapter-list ${projectDir}/Adapters.txt --threads ${task.cpus}
-    fastp -i read1_tmp -I read2_tmp -o ${reads[0].simpleName}_trimmed.fastq  -O ${reads[1].simpleName}_trimmed.fastq -W 5 -M 30 -e 25 -f 15 -w ${task.cpus}
+    fastp -i read1_tmp -I read2_tmp -o ${pair_id}_1_trimmed.fastq  -O ${pair_id}_2_trimmed.fastq -W 5 -M 30 -e 25 -f 15 -w ${task.cpus}
     
     mkdir -p ${projectDir}/${params.outdir}/${pair_id}/CompiledResults/
     mv fastp.html ${projectDir}/${params.outdir}/${pair_id}/CompiledResults/fastp.html
     
-    gzip ${reads[0].simpleName}_trimmed.fastq
-    gzip ${reads[1].simpleName}_trimmed.fastq
+    gzip ${pair_id}_1_trimmed.fastq
+    gzip ${pair_id}_2_trimmed.fastq
     rm read?_tmp
     """
     
