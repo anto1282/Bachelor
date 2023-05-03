@@ -97,7 +97,7 @@ process KRAKEN{
         else{
             memory {61.GB * task.attempt}
         }
-        cpus 8
+        cpus 3
         errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
         maxRetries 3
 
@@ -105,7 +105,7 @@ process KRAKEN{
     else {
         conda "kraken2"
         memory "6 GB"
-        cpus 4
+        cpus 2
     }
     publishDir "${params.outdir}/${pair_id}/KrakenResults", mode: 'copy'
 

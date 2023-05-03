@@ -52,10 +52,10 @@ process PHAGER {
         beforeScript "module unload miniconda/4.11.0"
         conda '/projects/mjolnir1/apps/conda/py39'
         module 'python/3.9.9'
-        cpus 8
+        cpus 2
             }
     else {
-        cpus 8
+        cpus 2
     }
     
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
@@ -193,6 +193,7 @@ process SEEKER{
 }
 
 process VIREXTRACTOR {
+    cpus 1
     publishDir "${params.outdir}/${pair_id}/VirusPredictions", mode: 'copy'
 
     
@@ -220,6 +221,7 @@ process VIREXTRACTOR {
 
 
 process DEEPVIREXTRACTOR {
+    cpus 1
     //Used instead of virextractor when only deepvirfinder is run
     
     publishDir "${params.outdir}/${pair_id}/VirusPredictions", mode: 'copy'
