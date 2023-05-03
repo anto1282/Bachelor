@@ -134,8 +134,8 @@ process KRAKEN{
         python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats.txt
         rm ${r1.baseName}
         rm ${r2.baseName} 
-        gzip ${pair_id}_1.TrimmedSubNoEu.fastq
-        gzip ${pair_id}_2.TrimmedSubNoEu.fastq
+        gzip ${pair_id}_1.TrimmedNoEu.fastq
+        gzip ${pair_id}_2.TrimmedNoEu.fastq
         """
     }
 }
