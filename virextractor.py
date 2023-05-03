@@ -12,6 +12,7 @@ dvffile = str(sys.argv[4])
 seekercutoff = float(sys.argv[5])
 seekerfile = str(sys.argv[6])
 phagerfile = str(sys.argv[7])
+intersectionOrUnion = str(sys.argv[8])
 
 DVFset = set()
 def DVFExtract(DVFfile):
@@ -58,16 +59,8 @@ try:
     DVFfile = open(dvffile,"r")
     SeekerInFile = open(seekerfile,"r")
     PhagerInfile = open(phagerfile,"r")
-except FileNotFoundError:
-    try:
-        SeekerInFile = open(seekerfile,"r")
-        PhagerInfile = open(phagerfile,"r")
-    except:
-        try:
-            PhagerInfile = open(phagerfile,"r")
-        except:
-            print("No files found, exiting")
-            sys.exit(1)
+except FileNotFoundError:  
+    sys.exit(1)
             
 DVFset = DVFExtract(DVFfile)
 SeekerSet = SeekerExtract(SeekerInFile)
@@ -78,12 +71,17 @@ PhagerSet = PhagerExtract(PhagerInfile)
 # print(SeekerSet)
 # print(PhagerSet)
 
+if intersectionOrUnion == "intersection":
+    #Creates intersection of each of the three pairs of sets, and then takes the union of the intersections
+    SeekerDVFInter = SeekerSet.intersection(DVFset)
+    SeekerPhagerInter = SeekerSet.intersection(PhagerSet)
+    DVFPhagerInter = DVFset.intersection(PhagerSet)
 
-SeekerDVFInter = SeekerSet.intersection(DVFset)
-SeekerPhagerInter = SeekerSet.intersection(PhagerSet)
-DVFPhagerInter = DVFset.intersection(PhagerSet)
+    final_viral_set = SeekerDVFInter.union(SeekerPhagerInter,DVFPhagerInter)
 
-final_viral_set = SeekerDVFInter.union(SeekerPhagerInter,DVFPhagerInter)
+elif intersectionOrUnion =="union":
+    #The union of the three sets, used if the virus predictors have a hard time predicting viruses on a specific dataset
+    final_viral_set = SeekerSet.union(DVFset,PhagerSet)
 
 virusoutfile = open(outputfilename,'w')
 

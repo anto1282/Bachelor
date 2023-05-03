@@ -52,7 +52,7 @@ process PHAGER {
         beforeScript "module unload miniconda/4.11.0"
         conda '/projects/mjolnir1/apps/conda/py39'
         module 'python/3.9.9'
-        cpus 2
+        cpus 4
             }
     else {
         cpus 2
@@ -75,7 +75,7 @@ process PHAGER {
         """
         echo $PATH
         gzip --decompress --force ${contigs} 
-        phager.py -c ${params.minLength} -a ${contigs.baseName} -d VirusPredictions -v
+        phager.py -c ${params.minLength} -a ${contigs.baseName} -d VirusPredictions -t ${task.cpus}
         gzip --force ${contigs.baseName}
         mv VirusPredictions/${contigs.simpleName}.phager_results.csv.gz VirusPredictions/PhagerResults.csv.gz
         """
@@ -212,7 +212,7 @@ process VIREXTRACTOR {
     """
     gzip -d -f ${contigsFile}
     gzip -d -f ${PhagerContigs}
-    python3 ${projectDir}/virextractor.py ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.94 ${DVFcontigs} 0.82 ${SeekerContigs} ${PhagerContigs.baseName}
+    python3 ${projectDir}/virextractor.py ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.94 ${DVFcontigs} 0.82 ${SeekerContigs} ${PhagerContigs.baseName} ${params.iou}
     gzip -f ${contigsFile.baseName}
     gzip -f ${PhagerContigs.baseName}
     
