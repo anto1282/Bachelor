@@ -106,7 +106,7 @@ with open(contigfile, 'r') as file:
             seqcount += 1
         elif line.startswith(">"):
             virusflag = False             
-        
+            print(line)
         elif virusflag == True:
             virusoutfile.write(line)
         
@@ -114,7 +114,7 @@ with open(contigfile, 'r') as file:
         
 
 print(final_viral_set)
-print(len(final_viral_set), end= "")
+print(len(final_viral_set))
 print(seqcount)
 
 virusoutfile.close()
