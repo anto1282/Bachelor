@@ -41,8 +41,8 @@ OutName2 = sraNR+"_2.TrimmedNoEu.fastq"
 outfile1 = open(OutName1,"w")
 outfile2 = open(OutName2, "w")
 
-DeletedFile1 = open("DeletedSeqs" , "ẃ")
-DeletedFile2 = open("DeletedSeqs" , "ẃ")
+DeletedFile1 = open("DeletedSeqs" , "w")
+DeletedFile2 = open("DeletedSeqs2" , "w")
 LineCounter = 0
 Counter = 0
 for line in infile1:
