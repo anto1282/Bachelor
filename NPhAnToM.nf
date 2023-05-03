@@ -57,9 +57,11 @@ workflow{
         DVF_ch = DVF(ASSEMBLY_ch)
         SEEKER_ch = SEEKER(ASSEMBLY_ch)
         PHAGER_ch = PHAGER(ASSEMBLY_ch)
-        
+
+        ASSEMBLY_ch.combine(DVF_ch,by:0).combine(SEEKER_ch, by: 0).combine(PHAGER_ch, by: 0).set {COMBINED_PREDS_ch}
+        COMBINED_PREDS_ch.view()
         // EXTRACTS AND JOINS VIRAL PHAGE CONTIGS FROM THE THREE VIRUS PREDICTION TOOLS
-        VIRAL_CONTIGS_ch = VIREXTRACTOR(ASSEMBLY_ch, DVF_ch, SEEKER_ch,PHAGER_ch)   
+        VIRAL_CONTIGS_ch = VIREXTRACTOR(COMBINED_PREDS_ch)   
     }
     else {
         // Simpler virus prediction using only deepvirfinder, when running locally
