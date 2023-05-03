@@ -4,7 +4,7 @@ process DVF {
     if (params.server) {
         beforeScript 'module load gcc theano deepvirfinder'
         afterScript 'module unload gcc theano deepvirfinder/'
-        cpus 8
+        cpus 16
         time = 20.m
         memory '16 GB'
         //clusterOptions '--partition=gpuqueue'
@@ -135,12 +135,12 @@ process CHECKV {
     if (params.server) {
         beforeScript 'module load checkv'
         afterScript 'module unload checkv'
-        time = 10.m
-        cpus 8
+        time = 20.m
+        cpus 4
             }
     else {
         conda 'conda-forge::libgcc-ng bioconda::checkv=1.0.1'
-        cpus 8
+        cpus 4
     }
     
     publishDir "${params.outdir}/${pair_id}/", mode: 'copy'
@@ -169,11 +169,11 @@ process SEEKER{
         beforeScript 'module load seeker bbmap'
         afterScript 'module unload seeker bbmap'
         time = 20.m
-        cpus 8
+        cpus 3
             }
     else {
         conda 'seeker python=3.7 pip'
-        cpus 8
+        cpus 3
     }
 
     publishDir "${params.outdir}/${pair_id}/VirusPredictions", mode: 'copy'
