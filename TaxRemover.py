@@ -21,7 +21,7 @@ for line in infile:
     if Flag == True:
         TaxIDSet.add(line.split()[4])
 infile.close()
-
+print(TaxIDSet)
 Flag = False
 
 ReadNumSet = set()
@@ -32,6 +32,8 @@ for line in infile:
 TaxIDSet.clear()
 infile.close()
 
+print(ReadNumSet)
+
 infile1 = open(read1TrimmedSub)
 infile2 = open(read2TrimmedSub)
 OutName1 = sraNR+"_1.TrimmedNoEu.fastq"
@@ -39,15 +41,19 @@ OutName2 = sraNR+"_2.TrimmedNoEu.fastq"
 outfile1 = open(OutName1,"w")
 outfile2 = open(OutName2, "w")
 
+DeletedFile1 = open("DeletedSeqs" , "ẃ")
+DeletedFile2 = open("DeletedSeqs" , "ẃ")
 LineCounter = 0
 Counter = 0
 for line in infile1:
-    LineCounter += 1
+    LineCounter = LineCounter + 1
     if LineCounter % 4 == 0 or LineCounter == 0:
         Flag = False
         if line.split()[0][1:] in ReadNumSet:
             Flag = True
             Counter += 1
+    if Flag == True:
+        print(line, file = DeletedFile1,end = "")
     if Flag == False:
         print(line, file = outfile1, end = "")
 print("Number of eukaryotic sequences removed from read1:", Counter)
@@ -58,12 +64,16 @@ outfile1.close()
 LineCounter = 0
 Counter = 0
 for line in infile2:
-    LineCounter += 1
+    LineCounter = LineCounter + 1
     if LineCounter % 4 == 0 or LineCounter == 0:
         Flag = False
         if line.split()[0][1:] in ReadNumSet:
+            print(LineCounter)
+            print(line)
             Flag = True
             Counter += 1
+    if Flag == True:
+        print(line, file = DeletedFile2,end = "")
     if Flag == False:
         print(line, file = outfile2, end = "")
 

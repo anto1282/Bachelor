@@ -118,12 +118,9 @@ process KRAKEN{
         mkdir -p ${projectDir}/${params.outdir}/${pair_id}/Assembly
         kraken2 -d ${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
         python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats.txt
-        mv report.kraken.txt ${projectDir}/${params.outdir}/${pair_id}/KrakenResults
-        mv read.kraken ${projectDir}/${params.outdir}/${pair_id}/KrakenResults
+        cp report.kraken.txt ${projectDir}/${params.outdir}/${pair_id}/KrakenResults
+        cp read.kraken ${projectDir}/${params.outdir}/${pair_id}/KrakenResults
 
-
-        rm ${r1.baseName}
-        rm ${r2.baseName} 
         gzip ${pair_id}_1.TrimmedNoEu.fastq
         gzip ${pair_id}_2.TrimmedNoEu.fastq
         """
