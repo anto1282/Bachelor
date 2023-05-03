@@ -90,20 +90,32 @@ with open(contigfile, 'r') as file:
 
     seqcount = 0
     for line in file:
-        if line.startswith(">"):
-            virusflag = False             
+        # if line.startswith(">"):
+        #     virusflag = False             
         
-        if virusflag == True:
-            virusoutfile.write(line)
+        # if virusflag == True:
+        #     virusoutfile.write(line)
         
-        elif line.startswith(">") and line[1:].strip().split()[0] in final_viral_set:
+        # elif line.startswith(">") and line[1:].strip().split()[0] in final_viral_set:
+        #     virusflag = True
+        #     virusoutfile.write(line)
+        #     seqcount += 1
+        if line.startswith(">") and line[1:].strip().split()[0] in final_viral_set:
             virusflag = True
             virusoutfile.write(line)
             seqcount += 1
+        elif line.startswith(">"):
+            virusflag = False             
+        
+        elif virusflag == True:
+            virusoutfile.write(line)
+        
+        
         
 
 print(final_viral_set)
 print(len(final_viral_set), end= "")
+print(seqcount)
 
 virusoutfile.close()
 
