@@ -195,6 +195,8 @@ with open(assemblystats,'r') as file:
 				</tr>
 
 				"""
+		elif line.startswith("Number"):
+			line.replace("\n","<br>")
 		#print(line)
 		
 
@@ -332,7 +334,7 @@ with open(outputfilename, 'w') as f:
 	#Creating a tab for statistics
 	buttonstring += opentab.format("Statistics","Assembly Statistics")
 
-	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics)
+	tabstring += statisticstabs.format("Statistics","Statistics of the assembly", assemblystatistics, "</div>")
 	
 
 	
@@ -345,22 +347,25 @@ with open(outputfilename, 'w') as f:
 		print("Contig info to HTML:", key)
 		#print(virusdict[key])
 		host = ""
-
-		if len(virusdict) > 1:
+		print(type(virusdict[key][1]))
+		if isinstance(virusdict[key][1],list):
+			print(virusdict[key][1])
 			for taxonomy in virusdict[key][1]:
 				host += taxonomy + "<br>"
-		else:
+		elif isinstance(virusdict[key][1],str):
 			host = virusdict[key][1]
+		
+		
 
 		print(host)
 		length = (virusdict[key][2])
 		completeness = (virusdict[key][3])
 		confidence = (virusdict[key][4])
-		print(length, completeness)
+		#print(length, completeness)
 		picturepath = key + ".png"
 		DNAtext = "Phage DNA:"
 		contig = virusdict[key][0]
-		buttonstring += (opentab.format(key,key))
+		buttonstring += opentab.format(key,key)
 		tabstring += tabs.format(key,key,host,length, completeness, confidence, picturepath,DNAtext,contig.replace("\n","<br>"))
 	buttonstring += "</div>"
 	f.write(buttonstring)
