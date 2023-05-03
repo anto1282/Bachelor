@@ -15,7 +15,7 @@ phagerfile = str(sys.argv[7])
 intersectionOrUnion = str(sys.argv[8])
 
 DVFset = set()
-def DVFExtract(DVFfile):
+def DVFExtract(DVFfile,dvfcutoff):
     linecount = 0
     for line in DVFfile:
         if linecount > 0:
@@ -28,7 +28,7 @@ def DVFExtract(DVFfile):
 
 
 SeekerSet = set()
-def SeekerExtract(SeekerInFile):
+def SeekerExtract(SeekerInFile, seekercutoff):
     SeekerFlag = False
     for line in SeekerInFile:
         if len(line) == 1:
@@ -41,7 +41,6 @@ def SeekerExtract(SeekerInFile):
     return  SeekerSet               
 
 
-#with open(virsorterfile, 'r') as VirSorterFile:
 
 PhagerSet = set()
 def PhagerExtract(file):
@@ -61,8 +60,8 @@ try:
 except FileNotFoundError:  
     sys.exit(1)
             
-DVFset = DVFExtract(DVFfile)
-SeekerSet = SeekerExtract(SeekerInFile)
+DVFset = DVFExtract(DVFfile,dvfcutoff)
+SeekerSet = SeekerExtract(SeekerInFile, seekercutoff)
 PhagerSet = PhagerExtract(PhagerInfile)
 
 
