@@ -65,8 +65,6 @@ for line in infile2:
     if LineCounter % 4 == 0 or LineCounter == 0:
         Flag = False
         if line.split()[0][1:] in ReadNumSet:
-            print(LineCounter)
-            print(line)
             Flag = True
             Counter += 1
     if Flag == True:
