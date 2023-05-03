@@ -30,14 +30,15 @@ with open(predfile,'r') as file:
             
         linecount += 1
 
-print(len(virusnames))
+print("Number of found viruses:", len(virusnames))
+print("Writing virus contigs to file...")
 virusoutfile = open(virusfile,"w")
 nonvirusoutfile = open(nonvirusfile,'w')
 
+seqcount = 0
 with open(contigfile, 'r') as file:
     virusflag = False
     nonvirusflag = False
-    seqcount = 0
     for line in file:
         #print(virusflag)
         if line.startswith(">"):
@@ -60,6 +61,9 @@ with open(contigfile, 'r') as file:
     
 virusoutfile.close()
 nonvirusoutfile.close()
+
+print("Viruses written to %s file:" % virusoutfile, seqcount)
+print("DeepVirExtractor finished")
 """"
 except IndexError as error:
     print("Command argument missing:", error)
