@@ -56,10 +56,10 @@ process TRIM {
     
     script:
    
-    if (params.refGenome == ""){
+   
     """
-    AdapterRemoval --file1 ${reads[0]}  --file2 ${reads[1]} --output1 read1_tmp --output2 read2_tmp 
-    fastp -i read1_tmp -I read2_tmp -o ${reads[0].simpleName}_trimmed.fastq  -O ${reads[1].simpleName}_trimmed.fastq  -W 5 -M 30 -5 -3 -e 25 -f 15 -t 15
+    AdapterRemoval --file1 ${reads[0]}  --file2 ${reads[1]} --collapse --output1 read1_tmp --output2 read2_tmp 
+    fastp -i read1_tmp -I read2_tmp -o ${reads[0].simpleName}_trimmed.fastq  -O ${reads[1].simpleName}_trimmed.fastq -W 5 -M 30 -e 25 -f 15
     
     mkdir -p ${projectDir}/${params.outdir}/${pair_id}/CompiledResults/
     mv fastp.html ${projectDir}/${params.outdir}/${pair_id}/CompiledResults/fastp.html
@@ -67,23 +67,8 @@ process TRIM {
     gzip ${reads[0].simpleName}_trimmed.fastq
     gzip ${reads[1].simpleName}_trimmed.fastq
     rm read?_tmp
-    
     """
-    }
-    else{
-     """
-    AdapterRemoval --file1 ${r1}  --file2 ${r2} --output1 read1_tmp --output2 read2_tmp 
-    fastp -i read1_tmp -I read2_tmp -o ${r1.simpleName}_trimmed.fastq  -O ${r2.simpleName}_trimmed.fastq  -W 5 -M 30 -e 30 -f 15 -t 15 
     
-    mkdir -p ${projectDir}/${params.outdir}/${pair_id}/CompiledResults/
-    mv fastp.html ${projectDir}/${params.outdir}/${pair_id}/CompiledResults/fastp.html
-    
-    gzip ${r1.simpleName}_trimmed.fastq
-    gzip ${r2.simpleName}_trimmed.fastq
-    rm read?_tmp
-
-    """
-    }
 }
 
 process KRAKEN{
@@ -107,8 +92,6 @@ process KRAKEN{
         memory "6 GB"
         cpus 2
     }
-    publishDir "${params.outdir}/${pair_id}/KrakenResults", mode: 'copy'
-
 
     input:
     val(pair_id)
@@ -118,22 +101,26 @@ process KRAKEN{
 
     output:
     val(pair_id)
-    path("${pair_id}_1.TrimmedSubNoEu.fastq.gz")
-    path("${pair_id}_2.TrimmedSubNoEu.fastq.gz")
+    path("${pair_id}_1.TrimmedNoEu.fastq.gz")
+    path("${pair_id}_2.TrimmedNoEu.fastq.gz")
     
     script:
     if (params.server) {
         """
+        mkdir -p ${projectDir}/${params.outdir}/${pair_id}/KrakenResults
         gzip -d -f ${r1}
         gzip -d -f ${r2}
         mkdir -p ${projectDir}/${params.outdir}/${pair_id}/Assembly
         kraken2 -d ${params.krakDB} --report report.kraken.txt --paired ${r1.baseName} ${r2.baseName} --output read.kraken --threads ${task.cpus}
         python3 ${projectDir}/TaxRemover.py ${r1.baseName} ${r2.baseName} ${pair_id} report.kraken.txt read.kraken > ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats.txt
-        
+        mv report.kraken.txt ${projectDir}/${params.outdir}/${pair_id}/KrakenResults
+        mv read.kraken ${projectDir}/${params.outdir}/${pair_id}/KrakenResults
+
+
         rm ${r1.baseName}
         rm ${r2.baseName} 
-        gzip ${pair_id}_1.TrimmedSubNoEu.fastq
-        gzip ${pair_id}_2.TrimmedSubNoEu.fastq
+        gzip ${pair_id}_1.TrimmedNoEu.fastq
+        gzip ${pair_id}_2.TrimmedNoEu.fastq
         """
     }
     else {
