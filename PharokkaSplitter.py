@@ -48,6 +48,7 @@ for Nodes in contigs:
             print(line, file = GBKOutfile, end = "")
     GBKFile.close()
     GFFFile.close()
+    print(SRANr + "_" + Nodes, end="")
 
 FASTAOutFile.close()
 GBKFile.close()
