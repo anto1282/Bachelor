@@ -28,12 +28,12 @@ process PHAROKKA {
     script:
     if (task.attempt == 1){
     """
-    pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal
+    pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
     """   
     }
     else{    
     """
-    pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
+    pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal 
 
     """
     }
@@ -75,7 +75,7 @@ process PHAROKKASPLITTER {
     
     tuple val (pair_id), path("NODE_*.gff"), path("NODE_*.gbk") , path("NODE_*.fasta")
 
-    
+
 
     script:
   
