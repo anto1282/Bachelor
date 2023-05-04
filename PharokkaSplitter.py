@@ -23,6 +23,7 @@ GBKFile = open(PharokkaGBKFile, "r")
 
 FastaFlag = False
 for Nodes in contigs:
+    FakeFile = open(SRANr + "_" + Nodes + ".txt", "w")
     GFFOutFile = open(SRANr + "_" + Nodes + ".gff","w")
     GBKOutfile = open(SRANr + "_" + Nodes + ".gbk", "w")
     FASTAOutFile = open(SRANr +"_" + Nodes + ".fasta", "w")
@@ -48,8 +49,6 @@ for Nodes in contigs:
             print(line, file = GBKOutfile, end = "")
     GBKFile.close()
     GFFFile.close()
-    print(SRANr + "_" + Nodes)
-
 FASTAOutFile.close()
 GBKFile.close()
 GFFFile.close()
