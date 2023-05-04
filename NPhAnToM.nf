@@ -89,28 +89,29 @@ workflow{
         }
         
         // CREATING PLOTS OF EACH PHAGE
-        PHAROKKA_SPLITS_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch[0]) 
+        PHAROKKA_INPUT_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch[0]) 
         
         //PHAROKKA_SPLITS_ch.groupTuple().set{PHAROKKA_INPUT_ch}
         PHAROKKA_SPLITS_ch[0].combine(PHAROKKA_SPLITS_ch[1], by: 0).combine(PHAROKKA_SPLITS_ch[2], by: 0).set{PHAROKKA_INPUT_ch}
         PHAROKKA_INPUT_ch.view()
+        //PHAROKKA_SPLITS_ch.groupTuple().set{PHAROKKA_INPUT_ch}
 
-        // PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_INPUT_ch[0].flatten(),PHAROKKA_INPUT_ch[1][0].flatten(),PHAROKKA_INPUT_ch[1][1].flatten(), PHAROKKA_INPUT_ch[1][2].flatten())
+        PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_INPUT_ch[0].flatten(),PHAROKKA_INPUT_ch[1].flatten(),PHAROKKA_INPUT_ch[2].flatten(), PHAROKKA_INPUT_ch[3].flatten())
 
         
-        // // CHECKS THE QUALITY OF THE VIRAL CONTIGS
-        // CHECKV_ch = CHECKV(VIRAL_CONTIGS_ch[0])
+        // CHECKS THE QUALITY OF THE VIRAL CONTIGS
+        CHECKV_ch = CHECKV(VIRAL_CONTIGS_ch[0])
 
-        // if (params.iphopDB != false) {
-        //     VIRAL_CONTIGS_ch[0].combine(HOSTPREDICTION_ch, by: 0).combine(CHECKV_ch, by: 0).set {COMBINED_RESULTS_ch}
-        //     RESULTS_COMPILATION_ch = RESULTS_COMPILATION(COMBINED_RESULTS_ch)
-        // }
-        // else {
-        //     // EMPTYFILE_ch = Channel.fromPath('/path/that/doesnt/exist.txt') //Replaces the hostprediction channel
+        if (params.iphopDB != false) {
+            VIRAL_CONTIGS_ch[0].combine(HOSTPREDICTION_ch, by: 0).combine(CHECKV_ch, by: 0).set {COMBINED_RESULTS_ch}
+            RESULTS_COMPILATION_ch = RESULTS_COMPILATION(COMBINED_RESULTS_ch)
+        }
+        else {
+            // EMPTYFILE_ch = Channel.fromPath('/path/that/doesnt/exist.txt') //Replaces the hostprediction channel
             
-        //     VIRAL_CONTIGS_ch[0].combine(CHECKV_ch, by: 0).combine(CHECKV_ch, by: 0).set {COMBINED_RESULTS_ch} // CHECK_V twice to act as empty path for missing iphop results
+            VIRAL_CONTIGS_ch[0].combine(CHECKV_ch, by: 0).combine(CHECKV_ch, by: 0).set {COMBINED_RESULTS_ch} // CHECK_V twice to act as empty path for missing iphop results
             
-        //     RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch[0], EMPTYFILE_ch, CHECKV_ch)
-        // }
+            RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch[0], EMPTYFILE_ch, CHECKV_ch)
+        }
     }   
 }
