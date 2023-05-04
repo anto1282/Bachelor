@@ -2,7 +2,8 @@
 
 
 process PHAROKKA {
-    errorStrategy= "ignore"
+    errorStrategy 'retry'
+    maxRetries  = 2
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 8
@@ -25,7 +26,7 @@ process PHAROKKA {
     path("Pharokka/")
     
     script:
-    if (meta == "1"){
+    if (task.attempt == 1){
     """
     pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal
     """   
