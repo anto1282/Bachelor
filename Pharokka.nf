@@ -73,8 +73,13 @@ process PHAROKKASPLITTER {
 
     output:
     
-    tuple path("${pair_id}_NODE*.txt"), path("${pair_id}_NODE*.gff"), path("${pair_id}_NODE*.gbk"), path("${pair_id}_NODE*.gff")
-
+    //tuple path("${pair_id}._NODE*.txt"), path("${pair_id}_NODE*.gff"), path("${pair_id}_NODE*.gbk"), path("${pair_id}_NODE*.fasta")
+    tuple val(pair_id), path("${pair_id}_NODE*.gff"), path("${pair_id}_NODE*.gbk"), path("${pair_id}_NODE*.fasta")
+    //tuple path("${pair_id}._NODE*.txt"), path("${pair_id}_NODE*.fasta")
+    //tuple path("${pair_id}_NODE*"), path(".")
+    //tuple path("${pair_id}._NODE*.txt"), path("${pair_id}_NODE*.gff")
+    // tuple path("${pair_id}._NODE*.txt"), path("${pair_id}_NODE*.gbk")
+    // tuple path("${pair_id}._NODE*.txt"), path("${pair_id}_NODE*.fasta")
 
     script:
   
@@ -85,7 +90,7 @@ process PHAROKKASPLITTER {
 
 
 process PHAROKKA_PLOTTER {
-    errorStrategy= "ignore"
+    errorStrategy= "finish"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 1
@@ -105,7 +110,9 @@ process PHAROKKA_PLOTTER {
 
     input: 
     
+    //tuple path(pair_id_txt), path(gffFile), path(gbkFile), path(phage_contig)
     tuple val(pair_id), path(gffFile), path(gbkFile), path(phage_contig)
+    // tuple val(pair_id_txt), path(phage_contig)
 
     output:
     path("*")
@@ -115,6 +122,9 @@ process PHAROKKA_PLOTTER {
     """ 
     pharokka_plotter.py -i ${phage_contig} -n ${gffFile.baseName} --gff ${gffFile} --genbank ${gbkFile} --label_hypotheticals -t ${phage_contig.baseName}
     """
+    // """ 
+    // pharokka_plotter.py -i ${phage_contig} -n ${phage_contig.baseName} --gff ${phage_contig.baseName}.gff --genbank ${phage_contig.baseName}.gbk --label_hypotheticals -t ${phage_contig.baseName}
+    // """
     
 }
 
