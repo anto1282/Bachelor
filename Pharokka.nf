@@ -72,15 +72,13 @@ process PHAROKKASPLITTER {
     
 
     output:
-    
-    tuple val (pair_id), path("NODE_*.gff"), path("NODE_*.gbk") , path("NODE_*.fasta")
-
+    path("*")
 
 
     script:
   
     """
-    python3 ${projectDir}/PharokkaSplitter.py ${files[1]} ${files[0]} 
+    python3 ${projectDir}/PharokkaSplitter.py ${files[1]} ${files[0]} ${pair_id}
     """
 }
 

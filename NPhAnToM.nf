@@ -73,11 +73,6 @@ workflow{
         VIRAL_CONTIGS_ch = DEEPVIREXTRACTOR(COMBINED_PREDS_ch)
     }
 
-    if (VIRAL_CONTIGS_ch[1] == "0"){
-        System.err.println "No Viral Contigs found. Please choose another dataset or reduce cutoff values (--minlength, --cutoff)"
-    }
-
-    else{
     //ANNOTATION OF VIRAL CONTIGS USING PHAROKKA
     PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch)
 
@@ -109,6 +104,5 @@ workflow{
             VIRAL_CONTIGS_ch[0].combine(CHECKV_ch, by: 0).combine(CHECKV_ch, by: 0).set {COMBINED_RESULTS_ch} // CHECK_V twice to act as empty path for missing iphop results
             
             RESULTS_COMPILATION_ch = RESULTS_COMPILATION(VIRAL_CONTIGS_ch[0], EMPTYFILE_ch, CHECKV_ch)
-        }
-    }   
+        }  
 }

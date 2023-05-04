@@ -1,6 +1,7 @@
 import sys
 PharokkaGFFFile = sys.argv[1]
 PharokkaGBKFile = sys.argv[2]
+SRANr = sys.argv[3]
 
 
 GFFFile = open(PharokkaGFFFile, "r")
@@ -22,9 +23,9 @@ GBKFile = open(PharokkaGBKFile, "r")
 
 FastaFlag = False
 for Nodes in contigs:
-    GFFOutFile = open(Nodes + ".gff","w")
-    GBKOutfile = open(Nodes + ".gbk", "w")
-    FASTAOutFile = open(Nodes + ".fasta", "w")
+    GFFOutFile = open(SRANr + "_" + Nodes + ".gff","w")
+    GBKOutfile = open(SRANr + Nodes + ".gbk", "w")
+    FASTAOutFile = open(SRANr + Nodes + ".fasta", "w")
     GFFFile = open(PharokkaGFFFile, "r")
     GBKFile = open(PharokkaGBKFile, "r")
     for line in GFFFile:
