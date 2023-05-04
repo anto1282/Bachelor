@@ -24,8 +24,8 @@ GBKFile = open(PharokkaGBKFile, "r")
 FastaFlag = False
 for Nodes in contigs:
     GFFOutFile = open(SRANr + "_" + Nodes + ".gff","w")
-    GBKOutfile = open(SRANr + Nodes + ".gbk", "w")
-    FASTAOutFile = open(SRANr + Nodes + ".fasta", "w")
+    GBKOutfile = open(SRANr + "_" + Nodes + ".gbk", "w")
+    FASTAOutFile = open(SRANr +"_" + Nodes + ".fasta", "w")
     GFFFile = open(PharokkaGFFFile, "r")
     GBKFile = open(PharokkaGBKFile, "r")
     for line in GFFFile:
