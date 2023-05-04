@@ -73,15 +73,16 @@ process PHAROKKASPLITTER {
 
     output:
     
-    val (pair_id)
-    path("NODE_*.gff") 
-    path("NODE_*.gbk")
-    path("NODE_*.fasta")
+    tuple val (pair_id), path("NODE_*.gff")
+    tuple val (pair_id), path("NODE_*.gbk") 
+    tuple val (pair_id), path("NODE_*.fasta")
+
+
 
     script:
   
     """
-    python3 ${projectDir}/PharokkaSplitter.py ${files[1]} ${files[0]}
+    python3 ${projectDir}/PharokkaSplitter.py ${files[1]} ${files[0]} 
     """
 }
 
@@ -107,10 +108,7 @@ process PHAROKKA_PLOTTER {
 
     input: 
     
-    val(pair_id)
-    path(gffFile)
-    path(gbkFile)
-    path(phage_contig)
+    tuple val(pair_id), path(gffFile), path(gbkFile), path(phage_contig)
 
     output:
     path("*")
