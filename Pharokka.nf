@@ -73,8 +73,8 @@ process PHAROKKASPLITTER {
 
     output:
     
-    tuple stdout, path("${pair_id}_NODE*.gff"), path("${pair_id}_NODE*.gbk"), path("${pair_id}_NODE*.gff")
-
+    tuple stdout, path("${pair_id}_NODE*.gff"), path("${pair_id}_NODE*.gbk"), path("${pair_id}_NODE*.fasta")
+    //path("${pair_id}_NODE*.{gff,gbk}")
 
     script:
   

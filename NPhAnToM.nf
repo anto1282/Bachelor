@@ -88,13 +88,14 @@ workflow{
         
         //PHAROKKA_SPLITS_ch.groupTuple().set{PHAROKKA_INPUT_ch}
         //PHAROKKA_SPLITS_ch[0].combine(PHAROKKA_SPLITS_ch[1], by: 0).combine(PHAROKKA_SPLITS_ch[2], by: 0).set{PHAROKKA_INPUT_ch}
-        //Channel.fromFilePairs(PHAROKKA_SPLITS_ch,size:3,type:dir).set {PHAROKKA_INPUT_ch}
+        //PHAROKKA_SPLITS_ch.fromFilePairs("*.{gbk,gff,fasta}",size:3).set {PHAROKKA_INPUT_ch}
         //PHAROKKA_SPLITS_ch.groupTuple().set{PHAROKKA_INPUT_ch}
 
         PHAROKKA_SPLITS_ch.view()
+//        PHAROKKA_SPLITS_ch.view()
 
         PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch)
-
+        //PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_INPUT_ch)
         
         // CHECKS THE QUALITY OF THE VIRAL CONTIGS
         CHECKV_ch = CHECKV(VIRAL_CONTIGS_ch[0])
