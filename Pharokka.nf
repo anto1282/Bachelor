@@ -108,7 +108,7 @@ process PHAROKKA_PLOTTER {
     tuple val(pair_id), path(gffFile), path(gbkFile), path(phage_contig)
 
     output:
-    path("*.{gff,gbk,fasta}")
+    path("*")
 
     script:
 
