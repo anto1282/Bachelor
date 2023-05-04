@@ -73,11 +73,9 @@ process PHAROKKASPLITTER {
 
     output:
     
-    tuple val (pair_id), path("NODE_*.gff")
-    tuple val (pair_id), path("NODE_*.gbk") 
-    tuple val (pair_id), path("NODE_*.fasta")
+    tuple val (pair_id), path("NODE_*.gff"), path("NODE_*.gbk") , path("NODE_*.fasta")
 
-
+    
 
     script:
   

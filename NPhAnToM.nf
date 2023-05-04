@@ -89,11 +89,11 @@ workflow{
         }
         
         // CREATING PLOTS OF EACH PHAGE
-        PHAROKKA_SPLITS_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch[0]) 
+        PHAROKKA_INPUT_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch[0]) 
         
-        PHAROKKA_SPLITS_ch.groupTuple().set{PHAROKKA_INPUT_ch}
+        //PHAROKKA_SPLITS_ch.groupTuple().set{PHAROKKA_INPUT_ch}
 
-        PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_INPUT_ch[0].flatten(),PHAROKKA_INPUT_ch[1][0].flatten(),PHAROKKA_INPUT_ch[1][1].flatten(), PHAROKKA_INPUT_ch[1][2].flatten())
+        PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_INPUT_ch[0].flatten(),PHAROKKA_INPUT_ch[1].flatten(),PHAROKKA_INPUT_ch[2].flatten(), PHAROKKA_INPUT_ch[3].flatten())
 
         
         // CHECKS THE QUALITY OF THE VIRAL CONTIGS
