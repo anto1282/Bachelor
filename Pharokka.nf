@@ -2,8 +2,9 @@
 
 
 process PHAROKKA {
-    errorStrategy 'retry'
-    maxRetries  = 2
+    //errorStrategy 'retry'
+    errorStrategy {task.attempt == 1 ? 'retry' : 'ignore'}
+    //maxRetries  = 2
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 8
