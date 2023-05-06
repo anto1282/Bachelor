@@ -91,7 +91,7 @@ process PHAROKKASPLITTER {
 
 
 process PHAROKKA_PLOTTER {
-    errorStrategy= "finish"
+    errorStrategy= "ignore"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 1
