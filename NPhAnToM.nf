@@ -37,7 +37,7 @@ workflow{
     // DETECTING WHICH OFFSET IS USED FOR THE READS
     OFFSET = OFFSETDETECTOR(read_pairs_ch)
 
-    if (params.skipTrim != false) {
+    if (params.skipTrim == false) {
     // TRIMS BAD QUALITY READS
     TrimmedFiles_ch = TRIM(read_pairs_ch)
     }
