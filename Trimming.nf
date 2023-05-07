@@ -40,11 +40,15 @@ process TRIM {
     else {
         conda 'adapterremoval fastqc fastp'
     }
-     
-    cpus 4
-    memory 4.GB
-    time = 20.m
-
+    
+    if (skipTrim == false)
+    {   cpus 4
+        memory 4.GB
+        time = 20.m
+    else
+    {   cpus 1
+        memory 1.GB
+        time = 20.s}
     input: 
     tuple(val(pair_id), path(reads))
    
