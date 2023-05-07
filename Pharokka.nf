@@ -93,14 +93,14 @@ process PHAROKKASPLITTER {
 process PHAROKKA_PLOTTER {
     errorStrategy= "ignore"
     if (params.server){
-        container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
-        cpus 1
+        container = "docker://quay.io/biocontainers/pharokka:1.3.2--hdfd78af_0"
+        cpus 2
         memory '2 GB'
         time = 1.h
         // time = 1.m
     }
     else{
-        conda "conda-forge::pycirclize bioconda::pharokka=1.3.1 mash==2.2 bcbio-gff"
+        conda "conda-forge::pycirclize bioconda::pharokka=1.3.2 mash==2.2 bcbio-gff"
         //conda 'pharokka'
         cpus 1
         memory '2 GB'
@@ -121,7 +121,7 @@ process PHAROKKA_PLOTTER {
     script:
 
     """ 
-    pharokka_plotter.py -i ${phage_contig} -n ${gffFile.baseName} --gff ${gffFile} --genbank ${gbkFile} --label_hypotheticals -t ${phage_contig.baseName}
+    pharokka_plotter.py -i ${phage_contig} -n ${gffFile.baseName} --gff ${gffFile} --genbank ${gbkFile} -t ${phage_contig.baseName}
     """
     // """ 
     // pharokka_plotter.py -i ${phage_contig} -n ${phage_contig.baseName} --gff ${phage_contig.baseName}.gff --genbank ${phage_contig.baseName}.gbk --label_hypotheticals -t ${phage_contig.baseName}
