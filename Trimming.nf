@@ -41,7 +41,7 @@ process TRIM {
         conda 'adapterremoval fastqc fastp'
     }
     
-    if (skipTrim == false)
+    if (params.skipTrim == false)
     {   cpus 4
         memory 4.GB
         time = 20.m}
