@@ -44,7 +44,7 @@ process TRIM {
     if (skipTrim == false)
     {   cpus 4
         memory 4.GB
-        time = 20.m
+        time = 20.m}
     else
     {   cpus 1
         memory 1.GB
