@@ -130,10 +130,11 @@ process PHAROKKA_PLOTTER {
 }
 
 process RESULTS_COMPILATION {
-    cpus 1
-    memory '2 GB'
-    time = 1.m
-    errorStrategy = 'ignore'
+    cpus {1 * task.attempt}
+    memory {2.GB * task.attempt}
+    time = {1.m * task.attempt}
+    //errorStrategy = 'ignore'
+    errorStrategy {task.attempt == 1 ? 'retry' : 'ignore'}
     
     publishDir "${params.outdir}/${pair_id}/CompiledResults", mode: 'copy'
 

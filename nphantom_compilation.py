@@ -166,16 +166,16 @@ with open(assemblystats,'r') as file:
 			line += """</tr>
 			"""
 		
-		elif statsflag and "KB" in line and line.split()[0] == "25":
-			linesplit = line.strip().split()
-			line = "<tr>" + "<td>" + ' '.join(linesplit[0:2]) + "</td>"
-			for elem in linesplit[2:]:
-				line += "<td>" + elem + "</td>"
-			line += """
-					</tr>
-				</table>
-				"""
-			statsflag = False
+		# elif statsflag and "KB" == line.split()[1] and line.split()[0] == "25":
+		# 	linesplit = line.strip().split()
+		# 	line = "<tr>" + "<td>" + ' '.join(linesplit[0:2]) + "</td>"
+		# 	for elem in linesplit[2:]:
+		# 		line += "<td>" + elem + "</td>"
+		# 	line += """
+		# 			</tr>
+		# 		</table>
+		# 		"""
+		# 	statsflag = False
 		
 		elif statsflag and "KB" in line:
 			linesplit = line.strip().split()
@@ -204,6 +204,10 @@ with open(assemblystats,'r') as file:
 
 
 		assemblystatistics += line
+	assemblystatistics += """
+					</tr>
+				</table>
+				"""
 
 assemblystatistics += """</table>"""
 
@@ -363,7 +367,7 @@ with open(outputfilename, 'w') as f:
 		completeness = (virusdict[key][3])
 		confidence = (virusdict[key][4])
 		#print(length, completeness)
-		picturepath = key + ".png"
+		picturepath = SRA_nr + "_" + key + ".png"
 		DNAtext = "Phage DNA:"
 		contig = virusdict[key][0]
 		buttonstring += opentab.format(key,key)
