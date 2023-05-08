@@ -74,7 +74,7 @@ process OFFSETDETECTOR {
     }
     else{
         """
-        python3 ${projectDir}/offsetdetector.py ${reads[0].baseName} ${reads[1].baseName}
+        python3 ${projectDir}/offsetdetector.py ${reads[0]} ${reads[1]}
         rm ${reads[0].baseName}
         rm ${reads[1].baseName}
         """
