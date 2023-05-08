@@ -82,6 +82,32 @@ elif intersectionOrUnion =="union":
     #The union of the three sets, used if the virus predictors have a hard time predicting viruses on a specific dataset
     final_viral_set = SeekerSet.union(DVFset,PhagerSet)
 
+pred_dict = dict()
+for value in final_viral_set:
+    Seeker, Phager, DVF = False, False, False
+    if value in SeekerSet:
+        Seeker = True
+    if value in PhagerSet:
+        Phager = True
+    if value in DVFset:
+        DVF = True
+    pred_dict[value] = [sum(Seeker,Phager,DVF),Seeker,Phager,DVF]
+
+with open("vir_pred_file.txt",'w') as pred_file:
+    #Writes header to file
+    pred_file.write("Phagename\tPred_counts\tSeeker\tPhager\tDVF")
+    for phage in final_viral_set:
+        Seeker, Phager, DVF = False, False, False
+        if phage in SeekerSet:
+            Seeker = True
+        if phage in PhagerSet:
+            Phager = True
+        if phage in DVFset:
+            DVF = True
+        pred_string = phage + sum(Seeker,Phager,DVF) + Seeker + Phager + DVF 
+        print(pred_string, sep="\t", file = pred_file)
+
+
 virusoutfile = open(outputfilename,'w')
 
 #Prints out all phages into one file
@@ -111,7 +137,7 @@ with open(contigfile, 'r') as file:
             virusoutfile.write(line)
         
         
-        
+      
 
 print(final_viral_set)
 print(len(final_viral_set))
