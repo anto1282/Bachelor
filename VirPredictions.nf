@@ -212,6 +212,7 @@ process VIREXTRACTOR {
     output:
     tuple val(pair_id), path("${pair_id}_ViralContigs.fasta")
     stdout
+    tuple val(pair_id), path("vir_pred_file.tsv")
 
 
     script:

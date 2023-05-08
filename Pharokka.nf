@@ -11,8 +11,6 @@ process PHAROKKA {
     }
     else{
         conda 'conda-forge::pycirclize bioconda::pharokka=1.3.1 mash==2.2 bcbio-gff'
-        //conda '/home/tbr/miniconda3/envs/PHAROKKA'
-        //container = "shub://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 8
     }
     
@@ -21,6 +19,7 @@ process PHAROKKA {
     input: 
     tuple val(pair_id), path(viralcontigs) 
     val(meta)
+    tuple val(pair_id), path(virpredfile) //not used in this process
     
     output:
     tuple(val(pair_id), path("Pharokka/pharokka.g*"))
