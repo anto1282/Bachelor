@@ -58,7 +58,7 @@ if (iphopGenusPredictions != "NOIPHOP"):
 						
 					else:
 						virusdict[line[0]][1].add(hostgenus_formatted.strip("; "))
-					print(virusdict[line[0]][1])
+					print(line[0])
 				linecount += 1
 	for key in virusdict:
 		if len(virusdict[key]) == 1:
