@@ -130,9 +130,9 @@ with open(contigfile, 'r') as file:
         
       
 
-print(final_viral_set)
-print(len(final_viral_set))
-print(seqcount)
+print("Final viral set: ", final_viral_set)
+print("Length of final viral set:", len(final_viral_set))
+print("Sequences written to", outputfilename + ":", seqcount)
 
 virusoutfile.close()
 
