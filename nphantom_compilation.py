@@ -51,14 +51,14 @@ if (iphopGenusPredictions != "NOIPHOP"):
 					for element in hostgenus:
 						
 						hostgenus_formatted += element[3:] + "; "
-						print(hostgenus_formatted)
+						#print(hostgenus_formatted)
 					#Creates set with the host genus information
 					if len(virusdict[line[0]]) == 1:
 						virusdict[line[0]].append({hostgenus_formatted.strip("; ")})
 						
 					else:
 						virusdict[line[0]][1].add(hostgenus_formatted.strip("; "))
-					
+					print(virusdict[line[0]][1])
 				linecount += 1
 	for key in virusdict:
 		if len(virusdict[key]) == 1:
