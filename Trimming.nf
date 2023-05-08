@@ -76,7 +76,7 @@ process TRIM {
     """
     }
     else{
-        if (reads[0].getExtension == "gz"){
+        if (reads[0].getExtension() == "gz"){
         """
         mv ${reads[0]} ${pair_id}_1_trimmed.fastq.gz
         mv ${reads[1]} ${pair_id}_2_trimmed.fastq.gz
