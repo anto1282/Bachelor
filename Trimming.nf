@@ -50,16 +50,10 @@ process TRIM {
         memory 4.GB
         time = 20.m}
     else
-    {   if (reads[0].getExtension() == "gz"){
+    {   if (reads[0].getExtension() == "gz")
         cpus 1
         memory 1.GB
-        time = 20.s}
-        else{
-            cpus 4
-            memory 4.GB
-            time = 20.m
-            }
-    }
+        time = 5.m}
 
 
     output:
