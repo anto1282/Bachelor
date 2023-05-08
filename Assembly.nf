@@ -63,7 +63,7 @@ process OFFSETDETECTOR {
     stdout
 
     script:
-    
+    if (reads[0].getExtension() == "gz"){
     """
     gzip -d ${reads[0]} -f
     gzip -d ${reads[1]} -f
@@ -71,7 +71,14 @@ process OFFSETDETECTOR {
     rm ${reads[0].baseName}
     rm ${reads[1].baseName}
     """
-
+    }
+    else{
+        """
+        python3 ${projectDir}/offsetdetector.py ${reads[0].baseName} ${reads[1].baseName}
+        rm ${reads[0].baseName}
+        rm ${reads[1].baseName}
+        """
+    }
 
 }
 
