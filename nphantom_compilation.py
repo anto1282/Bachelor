@@ -363,7 +363,7 @@ with open(outputfilename, 'w') as f:
 		
 		
 
-		print(host)
+		print("Host taxonomy:", host)
 		length = (virusdict[key][2])
 		completeness = (virusdict[key][3])
 		confidence = (virusdict[key][4])
