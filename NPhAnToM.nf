@@ -62,7 +62,7 @@ workflow{
         ASSEMBLY_ch.combine(DVF_ch,by:0).combine(SEEKER_ch, by: 0).combine(PHAGER_ch, by: 0).set {COMBINED_PREDS_ch}
         COMBINED_PREDS_ch.view()
         // EXTRACTS AND JOINS VIRAL PHAGE CONTIGS FROM THE THREE VIRUS PREDICTION TOOLS
-        VIRAL_CONTIGS_ch = VIREXTRACTOR(COMBINED_PREDS_ch)   
+        VIRAL_CONTIGS_ch = VIREXTRACTOR(COMBINED_PREDS_ch)  
     }
     else {
         // Simpler virus prediction using only deepvirfinder, when running locally
@@ -87,21 +87,7 @@ workflow{
         // CREATING PLOTS OF EACH PHAGE
         PHAROKKA_SPLITS_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch[0]) 
         
-        //PHAROKKA_SPLITS_ch.groupTuple().set{PHAROKKA_INPUT_ch}
-        //PHAROKKA_SPLITS_ch[0].combine(PHAROKKA_SPLITS_ch[1], by: 0).combine(PHAROKKA_SPLITS_ch[2], by: 0).set{PHAROKKA_INPUT_ch}
-        //PHAROKKA_SPLITS_ch.fromFilePairs("*.{gbk,gff,fasta}",size:3).set {PHAROKKA_INPUT_ch}
-        //PHAROKKA_SPLITS_ch.groupTuple().set{PHAROKKA_INPUT_ch}
-
         PHAROKKA_SPLITS_ch.transpose().view()
-        //Channel.fromFilePairs("{$PHAROKKA_SPLITS_ch}.{gbk,gff,fasta}",size:3).set {PHAROKKA_INPUT_ch}
-        
-        //PHAROKKA_SPLITS_ch.flatMap{n -> [n[0],n[1],n[2],n[3]]}.view()
-        //FILE_TRIPLETS_ch = PHAROKKA_SPLITS_ch.map(files -> [files[0].simpleName, files[1], files[1],files[1]])
-        //FILE_TRIPLETS_ch = PHAROKKA_SPLITS_ch[0].combine(PHAROKKA_SPLITS_ch[1],by: 0).combine(PHAROKKA_SPLITS_ch[2],by: 0)
-                    
-        //FILE_TRIPLETS_ch.view()
-
-        //PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch[0].flatten(),PHAROKKA_SPLITS_ch[1].flatten(),PHAROKKA_SPLITS_ch[2].flatten(),PHAROKKA_SPLITS_ch[3].flatten())
         
         PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch.transpose()) 
         // CHECKS THE QUALITY OF THE VIRAL CONTIGS
@@ -112,9 +98,8 @@ workflow{
             RESULTS_COMPILATION_ch = RESULTS_COMPILATION(COMBINED_RESULTS_ch)
         }
         else {
-            // EMPTYFILE_ch = Channel.fromPath('/path/that/doesnt/exist.txt') //Replaces the hostprediction channel
-            
             VIRAL_CONTIGS_ch[0].combine(DVF_ch, by: 0).combine(CHECKV_ch, by: 0).set {COMBINED_RESULTS_ch} // CHECK_V twice to act as empty path for missing iphop results
             RESULTS_COMPILATION_ch = RESULTS_COMPILATION(COMBINED_RESULTS_ch)
         }  
 }
+
