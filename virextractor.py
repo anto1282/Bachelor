@@ -83,7 +83,7 @@ elif intersectionOrUnion == "union":
     final_viral_set = SeekerSet.union(DVFset,PhagerSet)
 
 
-with open("vir_pred_file.txt",'w') as pred_file:
+with open("vir_pred_file.tsv",'w') as pred_file:
     #Writes header to file
     pred_file.write("Phagename\tPred_counts\tSeeker\tPhager\tDVF\n")
     for phage in sorted(final_viral_set):
