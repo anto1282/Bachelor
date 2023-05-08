@@ -86,8 +86,8 @@ process TRIM {
             """
             mv ${reads[0]} ${pair_id}_1_trimmed.fastq
             mv ${reads[1]} ${pair_id}_2_trimmed.fastq
-            gzip -f ${reads[0]}
-            gzip -f ${reads[1]}
+            gzip -f ${pair_id}_1_trimmed.fastq
+            gzip -f ${pair_id}_2_trimmed.fastq
             """
         }
     }
