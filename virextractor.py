@@ -78,20 +78,10 @@ if intersectionOrUnion == "intersection":
 
     final_viral_set = SeekerDVFInter.union(SeekerPhagerInter,DVFPhagerInter)
 
-elif intersectionOrUnion =="union":
+elif intersectionOrUnion == "union":
     #The union of the three sets, used if the virus predictors have a hard time predicting viruses on a specific dataset
     final_viral_set = SeekerSet.union(DVFset,PhagerSet)
 
-pred_dict = dict()
-for value in final_viral_set:
-    Seeker, Phager, DVF = False, False, False
-    if value in SeekerSet:
-        Seeker = True
-    if value in PhagerSet:
-        Phager = True
-    if value in DVFset:
-        DVF = True
-    pred_dict[value] = [sum(Seeker,Phager,DVF),Seeker,Phager,DVF]
 
 with open("vir_pred_file.txt",'w') as pred_file:
     #Writes header to file
@@ -104,7 +94,7 @@ with open("vir_pred_file.txt",'w') as pred_file:
             Phager = True
         if phage in DVFset:
             DVF = True
-        pred_string = phage + sum(Seeker,Phager,DVF) + Seeker + Phager + DVF 
+        pred_string = phage + [Seeker,Phager,DVF].count(True) + Seeker + Phager + DVF 
         print(pred_string, sep="\t", file = pred_file)
 
 
@@ -130,9 +120,10 @@ with open(contigfile, 'r') as file:
             virusflag = True
             virusoutfile.write(line)
             seqcount += 1
+            print("Phage in viral set:", line)
         elif line.startswith(">"):
             virusflag = False             
-            print(line)
+            
         elif virusflag == True:
             virusoutfile.write(line)
         
