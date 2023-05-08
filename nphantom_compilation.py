@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-#Create a script that runs pharokkas imager tool
+#Script that runs pharokkas phage plotter tool
 
 #Take the extracted viruses from virextractor.py
 #Find the corresponding viruses in the iphop results
@@ -51,13 +51,14 @@ if (iphopGenusPredictions != "NOIPHOP"):
 					for element in hostgenus:
 						
 						hostgenus_formatted += element[3:] + "; "
+						#print(hostgenus_formatted)
 					#Creates set with the host genus information
 					if len(virusdict[line[0]]) == 1:
 						virusdict[line[0]].append({hostgenus_formatted.strip("; ")})
-					
+						
 					else:
 						virusdict[line[0]][1].add(hostgenus_formatted.strip("; "))
-					
+					print(line[0])
 				linecount += 1
 	for key in virusdict:
 		if len(virusdict[key]) == 1:
@@ -353,7 +354,7 @@ with open(outputfilename, 'w') as f:
 		print("Contig info to HTML:", key)
 		#print(virusdict[key])
 		host = ""
-		if isinstance(virusdict[key][1],list):
+		if isinstance(virusdict[key][1],set):
 			print(virusdict[key][1])
 			for taxonomy in virusdict[key][1]:
 				host += taxonomy + "<br>"
