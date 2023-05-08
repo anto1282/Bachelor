@@ -49,11 +49,13 @@ process TRIM {
     {   if (reads[0].getExtension() == "gz"){
         cpus 1
         memory 1.GB
-        time = 20.s}}
+        time = 20.s}
         else{
             cpus 4
             memory 4.GB
-            time = 20.m}
+            time = 20.m
+            }
+    }
     input: 
     tuple(val(pair_id), path(reads))
    
