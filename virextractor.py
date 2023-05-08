@@ -85,7 +85,7 @@ elif intersectionOrUnion == "union":
 
 with open("vir_pred_file.txt",'w') as pred_file:
     #Writes header to file
-    pred_file.write("Phagename\tPred_counts\tSeeker\tPhager\tDVF")
+    pred_file.write("Phagename\tPred_counts\tSeeker\tPhager\tDVF\n")
     for phage in final_viral_set:
         Seeker, Phager, DVF = False, False, False
         if phage in SeekerSet:
