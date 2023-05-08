@@ -94,8 +94,8 @@ with open("vir_pred_file.txt",'w') as pred_file:
             Phager = True
         if phage in DVFset:
             DVF = True
-        pred_string = phage + str([Seeker,Phager,DVF].count(True)) + str(Seeker) + str(Phager) + str(DVF)
-        print(pred_string, sep="\t", file = pred_file)
+        pred_string = "\t".join(phage, str([Seeker,Phager,DVF].count(True)), str(Seeker), str(Phager), str(DVF))
+        pred_file.write()
 
 
 virusoutfile = open(outputfilename,'w')
