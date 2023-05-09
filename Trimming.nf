@@ -67,8 +67,8 @@ process TRIM {
    
     if (params.skipTrim == false){
     """
-    fastp -i ${reads[0]} -I  ${reads[1]} -o read1_tmp  -O read2_tmp -W 5 -M 30 -e 25 -f 15 -w ${task.cpus} --cut_tail --cut_tail_window_size 1 -c
-    AdapterRemoval --file1 read1_tmp --file2 read2_tmp --output1 ${pair_id}_1_trimmed.fastq --output2  ${pair_id}_2_trimmed.fastq  --collapse --adapter-list ${projectDir}/Adapters.txt --threads ${task.cpus}
+    AdapterRemoval --file1 ${reads[0]} --file2 ${reads[1]} --output1 read1_tmp --output2 read2_tmp --collapse --adapter-list ${projectDir}/Adapters.txt --threads ${task.cpus}
+    fastp -i read1_tmp -I read2_tmp -o ${pair_id}_1_trimmed.fastq -O ${pair_id}_2_trimmed.fastq -W 5 -M 30 -e 25 -f 15 -w ${task.cpus} --cut_tail --cut_tail_window_size 1 -c
     
     mkdir -p ${projectDir}/${params.outdir}/${pair_id}/CompiledResults/
     mv fastp.html ${projectDir}/${params.outdir}/${pair_id}/CompiledResults/fastp.html
