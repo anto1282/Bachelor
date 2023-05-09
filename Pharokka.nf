@@ -19,7 +19,7 @@ process PHAROKKA {
     input: 
     tuple val(pair_id), path(viralcontigs) 
     val(meta)
-    tuple val(pair_id), path(virpredfile) //not used in this process
+    
     
     output:
     tuple(val(pair_id), path("Pharokka/pharokka.g*"))
