@@ -75,8 +75,9 @@ workflow{
     }
 
     //ANNOTATION OF VIRAL CONTIGS USING PHAROKKA
-    PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch[0],VIRAL_CONTIGS_ch[1])
-
+    
+    PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch[0],VIRAL_CONTIGS_ch[1],VIRAL_CONTIGS_ch[0].countFasta())
+    
 
         if (params.iphopDB != false) {
             // If a iphop database path is provided, run the hostprediction
