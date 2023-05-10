@@ -37,7 +37,9 @@ process PHAROKKA {
 
     // """
     // }
-
+    """
+    echo Size of viral contigs fasta file: ${viralcontigs.size()} bytes
+    """
     if (fastacount >= 2) {
     """
     echo "2 or more entries found in fasta file, running Pharokka with the -metagenomic tag"
