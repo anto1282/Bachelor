@@ -3,7 +3,6 @@
 
 process PHAROKKA {
     //errorStrategy 'retry'
-    errorStrategy 'ignore'
     errorStrategy {task.attempt == 1 ? 'retry' : 'ignore'}
     //maxRetries  = 2
     if (params.server){
@@ -20,37 +19,22 @@ process PHAROKKA {
     input: 
     tuple val(pair_id), path(viralcontigs) 
     val(meta)
-    
+    tuple val(pair_id), path(virpredfile) //not used in this process
     
     output:
     tuple(val(pair_id), path("Pharokka/pharokka.g*"))
     path("Pharokka/")
     
     script:
-    // if (task.attempt == 1){
-    // """
-    // pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
-    // """   
-    // }
-    // else{    
-    // """
-    // pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal 
-
-    // """
-    if (viralcontigs.countFasta() > 1){
+    if (task.attempt == 1){
     """
     pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
     """   
     }
-    else if (viralcontigs.size() >= 20000){    
+    else{    
     """
     pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal 
 
-    """ 
-    }
-    else {
-    """
-    echo "No phages found with size above 20000"
     """
     }
 }
