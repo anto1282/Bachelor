@@ -3,7 +3,6 @@
 
 process PHAROKKA {
     //errorStrategy 'retry'
-    errorStrategy 'ignore'
     errorStrategy {task.attempt == 1 ? 'retry' : 'ignore'}
     //maxRetries  = 2
     if (params.server){
@@ -20,7 +19,7 @@ process PHAROKKA {
     input: 
     tuple val(pair_id), path(viralcontigs) 
     val(meta)
-    
+    tuple val(pair_id), path(virpredfile) //not used in this process
     
     output:
     tuple(val(pair_id), path("Pharokka/pharokka.g*"))
@@ -37,7 +36,7 @@ process PHAROKKA {
     pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal 
 
     """
-   
+    }
 }
 
 
