@@ -3,7 +3,7 @@
 
 process PHAROKKA {
     //errorStrategy 'retry'
-    errorStrategy {task.attempt == 1 ? 'retry' : 'ignore'}
+    //errorStrategy {task.attempt == 1 ? 'retry' : 'ignore'}
     //maxRetries  = 2
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
@@ -19,23 +19,43 @@ process PHAROKKA {
     input: 
     tuple val(pair_id), path(viralcontigs) 
     val(meta)
-    tuple val(pair_id), path(virpredfile) //not used in this process
+    val (fastacount)
     
     output:
     tuple(val(pair_id), path("Pharokka/pharokka.g*"))
     path("Pharokka/")
     
     script:
-    if (task.attempt == 1){
-    """
-    pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
-    """   
-    }
-    else{    
-    """
-    pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal 
+    // if (task.attempt == 1){
+    // """
+    // pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
+    // """   
+    // }
+    // else{    
+    // """
+    // pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal 
 
+    // """
+    // }
+
+    if (fastacount >= 2) {
     """
+    echo "2 or more entries found in fasta file, running Pharokka with the -metagenomic tag"
+    pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
+    """ 
+    }
+    else {
+        if (viralcontigs.size() >= 20000){
+        """
+        echo "Only one entry in fasta file, running Pharokka without the -metagenomic tag"
+        pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal 
+        """   
+        }
+        else {
+        """
+        echo "No phages found with size above 20000\nPharokka was not run"
+        """
+        }
     }
 }
 
@@ -90,7 +110,7 @@ process PHAROKKASPLITTER {
 
 
 process PHAROKKA_PLOTTER {
-    errorStrategy= "ignore"
+    //errorStrategy= "ignore"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 2
@@ -130,8 +150,8 @@ process PHAROKKA_PLOTTER {
 
 process RESULTS_COMPILATION {
     cpus {1 * task.attempt}
-    memory {2.GB * task.attempt}
-    time = {1.m * task.attempt}
+    memory {3.GB * task.attempt}
+    time = {2.m * task.attempt}
     //errorStrategy = 'ignore'
     errorStrategy {task.attempt == 1 ? 'retry' : 'ignore'}
     
