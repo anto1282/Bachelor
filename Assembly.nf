@@ -9,7 +9,7 @@ process SPADES {
         beforeScript 'module load spades/3.15.5'
         cpus 16
         memory { 16.GB + (16.GB * 1/2*task.attempt) }
-        errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+        errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'ignore' }
 
         maxRetries  = 3
         afterScript 'module unload spades/3.15.5'
