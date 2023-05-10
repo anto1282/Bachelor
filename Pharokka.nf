@@ -27,32 +27,17 @@ process PHAROKKA {
     path("Pharokka/")
     
     script:
-    // if (task.attempt == 1){
-    // """
-    // pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
-    // """   
-    // }
-    // else{    
-    // """
-    // pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal 
-
-    // """
-    if (viralcontigs.countFasta() > 1){
+    if (task.attempt == 1){
     """
     pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal -m
     """   
     }
-    else if (viralcontigs.size() >= 20000){    
+    else{    
     """
     pharokka.py -i ${viralcontigs} -o Pharokka -f -t ${task.cpus} -d ${params.phaDB} -g prodigal 
 
-    """ 
-    }
-    else {
     """
-    echo "No phages found with size above 20000"
-    """
-    }
+   
 }
 
 
