@@ -115,7 +115,7 @@ process PHAROKKA_PLOTTER {
         container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 2
         memory '2 GB'
-        time = 1.h
+        time = 2.m
         // time = 1.m
     }
     else{
@@ -123,7 +123,7 @@ process PHAROKKA_PLOTTER {
         //conda 'pharokka'
         cpus 1
         memory '2 GB'
-        time = 1.h
+        time = 2.m
     }
     
     publishDir "${params.outdir}/${pair_id}/CompiledResults", mode: 'copy'
@@ -150,8 +150,8 @@ process PHAROKKA_PLOTTER {
 
 process RESULTS_COMPILATION {
     cpus {1 * task.attempt}
-    memory {3.GB * task.attempt}
-    time = {2.m * task.attempt}
+    memory {2.GB * task.attempt}
+    time = {1.m * task.attempt}
     //errorStrategy = 'ignore'
     errorStrategy {task.attempt == 1 ? 'retry' : 'ignore'}
     
