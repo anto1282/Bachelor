@@ -18,7 +18,6 @@ process PHAROKKA {
 
     input: 
     tuple val(pair_id), path(viralcontigs) 
-    val(meta)
     val (fastacount)
     
     output:
