@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #SBATCH --job-name=NPhAnToM_%j
-#SBATCH --output=/projects/mjolnir1/people/%u/nextflowout/BachAssemblies_%j_%a
+#SBATCH --output=/projects/mjolnir1/people/%u/nextflowout/%j_%a_stdout
 #SBATCH --error=/projects/mjolnir1/people/%u/nextflowout/errors_%j_%a
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=2
