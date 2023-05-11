@@ -78,28 +78,28 @@ workflow{
     PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch[0])
     
 
-        if (params.iphopDB != false) {
-            // If a iphop database path is provided, run the hostprediction
-            // HOSTPREDICTION TOOL
-            HOSTPREDICTION_ch = IPHOP(VIRAL_CONTIGS_ch[0]) 
-        }
-        
-        // CREATING PLOTS OF EACH PHAGE
-        PHAROKKA_SPLITS_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch[0]) 
-        
-        PHAROKKA_SPLITS_ch.transpose().view()
-        
-        PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch.transpose()) 
-        // CHECKS THE QUALITY OF THE VIRAL CONTIGS
-        CHECKV_ch = CHECKV(VIRAL_CONTIGS_ch[0])
+    if (params.iphopDB != false) {
+        // If a iphop database path is provided, run the hostprediction
+        // HOSTPREDICTION TOOL
+        HOSTPREDICTION_ch = IPHOP(VIRAL_CONTIGS_ch[0]) 
+    }
+    
+    // CREATING PLOTS OF EACH PHAGE
+    PHAROKKA_SPLITS_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch[0]) 
+    
+    PHAROKKA_SPLITS_ch.transpose().view()
+    
+    PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch.transpose()) 
+    // CHECKS THE QUALITY OF THE VIRAL CONTIGS
+    CHECKV_ch = CHECKV(VIRAL_CONTIGS_ch[0])
 
-        if (params.iphopDB != false) {
-            VIRAL_CONTIGS_ch[0].combine(HOSTPREDICTION_ch, by: 0).combine(CHECKV_ch, by: 0).set {COMBINED_RESULTS_ch}
-            RESULTS_COMPILATION_ch = RESULTS_COMPILATION(COMBINED_RESULTS_ch)
-        }
-        else {
-            VIRAL_CONTIGS_ch[0].combine(DVF_ch, by: 0).combine(CHECKV_ch, by: 0).set {COMBINED_RESULTS_ch} // CHECK_V twice to act as empty path for missing iphop results
-            RESULTS_COMPILATION_ch = RESULTS_COMPILATION(COMBINED_RESULTS_ch)
-        }  
+    if (params.iphopDB != false) {
+        VIRAL_CONTIGS_ch[0].combine(HOSTPREDICTION_ch, by: 0).combine(CHECKV_ch, by: 0).set {COMBINED_RESULTS_ch}
+        RESULTS_COMPILATION_ch = RESULTS_COMPILATION(COMBINED_RESULTS_ch)
+    }
+    else {
+        VIRAL_CONTIGS_ch[0].combine(DVF_ch, by: 0).combine(CHECKV_ch, by: 0).set {COMBINED_RESULTS_ch} // CHECK_V twice to act as empty path for missing iphop results
+        RESULTS_COMPILATION_ch = RESULTS_COMPILATION(COMBINED_RESULTS_ch)
+    }  
 }
 
