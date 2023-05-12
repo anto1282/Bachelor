@@ -40,13 +40,10 @@ process TRIM {
     else {
         conda 'adapterremoval fastqc fastp'
     }
-    
-    errorStrategy { task.attempt < 3 ? 'retry' : 'ignore' }
-    maxRetries 3
+     
     cpus 4
     memory 4.GB
-    time = 30.m * task.attempt
-
+    time = 20.m
 
     input: 
     tuple(val(pair_id), path(reads))
@@ -89,7 +86,7 @@ process KRAKEN{
             time = 20.m
         }
         cpus 3
-        errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'ignore' }
+        errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
         maxRetries 3
 
     }
