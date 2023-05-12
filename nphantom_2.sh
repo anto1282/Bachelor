@@ -22,8 +22,8 @@ export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
 export NXF_CONDA_ENABLED=true
 
 module purge
-module load openjdk/20.0.0
-module load singularity/3.8.0 nextflow miniconda/4.11.0
+module load openjdk/17.0.3
+module load singularity/3.8.0 nextflow/22.10.4 miniconda/4.11.0
 
 
 # srun nextflow run NPhAnToM.nf ${SRRNUMBER} -profile ${PROFILE} ${RESUME} -with-mpi -with-tower --accessToken ${TOWERTOKEN} --minLength ${MINLENGTH} --contigs ${CONTIGS}
