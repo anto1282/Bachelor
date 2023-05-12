@@ -46,25 +46,10 @@ process TRIM {
     cpus 4
     memory 4.GB
     time = 30.m * task.attempt
-
-
-    
-    if (params.skipTrim == false)
-    {   cpus 4
-        memory 4.GB
-        time = 20.m}
-    else
-    { 
-        cpus 1
-        memory 1.GB
-        time = 5.m}
-    
+        
     input: 
     tuple(val(pair_id), path(reads))
     
-    
-
-
     output:
     val(pair_id)
     path("${pair_id}_1_trimmed.fastq.gz")
@@ -72,8 +57,7 @@ process TRIM {
 
     
     script:
-   
-    if (params.skipTrim == false){
+  
     """
     AdapterRemoval --file1 ${reads[0]} --file2 ${reads[1]} --output1 read1_tmp --output2 read2_tmp --collapse --adapter-list ${projectDir}/Adapters.txt --threads ${task.cpus}
     fastp -i read1_tmp -I read2_tmp -o ${pair_id}_1_trimmed.fastq -O ${pair_id}_2_trimmed.fastq -W 5 -M 30 -e 25 -f 15 -w ${task.cpus} --cut_tail --cut_tail_window_size 1 -c
@@ -85,22 +69,7 @@ process TRIM {
     gzip ${pair_id}_2_trimmed.fastq
     rm read?_tmp
     """
-    else{
-        if (reads[0].getExtension() == "gz"){
-        """
-        mv ${reads[0]} ${pair_id}_1_trimmed.fastq.gz
-        mv ${reads[1]} ${pair_id}_2_trimmed.fastq.gz
-        """
-        }
-        else{
-            """
-            mv ${reads[0]} ${pair_id}_1_trimmed.fastq
-            mv ${reads[1]} ${pair_id}_2_trimmed.fastq
-            gzip -f ${pair_id}_1_trimmed.fastq
-            gzip -f ${pair_id}_2_trimmed.fastq
-            """
-        }
-    }
+    
 }
 
 process KRAKEN{
