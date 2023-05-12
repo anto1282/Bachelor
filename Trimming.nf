@@ -41,7 +41,7 @@ process TRIM {
         conda 'adapterremoval fastqc fastp'
     }
     
-    errorStrategy { task.attempt < 3 ? 'retry' : 'ignore' }
+    errorStrategy { task.attempt < 2 ? 'retry' : 'ignore' }
     maxRetries 3
     cpus 4
     memory 4.GB
