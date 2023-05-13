@@ -203,15 +203,11 @@ process VIREXTRACTOR {
 
     
     input:
-    // tuple val(pair_id), path(contigsFile)
-    // tuple val(pair_id), path(DVFcontigs)
-    // tuple val(pair_id), path(SeekerContigs)
-    // tuple val(pair_id), path(PhagerContigs)
     tuple val(pair_id), path(contigsFile), path(DVFcontigs), path(SeekerContigs), path(PhagerContigs)
 
     output:
     tuple val(pair_id), path("${pair_id}_ViralContigs.fasta")
-    stdout
+    tuple val(pair_id), path("vir_pred_file.tsv")
 
 
     script:
@@ -241,13 +237,13 @@ process DEEPVIREXTRACTOR {
 
     output:
     tuple val(pair_id), path("${pair_id}_ViralContigs.fasta")
-    stdout    
+    tuple val(pair_id), path("vir_pred_file.tsv")
 
 
     script:
     """
     gzip -d -f ${contigsFile}
-    python3 ${projectDir}/DeepVirExtractor.py ${DVFcontigs} ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.50
+    python3 ${projectDir}/DeepVirExtractor.py ${DVFcontigs} ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.94
     gzip -f ${contigsFile.baseName}
     """
 }

@@ -74,7 +74,7 @@ workflow{
     }
 
     //ANNOTATION OF VIRAL CONTIGS USING PHAROKKA
-    PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch)
+    PHAROKKA_ANNOTATION_ch = PHAROKKA(VIRAL_CONTIGS_ch[0])
 
 
         if (params.iphopDB != false) {
