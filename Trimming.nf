@@ -173,7 +173,7 @@ process FASTQC{
 
     if (params.server) {
         beforeScript 'module load perl fastqc'
-        afterScript 'module unload perl fastqc'
+        afterScript 'module unload fastqc perl'
     }
     else {
         conda "fastqc"
