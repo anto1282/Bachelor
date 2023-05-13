@@ -88,8 +88,9 @@ process KRAKEN{
             time = 20.m
         }
         cpus 3
-        errorStrategy { task.exitStatus in 1..140 ? 'retry' : 'ignore' }
+        errorStrategy { task.attempt < 3 ? 'retry' : 'ignore' }
         maxRetries 3
+        maxForks 10
 
     }
     else {
