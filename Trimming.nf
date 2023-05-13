@@ -180,7 +180,9 @@ process FASTQC{
     else {
         conda "fastqc"
     }
-    time = 10.m
+    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'ignore' }
+    maxRetries 3
+    time = {5.m * task.attempt}
     memory 2.GB
     
     publishDir "${params.outdir}/${pair_id}/CompiledResults", mode: 'copy', overwrite: true
