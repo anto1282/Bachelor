@@ -43,7 +43,7 @@ with open("vir_pred_file.tsv",'w') as pred_file:
         DVF = False
         if phage in virusnames:
             DVF = True
-        pred_string = "\t".join([phage, 1, str(DVF)]) + "\n"
+        pred_string = "\t".join([phage, str(1), str(DVF)]) + "\n"
         pred_file.write(pred_string)
 
 
