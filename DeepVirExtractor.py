@@ -75,7 +75,7 @@ with open(contigfile, 'r') as file:
 virusoutfile.close()
 nonvirusoutfile.close()
 
-print("Viruses written to %s file:" % virusoutfile, seqcount)
+print("Viruses written to %s file:" % virusfile, seqcount)
 print("DeepVirExtractor finished")
 """"
 except IndexError as error:
