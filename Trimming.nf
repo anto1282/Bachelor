@@ -43,7 +43,9 @@ process TRIM {
      
     cpus 4
     memory 4.GB
-    time = 20.m
+    time = {30.m * task.attempt}
+    errorStrategy { task.attempt < 3 ? 'retry' : 'ignore' }
+
 
     input: 
     tuple(val(pair_id), path(reads))
@@ -86,7 +88,7 @@ process KRAKEN{
             time = 20.m
         }
         cpus 3
-        errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'terminate' }
+        errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'ignore' }
         maxRetries 3
 
     }
