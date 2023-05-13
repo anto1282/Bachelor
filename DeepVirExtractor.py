@@ -35,6 +35,19 @@ print("Writing virus contigs to file...")
 virusoutfile = open(virusfile,"w")
 nonvirusoutfile = open(nonvirusfile,'w')
 
+
+with open("vir_pred_file.tsv",'w') as pred_file:
+    #Writes header to file
+    pred_file.write("Phagename\tPred_counts\tSeeker\tPhager\tDVF\n")
+    for phage in sorted(virusnames):
+        DVF = False
+        if phage in virusnames:
+            DVF = True
+        pred_string = "\t".join([phage, 1, str(DVF)]) + "\n"
+        pred_file.write(pred_string)
+
+
+
 seqcount = 0
 with open(contigfile, 'r') as file:
     virusflag = False
