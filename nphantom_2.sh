@@ -18,8 +18,8 @@ export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP
 export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
 export NXF_CONDA_ENABLED=true
 
-mkdir -p $(pwd)/$SLURM_JOB_NAME
-export NXF_WORK=$(pwd)/$SLURM_JOB_NAME
+mkdir -p $(pwd)/${SLURM_JOB_NAME}_work
+export NXF_WORK=$(pwd)/${SLURM_JOB_NAME}_work
 
 module purge
 module load openjdk/17.0.3
