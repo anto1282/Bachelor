@@ -3,7 +3,7 @@
 
 #Program that extracts viral contigs from various phage prediction tools
 
-import sys
+import sys, os
 
 contigfile = str(sys.argv[1])
 outputfilename = str(sys.argv[2])
@@ -108,19 +108,10 @@ with open(contigfile, 'r') as file:
 
     seqcount = 0
     if len(final_viral_set) >= 1:
-
+        seqlength = 0
         virusoutfile = open(outputfilename,'w')
         for line in file:
-            # if line.startswith(">"):
-            #     virusflag = False             
-            
-            # if virusflag == True:
-            #     virusoutfile.write(line)
-            
-            # elif line.startswith(">") and line[1:].strip().split()[0] in final_viral_set:
-            #     virusflag = True
-            #     virusoutfile.write(line)
-            #     seqcount += 1
+
             if line.startswith(">") and line[1:].strip().split()[0] in final_viral_set:
                 virusflag = True
                 virusoutfile.write(line)
@@ -131,10 +122,20 @@ with open(contigfile, 'r') as file:
                 
             elif virusflag == True:
                 virusoutfile.write(line)
+                if len(final_viral_set) == 1:
+                    seqlength += len(line.strip())
+        virusoutfile.close()
         print("Final viral set: ", final_viral_set)
         print("Length of final viral set:", len(final_viral_set))
-        print("Sequences written to", outputfilename + ":", seqcount)
-        virusoutfile.close()
+        if len(final_viral_set) == 1 and seqlength < 20000:
+            newname = "SINGLEPHAGE" + outputfilename
+            os.rename(outputfilename,newname)
+            print("Only found one phage with length:", seqlength, "bp")
+            print("Output file not useful, renamed it so pipeline stops")
+        else:
+            print("Sequences written to", outputfilename + ":", seqcount)
+        
+    
     else:
         print("No viruses was predicted by the virus prediction tools")
 
