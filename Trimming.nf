@@ -180,7 +180,7 @@ process FASTQC{
     else {
         conda "fastqc"
     }
-    time = 3.m
+    time = 10.m
     memory 2.GB
     
     publishDir "${params.outdir}/${pair_id}/CompiledResults", mode: 'copy', overwrite: true
