@@ -78,9 +78,25 @@ if intersectionOrUnion == "intersection":
 
     final_viral_set = SeekerDVFInter.union(SeekerPhagerInter,DVFPhagerInter)
 
-elif intersectionOrUnion =="union":
+elif intersectionOrUnion == "union":
     #The union of the three sets, used if the virus predictors have a hard time predicting viruses on a specific dataset
     final_viral_set = SeekerSet.union(DVFset,PhagerSet)
+
+
+with open("vir_pred_file.tsv",'w') as pred_file:
+    #Writes header to file
+    pred_file.write("Phagename\tPred_counts\tSeeker\tPhager\tDVF\n")
+    for phage in sorted(final_viral_set):
+        Seeker, Phager, DVF = False, False, False
+        if phage in SeekerSet:
+            Seeker = True
+        if phage in PhagerSet:
+            Phager = True
+        if phage in DVFset:
+            DVF = True
+        pred_string = "\t".join([phage, str([Seeker,Phager,DVF].count(True)), str(Seeker), str(Phager), str(DVF)]) + "\n"
+        pred_file.write(pred_string)
+
 
 virusoutfile = open(outputfilename,'w')
 
@@ -104,18 +120,19 @@ with open(contigfile, 'r') as file:
             virusflag = True
             virusoutfile.write(line)
             seqcount += 1
+            print("Phage in viral set:", line)
         elif line.startswith(">"):
             virusflag = False             
-            print(line)
+            
         elif virusflag == True:
             virusoutfile.write(line)
         
         
-        
+      
 
-print(final_viral_set)
-print(len(final_viral_set))
-print(seqcount)
+print("Final viral set: ", final_viral_set)
+print("Length of final viral set:", len(final_viral_set))
+print("Sequences written to", outputfilename + ":", seqcount)
 
 virusoutfile.close()
 
