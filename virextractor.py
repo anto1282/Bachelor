@@ -83,6 +83,9 @@ elif intersectionOrUnion == "union":
     final_viral_set = SeekerSet.union(DVFset,PhagerSet)
 
 
+
+
+
 with open("vir_pred_file.tsv",'w') as pred_file:
     #Writes header to file
     pred_file.write("Phagename\tPred_counts\tSeeker\tPhager\tDVF\n")
@@ -126,6 +129,8 @@ with open(contigfile, 'r') as file:
             
         elif virusflag == True:
             virusoutfile.write(line)
+    if seqcount < 1:
+
         
         
       
