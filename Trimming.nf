@@ -44,7 +44,7 @@ process TRIM {
     cpus 4
     memory 4.GB
     time = {30.m * task.attempt}
-    errorStrategy {'retry' : 'ignore'}
+    errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'ignore' }
     maxRetries 3
 
     input: 
