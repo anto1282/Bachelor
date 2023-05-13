@@ -18,22 +18,9 @@ export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP
 export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
 export NXF_CONDA_ENABLED=true
 
-NXF_work=$(pwd)
-# Parse command line arguments
-while [[ $# -gt 0 ]]
-do
-    key="$1"
-    case $key in
-        -wd|--working-dir)
-            NXF_work="$2"
-            shift # past argument
-            shift # past value
-            ;;
-        *)    # unknown option
-            shift # past argument
-            ;;
-    esac
-done
+mkdir -p $(pwd)/${SLURM_JOB_NAME}
+export NXF_work=$(pwd)/${SLURM_JOB_NAME}
+
 
 
 module purge
