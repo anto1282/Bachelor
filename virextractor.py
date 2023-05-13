@@ -101,43 +101,42 @@ with open("vir_pred_file.tsv",'w') as pred_file:
         pred_file.write(pred_string)
 
 
-virusoutfile = open(outputfilename,'w')
 
 #Prints out all phages into one file
 with open(contigfile, 'r') as file:
     virusflag = False
 
     seqcount = 0
-    for line in file:
-        # if line.startswith(">"):
-        #     virusflag = False             
-        
-        # if virusflag == True:
-        #     virusoutfile.write(line)
-        
-        # elif line.startswith(">") and line[1:].strip().split()[0] in final_viral_set:
-        #     virusflag = True
-        #     virusoutfile.write(line)
-        #     seqcount += 1
-        if line.startswith(">") and line[1:].strip().split()[0] in final_viral_set:
-            virusflag = True
-            virusoutfile.write(line)
-            seqcount += 1
-            print("Phage in viral set:", line)
-        elif line.startswith(">"):
-            virusflag = False             
+    if len(final_viral_set) >= 1:
+
+        virusoutfile = open(outputfilename,'w')
+        for line in file:
+            # if line.startswith(">"):
+            #     virusflag = False             
             
-        elif virusflag == True:
-            virusoutfile.write(line)
-    if seqcount < 1:
+            # if virusflag == True:
+            #     virusoutfile.write(line)
+            
+            # elif line.startswith(">") and line[1:].strip().split()[0] in final_viral_set:
+            #     virusflag = True
+            #     virusoutfile.write(line)
+            #     seqcount += 1
+            if line.startswith(">") and line[1:].strip().split()[0] in final_viral_set:
+                virusflag = True
+                virusoutfile.write(line)
+                seqcount += 1
+                print("Phage in viral set:", line)
+            elif line.startswith(">"):
+                virusflag = False             
+                
+            elif virusflag == True:
+                virusoutfile.write(line)
+        print("Final viral set: ", final_viral_set)
+        print("Length of final viral set:", len(final_viral_set))
+        print("Sequences written to", outputfilename + ":", seqcount)
+        virusoutfile.close()
+    else:
+        print("No viruses was predicted by the virus prediction tools")
 
-        
-        
-      
 
-print("Final viral set: ", final_viral_set)
-print("Length of final viral set:", len(final_viral_set))
-print("Sequences written to", outputfilename + ":", seqcount)
-
-virusoutfile.close()
 
