@@ -81,7 +81,7 @@ process KRAKEN{
         beforeScript 'module load openmpi kraken2'
         afterScript 'module unload kraken2 openmpi'
         if (params.bigDB){
-            memory {520.GB}
+            memory {550.GB}
         }
         else{
             memory {61.GB * task.attempt}
