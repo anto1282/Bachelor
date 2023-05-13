@@ -44,8 +44,8 @@ process TRIM {
     cpus 4
     memory 4.GB
     time = {30.m * task.attempt}
-    errorStrategy { task.attempt < 3 ? 'retry' : 'ignore' }
-
+    errorStrategy {'retry': "ignore"}
+    maxRetries 3
 
     input: 
     tuple(val(pair_id), path(reads))
