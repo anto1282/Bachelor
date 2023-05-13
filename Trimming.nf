@@ -81,14 +81,14 @@ process KRAKEN{
         beforeScript 'module load openmpi kraken2'
         afterScript 'module unload kraken2 openmpi'
         if (params.bigDB){
-            memory {550.GB}
+            memory {520.GB + (50.GB * task.attempt)}
         }
         else{
             memory {61.GB * task.attempt}
             time = 20.m
         }
         cpus 3
-        errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'ignore' }
+        errorStrategy { task.exitStatus in 1..140 ? 'retry' : 'ignore' }
         maxRetries 3
 
     }
