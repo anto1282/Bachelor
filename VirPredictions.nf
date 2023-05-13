@@ -1,5 +1,5 @@
 
-process DVF {
+process DVF{
     
     if (params.server) {
         beforeScript 'module load gcc theano deepvirfinder'
@@ -45,7 +45,7 @@ process DVF {
     
 }
 
-process PHAGER {
+process PHAGER{
     
     //errorStrategy = 'ignore'
     //Tool for phage prediction from Thomas
@@ -86,7 +86,7 @@ process PHAGER {
     
 }
 
-process VIRSORTER {
+process VIRSORTER{
     errorStrategy = 'ignore'
     // if (params.server) {
     //     //conda "pandas"
@@ -131,7 +131,7 @@ process VIRSORTER {
 }
 
 
-process CHECKV {
+process CHECKV{
     if (params.server) {
         beforeScript 'module load checkv'
         afterScript 'module unload checkv'
@@ -196,7 +196,7 @@ process SEEKER{
 
 }
 
-process VIREXTRACTOR {
+process VIREXTRACTOR{
     cpus 1
     time = 20.m
     publishDir "${params.outdir}/${pair_id}/VirusPredictions", mode: 'copy'
@@ -222,7 +222,7 @@ process VIREXTRACTOR {
 }
 
 
-process DEEPVIREXTRACTOR {
+process DEEPVIREXTRACTOR{
     cpus 1
     time = 20.m
     //Used instead of virextractor when only deepvirfinder is run

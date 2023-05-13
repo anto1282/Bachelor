@@ -1,6 +1,6 @@
 #!/usr/bin/env nextflow
 
-process IPHOP {
+process IPHOP{
     
     if (params.server) {
         beforeScript 'module purge'
@@ -38,7 +38,7 @@ process IPHOP {
 
 // not working atm
 
-process HOSTPHINDER {
+process HOSTPHINDER{
 
     errorStrategy = 'ignore'
     if (params.server) {

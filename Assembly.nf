@@ -4,7 +4,7 @@
 // the reads and calculating a N50 score.
 
 // Assembly using spades
-process SPADES {
+process SPADES{
     if (params.server) {
         beforeScript 'module load spades/3.15.5'
         cpus 16
@@ -50,7 +50,7 @@ process SPADES {
 
 // Offset detection using offsetdetector.py
 
-process OFFSETDETECTOR {
+process OFFSETDETECTOR{
     cpus 2
     time = 10.m
     memory 1.GB
@@ -77,7 +77,7 @@ process OFFSETDETECTOR {
 
 // Calculating N50 score from contigs using the bbmap stash.sh script
 
-process N50 {
+process N50{
     if (params.server) {
         beforeScript 'module load bbmap'
         cpus 1

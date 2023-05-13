@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 
-process PHAROKKA {
+process PHAROKKA{
     //errorStrategy 'retry'
     errorStrategy {task.attempt == 1 ? 'retry' : 'ignore'}
     //maxRetries  = 2
@@ -40,7 +40,7 @@ process PHAROKKA {
 }
 
 
-process FASTASPLITTER {
+process FASTASPLITTER{
     // publishDir "${params.outdir}/${pair_id}/ViralContigs", mode: 'copy'
     
     // Creates fasta files for each contig
@@ -65,7 +65,7 @@ process FASTASPLITTER {
 
 
 
-process PHAROKKASPLITTER {
+process PHAROKKASPLITTER{
     
     input:
     tuple(val(pair_id), path(files))
@@ -89,7 +89,7 @@ process PHAROKKASPLITTER {
 }
 
 
-process PHAROKKA_PLOTTER {
+process PHAROKKA_PLOTTER{
     errorStrategy= "ignore"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
@@ -128,7 +128,7 @@ process PHAROKKA_PLOTTER {
     
 }
 
-process RESULTS_COMPILATION {
+process RESULTS_COMPILATION{
     cpus 1
     memory '2 GB'
     time = 1.m

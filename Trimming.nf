@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 
-process FASTERQDUMP {
+process FASTERQDUMP{
     if (params.server) {
         beforeScript 'module load sra-tools'
         afterScript 'module unload sra-tools'
@@ -31,7 +31,7 @@ process FASTERQDUMP {
     """
 }
 
-process TRIM {
+process TRIM{
     
     if (params.server) {
         beforeScript 'module load adapterremoval fastp'
