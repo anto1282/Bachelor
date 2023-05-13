@@ -86,21 +86,6 @@ workflow{
         // CREATING PLOTS OF EACH PHAGE
         PHAROKKA_SPLITS_ch = PHAROKKASPLITTER(PHAROKKA_ANNOTATION_ch[0]) 
         
-        //PHAROKKA_SPLITS_ch.groupTuple().set{PHAROKKA_INPUT_ch}
-        //PHAROKKA_SPLITS_ch[0].combine(PHAROKKA_SPLITS_ch[1], by: 0).combine(PHAROKKA_SPLITS_ch[2], by: 0).set{PHAROKKA_INPUT_ch}
-        //PHAROKKA_SPLITS_ch.fromFilePairs("*.{gbk,gff,fasta}",size:3).set {PHAROKKA_INPUT_ch}
-        //PHAROKKA_SPLITS_ch.groupTuple().set{PHAROKKA_INPUT_ch}
-
-        PHAROKKA_SPLITS_ch.transpose().view()
-        //Channel.fromFilePairs("{$PHAROKKA_SPLITS_ch}.{gbk,gff,fasta}",size:3).set {PHAROKKA_INPUT_ch}
-        
-        //PHAROKKA_SPLITS_ch.flatMap{n -> [n[0],n[1],n[2],n[3]]}.view()
-        //FILE_TRIPLETS_ch = PHAROKKA_SPLITS_ch.map(files -> [files[0].simpleName, files[1], files[1],files[1]])
-        //FILE_TRIPLETS_ch = PHAROKKA_SPLITS_ch[0].combine(PHAROKKA_SPLITS_ch[1],by: 0).combine(PHAROKKA_SPLITS_ch[2],by: 0)
-                    
-        //FILE_TRIPLETS_ch.view()
-
-        //PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch[0].flatten(),PHAROKKA_SPLITS_ch[1].flatten(),PHAROKKA_SPLITS_ch[2].flatten(),PHAROKKA_SPLITS_ch[3].flatten())
         
         PHAROKKA_PLOTTER_ch = PHAROKKA_PLOTTER(PHAROKKA_SPLITS_ch.transpose()) 
         // CHECKS THE QUALITY OF THE VIRAL CONTIGS
