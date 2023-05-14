@@ -90,7 +90,8 @@ process PHAROKKASPLITTER{
 
 
 process PHAROKKA_PLOTTER{
-    errorStrategy= "ignore"
+    errorStrategy {task.attempt  < 5 ? 'retry' : 'ignore'}
+    //errorStrategy= "ignore"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.2--hdfd78af_0"
         cpus 1
