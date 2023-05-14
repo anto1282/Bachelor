@@ -1,7 +1,7 @@
 #!/usr/bin/env nextflow
 
 process IPHOP{
-    
+    errorStrategy {task.attempt < 3 ? 'retry' : 'ignore'}
     if (params.server) {
         beforeScript 'module purge'
         conda '/projects/mjolnir1/apps/conda/iphop-1.2.0'
@@ -12,9 +12,10 @@ process IPHOP{
    
     publishDir "${params.outdir}/${pair_id}", mode: 'copy'
     
-    cpus 4
+    cpus {4 * task.attempt * task.attempt}
     memory '75 GB'
-    time = 1.h
+    time = {1.h * task.attempt}
+    
 
     input: 
     tuple val(pair_id), path(viral_contigs_fasta)
