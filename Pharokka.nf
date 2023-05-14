@@ -92,14 +92,14 @@ process PHAROKKASPLITTER{
 process PHAROKKA_PLOTTER{
     errorStrategy= "ignore"
     if (params.server){
-        container = "docker://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
+        container = "docker://quay.io/biocontainers/pharokka:1.3.2--hdfd78af_0"
         cpus 1
         memory '2 GB'
         time = 20.m
         // time = 1.m
     }
     else{
-        conda "conda-forge::pycirclize bioconda::pharokka=1.3.1 mash==2.2 bcbio-gff"
+        conda "conda-forge::pycirclize bioconda::pharokka=1.3.2 mash==2.2 bcbio-gff"
         //conda 'pharokka'
         cpus 1
         memory '2 GB'
