@@ -53,7 +53,7 @@ process SPADES{
 
 process OFFSETDETECTOR{
     cpus 2
-    time = 10.m
+    time = 40.m
     memory 1.GB
     input:
     tuple(val(pair_id), path(reads))
