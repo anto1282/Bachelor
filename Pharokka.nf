@@ -92,7 +92,7 @@ process PHAROKKASPLITTER{
 process PHAROKKA_PLOTTER{
     errorStrategy {task.attempt  < 5 ? 'retry' : 'ignore'}
     maxRetries 5
-    maxForks 1
+    
     //errorStrategy= "ignore"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.2--hdfd78af_0"
