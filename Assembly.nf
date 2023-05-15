@@ -8,10 +8,10 @@ process SPADES{
     if (params.server) {
         beforeScript 'module load spades/3.15.5'
         cpus 16
-        memory { 16.GB + (16.GB * task.attempt) }
+        memory { 32.GB + (16.GB * task.attempt) }
         //errorStrategy 'retry'
-        errorStrategy { task.attempt <3 ? 'retry' : 'ignore' }
-        maxRetries  = 3
+        errorStrategy { task.attempt < 3 ? 'retry' : 'ignore' }
+        maxRetries 3
         afterScript 'module unload spades/3.15.5'
         time { 1.hour * task.attempt }
     }
