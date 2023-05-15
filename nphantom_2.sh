@@ -23,7 +23,7 @@ export NXF_WORK=$(pwd)/${SLURM_JOB_NAME}_work
 
 module purge
 module load openjdk/17.0.3
-module load singularity/3.8.6 nextflow/22.10.4 miniconda/4.11.0
+module load singularity/3.8.0 nextflow/22.10.4 miniconda/4.11.0
 
 echo $NXF_WORK
 
