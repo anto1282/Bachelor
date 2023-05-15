@@ -90,7 +90,7 @@ process PHAROKKASPLITTER{
 
 
 process PHAROKKA_PLOTTER{
-    errorStrategy {task.attempt  < 5 ? 'retry' : 'ignore'}
+    errorStrategy {task.attempt  < 3 ? 'retry' : 'ignore'}
     maxRetries 5
     
     //errorStrategy= "ignore"
@@ -121,10 +121,16 @@ process PHAROKKA_PLOTTER{
     path("*")
 
     script:
-
+    if (task.attempt == 1) { 
     """ 
     pharokka_plotter.py -i ${phage_contig} -n ${gffFile.baseName} --gff ${gffFile} --genbank ${gbkFile} -t ${phage_contig.baseName}
     """    
+    }
+    else {
+    """ 
+    pharokka_plotter.py -i ${phage_contig} -n ${gffFile.baseName} --gff ${gffFile} --genbank ${gbkFile} -t ${phage_contig.baseName} --label-hypotheticals
+    """
+    }
 }
 
 process RESULTS_COMPILATION{
