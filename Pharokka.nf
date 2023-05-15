@@ -128,7 +128,7 @@ process PHAROKKA_PLOTTER{
     }
     else {
     """ 
-    pharokka_plotter.py -i ${phage_contig} -n ${gffFile.baseName} --gff ${gffFile} --genbank ${gbkFile} -t ${phage_contig.baseName} --label-hypotheticals
+    pharokka_plotter.py -i ${phage_contig} -n ${gffFile.baseName} --gff ${gffFile} --genbank ${gbkFile} -t ${phage_contig.baseName} --label_hypotheticals
     """
     }
 }
