@@ -91,6 +91,7 @@ process PHAROKKASPLITTER{
 
 process PHAROKKA_PLOTTER{
     errorStrategy {task.attempt  < 5 ? 'retry' : 'ignore'}
+    maxRetries 5
     maxForks 10
     //errorStrategy= "ignore"
     if (params.server){
