@@ -90,9 +90,9 @@ process PHAROKKASPLITTER{
 
 
 process PHAROKKA_PLOTTER{
-    errorStrategy {task.attempt  < 5 ? 'retry' : 'ignore'}
+    errorStrategy {task.attempt  < 3 ? 'retry' : 'ignore'}
     maxRetries 5
-    maxForks 1
+    
     //errorStrategy= "ignore"
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.2--hdfd78af_0"
@@ -121,10 +121,16 @@ process PHAROKKA_PLOTTER{
     path("*")
 
     script:
-
+    if (task.attempt == 1) { 
     """ 
     pharokka_plotter.py -i ${phage_contig} -n ${gffFile.baseName} --gff ${gffFile} --genbank ${gbkFile} -t ${phage_contig.baseName}
     """    
+    }
+    else {
+    """ 
+    pharokka_plotter.py -i ${phage_contig} -n ${gffFile.baseName} --gff ${gffFile} --genbank ${gbkFile} -t ${phage_contig.baseName} --label_hypotheticals
+    """
+    }
 }
 
 process RESULTS_COMPILATION{
