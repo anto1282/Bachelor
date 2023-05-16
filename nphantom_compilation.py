@@ -166,16 +166,16 @@ with open(assemblystats,'r') as file:
 			line += """</tr>
 			"""
 		
-		elif statsflag and "KB" in line and line.split()[0] == "25":
-			linesplit = line.strip().split()
-			line = "<tr>" + "<td>" + ' '.join(linesplit[0:2]) + "</td>"
-			for elem in linesplit[2:]:
-				line += "<td>" + elem + "</td>"
-			line += """
-					</tr>
-				</table>
-				"""
-			statsflag = False
+		# elif statsflag and "KB" in line and line.split()[0] == "25":
+		# 	linesplit = line.strip().split()
+		# 	line = "<tr>" + "<td>" + ' '.join(linesplit[0:2]) + "</td>"
+		# 	for elem in linesplit[2:]:
+		# 		line += "<td>" + elem + "</td>"
+		# 	line += """
+		# 			</tr>
+				
+		# 		"""
+		# 	statsflag = False
 		
 		elif statsflag and "KB" in line:
 			linesplit = line.strip().split()
@@ -204,8 +204,11 @@ with open(assemblystats,'r') as file:
 
 
 		assemblystatistics += line
+	
 
-assemblystatistics += """</table>"""
+assemblystatistics += """
+</table>
+</table>"""
 
 webpage = f"""
 <!DOCTYPE html>
