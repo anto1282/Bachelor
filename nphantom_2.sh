@@ -12,6 +12,7 @@
 #SBATCH --mail-type=fail
 
 
+export SINGULARITY_CACHEDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP"
 export SINGULARITY_LOCALCACHEDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP"
 export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP"
 
