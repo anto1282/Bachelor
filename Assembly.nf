@@ -7,13 +7,13 @@
 process SPADES{
     if (params.server) {
         beforeScript 'module load spades/3.15.5'
-        cpus 16
-        memory { 32.GB + (16.GB * task.attempt) }
+        cpus {16 + (16 * (task.attempt - 1))}
+        memory { 48.GB + (32.GB * (task.attempt - 1)) }
         //errorStrategy 'retry'
         errorStrategy { task.attempt < 3 ? 'retry' : 'ignore' }
         maxRetries 3
         afterScript 'module unload spades/3.15.5'
-        time { 1.hour * task.attempt * task.attempt }
+        time { 2.hour * task.attempt }
     }
     else {
         conda "spades=3.15.5 conda-forge::openmp"
