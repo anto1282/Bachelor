@@ -349,7 +349,7 @@ with open(outputfilename, 'w') as f:
 		print("Contig info to HTML:", key)
 		#print(virusdict[key])
 		host = ""
-		if isinstance(virusdict[key][1],list):
+		if isinstance(virusdict[key][1],set):
 			print(virusdict[key][1])
 			for taxonomy in virusdict[key][1]:
 				host += taxonomy + "<br>"
