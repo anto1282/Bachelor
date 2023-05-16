@@ -9,7 +9,8 @@ process SPADES{
         beforeScript 'module load spades/3.15.5'
         cpus {16 + (16 * (task.attempt - 1))}
         memory { 48.GB + (32.GB * (task.attempt - 1)) }
-        //errorStrategy 'retry'
+        //If you change memory for spades, remember to also change the memory limit tag in the spades command below!
+        
         errorStrategy { task.attempt < 3 ? 'retry' : 'ignore' }
         maxRetries 3
         afterScript 'module unload spades/3.15.5'
@@ -41,7 +42,7 @@ process SPADES{
     """
     gzip -d -f ${r1}
     gzip -d -f ${r2}
-    spades.py -o Assembly -1 ${r1.baseName} -2 ${r2.baseName} --meta --threads ${task.cpus} --memory ${32 + (16 * task.attempt)} --phred-offset ${phred} 
+    spades.py -o Assembly -1 ${r1.baseName} -2 ${r2.baseName} --meta --threads ${task.cpus} --memory ${48 + (32 * (task.attempt - 1)} --phred-offset ${phred} 
     gzip -n Assembly/${params.contigs}.fasta   
     gzip ${r1.baseName}
     gzip ${r2.baseName}
