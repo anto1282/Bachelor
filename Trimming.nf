@@ -82,6 +82,7 @@ process KRAKEN{
         afterScript 'module unload kraken2 openmpi'
         if (params.bigDB){
             memory {520.GB + (50.GB * task.attempt)}
+            time = 3.h
         }
         else{
             memory {61.GB * task.attempt}

@@ -13,7 +13,7 @@ process SPADES{
         errorStrategy { task.attempt < 3 ? 'retry' : 'ignore' }
         maxRetries 3
         afterScript 'module unload spades/3.15.5'
-        time { 1.hour * task.attempt }
+        time { 2.hour * task.attempt }
     }
     else {
         conda "spades=3.15.5 conda-forge::openmp"
