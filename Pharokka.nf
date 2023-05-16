@@ -98,7 +98,7 @@ process PHAROKKA_PLOTTER{
         container = "docker://quay.io/biocontainers/pharokka:1.3.2--hdfd78af_0"
         cpus 1
         memory '2 GB'
-        time = 20.m
+        time = {20.m * task.attempt}
         // time = 1.m
     }
     else{
@@ -147,19 +147,19 @@ process RESULTS_COMPILATION{
     tuple val(pair_id), path(viralcontigs), path(iphop_predictions), path(checkv_results)
     
     output:
-    path ("${pair_id}_compiled_results.html")
+    path ("compiled_results.html")
     
    
     script:
 
     if (params.iphopDB != false) {
-    """  
-    python3 ${projectDir}/nphantom_compilation.py ${pair_id}_compiled_results.html ${viralcontigs} ${iphop_predictions}/Host_prediction_to_genus_m90.csv  ${iphop_predictions}/Host_prediction_to_genome_m90.csv ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats.txt ${pair_id}
+    """   
+    python3 ${projectDir}/nphantom_compilation.py compiled_results.html ${viralcontigs} ${iphop_predictions}/Host_prediction_to_genus_m90.csv  ${iphop_predictions}/Host_prediction_to_genome_m90.csv ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats.txt ${pair_id}
     """
     }
     else {
     """   
-    python3 ${projectDir}/nphantom_compilation.py ${pair_id}_compiled_results.html ${viralcontigs} NOIPHOP NOIPHOP ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats.txt ${pair_id}
+    python3 ${projectDir}/nphantom_compilation.py compiled_results.html ${viralcontigs} NOIPHOP NOIPHOP ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats.txt ${pair_id}
     """
     }
 }
