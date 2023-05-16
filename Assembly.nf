@@ -42,7 +42,7 @@ process SPADES{
     """
     gzip -d -f ${r1}
     gzip -d -f ${r2}
-    spades.py -o Assembly -1 ${r1.baseName} -2 ${r2.baseName} --meta --threads ${task.cpus} --memory ${ 16 + 32*task.attempt }--phred-offset ${phred} 
+    spades.py -o Assembly -1 ${r1.baseName} -2 ${r2.baseName} --meta --threads ${task.cpus} --memory ${ 16 + 32*task.attempt} --phred-offset ${phred} 
     gzip -n Assembly/${params.contigs}.fasta   
     gzip ${r1.baseName}
     gzip ${r2.baseName}
