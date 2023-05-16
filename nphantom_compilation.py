@@ -356,14 +356,11 @@ with open(outputfilename, 'w') as f:
 		elif isinstance(virusdict[key][1],str):
 			host = virusdict[key][1]
 		
-		
-
 		print(host)
 		length = (virusdict[key][2])
 		completeness = (virusdict[key][3])
 		confidence = (virusdict[key][4])
-		#print(length, completeness)
-		picturepath = key + ".png"
+		picturepath = SRA_nr + "_" + key + ".png"
 		DNAtext = "Phage DNA:"
 		contig = virusdict[key][0]
 		buttonstring += opentab.format(key,key)
