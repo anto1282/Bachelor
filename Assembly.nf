@@ -7,8 +7,8 @@
 process SPADES{
     if (params.server) {
         beforeScript 'module load spades/3.15.5'
-        cpus 16
-        memory { 32.GB + (16.GB * task.attempt) }
+        cpus {16 + (16 * (task.attempt - 1))}
+        memory { 48.GB + (32.GB * (task.attempt - 1)) }
         //errorStrategy 'retry'
         errorStrategy { task.attempt < 3 ? 'retry' : 'ignore' }
         maxRetries 3
