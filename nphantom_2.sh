@@ -19,6 +19,9 @@ export SINGULARITY_TMPDIR="/maps/projects/mjolnir1/people/${USER}/SingularityTMP
 export NXF_CLUSTER_SEED=$(shuf -i 0-16777216 -n 1)
 export NXF_CONDA_ENABLED=true
 
+#re-direct tmp files away from /tmp directories on compute nodes or the headnode
+export NXF_TEMP=/maps/projects/mjolnir1/people/${USER}/.tmp_nfcore
+
 mkdir -p $(pwd)/${SLURM_JOB_NAME}_work
 export NXF_WORK=$(pwd)/${SLURM_JOB_NAME}_work
 

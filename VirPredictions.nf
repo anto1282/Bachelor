@@ -242,7 +242,7 @@ process DEEPVIREXTRACTOR{
     script:
     """
     gzip -d -f ${contigsFile}
-    python3 ${projectDir}/DeepVirExtractor.py ${DVFcontigs} ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.94
+    python3 ${projectDir}/DeepVirExtractor.py ${DVFcontigs} ${contigsFile.baseName} ${pair_id}_ViralContigs.fasta 0.50
     gzip -f ${contigsFile.baseName}
     """
 }
