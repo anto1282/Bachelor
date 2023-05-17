@@ -96,8 +96,9 @@ with open(assemblystats,'r') as file:
 	ACGTflag = False
 	mainflag = False
 	statsflag = False
+	Aflag = 0
 	for line in file:
-		if line.startswith("A"):
+		if line.startswith("A") and Aflag == 0:
 			linesplit = line.strip().split()
 			line = """
 			<table>
@@ -108,6 +109,9 @@ with open(assemblystats,'r') as file:
 			line += """</tr>
 			"""
 			ACGTflag = True
+			Aflag = 1
+		elif line.startswith("A") and Aflag == 1:
+			break
 		elif ACGTflag:
 			linesplit = line.strip().split()
 			line = """<tr>
@@ -298,7 +302,7 @@ function openPhage(evt, phageName) {
         function copyTextToClipboard(textToCopy) {
             navigator.clipboard.writeText(textToCopy)
                 .then(function() {
-                    alert("Text copied to clipboard!");
+                    console.log("Text copied to clipboard!");
                 })
                 .catch(function(error) {
                     console.error("Error copying text: ", error);
@@ -382,7 +386,7 @@ with open(outputfilename, 'w') as f:
 		picturepath = SRA_nr + "_" + key + ".png"
 		DNAtext = "Phage DNA:"
 		contig = virusdict[key][0]
-		fastafile = ">"+ SRA_nr + " " + contig.replace("\n","")
+		fastafile = ">"+ key + " " + contig.replace("\n","")
 		buttonstring += opentab.format(key,key)
 		tabstring += tabs.format(key,key,host,length, completeness, confidence, fastafile, picturepath,DNAtext,contig.replace("\n","<br>"))
 	buttonstring += "</div>"
