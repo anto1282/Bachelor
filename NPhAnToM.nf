@@ -35,7 +35,6 @@ workflow{
     }
     else {
         error("Error: You are not allowed to specify both --IDS and --pair_file_names")
-        
     }
     
 
