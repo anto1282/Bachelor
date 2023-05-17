@@ -386,7 +386,7 @@ with open(outputfilename, 'w') as f:
 		picturepath = SRA_nr + "_" + key + ".png"
 		DNAtext = "Phage DNA:"
 		contig = virusdict[key][0]
-		fastafile = ">"+ key + " " + contig.replace("\n","")
+		fastafile = contig.replace("\n","")
 		buttonstring += opentab.format(key,key)
 		tabstring += tabs.format(key,key,host,length, completeness, confidence, fastafile, picturepath,DNAtext,contig.replace("\n","<br>"))
 	buttonstring += "</div>"
