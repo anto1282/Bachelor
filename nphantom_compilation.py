@@ -263,6 +263,7 @@ body {{font-family: Arial;}}
   width: 50%;
 }}
 </style>
+
 </head>
 <body>
 
@@ -291,8 +292,19 @@ function openPhage(evt, phageName) {
   document.getElementById(phageName).style.display = "block";
   evt.currentTarget.className += " active";
 }
+
 </script>
-   
+<script>
+        function copyTextToClipboard(textToCopy) {
+            navigator.clipboard.writeText(textToCopy)
+                .then(function() {
+                    alert("Text copied to clipboard!");
+                })
+                .catch(function(error) {
+                    console.error("Error copying text: ", error);
+                });
+        }
+    </script>
 </body>
 </html> 
 """
@@ -309,6 +321,7 @@ tabs = """
 	<p><strong>Predicted host taxonomy:</strong><br> {}</p>
     <p><strong>Length:</strong> {} bp</p>
     <p><strong>Phage completeness % / confidence (from CheckV):</strong> {} % / {}</p>
+    <button onclick="copyTextToClipboard('{}'); window.open('https://blast.ncbi.nlm.nih.gov/Blast.cgi?PROGRAM=blastn&PAGE_TYPE=BlastSearch&LINK_LOC=blasthome')">Copy Fasta and Open Link</button>
 	<p><strong>Illustration of annotated phage:</strong></p>
 	<img class="center" src="{}" alt="Illustration of annotated phage">
 	<p><strong>{}</strong></p>
@@ -316,6 +329,7 @@ tabs = """
 	
 </div>
 """
+
 
 statisticstabs = """
 <div id="{}" class="tabcontent">
@@ -347,6 +361,7 @@ with open(outputfilename, 'w') as f:
 	buttonstring += ("""<button onclick="window.location.href = '{}_1_trimmed_fastqc.html';">Quality of Read1</button>""").format(SRA_nr)
 	buttonstring += ("""<button onclick="window.location.href = '{}_2_trimmed_fastqc.html';">Quality of Read2</button>""").format(SRA_nr)
 
+    
 	#Creating the tabs for the phages
 	for key in virusdict:
 		print("Contig info to HTML:", key)
@@ -363,11 +378,13 @@ with open(outputfilename, 'w') as f:
 		length = (virusdict[key][2])
 		completeness = (virusdict[key][3])
 		confidence = (virusdict[key][4])
+		
 		picturepath = SRA_nr + "_" + key + ".png"
 		DNAtext = "Phage DNA:"
 		contig = virusdict[key][0]
+		fastafile = ">"+ SRA_nr + " " + contig.replace("\n","")
 		buttonstring += opentab.format(key,key)
-		tabstring += tabs.format(key,key,host,length, completeness, confidence, picturepath,DNAtext,contig.replace("\n","<br>"))
+		tabstring += tabs.format(key,key,host,length, completeness, confidence, fastafile, picturepath,DNAtext,contig.replace("\n","<br>"))
 	buttonstring += "</div>"
 	f.write(buttonstring)
 	f.write(tabstring)
