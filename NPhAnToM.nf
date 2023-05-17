@@ -13,7 +13,7 @@ include {IPHOP} from "./HostPredictor.nf"
 
 workflow{
     
-    if (params.IDS != false)
+    if (params.IDS != false && params.pair_file_names == false)
     {
     // CREATES A NEXTFLOW CHANNEL CONTAINING THE READ IDS
     Channel
@@ -24,18 +24,25 @@ workflow{
     // DOWNLOADS THE CORRESPONDING READS USING FASTERQDUMP 
     read_pairs_ch = FASTERQDUMP(read_IDS_ch)
     }
-    else if (params.pair_file_names != false)
+    else if (params.pair_file_names != false && params.IDS == false)
     {
     // CREATING CHANNEL WITH TWO READS FROM PROVIDED FILEPATH
-    // MUST BE IN THE FORM OF path/to/directory/SOMESRANR_*.fastq.gz
-    // WHERE THE * SIGNIFIES R1 and R2
+    // MUST BE IN THE FORM OF path/to/directory/SOMESRANR_{R1,R2}.fastq.gz
+    // OR FOR MULTIPLE SAMPLES path/to/directory/*_{R1,R2}.fastq.gz
     Channel
         .fromFilePairs(params.pair_file_names)
         .set {read_pairs_ch}
     }
-    read_pairs_ch.view()
-    // DETECTING WHICH OFFSET IS USED FOR THE READS
-    OFFSET = OFFSETDETECTOR(read_pairs_ch)
+    else {
+        error("Error: You are not allowed to specify both --IDS and --pair_file_names")
+        
+    }
+    
+
+    
+    // // DETECTING WHICH OFFSET IS USED FOR THE READS
+    // OFFSET = OFFSETDETECTOR(read_pairs_ch)
+    
 
     // TRIMS BAD QUALITY READS
     TrimmedFiles_ch = TRIM(read_pairs_ch)
@@ -47,7 +54,7 @@ workflow{
     
     
     // ASSEMBLES THE CLEANED READS USING SPADES
-    ASSEMBLY_ch = SPADES(CleanedReads_ch,OFFSET)
+    ASSEMBLY_ch = SPADES(CleanedReads_ch,params.phredoffset)
 
     // CALCULATES N50 FROM THE ASSEMBLY
     N50CONTIG = N50(ASSEMBLY_ch)
