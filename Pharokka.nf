@@ -154,11 +154,13 @@ process RESULTS_COMPILATION{
 
     if (params.iphopDB != false) {
     """   
+
     python3 ${projectDir}/nphantom_compilation.py ${pair_id}_compiled_results.html ${viralcontigs} ${iphop_predictions}/Host_prediction_to_genus_m90.csv  ${iphop_predictions}/Host_prediction_to_genome_m90.csv ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats.txt ${pair_id}
     """
     }
     else {
     """   
+    
     python3 ${projectDir}/nphantom_compilation.py ${pair_id}_compiled_results.html ${viralcontigs} NOIPHOP NOIPHOP ${checkv_results}/completeness.tsv ${projectDir}/${params.outdir}/${pair_id}/Assembly/assemblyStats.txt ${pair_id}
     """
     }
