@@ -91,7 +91,7 @@ process KRAKEN{
         cpus 3
         errorStrategy { task.attempt < 3 ? 'retry' : 'ignore' }
         maxRetries 3
-        maxForks 10
+        //maxForks 10
 
     }
     else {
