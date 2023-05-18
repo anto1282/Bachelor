@@ -13,6 +13,6 @@ for line in Infile:
     if line.startswith(">"):
         x = re.search(">(NODE_\d*_).*",line)
 
-        print(">" + a+ x.group(1), file = OutFile)
+        print(">" + a+ "_"+  x.group(1), file = OutFile)
     else:
         print(line, end= "", file = OutFile)
