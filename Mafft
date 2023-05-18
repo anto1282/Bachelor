@@ -5,8 +5,6 @@
 #SBATCH --cpus-per-task=10
 #SBATCH --mem-per-cpu=10G
 #SBATCH --time=6:00:00
-#SBATCH --mail-type=begin
-#SBATCH --mail-type=end
 
 
 module load mafft
