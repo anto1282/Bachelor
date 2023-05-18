@@ -21,3 +21,8 @@ checkv-db-v1.5
 .conda_cache
 env-*
 GalatheaD
+
+*.fasta
+*.gz
+*.txt
+*.tsv
