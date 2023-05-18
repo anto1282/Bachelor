@@ -11,7 +11,7 @@ a = InputName[0:-19]
 
 for line in Infile:
     if line.startswith(">"):
-        x = re.search(">(NODE_\d*_).*",line)
+        x = re.search(">(NODE_\d*_length_\d*).*",line)
 
         print(">" + a+ "_"+  x.group(1), file = OutFile)
     else:
