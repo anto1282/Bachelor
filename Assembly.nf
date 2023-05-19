@@ -11,10 +11,10 @@ process SPADES{
         memory { 16.GB + 32.GB * task.attempt }
         //If you change memory for spades, remember to also change the memory limit tag in the spades command below!
         
-        errorStrategy { task.attempt < 3 ? 'retry' : 'ignore' }
-        maxRetries 3
+        errorStrategy { task.attempt < 4 ? 'retry' : 'ignore' }
+        maxRetries 4
         afterScript 'module unload spades/3.15.5'
-        time { 2.hour * task.attempt }
+        time { 3.hour * task.attempt }
     }
     else {
         conda "spades=3.15.5 conda-forge::openmp"
