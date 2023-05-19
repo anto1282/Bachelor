@@ -2,11 +2,11 @@
 
 #SBATCH --job-name=Mafft
 #SBATCH --ntasks=1
-#SBATCH --cpus-per-task=10
+#SBATCH --cpus-per-task=20
 #SBATCH --mem-per-cpu=10G
-#SBATCH --time=6:00:00
+#SBATCH --time=1:00:00
 
 
 module load mafft
-mafft --thread 10 /projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/VultureFS_Results/VultureContigs/FaceContigs_renamed.txt >> /projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/VultureFS_Results/VultureContigs/FaceContigs_Alignment.txt
+mafft --thread 20 /projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/VultureFS_Results/VultureContigs/FaceContigs_renamed.txt >> /projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/VultureFS_Results/VultureContigs/FaceContigs_Alignment.txt
 
