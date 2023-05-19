@@ -1,0 +1,12 @@
+#!/bin/bash
+
+#SBATCH --job-name=Mafft
+#SBATCH --ntasks=1
+#SBATCH --cpus-per-task=10
+#SBATCH --mem-per-cpu=10G
+#SBATCH --time=6:00:00
+
+
+module load mafft
+mafft --thread 10 /projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/GalatheaResults_DSamples/RenamedGalathea/D_sampleAll.fasta >> /projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/GalatheaResults_DSamples/RenamedGalathea/D_SampleAlignment.txt
+
