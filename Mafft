@@ -8,5 +8,5 @@
 
 
 module load mafft
-mafft --thread 10 /projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/GalatheaResults_DSamples/RenamedGalathea/D_sampleAll.fasta >> /projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/GalatheaResults_DSamples/RenamedGalathea/D_SampleAlignment.txt
+mafft --thread 10 /projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/VultureFS_Results/VultureContigs/FaceContigs_renamed.txt >> /projects/mjolnir1/people/zpx817/PipeLineFolder/Bachelor/VultureFS_Results/VultureContigs/FaceContigs_Alignment.txt
 
