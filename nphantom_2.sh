@@ -5,8 +5,8 @@
 #SBATCH --error=/projects/mjolnir1/people/%u/nextflowout/error_%j
 #SBATCH --ntasks=1
 #SBATCH --cpus-per-task=4
-#SBATCH --mem-per-cpu=8G
-#SBATCH --time=20:00:00
+#SBATCH --mem=8G
+#SBATCH --time=24:00:00
 #SBATCH --mail-type=begin
 #SBATCH --mail-type=end
 #SBATCH --mail-type=fail
