@@ -10,7 +10,7 @@ process SPADES{
         // cpus {16 * task.attempt}
         // memory { 16.GB + 32.GB * task.attempt }
         cpus {80 * task.attempt}
-        memory { 200.GB *task.attemp}
+        memory { 200.GB *task.attempt}
         //If you change memory for spades, remember to also change the memory limit tag in the spades command below!
         
         errorStrategy { task.attempt < 4 ? 'retry' : 'ignore' }
