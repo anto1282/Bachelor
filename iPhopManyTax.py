@@ -6,8 +6,9 @@ import re
 import sys
 
 iphopFile = sys.argv[1]
-sampleName = (sys.argv[1]).split("/")[-1]
+sampleName = (sys.argv[1]).split("/")[-2]
 print(iphopFile)
+
 
 
 infile = open(iphopFile + "IphopPrediction/Host_prediction_to_genome_m90.csv","r")
