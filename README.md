@@ -97,7 +97,7 @@ When running the pipeline on your local system, be aware that the host predictio
 nextflow run NPhAnToM.nf --IDS SRR1234567890 -profile cluster
 ```
 Submit the pipeline to a cluster using slurm and submitting your own sbatch script containing that command.
-Otherwise we also provide an sbatch script called nphantom_2.sh. Using this script, you can run the pipeline in the following way by just replacing ```nextflow run NPhAnToM.sh``` with ```sbatch --mail-user=your@email.com nphantom_2.sh```. The syntax of the pipeline parameters stays the same.
+Otherwise we also provide an sbatch script called nphantom_2.sh. Using this script, you can run the pipeline in the following way by just replacing ```nextflow run NPhAnToM.sh``` with ```sbatch --mail-user=your@email.com nphantom_2.sh```. Make sure to also provide the script with a directive for --output and --error directories as well as changing the different cache and temp dirs defined in the script. The syntax of the pipeline parameters stays the same. 
 
 ```
 sbatch --mail-user=your@email.com nphantom_2.sh --IDS SRR123456 -profile cluster 
@@ -110,12 +110,12 @@ nextflow run NPhAnToM.nf --IDS SRR1234567890 -profile cluster -with-tower --acce
 ```
 
 # Different ways to provide reads to the pipeline
-If you have the SRA nr for the reads you want to run through the pipeline, just provide the SRA nr like this using the parameter ```--IDS``` in the terminal.
-If you already have the reads locally in a file pair, provide the path to the file pair using the ```--pair_file_names``` parameter and a glob pattern like this.
+If you have the SRA nr for the reads you want to run through the pipeline, just provide the SRA nr. like this, using the parameter ```--IDS``` in the terminal.
+If you already have the reads locally or on an accesible server in a file pair, provide the path to the file pair using the ```--pair_file_names``` parameter and a glob pattern like this.
 ```
 nextflow run NPhAnToM.sh --pair_file_names "/path/to/file/pair/SRR123456_{R1,R2}.fastq.gz"
 ```
-Multiple pairs of reads can be given this way at once by replacing the SRR number with a glob, which takes all ike this:
+Multiple pairs of reads can be given this way at once by replacing the SRR number with a glob, which takes all reads in a directory and analyzes paired reads together, like this:
 ```
 nextflow run NPhAnToM.sh --pair_file_names "/path/to/file/pair/*_{R1,R2}.fastq.gz"
 ```
