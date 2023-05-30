@@ -109,7 +109,7 @@ To monitor the pipeline through nextflow tower, you need to provide an access-to
 nextflow run NPhAnToM.nf --IDS SRR1234567890 -profile cluster -with-tower --accessToken qwerty1234567890
 ```
 
-# Different ways to provid reads to the pipeline
+# Different ways to provide reads to the pipeline
 If you have the SRA nr for the reads you want to run through the pipeline, just provide the SRA nr like this using the parameter ```--IDS``` in the terminal.
 If you already have the reads locally in a file pair, provide the path to the file pair using the ```--pair_file_names``` parameter and a glob pattern like this.
 ```
