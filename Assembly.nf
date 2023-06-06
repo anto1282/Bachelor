@@ -1,24 +1,20 @@
 #!/usr/bin/env nextflow
 
-// Script that contains nextflow processes for assembling illumina reads, as well as for detecting the offset of 
+// Script that contains nextflow processes for assembling Illumina reads, as well as for detecting the offset of 
 // the reads and calculating a N50 score.
 
 // Assembly using spades
 process SPADES{
     if (params.server) {
         beforeScript 'module load spades/3.15.5'
-        // cpus {16 * task.attempt}
-        // memory { 16.GB + 32.GB * task.attempt }
-        cpus {48 * task.attempt * task.attempt}
-        memory { 150.GB * task.attempt}
+        cpus {16 * task.attempt}
+        memory { 16.GB + 32.GB * task.attempt }
         //If you change memory for spades, remember to also change the memory limit tag in the spades command below!
-        
         errorStrategy { task.attempt < 4 ? 'retry' : 'ignore' }
-        // maxRetries 4
-        maxRetries 1
+        maxRetries 4
         afterScript 'module unload spades/3.15.5'
-        // time { 12.hour * task.attempt + (1.hours *(task.attempt - 1))}
-        time { 32.hour}
+        time { 12.hour * task.attempt + (1.hours *(task.attempt - 1))}
+        
     }
     else {
         conda "spades=3.15.5 conda-forge::openmp"
@@ -46,19 +42,11 @@ process SPADES{
     """
     gzip -d -f ${r1}
     gzip -d -f ${r2}
-    spades.py -o Assembly -1 ${r1.baseName} -2 ${r2.baseName} --meta --threads ${task.cpus} --memory ${ (150*task.attempt)} --phred-offset ${phred} 
+    spades.py -o Assembly -1 ${r1.baseName} -2 ${r2.baseName} --meta --threads ${task.cpus} --memory ${ 16 + 32*task.attempt} --phred-offset ${phred} 
     gzip -n Assembly/${params.contigs}.fasta   
     gzip ${r1.baseName}
     gzip ${r2.baseName}
     """
-    // """
-    // gzip -d -f ${r1}
-    // gzip -d -f ${r2}
-    // spades.py -o Assembly -1 ${r1.baseName} -2 ${r2.baseName} --meta --threads ${task.cpus} --memory ${ 16 + 32*task.attempt} --phred-offset ${phred} 
-    // gzip -n Assembly/${params.contigs}.fasta   
-    // gzip ${r1.baseName}
-    // gzip ${r2.baseName}
-    // """
 }
 
 
@@ -89,7 +77,7 @@ process OFFSETDETECTOR{
 }
 
 
-// Calculating N50 score from contigs using the bbmap stash.sh script
+// Calculating N50 score from contigs using the bbmap stats.sh script
 
 process N50{
     if (params.server) {
