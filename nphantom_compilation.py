@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 
-#Create a script that runs pharokkas imager tool
 
-#Take the extracted viruses from virextractor.py
-#Find the corresponding viruses in the iphop results
-#Show length of phage and completeness using checkv
-#Add a picture of the assembled phage
+
+#Takes the extracted viruses from virextractor.py
+#Finds the corresponding viruses in the iphop results
+#Shows length of phage and completeness using checkv
+#Adds a picture of the assembled phage
 
 import sys
 
