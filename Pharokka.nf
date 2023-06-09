@@ -2,17 +2,13 @@
 
 
 process PHAROKKA{
-    //errorStrategy 'retry'
     errorStrategy {task.attempt == 1 ? 'retry' : 'ignore'}
-    //maxRetries  = 2
     if (params.server){
         container = "docker://quay.io/biocontainers/pharokka:1.3.2--hdfd78af_0"
         cpus 8
     }
     else{
         conda 'conda-forge::pycirclize bioconda::pharokka=1.3.2 mash==2.2 bcbio-gff'
-        //conda '/home/tbr/miniconda3/envs/PHAROKKA'
-        //container = "shub://quay.io/biocontainers/pharokka:1.3.1--hdfd78af_0"
         cpus 8
     }
     
