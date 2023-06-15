@@ -3,6 +3,7 @@
 ## About NPhAnToM - Nextflow Pipeline for Phage AnnoTation of Metagenomic samples
 NPhAnToM is a nextflow pipeline for prediction and annotation of phages in environmental samples, along with phage host prediction using industry standard bioinformatics tools.
 The pipeline takes in short reads and outputs a results folder with predicted phages. An html file for the sample is found within the CompiledResults folder. 
+Genbank files for the predicted phages are also available. 
 
 ![image](https://github.com/anto1282/NPhAnTom/assets/114398738/f8315d60-54d8-4df0-bc02-3af5ccee0a5c)
 
