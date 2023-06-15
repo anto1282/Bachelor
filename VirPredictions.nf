@@ -4,7 +4,7 @@ process DVF{
     if (params.server) {
         beforeScript 'module load gcc theano deepvirfinder'
         afterScript 'module unload gcc theano deepvirfinder/'
-        cpus 12
+        cpus 20
         time = 20.m
         memory '35 GB'
         }
@@ -27,6 +27,7 @@ process DVF{
     script:
     if (params.server) {
         """
+        export OMP_NUM_THREADS=${task.cpus}
         gzip --decompress --force ${contigs} 
         ${params.DVFPath} -i ${contigs.baseName} -l ${params.minLength} -c ${task.cpus}
         gzip --force ${contigs.baseName} 
@@ -35,6 +36,7 @@ process DVF{
             }
     else {
         """
+        export OMP_NUM_THREADS=${task.cpus}
         gzip --decompress --force ${contigs} 
         python ${params.DVFPath} -i ${contigs.baseName} -l ${params.minLength} -c ${task.cpus}
         gzip --force ${contigs.baseName} 
