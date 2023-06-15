@@ -8,7 +8,7 @@ The NPhAnTom pipeline consists of several steps:
 - Providing reads either by:
     - Downloading reads: fasterqdump for downloading illumina reads from the NCBI Sequence Read Archive.
     - Fetching reads from local directory
-- Trimming reads: adapterremoval, bbduk.sh
+- Trimming reads: adapterremoval, FastP
 - Removing eukaryotic reads: kraken
 - FastQC: Checking the quality of the FastQ reads
 - Assembly: metagenomic spades
