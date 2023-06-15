@@ -14,7 +14,7 @@ The NPhAnTom pipeline consists of several steps:
 - Assembly: metagenomic spades
     - Assembly quality check using stats.sh
 - Virus prediction: A combination of DeepVirFinder, Seeker and Phager
-- Quality check of viral contigs: CheckV
+- Checking phage completeness: CheckV
 - Phage annotation: Pharokka
 - Phage host prediction: IPHOP
 - Compilation of the pipelines results to an HTML file
