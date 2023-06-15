@@ -29,6 +29,7 @@ process DVF{
     if (params.server) {
         """
         export OMP_NUM_THREADS=${task.cpus}
+        export THEANO_FLAGS='openmp=True'
         gzip --decompress --force ${contigs} 
         ${params.DVFPath} -i ${contigs.baseName} -l ${params.minLength} -c ${task.cpus}
         gzip --force ${contigs.baseName} 
@@ -38,6 +39,7 @@ process DVF{
     else {
         """
         export OMP_NUM_THREADS=${task.cpus}
+        export THEANO_FLAGS='openmp=True'
         gzip --decompress --force ${contigs} 
         python ${params.DVFPath} -i ${contigs.baseName} -l ${params.minLength} -c ${task.cpus}
         gzip --force ${contigs.baseName} 
