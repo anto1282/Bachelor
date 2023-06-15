@@ -96,12 +96,21 @@ When running the pipeline on your local system, be aware that the host predictio
 ```
 nextflow run NPhAnToM.nf --IDS SRR1234567890 -profile cluster
 ```
-Submit the pipeline to a cluster using slurm and submitting your own sbatch script containing that command.
-Otherwise we also provide an sbatch script called nphantom_2.sh. Using this script, you can run the pipeline in the following way by just replacing ```nextflow run NPhAnToM.sh``` with ```sbatch --mail-user=your@email.com nphantom_2.sh```. Make sure to also provide the script with a directive for --output and --error directories as well as changing the different cache and temp dirs defined in the script. The syntax of the pipeline parameters stays the same. 
+The pipeline is easily run on an HPC using the SLURM workload manager. 
+Submit a sbatch script containing the command above. 
+We provide an sbatch script called nphantom.sh from which you can use entirely or take inspiration from. Using this script, you can run the pipeline in the following way by just replacing ```nextflow run NPhAnToM.sh``` with ```sbatch --mail-user=your@email.com nphantom_2.sh```. Make sure to also provide the script with a directive for --output and --error directories as well as changing the different cache and temp dirs defined in the script. The syntax of the pipeline parameters stays the same. 
+Remember to make sure that the database directories specified in the nextflow.config file are correct for your specific HPC.
 
 ```
 sbatch --mail-user=your@email.com nphantom_2.sh --IDS SRR123456 -profile cluster 
 ```
+# For KU users (MJOLNIR HPC)
+The pipeline is very easily run on the Mjolnir HPC. 
+Just clone this repository and run the pipeline using this command.  All database paths are already set up. 
+```
+sbatch --mail-user=your@email.com nphantom_2.sh --IDS SRR123456 -profile cluster 
+```
+
 
 # Run the pipeline with nextflow tower
 To monitor the pipeline through nextflow tower, you need to provide an access-token from tower.nf.
