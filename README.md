@@ -2,6 +2,7 @@
 
 ## About NPhAnToM - Nextflow Pipeline for Phage AnnoTation of Metagenomic samples
 NPhAnToM is a nextflow pipeline for prediction and annotation of phages in environmental samples, along with phage host prediction using industry standard bioinformatics tools.
+![image](https://github.com/anto1282/NPhAnTom/assets/114398738/f8315d60-54d8-4df0-bc02-3af5ccee0a5c)
 
 The NPhAnTom pipeline consists of several steps:
 - Providing reads either by:
@@ -18,11 +19,17 @@ The NPhAnTom pipeline consists of several steps:
 - Phage host prediction: IPHOP
 - Compilation of the pipelines results to an HTML file
 
+# Quick start - for KU users (MJOLNIR HPC)
+The pipeline is very easily run on the Mjolnir HPC located on KU. 
+Just clone this repository and run the pipeline using this command. All database paths are already set up. 
+```
+sbatch --mail-user=your@email.com nphantom_2.sh --IDS SRR123456 -profile cluster 
+```
 
 ## Install the pipeline
-To install the pipeline, clone the repository using git, and install the necessary dependencies either using conda or mamba. See thorough guide below for how to setup your PC to run NPhAnToM. You must also install nextflow its dependencies to run the pipeline.
+To install the pipeline on your system, clone the repository using git, and install the necessary dependencies either using conda or mamba. See thorough guide below for how to setup your PC to run NPhAnToM. You must also install nextflow and its dependencies to run the pipeline.
 
-Some of the parts of the pipeline need a database, so follow the guide to install those and add the paths for those databases to the relevant variables in the nextflow.config file. 
+Some of the parts of the pipeline need a database, so follow the guide to install those and add the paths to the databases in the nextflow.config file. 
 
 When running locally on a PC, make sure that nextflow and conda / mamba is properly installed. Our pipeline uses mamba as the standard package manager. 
 When running the pipeline on an cluster, the pipeline uses modules to load a specific environment. Therefore the modules must be installed and named the same way on the cluster as they are in the pipeline script. If they are not, either ask your system administrator to download the proper modules or simply change the names of the modules inside the script to match the proper names. 
@@ -43,8 +50,9 @@ or by editing your version of the nextflow.config file in order to contain the c
 >Be aware that you only need to install the databases and the DeepVirFinder script if you don't have them installed already. 
 
 ### DeepVirFinder 
-Since DeepVirFinder (DVF) doesn't seem to work using conda or mamba, it must be downloaded manually, so download DeepVirFinder by following the instructions from their github: https://github.com/jessieren/DeepVirFinder.
-If you only intend to run DVF from within nextflow, you do not need to create a conda environment, as the instructions otherwise tell you to do, since our pipeline creates the proper environment automatically.
+Since DeepVirFinder (DVF) doesn't seem to work using conda or mamba, it must be downloaded manually. 
+Download DeepVirFinder by following the instructions from their github: https://github.com/jessieren/DeepVirFinder.
+If you only intend to run DVF from within nextflow, you do not need to create a conda environment for it, as the instructions otherwise tell you to do, since our pipeline creates the proper environment automatically.
 Remember the full path to DeepVirFinder/dvf.py as you need to provide it when running the Pipeline. 
 Alternatively, you can also add the DVFpath parameter directly to the nextflow.config file and add the ```--DVFpath``` in there. 
 In the command for running NPhAnToM, provide the path like this:
@@ -98,19 +106,12 @@ nextflow run NPhAnToM.nf --IDS SRR1234567890 -profile cluster
 ```
 The pipeline is easily run on an HPC using the SLURM workload manager. 
 Submit a sbatch script containing the command above. 
-We provide an sbatch script called nphantom.sh from which you can use entirely or take inspiration from. Using this script, you can run the pipeline in the following way by just replacing ```nextflow run NPhAnToM.sh``` with ```sbatch --mail-user=your@email.com nphantom_2.sh```. Make sure to also provide the script with a directive for --output and --error directories as well as changing the different cache and temp dirs defined in the script. The syntax of the pipeline parameters stays the same. 
+We provide an sbatch script called nphantom_2.sh which you can use it its entirety or take inspiration from. Using this script, you can run the pipeline in the following way by just replacing ```nextflow run NPhAnToM.sh``` with ```sbatch --mail-user=your@email.com nphantom_2.sh```. Make sure to also provide the script with a directive for --output and --error directories as well as changing the different cache and temp dirs defined in the script. The syntax of the pipeline parameters stays the same when using this command. 
 Remember to make sure that the database directories specified in the nextflow.config file are correct for your specific HPC.
 
 ```
 sbatch --mail-user=your@email.com nphantom_2.sh --IDS SRR123456 -profile cluster 
 ```
-# For KU users (MJOLNIR HPC)
-The pipeline is very easily run on the Mjolnir HPC. 
-Just clone this repository and run the pipeline using this command.  All database paths are already set up. 
-```
-sbatch --mail-user=your@email.com nphantom_2.sh --IDS SRR123456 -profile cluster 
-```
-
 
 # Run the pipeline with nextflow tower
 To monitor the pipeline through nextflow tower, you need to provide an access-token from tower.nf.
