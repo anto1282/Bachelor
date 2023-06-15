@@ -26,6 +26,38 @@ Just clone this repository and run the pipeline using this command. All database
 sbatch --mail-user=your@email.com nphantom_2.sh --IDS SRR123456 -profile cluster 
 ```
 
+# Help menu
+```
+nextflow run NPhAnToM.nf [--IDS] or [--pair_file_names]  [-profile cluster / local]
+
+Parameter usage
+--IDS = <SRA NR>  //  Specify SRA nr for specific sample
+--pair_file_names = </path/to/file/pair/SRR123456_{R1,R2}.fastq.gz> // Write pair_file_names to specify a glob pattern to run pipeline on multiple local file pairs at once
+--outdir = "./Results" // Specifies where output is saved
+
+
+--bigDB = true or false
+
+--krakDB = "/maps/databases/kraken2/kraken2_standard/20220926" // Path for kraken Database
+--phaDB = "/maps/conda/pharokka-1.2.1/pharokka_v1.2.0_databases" // Path for pharokka Database
+DVFPath = "dvf.py" // Path for deepvirfinder
+--iphopDB = "/maps/databases/iphop/20230317/Sept_2021_pub"  // Path for Iphop database
+--checkVDB = "/maps/databases/checkv/20230320/checkv-db-v1.5" // Path for checkV database
+--basepath = "/maps" // Basepath used for singularity, change if basepath is not maps
+--singularityCacheDir = '/maps/cache/nf-core/singularity' // The place where singularity containers are stored locally
+
+--accessToken = "writeTokenForNextflowTower" // Write your token for Tower.nf (nextflow tower)             
+
+--minLength = 1001 // Specifies minimum contig length, must be larger than 1000 for Pharokka to function
+--contigs = "scaffolds"  // choose between "scaffolds" or "contigs", specifying which of the two assembly files the pipeline uses after assembly                
+--iou = "intersection" // choose between "intersection" or "union" strategies for combination of virus predictors, used by virextractor.py. Intersection is stricter, union is looser. 
+phredoffset = "64" // choose between "33" (Sanger encoding) and "64" (Illumina encoding)
+
+-profile = <cluster> or <local>
+-resume
+
+```
+
 ## Install the pipeline
 To install the pipeline on your system, clone the repository using git, and install the necessary dependencies either using conda or mamba. See thorough guide below for how to setup your PC to run NPhAnToM. You must also install nextflow and its dependencies to run the pipeline.
 
