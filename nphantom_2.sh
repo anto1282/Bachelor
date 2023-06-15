@@ -31,5 +31,4 @@ module load singularity/3.8.6 nextflow/22.10.4 miniconda/4.11.0
 
 echo $NXF_WORK
 
-# srun nextflow run NPhAnToM.nf ${SRRNUMBER} -profile ${PROFILE} ${RESUME} -with-mpi -with-tower --accessToken ${TOWERTOKEN} --minLength ${MINLENGTH} --contigs ${CONTIGS}
 srun nextflow run NPhAnToM.nf $@ 
