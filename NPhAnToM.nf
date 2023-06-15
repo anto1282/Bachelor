@@ -40,11 +40,12 @@ DVFPath = "dvf.py" // Path for deepvirfinder
 phredoffset = "64" // choose between "33" (Sanger encoding) and "64" (Illumina encoding)
 
 -profile = <cluster> or <local>
--resume
+-resume""".stripMargin()
         // Print the help with the stripped margin and exit
         println(help)
         exit(0)
     }
+
     if (params.IDS != false && params.pair_file_names == false)
     {
     // CREATES A NEXTFLOW CHANNEL CONTAINING THE READ IDS
