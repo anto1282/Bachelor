@@ -5,7 +5,8 @@ process DVF{
         beforeScript 'module load gcc theano deepvirfinder'
         afterScript 'module unload gcc theano deepvirfinder/'
         cpus 20
-        time = 20.m
+        time = {20.m * task.attempt}
+        errorStrategy { task.exitStatus in 137..140 ? 'retry' : 'ignore' }
         memory '35 GB'
         }
     else {
